@@ -7,12 +7,6 @@ Route::group(['middleware' => 'article'], function () {
     Route::get('/category/{category_id}', 'FrontController@category');
 });
 
-Route::get('get_date_656861622', function () {
-        return response()->json(
-             time() - strtotime('2000-1-1 8:00')
-        );
-});
-
 Route::get('/ajax/login_status', 'AjaxController@loginStatus');
 Route::get('/ajax/user_is_identical/{user_id}', 'AjaxController@userIsIdentical');
 Route::post('/ajax/generate_num', 'AjaxController@generate_num');
