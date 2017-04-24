@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Category;
 
 class CreateCategory extends Migration
 {
@@ -20,6 +21,18 @@ class CreateCategory extends Migration
             $table->integer('parent_id');
             $table->timestamps();
         });
+
+        $category = new Category;
+        $category->create([
+            'name' => '默认',
+            'parent_id' => '0',
+            'alias' => 'default',
+        ]);
+        $category->create([
+            'name' => '闹钟任务',
+            'parent_id' => '1',
+            'alias' => 'alarm',
+        ]);
     }
 
     /**
