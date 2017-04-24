@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->timestamp('next_login_time');
+            $table->timestamp('next_login_time')->nullable();
         });
     }
 
