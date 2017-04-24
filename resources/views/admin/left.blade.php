@@ -42,8 +42,8 @@ body,td,th {
     <span><img src="/images/leftico01.png" /></span>我的任务
     </div>
     	<ul class="menuson">
-            <li class="active"><cite></cite><a href="/admin/task" target="rightFrame">我的任务</a><i></i></li>
-            <li><cite></cite><a href="/admin/add_task" target="rightFrame">添加任务</a><i></i></li>
+            <li class="active"><cite></cite><a href="/admin/task/page" target="rightFrame">我的任务</a><i></i></li>
+            <li><cite></cite><a href="/admin/task/add" target="rightFrame">添加任务</a><i></i></li>
         </ul>
     </dd>
         

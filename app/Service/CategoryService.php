@@ -25,4 +25,9 @@ class CategoryService
         $value = ['name','parent_id','id'];
         return $this->category->selectGet($value)->toArray();
     }
+
+    public function current($category_id)
+    {
+        return $this->category->current($category_id);
+    }
 }

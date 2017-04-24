@@ -14,11 +14,17 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/left', 'IndexController@left');
     Route::get('/main', 'IndexController@main');
 
-    //后台功能相关
-    Route::get('/task/', function () {
-        return redirect()->route('task', ['page' => 1]);
+    //分页访问
+    Route::get('/task/page', function () {
+        return redirect()->route('task_page', ['page' => 1]);
     });
-    Route::get('/task/{page}', 'TaskController@show')->name('task');
+    Route::get('/task/page/{page}', 'TaskController@show')->name('task_page');
+
+    //添加任务
+    Route::get('/task/add', function () {
+        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['id']]);
+    });
+    Route::get('/task/add/{category}', 'TaskController@store')->name('task_add');
 });
 
 

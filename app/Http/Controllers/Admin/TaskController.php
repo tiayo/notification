@@ -9,42 +9,41 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $category;
+    protected $all_category;
+
+    public function __construct(CategoryService $category)
     {
-        //
+        $this->category = $category;
+        $this->all_category = $category->getSelect();
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * 添加任务
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($category_id)
     {
-        //
+        //获取当前栏目
+        $current = $this->category->current($category_id);
+
+        //当前栏目别名
+        $category = $current['alias'];
+
+        return view("home.$category", [
+            'all_category' => $this->all_category,
+            'current' => $current,
+        ]);
     }
 
     /**
      * 显示所有我的任务
+     *
      * @return array
      */
-    public function show($page, TaskService $task, CategoryService $category)
+    public function show($page, TaskService $task)
     {
         //所有任务
         $list_task = $task->show($page, Config('site.page'));
@@ -55,15 +54,12 @@ class TaskController extends Controller
         // 最多页数
         $max_page = ceil($count/Config('site.page'));
 
-        //分类
-        $all_category = $category->getSelect();
-
-        return view('home.right',[
+        return view('home.list',[
             'list_task' => $list_task,
             'count' => ($count <= 5) ? $count : 5,
             'page' => $page,
             'max_page' => $max_page,
-            'all_category' => $all_category,
+            'all_category' => $this->all_category,
         ]);
     }
 
