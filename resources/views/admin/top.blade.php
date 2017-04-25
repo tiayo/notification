@@ -69,7 +69,7 @@ function Push() {
     </ul>
      
     <div class="user">
-    <span>admin</span>
+    <span>{{$user_name}}</span>
     <i>消息</i>
     <b><a href="/Index/liuyan" target="rightFrame"><div id="shuchu" style="color:#fff;">0</div></a></b>
     </div>    

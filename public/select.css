@@ -15,8 +15,8 @@ option{overflow:auto;}
 /*----------------------------------*
  * 	组件公用图标库         				*
  *----------------------------------*/
-.uew-icon,.ue-state-default .uew-icon{display:inline-block;width:16px;height:16px;background-image:url(/Public/images/uew_icon.png);}
-.ue-state-hover .uew-icon{background-image:url(/Public/images/uew_icon_hover.png);}
+.uew-icon,.ue-state-default .uew-icon{display:inline-block;width:16px;height:16px;background-image:url(/images/uew_icon.png);}
+.ue-state-hover .uew-icon{background-image:url(/images/uew_icon_hover.png);}
 .uew-icon-triangle-1-s{background-position:-80px 0;}
 
 .vocation,.usercity{float:left;}

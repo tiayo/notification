@@ -3,17 +3,18 @@
 namespace App\Service;
 
 use App\Repositories\CategoryRepositories;
-use App\Repositories\TackRepositories;
 use App\Repositories\UserRepositories;
 use Illuminate\Support\Facades\Auth;
 
 class CategoryService
 {
     protected $category;
+    protected $user;
 
-    public function __construct(CategoryRepositories $category)
+    public function __construct(CategoryRepositories $category, UserRepositories $user)
     {
         $this->category = $category;
+        $this->user = $user;
     }
 
     /**
@@ -54,11 +55,41 @@ class CategoryService
      */
     public function show($page, $num)
     {
-        return $this->category->show($page, $num);
+        if (!$this->user->find(Auth::id())->can('Admin', CategoryService::class)) {
+            throw new \Exception('您没有权限访问！', 403);
+        }
+
+        $all_category = $this->category->show($page, $num)->toarray();
+
+        foreach ($all_category as $item) {
+            $item['parent_name'] = $this->category->selectWhereFirst('name', 'id', $item['parent_id'])['name'] ? : '顶级';
+            $result_category[] = $item;
+        }
+
+        return $result_category;
     }
 
+    /**
+     * 统计分类个数
+     * @return int
+     */
     public function count()
     {
         return $this->category->count();
     }
+
+    public function store($name, $parent_id, $alias)
+    {
+        $data = [
+            'name' => $name,
+            'parent_id' => $parent_id,
+            'alias' => $alias
+        ];
+
+        var_dump($data);
+        exit();
+
+        return $this->category->store($data);
+    }
+
 }

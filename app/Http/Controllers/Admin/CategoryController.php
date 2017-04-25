@@ -11,17 +11,31 @@ class CategoryController extends Controller
 {
     protected $category;
     protected $all_category;
+    protected $request;
 
-    public function __construct(CategoryService $category)
+    public function __construct(CategoryService $category, Request $request)
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
+        $this->request = $request;
     }
 
+    /**
+     * 显示分类管理页面
+     * 超级管理员才可以访问
+     * 普通用户抛403错误
+     *
+     * @param $page 页码
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index($page)
     {
         // 所有分类
-        $list_category = $this->category->show($page, Config('site.page'));
+        try{
+            $list_category = $this->category->show($page, Config('site.page'));
+        } catch (\Exception $e) {
+            return response($e->getMessage(), $e->getCode());
+        }
 
         // 任务数量
         $count = $this->category->count();
@@ -30,7 +44,7 @@ class CategoryController extends Controller
         $max_page = ceil($count/Config('site.page'));
 
         return view('home.category', [
-            'list_task' => $list_category,
+            'list_category' => $list_category,
             'count' => ($count <= 5) ? $count : 5,
             'page' => $page,
             'max_page' => $max_page,
@@ -39,49 +53,42 @@ class CategoryController extends Controller
     }
 
     /**
-     * 添加任务
+     * 添加分类页面
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($category_id)
+    public function storeView()
     {
-        //获取当前栏目
-        $current = $this->category->current($category_id);
-
-        //当前栏目别名
-        $category = $current['alias'];
-
-        return view("home.$category", [
+        return view('home.category_add', [
             'all_category' => $this->all_category,
-            'current' => $current,
         ]);
     }
 
     /**
-     * 显示所有我的任务
-     *
-     * @return array
+     * 插入新分类
      */
-    public function show($page, TaskService $task)
+    public function store()
     {
-        //所有任务
-        $list_task = $task->show($page, Config('site.page'));
-
-        //任务数量
-        $count = $task->count();
-
-        // 最多页数
-        $max_page = ceil($count/Config('site.page'));
-
-        return view('home.list',[
-            'list_task' => $list_task,
-            'count' => ($count <= 5) ? $count : 5,
-            'page' => $page,
-            'max_page' => $max_page,
-            'all_category' => $this->all_category,
+        $this->validate($this->request,[
+            'name' => 'bail|required|max:50',
+            'parent_id' => 'bail|required|integer',
+            'alias' => 'bail|required|max:50'
         ]);
+
+        $name = $this->request->get('name');
+        $parent_id = $this->request->get('parent_id');
+        $alias = $this->request->get('alias');
+
+        try{
+            $this->category->store($name, $parent_id, $alias);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), $e->getCode());
+        }
+
+        return redirect()->route('category', ['page' => 1]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

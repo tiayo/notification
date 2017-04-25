@@ -23,7 +23,9 @@ class IndexController extends Controller
      */
     public function top()
     {
-        return view('admin.top');
+        return view('admin.top', [
+            'user_name' => Auth::user()['name'],
+        ]);
     }
 
     /**
@@ -47,6 +49,7 @@ class IndexController extends Controller
 
         //输出模板
         return view('admin.main', [
+            'user_name' => Auth::user()['name'],
             'next_login_time' => $next_login_time ? : date('Y-m-d H:i:s')
         ]);
     }

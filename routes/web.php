@@ -27,10 +27,14 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/task/add/{category}', 'TaskController@store')->name('task_add');
 
     //管理分类
-    Route::get('/category', function () {
+    Route::get('/category/page', function () {
         return redirect()->route('category', ['page' => 1]);
     });
-    Route::get('/category/{page}', 'CategoryController@index')->name('category');
+    Route::get('/category/page/{page}', 'CategoryController@index')->name('category');
+
+    //添加分类
+    Route::get('/category/add', 'CategoryController@storeView');
+    Route::post('/category/add', 'CategoryController@store')->name('category_add');
 });
 
 

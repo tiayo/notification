@@ -1,9 +1,8 @@
-
 <!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>祥景CMS</title>
+<title>{{config('site.title').config('site.version')}}</title>
 <link href="/Houtai/style.css" rel="stylesheet"/>
 <script src="/Houtai/jquery.js"></script>
 <link href="/Houtai/style.css" rel="stylesheet" type="text/css" />

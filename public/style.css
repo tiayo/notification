@@ -395,3 +395,16 @@ a:active,a:hover { text-decoration:underline;color:#FF7F02;}
 	font-size:13px;
 }
 
+/*category_add*/
+.category_error{
+	float: left;
+	border: 1px solid #66c9f3;
+	font-size: 14px;
+	color: #1087ba;
+	padding: 1em 0 0;
+	margin-bottom: 1em;
+	border-radius: 10px;
+}
+.category_error p{
+	padding: 0 0 0.5em 1em;
+}

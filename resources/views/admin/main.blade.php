@@ -18,7 +18,7 @@ body,td,th {
 	<div class="place">
     <span>位置：</span>
     <ul class="placeul">
-    <li><a href="/admin/main">首页-{{config('site.site_title')}}</a></li>
+    <li><a href="/admin/main">首页-{{config('site.title')}}</a></li>
     </ul>
     </div>
     
@@ -27,7 +27,7 @@ body,td,th {
     
     <div class="welinfo">
     <span><img src="/images/sun.png" alt="天气" /></span>
-    <b>超级管理员你好，欢迎登录到{{config('site.site_title')}}</b>(版本：{{config('site.version')}})
+    <b>{{$user_name}}你好，欢迎登录到{{config('site.title')}}</b>(版本：{{config('site.version')}})
     </div>
     
     <div class="welinfo">

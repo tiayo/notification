@@ -51,9 +51,16 @@ class TaskRepositories
             ->update($value);
     }
 
-    public function count()
+    public function adminCount()
     {
         return $this->task->count();
+    }
+
+    public function userCount($user_id)
+    {
+        return $this->task
+            ->where('id', $user_id)
+            ->count();
     }
 
 }

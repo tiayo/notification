@@ -49,7 +49,7 @@ $(function(){
             <span><img src="/images/leftico02.png" /></span>管理操作
         </div>
         <ul class="menuson">
-            <li class="active"><cite></cite><a href="/admin/category" target="rightFrame">管理分类</a><i></i></li>
+            <li class="active"><cite></cite><a href="/admin/category/page/1" target="rightFrame">管理分类</a><i></i></li>
             <li><cite></cite><a href="#" target="rightFrame">预留位置</a><i></i></li>
         </ul>
     </dd>

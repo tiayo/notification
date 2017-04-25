@@ -25,6 +25,14 @@ class CategoryRepositories
            ->get();
    }
 
+   public function selectWhereFirst($value = '*', $option, $str)
+   {
+       return $this->category
+           ->select($value)
+           ->where($option, $str)
+           ->first();
+   }
+
    public function routeFirst()
    {
        return $this->category
@@ -53,6 +61,12 @@ class CategoryRepositories
    public function count()
    {
        return $this->category->count();
+   }
+
+   public function store($data)
+   {
+       return $this->category
+           ->create($data);
    }
 
 }

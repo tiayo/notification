@@ -48,7 +48,7 @@ $(document).ready(function(){
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="#">首页</a></li>
-    <li><a href="#">我的分享</a></li>
+    <li><a href="#">分类管理</a></li>
     </ul>
     </div>
     
@@ -57,20 +57,9 @@ $(document).ready(function(){
     <div class="tools">
     
     	<ul class="toolbar">
-        <li><a href="/Admin/list/xinxi_view?id=1"><span><img src="/images/t01.png" /></span>添加</a></li>
+        <li><a href="/admin/category/add"><span><img src="/images/t01.png" /></span>添加</a></li>
         <li><span><img src="/images/t02.png" /></span>修改</li>
         <li class="click"><span><img src="/images/t03.png" /></span>删除</li>
-        <form class="form" action="/Admin/List/admin_serch_list" method="get">
-        <select name="lanmu" class="lanmu">
-            <option value="0">所有栏目</option>
-            @foreach ($all_category as $value)
-              <option value="{{$value['id']}}">{{$value['name']}}</option>
-            @endforeach
-          </select>
-          <input type="hidden" name='id' value="{$list_id}" />
-          <input type="text" class="text" name="text" placeholder="输入关键词" />
-          <input type="submit" class="submit"  />
-        </form>
         </ul>
         
         
@@ -103,26 +92,24 @@ $(document).ready(function(){
     	<tr>
         <th><input name="checkbox101" type="checkbox" value="101"  id="quanxuan"/></th>
         <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-        <th>标题</th>
-        <th>用户</th>
-        <th>时间</th>
-        <th>邮箱</th>
-        <th>手机</th>
-        <th>内容</th>
+        <th>名称</th>
+        <th>父级</th>
+        <th>别名</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
         <th>操作</th>
         </tr>
         </thead>
         <tbody>
-        @foreach ($list_task as $row)
+        @foreach ($list_category as $row)
             <tr>
                 <td><input name="xuanze{++$i}" value="{$row[aid]}" type="checkbox" id="xuanze"/></td>
                 <td>{{$row['id']}}</td>
-                <td>{{$row['title']}}</td>
-                <td>{{$row['user_id']}}</td>
-                <td>{{$row['start_time'] or ''}}-{{$row['end_time'] or ''}}</td>
-                <td>{{$row['email']}}</td>
-                <td>{{$row['phone']}}</td>
-                <td>{{$row['content']}}</td>
+                <td>{{$row['name']}}</td>
+                <td>{{$row['parent_name']}}</td>
+                <td>{{$row['alias'] or ''}}</td>
+                <td>{{$row['created_at']}}</td>
+                <td>{{$row['updated_at']}}</td>
                 <td>
                     <a href="/admin/index/article_xiugai?aid={$row[aid]}" class="tablelink">设置</a>
                     <a href="/admin/index/article_delete?delete={$row[aid]}" class="tablelink"> 删除</a>

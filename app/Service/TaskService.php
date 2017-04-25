@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
-use App\Repositories\TackRepositories;
 use App\Repositories\TaskRepositories;
 use App\Repositories\UserRepositories;
+use App\Task;
 use Illuminate\Support\Facades\Auth;
 
 class TaskService
@@ -29,11 +29,11 @@ class TaskService
      */
     public function show($page, $num)
     {
-        if ($this->user->find($this->user_id)->can('Admin')) {
+        if ($this->user->find($this->user_id)->can('Admin', Task::class)) {
             return $this->adminShow($page, $num);
         }
 
-        return $this->adminShow($page, $num);
+        return $this->userShow($page, $num);
     }
 
     /**
@@ -64,6 +64,10 @@ class TaskService
 
     public function count()
     {
-        return $this->task->count();
+        if ($this->user->find($this->user_id)->can('Admin', Task::class)) {
+            return $this->task->adminCount();
+        }
+
+        return $this->task->userCount($this->user_id);
     }
 }
