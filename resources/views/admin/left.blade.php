@@ -25,11 +25,7 @@ $(function(){
 	});
 })	
 </script>
-<style type="text/css">
-body,td,th {
-	font-family: "Microsoft YaHei";
-}
-</style>
+
 <meta name="__hash__" content="815142ad9273ac3ba118b76c71290b15_10ad3c33ec7aff3f1ccd9f9dd44d0764" /></head>
 
 <body style="background:#f0f9fd;">
@@ -50,10 +46,10 @@ body,td,th {
     
     <dd>
         <div class="title">
-            <span><img src="/images/leftico02.png" /></span>预留位置
+            <span><img src="/images/leftico02.png" /></span>管理操作
         </div>
         <ul class="menuson">
-            <li class="active"><cite></cite><a href="#" target="rightFrame">预留位置</a><i></i></li>
+            <li class="active"><cite></cite><a href="/admin/category" target="rightFrame">管理分类</a><i></i></li>
             <li><cite></cite><a href="#" target="rightFrame">预留位置</a><i></i></li>
         </ul>
     </dd>

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Repositories\TackRepositories;
+use App\Repositories\TaskRepositories;
 use App\Repositories\UserRepositories;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,7 @@ class TaskService
     protected $task;
     protected $user;
 
-    public function __construct(TackRepositories $tack, UserRepositories $user)
+    public function __construct(TaskRepositories $tack, UserRepositories $user)
     {
         $this->user_id = Auth::id();
         $this->task = $tack;

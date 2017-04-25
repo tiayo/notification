@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Task;
 
-class TackRepositories
+class TaskRepositories
 {
     protected $task;
 

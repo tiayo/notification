@@ -25,6 +25,12 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['id']]);
     });
     Route::get('/task/add/{category}', 'TaskController@store')->name('task_add');
+
+    //管理分类
+    Route::get('/category', function () {
+        return redirect()->route('category', ['page' => 1]);
+    });
+    Route::get('/category/{page}', 'CategoryController@index')->name('category');
 });
 
 

@@ -18,7 +18,7 @@ class CategoryRepositories
        return $this->category->get();
    }
 
-   public function selectGet($value)
+   public function selectGet($value = '*')
    {
        return $this->category
            ->select($value)
@@ -39,6 +39,20 @@ class CategoryRepositories
             ->select('name','parent_id','id', 'alias')
             ->where('id', $category_id)
             ->first();
+   }
+
+   public function show($page, $num)
+   {
+        return $this->category
+            ->skip(($page-1)*$num)
+            ->take($num)
+            ->orderBy('id', 'desc')
+            ->get();
+   }
+
+   public function count()
+   {
+       return $this->category->count();
    }
 
 }
