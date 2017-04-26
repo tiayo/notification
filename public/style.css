@@ -397,6 +397,7 @@ a:active,a:hover { text-decoration:underline;color:#FF7F02;}
 
 /*category_add*/
 .category_error{
+	width: 60%;
 	float: left;
 	border: 1px solid #66c9f3;
 	font-size: 14px;

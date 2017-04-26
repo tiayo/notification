@@ -69,4 +69,11 @@ class CategoryRepositories
            ->create($data);
    }
 
+   public function delete($id)
+   {
+       return $this->category
+           ->where('id', $id)
+           ->delete();
+   }
+
 }

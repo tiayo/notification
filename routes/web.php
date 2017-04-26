@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/task/add', function () {
         return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['id']]);
     });
-    Route::get('/task/add/{category}', 'TaskController@store')->name('task_add');
+    Route::get('/task/add/{category}', 'TaskController@storeView')->name('task_add');
+    Route::post('/task/add/{category}', 'TaskController@store');
 
     //管理分类
     Route::get('/category/page', function () {
@@ -35,6 +36,9 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //添加分类
     Route::get('/category/add', 'CategoryController@storeView');
     Route::post('/category/add', 'CategoryController@store')->name('category_add');
+
+    //删除扽类
+    Route::get('/category/delete/{id}', 'CategoryController@delete');
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Category;
 use App\Policies\ViewPolicy;
 use App\Service\CategoryService;
+use App\Service\IndexService;
 use App\Service\TaskService;
 use App\Task;
 use App\User;
@@ -24,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
         TaskService::class => ViewPolicy::class,
         CategoryService::class => ViewPolicy::class,
         User::class => ViewPolicy::class,
+        IndexService::class => ViewPolicy::class,
     ];
 
     /**

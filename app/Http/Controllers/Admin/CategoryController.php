@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
-use App\Service\TaskService;
+use App\Service\VerficationService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +13,7 @@ class CategoryController extends Controller
     protected $all_category;
     protected $request;
 
-    public function __construct(CategoryService $category, Request $request)
+    public function __construct(CategoryService $category, Request $request, VerficationService $verfication)
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
@@ -61,6 +61,7 @@ class CategoryController extends Controller
     public function storeView()
     {
         return view('home.category_add', [
+            'old_input' => $this->request->session()->get('_old_input'),
             'all_category' => $this->all_category,
         ]);
     }
@@ -91,14 +92,22 @@ class CategoryController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
+     * 删除分类
+     * 管理员操作成功，返回上一个路由
+     *  非管理员抛403错误
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function delete($id)
     {
-        //
+        try{
+            $this->category->delete($id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), $e->getCode());
+        }
+
+        return redirect()->to($this->getRedirectUrl());
     }
 
     /**

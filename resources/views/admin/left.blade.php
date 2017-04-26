@@ -42,8 +42,8 @@ $(function(){
             <li><cite></cite><a href="/admin/task/add" target="rightFrame">添加任务</a><i></i></li>
         </ul>
     </dd>
-        
-    
+
+    @if ($admin === true)
     <dd>
         <div class="title">
             <span><img src="/images/leftico02.png" /></span>管理操作
@@ -53,6 +53,7 @@ $(function(){
             <li><cite></cite><a href="#" target="rightFrame">预留位置</a><i></i></li>
         </ul>
     </dd>
+    @endif
 
    </dl>
     

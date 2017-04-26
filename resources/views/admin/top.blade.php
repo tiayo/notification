@@ -12,34 +12,7 @@ $(function(){
 		$(".nav li a.selected").removeClass("selected")
 		$(this).addClass("selected");
 	})	
-})	
-//$(document).ready(function(){
-		  setTimeout(function() {
-             Push();
-           },
-        200);
-      /*30轮询读取函数*/
-        setInterval(function() {
-            Push();
-    },
-        5000);
-/*请求函数的ajax*/
-function Push() {
-		$.ajax({ 
-		type: "post", 
-		url: "/index/liuyan_ajax", 
-		dataType: "json",
-		success: function (data) { 
-		   shuchu = data;
-		   $("#shuchu").html(shuchu);
-		}, 
-		error: function (XMLHttpRequest, textStatus, errorThrown) { 
-			  //alert('ajax刷新异常，错误：'+errorThrown); 
-		}
-		
-	   
-		});
-}
+})
 </script>
 
 <meta name="__hash__" content="fd5791137041869e9bd380db3fc57b62_e0245253755620bd9acd2af5210055b6" /></head>

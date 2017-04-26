@@ -11,20 +11,22 @@ class TaskController extends Controller
 {
     protected $category;
     protected $all_category;
+    protected $request;
 
-    public function __construct(CategoryService $category)
+    public function __construct(CategoryService $category, Request $request)
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
+        $this->request = $request;
     }
 
     /**
-     * 添加任务
+     * 添加任务视图
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($category_id)
+    public function storeView($category_id)
     {
         //获取当前栏目
         $current = $this->category->current($category_id);
@@ -35,6 +37,18 @@ class TaskController extends Controller
         return view("home.$category", [
             'all_category' => $this->all_category,
             'current' => $current,
+            'old_input' => $this->request->session()->get('_old_input'),
+        ]);
+    }
+
+    public function store($category_id)
+    {
+        $this->validate($this->request, [
+            'title' => 'bail|required',
+            'datetime' => 'bail|required|date',
+            'phone' => 'bail|required|integer',
+            'email' => 'bail|required|email',
+            'content' => 'bail|required',
         ]);
     }
 

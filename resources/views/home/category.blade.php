@@ -111,8 +111,8 @@ $(document).ready(function(){
                 <td>{{$row['created_at']}}</td>
                 <td>{{$row['updated_at']}}</td>
                 <td>
-                    <a href="/admin/index/article_xiugai?aid={$row[aid]}" class="tablelink">设置</a>
-                    <a href="/admin/index/article_delete?delete={$row[aid]}" class="tablelink"> 删除</a>
+                    <a href="/admin/category/update/{{$row['id']}}" class="tablelink">修改</a>
+                    <a href="/admin/category/delete/{{$row['id']}}" class="tablelink"> 删除</a>
                 </td>
             </tr>
         @endforeach

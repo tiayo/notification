@@ -56,7 +56,6 @@
         <!--闹钟页面-->
         <div id="tab1" class="tabson">
              {{--输出错误信息--}}
-            {{var_dump($input)}}
             @if (count($errors) > 0)
                 <div class="category_error">
                     <p>有错误，请修改：</p>
@@ -72,7 +71,7 @@
                 {{ csrf_field() }}
                 <ul class="forminfo">
                     <div id="xinxi_zhaoping" class="xinxi_zhaoping">
-                        <li><label>名称<b>*</b></label><input name="name" type="text" class="dfinput" placeholder="请输入分类名称" style="width:518px;"/></li>
+                        <li><label>名称<b>*</b></label><input name="name" type="text" class="dfinput" value="{{$old_input['name']}}" placeholder="请输入分类名称" style="width:518px;"/></li>
                         <li>
                             <label>父级<b>*</b></label>
                             <div class="vocation">
@@ -83,7 +82,7 @@
                                 </select>
                             </div>
                         </li>
-                        <li><label>别名<b>*</b></label><input name="alias" type="text" class="dfinput" placeholder="填写栏目别名" style="width:518px;"/></li>
+                        <li><label>别名<b>*</b></label><input name="alias" type="text" class="dfinput" value="{{$old_input['alias']}}" placeholder="填写栏目别名" style="width:518px;"/></li>
                         <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
                     </div>
                 </ul>
