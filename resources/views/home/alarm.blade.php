@@ -72,18 +72,32 @@
                 </ul>
             </div>
 
+            {{--输出错误信息--}}
+            @if (count($errors) > 0)
+                <div class="category_error">
+                    <p>有错误，请修改：</p>
+                    <ul class="umlist">
+                        @foreach ($errors->all() as $error)
+                            <li><a>{{ $error }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            <form method="post" action="/admin/list/xinxi_fabu">
+            <form method="post" action="/admin/task/add/{{$current['id']}}">
+                {{ csrf_field() }}
                 <ul class="forminfo">
                     <div id="xinxi_zhaoping" class="xinxi_zhaoping">
-                        <li><label>标题<b>*</b></label><input name="title" type="text" class="dfinput" placeholder="请输入主题" style="width:518px;"/></li>
+                        <li><label>标题<b>*</b></label><input name="title" type="text" class="dfinput" value="{{$old_input['title']}}" placeholder="请输入主题" style="width:518px;"/></li>
                         <input type="hidden" name="order" value="date">
-                        <li><label>时间<b>*</b></label><input name="datetime" id="range" type="text" class="dfinput" placeholder="Select Date.."/></li>
-                        <li><label>手机<b>*</b></label><input name="phone" type="text" class="dfinput" placeholder="填写即提醒" style="width:518px;"/></li>
-                        <li><label>邮箱<b>*</b></label><input name="email" type="text" class="dfinput" placeholder="填写即提醒" style="width:518px;"/></li>
+                        <li><label>时间<b>*</b></label><input name="start_time" id="range" type="text" class="dfinput" value="{{$old_input['start_time']}}" placeholder="Select Date.."/></li>
+                        <li><label>手机<b>*</b></label><input name="phone" type="text" class="dfinput" value="{{$old_input['phone']}}" placeholder="填写即提醒" style="width:518px;"/></li>
+                        <li><label>邮箱<b>*</b></label><input name="email" type="text" class="dfinput" value="{{$old_input['email']}}" placeholder="填写即提醒" style="width:518px;"/></li>
                         <li><label><p class="content">提醒内容<b>*</b></p></label>
 
-                            <script id="editor" type="text/plain" style="width:1024px;height:500px; float:left;" name="xinxi_body"></script>
+                            <script id="editor" type="text/plain" style="width:1024px;height:500px; float:left;" name="content">
+                                {!! isset($old_input['content']) ? $old_input['content'] : '' !!}
+                            </script>
                             <script type="text/javascript">
 
                                 //实例化编辑器

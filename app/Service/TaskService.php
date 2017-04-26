@@ -5,35 +5,37 @@ namespace App\Service;
 use App\Repositories\TaskRepositories;
 use App\Repositories\UserRepositories;
 use App\Task;
+use App\Facades\Verfication;
 use Illuminate\Support\Facades\Auth;
 
 class TaskService
 {
-
-    protected $user_id;
     protected $task;
     protected $user;
+    protected $verfication;
 
     public function __construct(TaskRepositories $tack, UserRepositories $user)
     {
-        $this->user_id = Auth::id();
         $this->task = $tack;
         $this->user = $user;
     }
 
     /**
      * 获取任务列表
+     * 根据权限执行不同操作
      * @param $page 当前页数
      * @param $num 每页条数
      * @return mixed
      */
     public function show($page, $num)
     {
-        if ($this->user->find($this->user_id)->can('Admin', Task::class)) {
-            return $this->adminShow($page, $num);
+        try{
+            Verfication::admin(Task::class);
+        } catch (\Exception $e) {
+            return $this->userShow($page, $num);
         }
 
-        return $this->userShow($page, $num);
+        return $this->adminShow($page, $num);
     }
 
     /**
@@ -45,7 +47,7 @@ class TaskService
     public function userShow($page, $num)
     {
         return $this->task
-            ->findMulti('id', $this->user_id, $page, $num)
+            ->findMulti('id', Auth::id(), $page, $num)
             ->toArray();
     }
 
@@ -62,12 +64,28 @@ class TaskService
             ->toArray();
     }
 
+    /**
+     * 统计任务总数量
+     * 权限不同执行不同操作
+     *
+     * @return mixed
+     */
     public function count()
     {
-        if ($this->user->find($this->user_id)->can('Admin', Task::class)) {
-            return $this->task->adminCount();
+        try{
+            Verfication::admin(Task::class);
+        } catch (\Exception $e) {
+            return $this->task->userCount($this->user_id);
         }
 
-        return $this->task->userCount($this->user_id);
+        return $this->task->adminCount();
+    }
+
+    public function store($data, $category_id)
+    {
+        $data['category'] = $category_id;
+        $data['user_id'] = Auth::id();
+
+        return $this->task->store($data);
     }
 }

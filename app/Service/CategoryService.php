@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
+use App\Facades\Verfication;
 use App\Repositories\CategoryRepositories;
 use App\Repositories\UserRepositories;
-use Illuminate\Support\Facades\Auth;
 
 class CategoryService
 {
@@ -49,15 +49,15 @@ class CategoryService
 
     /**
      * 根据条件获取分类
+     * 非管理操作抛403
      * @param $page 页码
      * @param $num 每页显示条数
      * @return mixed
      */
     public function show($page, $num)
     {
-        if (!$this->user->find(Auth::id())->can('Admin', CategoryService::class)) {
-            throw new \Exception('您没有权限访问！', 403);
-        }
+        //权限验证
+        Verfication::admin(CategoryService::class);
 
         $all_category = $this->category->show($page, $num)->toarray();
 
@@ -78,6 +78,14 @@ class CategoryService
         return $this->category->count();
     }
 
+    /**
+     * 插入分类
+     *
+     * @param $name
+     * @param $parent_id
+     * @param $alias
+     * @return mixed
+     */
     public function store($name, $parent_id, $alias)
     {
         $data = [
@@ -86,10 +94,21 @@ class CategoryService
             'alias' => $alias
         ];
 
-        var_dump($data);
-        exit();
-
         return $this->category->store($data);
+    }
+
+    /**
+     * 删除分类
+     * 非管理员操作抛403
+     *
+     * @param $id
+     */
+    public function delete($id)
+    {
+        //权限验证
+        Verfication::admin(CategoryService::class);
+
+        return $this->category->delete($id);
     }
 
 }

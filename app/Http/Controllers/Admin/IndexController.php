@@ -4,10 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepositories;
+use App\Service\IndexService;
+use App\Service\VerficationService;
 use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
+    protected $index;
+
+    public  function __construct(IndexService $index)
+    {
+        $this->index = $index;
+    }
+
     /**
      * 显示后台框架
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -34,7 +43,12 @@ class IndexController extends Controller
      */
     public function left()
     {
-        return view('admin.left');
+        //验证是否管理员true,false
+        $admin = $this->index->admin();
+
+        return view('admin.left', [
+            'admin' => $admin,
+        ]);
     }
 
     /**

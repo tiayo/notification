@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{{config('site.title').config('site.version')}}</title>
-<link href="/Houtai/style.css" rel="stylesheet"/>
-<script src="/Houtai/jquery.js"></script>
-<link href="/Houtai/style.css" rel="stylesheet" type="text/css" />
+<link href="/style.css" rel="stylesheet"/>
+<script src="/jquery.js"></script>
+<link href="/style.css" rel="stylesheet" type="text/css" />
 </head>
   
 <frameset rows="88,*" cols="*" frameborder="NO" border="0" framespacing="0">
