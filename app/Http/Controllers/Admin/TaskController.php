@@ -30,10 +30,10 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeOrUpdateView($category_id, $id = null, $option = null)
+    public function storeOrUpdateView($id, $option = null)
     {
         //获取当前栏目
-        $current = $this->category->current($category_id);
+        $current = $this->category->current($id);
 
         //当前栏目别名
         $category = $current['alias'];
