@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Facades\Verfication;
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
+use App\Service\IndexService;
 use App\Service\TaskService;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeView($category_id)
+    public function storeOrUpdateView($category_id, $id = null, $option = null)
     {
         //获取当前栏目
         $current = $this->category->current($category_id);
@@ -36,10 +38,17 @@ class TaskController extends Controller
         //当前栏目别名
         $category = $current['alias'];
 
+        //填入表格的内容
+        if (empty($option)) {
+            $old_input = $this->request->session()->get('_old_input');
+        } else if($option == 'edit') {
+            $old_input = $this->task->findFirst($id);
+        }
+
         return view("home.$category", [
             'all_category' => $this->all_category,
             'current' => $current,
-            'old_input' => $this->request->session()->get('_old_input'),
+            'old_input' => $old_input,
         ]);
     }
 
@@ -87,12 +96,16 @@ class TaskController extends Controller
         // 最多页数
         $max_page = ceil($count/Config('site.page'));
 
+        //判断管理员
+        $admin = IndexService::admin();
+
         return view('home.list',[
             'list_task' => $list_task,
             'count' => ($count <= 5) ? $count : 5,
             'page' => $page,
             'max_page' => $max_page,
             'all_category' => $this->all_category,
+            'admin' => $admin,
         ]);
     }
 
@@ -116,7 +129,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

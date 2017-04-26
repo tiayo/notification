@@ -16,19 +16,21 @@ class TaskRepositories
     public function getAll($page, $num)
     {
         return $this->task
+            ->join('category', 'task.category', '=', 'category.id')
             ->skip(($page-1)*$num)
             ->take($num)
-            ->orderBy('id', 'desc')
+            ->orderBy('task.id', 'desc')
             ->get();
     }
 
     public function findMulti($option, $value, $page, $num)
     {
         return $this->task
+            ->join('category', 'task.category', '=', 'category.id')
             ->skip(($page-1)*$num)
             ->take($num)
             ->where($option, $value)
-            ->orderBy('id', 'desc')
+            ->orderBy('task.id', 'desc')
             ->get();
     }
 

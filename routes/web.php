@@ -1,8 +1,8 @@
 <?php
 
-//首页,返回登录页面
+//首页,自动判断是否登录
 Route::get('/', function () {
-    return view('auth.login');
+    return redirect()->route('login');
 });
 
 //登录后路由组
@@ -24,8 +24,11 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/task/add', function () {
         return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['id']]);
     });
-    Route::get('/task/add/{category}', 'TaskController@storeView')->name('task_add');
+    Route::get('/task/add/{category}', 'TaskController@storeOrUpdateView')->name('task_add');
     Route::post('/task/add/{category}', 'TaskController@store');
+
+    //更新任务
+    Route::get('/task/update/{id}/{option}', 'TaskController@storeOrUpdateView');
 
     //管理分类
     Route::get('/category/page', function () {
@@ -37,7 +40,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/category/add', 'CategoryController@storeView');
     Route::post('/category/add', 'CategoryController@store')->name('category_add');
 
-    //删除扽类
+    //删除分类
     Route::get('/category/delete/{id}', 'CategoryController@delete');
 });
 
