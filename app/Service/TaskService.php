@@ -10,15 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskService
 {
-
-    protected $user_id;
     protected $task;
     protected $user;
     protected $verfication;
 
     public function __construct(TaskRepositories $tack, UserRepositories $user)
     {
-        $this->user_id = Auth::id();
         $this->task = $tack;
         $this->user = $user;
     }
@@ -50,7 +47,7 @@ class TaskService
     public function userShow($page, $num)
     {
         return $this->task
-            ->findMulti('id', $this->user_id, $page, $num)
+            ->findMulti('id', Auth::id(), $page, $num)
             ->toArray();
     }
 
@@ -82,5 +79,13 @@ class TaskService
         }
 
         return $this->task->adminCount();
+    }
+
+    public function store($data, $category_id)
+    {
+        $data['category'] = $category_id;
+        $data['user_id'] = Auth::id();
+
+        return $this->task->store($data);
     }
 }

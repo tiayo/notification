@@ -90,7 +90,7 @@
                     <div id="xinxi_zhaoping" class="xinxi_zhaoping">
                         <li><label>标题<b>*</b></label><input name="title" type="text" class="dfinput" value="{{$old_input['title']}}" placeholder="请输入主题" style="width:518px;"/></li>
                         <input type="hidden" name="order" value="date">
-                        <li><label>时间<b>*</b></label><input name="datetime" id="range" type="text" class="dfinput" value="{{$old_input['datetime']}}" placeholder="Select Date.."/></li>
+                        <li><label>时间<b>*</b></label><input name="start_time" id="range" type="text" class="dfinput" value="{{$old_input['start_time']}}" placeholder="Select Date.."/></li>
                         <li><label>手机<b>*</b></label><input name="phone" type="text" class="dfinput" value="{{$old_input['phone']}}" placeholder="填写即提醒" style="width:518px;"/></li>
                         <li><label>邮箱<b>*</b></label><input name="email" type="text" class="dfinput" value="{{$old_input['email']}}" placeholder="填写即提醒" style="width:518px;"/></li>
                         <li><label><p class="content">提醒内容<b>*</b></p></label>

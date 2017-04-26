@@ -9,6 +9,7 @@ class Task extends Model
     public $timestamps = true;
     protected $fillable = [
         'category',
+        'user_id',
         'title',
         'start_time',
         'end_time',

@@ -12,12 +12,14 @@ class TaskController extends Controller
     protected $category;
     protected $all_category;
     protected $request;
+    protected $task;
 
-    public function __construct(CategoryService $category, Request $request)
+    public function __construct(CategoryService $category, Request $request, TaskService $task)
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
         $this->request = $request;
+        $this->task = $task;
     }
 
     /**
@@ -41,15 +43,32 @@ class TaskController extends Controller
         ]);
     }
 
+    /**
+     * 添加任务
+     * post请求
+     *
+     * @param $category_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function store($category_id)
     {
         $this->validate($this->request, [
             'title' => 'bail|required',
-            'datetime' => 'bail|required|date',
+            'start_time' => 'bail|required|date',
+            'end_time' => 'date',
             'phone' => 'bail|required|integer',
             'email' => 'bail|required|email',
             'content' => 'bail|required',
         ]);
+
+        try{
+            $this->task->store($this->request->all(), $category_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+
+        return redirect()->route('task_page', ['page' => 1]);
+
     }
 
     /**
@@ -57,13 +76,13 @@ class TaskController extends Controller
      *
      * @return array
      */
-    public function show($page, TaskService $task)
+    public function show($page)
     {
         //所有任务
-        $list_task = $task->show($page, Config('site.page'));
+        $list_task = $this->task->show($page, Config('site.page'));
 
         //任务数量
-        $count = $task->count();
+        $count = $this->task->count();
 
         // 最多页数
         $max_page = ceil($count/Config('site.page'));
