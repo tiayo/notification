@@ -76,7 +76,7 @@ $(document).ready(function(){
         
         <ul class="toolbar1">
             <li class="paginItem"><a href="{{($page-1) < 1 ? 1 : ($page-1)}}">上一页</a></li>
-		    @for ($i=1;$i<=$count;$i++)
+		    @for ($i=1;$i<=$max_page;$i++)
                 <li class="paginItem"><a href="{{$i}}">第{{$i}}页</a></li>
 		    @endfor
    			@if ($max_page > 5)
@@ -104,11 +104,13 @@ $(document).ready(function(){
         <th><input name="checkbox101" type="checkbox" value="101"  id="quanxuan"/></th>
         <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
         <th>标题</th>
+        @if ($admin)
         <th>用户</th>
+        @endif
+        <th>分类</th>
         <th>时间</th>
         <th>邮箱</th>
         <th>手机</th>
-        <th>内容</th>
         <th>操作</th>
         </tr>
         </thead>
@@ -118,14 +120,16 @@ $(document).ready(function(){
                 <td><input name="xuanze{++$i}" value="{$row[aid]}" type="checkbox" id="xuanze"/></td>
                 <td>{{$row['id']}}</td>
                 <td>{{$row['title']}}</td>
+                @if ($admin)
                 <td>{{$row['user_id']}}</td>
-                <td>{{$row['start_time'] or ''}}-{{$row['end_time'] or ''}}</td>
+                @endif
+                <td>{{$row['name']}}</td>
+                <td>{{$row['start_time']}} {{$row['end_time'] or ''}}</td>
                 <td>{{$row['email']}}</td>
                 <td>{{$row['phone']}}</td>
-                <td>{{$row['content']}}</td>
                 <td>
-                    <a href="/admin/index/article_xiugai?aid={$row[aid]}" class="tablelink">设置</a>
-                    <a href="/admin/index/article_delete?delete={$row[aid]}" class="tablelink"> 删除</a>
+                    <a href="/admin/task/update/{{$row['id']}}/edit" class="tablelink">修改</a>
+                    <a href="/admin/task/delete/{{$row['id']}}" class="tablelink"> 删除</a>
                 </td>
             </tr>
         @endforeach
@@ -137,7 +141,7 @@ $(document).ready(function(){
     	<div class="message">共<i class="blue">{{$count}}</i>条记录，当前显示第<i class="blue">{{$page}}</i>页</div>
         <ul class="paginList">
             <li class="paginItem"><a href="{{($page-1) < 1 ? 1 : ($page-1)}}">上一页</a></li>
-            @for ($i=1;$i<=$count;$i++)
+            @for ($i=1;$i<=$max_page;$i++)
                 <li class="paginItem"><a href="{{$i}}">第{{$i}}页</a></li>
             @endfor
             @if ($max_page > 5)

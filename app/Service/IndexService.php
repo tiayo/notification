@@ -21,7 +21,7 @@ class IndexService
      *
      * @return bool
      */
-    public function admin()
+    static public function admin()
     {
         try{
             Verfication::admin(IndexService::class);
