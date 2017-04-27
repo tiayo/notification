@@ -22,7 +22,7 @@ class AddTask extends Mailable
     public function __construct($template, $name, $data = [])
     {
         $this->template = $template;
-        $this->name =$name;
+        $this->name = $name;
         $this->data = $data;
     }
 
