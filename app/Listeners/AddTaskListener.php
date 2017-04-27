@@ -8,18 +8,13 @@ use Carbon\Carbon;
 
 class AddTaskListener
 {
-
-    protected $event;
-    protected $send;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(AddTask $event, SendReminderEmail $send)
+    public function __construct()
     {
-        $this->event = $event;
-        $this->send = $send;
     }
 
     /**
@@ -28,9 +23,9 @@ class AddTaskListener
      * @param  Event  $event
      * @return void
      */
-    public function handle()
+    public function handle(AddTask $event)
     {
-        $job = ($this->send->handle($this->event->tack))->delay(Carbon::now()->addSecond(10));
+        $job = (new SendReminderEmail($event->task))->delay(Carbon::now()->addSecond(10));
         dispatch($job);
     }
 }

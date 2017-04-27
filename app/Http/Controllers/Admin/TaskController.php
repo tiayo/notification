@@ -94,7 +94,7 @@ class TaskController extends Controller
             'email' => 'bail|required|email',
             'content' => 'bail|required',
         ]);
-        try {
+        try{
             if (empty($task_id)) {
                 $result = $this->task->store($this->request->all(), $id);
                 $this->sendEmailTaskAdd($result['task_id']);
@@ -104,7 +104,6 @@ class TaskController extends Controller
         } catch (\Exception $e) {
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
         }
-
         return redirect()->route('task_page', ['page' => 1]);
 
     }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Task;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -15,29 +16,26 @@ class SendReminderEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $user;
-    protected $mail;
+    protected $task;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(User $user, MailService $mail)
+    public function __construct(Task $task)
     {
-        $this->user = $user;
-        $this->mail = $mail;
+        $this->task = $task;
     }
 
-    public function handle($task)
+    public function handle(MailService $mail, User $user)
     {
         $template = 'emails.task_add';
-        $user_email = Auth::user()->email;
+        $user_email = $user->find($this->task->user_id)->email;
         $name = '任务添加通知';
         $data = [
-            'task' => $task,
+            'task' => $this->task,
             'plan' => 'App\Http\Controllers\Controller'
         ];
-
-        $this->mail->mailSend($template, $user_email, $name, $data);
+        $mail->mailSend($template, $user_email, $name, $data);
     }
 }
