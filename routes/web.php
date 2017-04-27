@@ -22,13 +22,20 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //添加任务
     Route::get('/task/add', function () {
-        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['id']]);
+        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['category_id']]);
     });
     Route::get('/task/add/{category}', 'TaskController@storeOrUpdateView')->name('task_add');
-    Route::post('/task/add/{category}', 'TaskController@store');
+    Route::post('/task/add/{category}', 'TaskController@storeORupdate')->name('task_add_post');
 
     //更新任务
-    Route::get('/task/update/{id}/{option}', 'TaskController@storeOrUpdateView');
+    Route::get('/task/update/{category}/{task}', 'TaskController@storeOrUpdateView')->name('task_update');
+    Route::post('/task/update/{category}/{task}', 'TaskController@storeORupdate')->name('task_update_post');
+
+    //删除任务
+    Route::get('/task/delete/{id}', 'TaskController@destroy');
+
+    //多选删除及选择修改
+    Route::post('/task/select/', 'TaskController@selectEvent');
 
     //管理分类
     Route::get('/category/page', function () {

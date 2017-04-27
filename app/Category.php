@@ -14,7 +14,7 @@ class Category extends Model
     ];
     protected $connection = 'mysql';
     protected $table = 'category';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'category_id';
 
 }
 

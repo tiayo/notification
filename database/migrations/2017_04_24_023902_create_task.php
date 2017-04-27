@@ -14,12 +14,13 @@ class CreateTask extends Migration
     public function up()
     {
         Schema::create('task', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('task_id');
             $table->integer('category');
             $table->integer('user_id');
             $table->string('title');
             $table->timestamp('start_time')->nullable();
             $table->timestamp('end_time')->nullable();
+            $table->integer('plan')->default(1);
             $table->string('email', 50);
             $table->string('phone', 15);
             $table->longText('content');

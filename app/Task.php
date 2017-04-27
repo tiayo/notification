@@ -13,13 +13,14 @@ class Task extends Model
         'title',
         'start_time',
         'end_time',
+        'plan',
         'email',
         'phone',
         'content',
     ];
     protected $connection = 'mysql';
     protected $table = 'task';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'task_id';
 
 }
 

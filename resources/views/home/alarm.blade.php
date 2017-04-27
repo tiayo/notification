@@ -24,12 +24,20 @@
         });
     </script>
 
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            $(".select1").uedSelect({
+                width : 345
+            });
+        });
+    </script>
+
     <script>
         window.onload = function () {
             flatpickr("#range", {
                 enableTime: true,
                 altInput: true,
-                altFormat: "Y-m-d H:i:S"
+                altFormat: "H:i:S"
             });
         }
     </script>
@@ -57,7 +65,7 @@
                     @if ($value['parent_id'] == 0)
                         @continue
                     @endif
-                <li><a href="/admin/task/add/{{$value['id']}}" class="selected">{{$value['name']}}</a></li>
+                <li><a href="/admin/task/add/{{$value['category_id']}}" class="selected">{{$value['name']}}</a></li>
                 @endforeach
             </ul>
         </div>
@@ -84,13 +92,22 @@
                 </div>
             @endif
 
-            <form method="post" action="/admin/task/add/{{$current['id']}}">
+            <form method="post" action="{{$uri}}">
                 {{ csrf_field() }}
                 <ul class="forminfo">
                     <div id="xinxi_zhaoping" class="xinxi_zhaoping">
                         <li><label>标题<b>*</b></label><input name="title" type="text" class="dfinput" value="{{$old_input['title']}}" placeholder="请输入主题" style="width:518px;"/></li>
                         <input type="hidden" name="order" value="date">
-                        <li><label>时间<b>*</b></label><input name="start_time" id="range" type="text" class="dfinput" value="{{$old_input['start_time']}}" placeholder="Select Date.."/></li>
+                        <li><label>时间<b>*</b></label><input name="start_time" id="range" type="text" class="dfinput" value="{{$old_input['start_time']}}" placeholder="Select Time.."/></li>
+                        <li><label>计划<b>*</b></label>
+                            <div class="vocation">
+                                <select class="select1" name="plan" style="width: 347px;">
+                                    <option value="1">一次</option>
+                                    <option value="2">每天</option>
+                                    <option value="3">工作日</option>
+                                </select>
+                            </div>
+                        </li>
                         <li><label>手机<b>*</b></label><input name="phone" type="text" class="dfinput" value="{{$old_input['phone']}}" placeholder="填写即提醒" style="width:518px;"/></li>
                         <li><label>邮箱<b>*</b></label><input name="email" type="text" class="dfinput" value="{{$old_input['email']}}" placeholder="填写即提醒" style="width:518px;"/></li>
                         <li><label><p class="content">提醒内容<b>*</b></p></label>
