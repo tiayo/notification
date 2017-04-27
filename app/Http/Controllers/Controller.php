@@ -16,4 +16,19 @@ class Controller extends BaseController
     {
         return $validator->errors()->all();
     }
+
+    public static function plan($id)
+    {
+        switch ($id) {
+            case 1 :
+                return '单次';
+                break;
+            case 2 :
+                return '每天';
+                break;
+            case 3 :
+                return '工作日';
+                break;
+        }
+    }
 }

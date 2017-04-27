@@ -26,9 +26,20 @@ class ViewPolicy
      * @param User $user
      * @return bool
      */
-    public function Admin(User $user)
+    public function admin(User $user)
     {
         return $user->name === config('site.adminstrator');
+    }
+
+    /**
+     * 判断用户是否有修改权限
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function update(User $user, $class)
+    {
+        return $user->id === $class['user_id'];
     }
 
 }

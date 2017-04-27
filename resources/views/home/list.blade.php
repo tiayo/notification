@@ -8,30 +8,42 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+
   $(".click").click(function(){
-  $(".tip").fadeIn(200);
+    $(".tip").fadeIn(200);
   });
-  
-  $(".tiptop a").click(function(){
-  $(".tip").fadeOut(200);
-});
 
-  $(".sure").click(function(){
-  $(".tip").fadeOut(100);
-});
+    $(".tiptop a").click(function(){
+        $(".tip").fadeOut(200);
+    });
 
-  $(".cancel").click(function(){
-  $(".tip").fadeOut(100);
-});
+    $(".sure").click(function(){
+          $(".tip").fadeOut(100);
+          $("#judge").val('delete');
+          $("#selectEvent").submit();
+    });
+    $("#modified").click(function(){
+        $("#judge").val('modified');
+        if ($("input:checked").length == 1) {
+            $("#selectEvent").submit();
+        } else {
+            alert('只能选中一个产品');
+        }
+    });
+
+    $(".cancel").click(function(){
+        $(".tip").fadeOut(100);
+    });
 
 });
 </script>
+
 <script>
 $(document).ready(function(){
 	//全选
-	$('#quanxuan').click(function(){
-	  panduan = $("#quanxuan").prop("checked");
-	  if(panduan == true){
+	$('#select_all').click(function(){
+        judge = $("#select_all").prop("checked");
+	  if(judge == true){
 		  $("input").prop("checked", 'checked');
 	  }else{
 		  $("input").prop("checked", false);
@@ -48,32 +60,33 @@ $(document).ready(function(){
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="#">首页</a></li>
-    <li><a href="#">我的分享</a></li>
+    <li><a href="#">所有任务</a></li>
     </ul>
     </div>
-    
+
     <div class="rightinfo">
-    
+
     <div class="tools">
-    
+
     	<ul class="toolbar">
-        <li><a href="/Admin/list/xinxi_view?id=1"><span><img src="/images/t01.png" /></span>添加</a></li>
-        <li><span><img src="/images/t02.png" /></span>修改</li>
+        <li><a href="/admin/task/add"><span><img src="/images/t01.png" /></span>添加</a></li>
+        <li id="modified"><span><img src="/images/t02.png" /></span>修改</li>
         <li class="click"><span><img src="/images/t03.png" /></span>删除</li>
-        <form class="form" action="/Admin/List/admin_serch_list" method="get">
-        <select name="lanmu" class="lanmu">
-            <option value="0">所有栏目</option>
-            @foreach ($all_category as $value)
-              <option value="{{$value['id']}}">{{$value['name']}}</option>
-            @endforeach
-          </select>
-          <input type="hidden" name='id' value="{$list_id}" />
-          <input type="text" class="text" name="text" placeholder="输入关键词" />
-          <input type="submit" class="submit"  />
+        <form class="form" action="/admin/task/select" method="post">
+            {{ csrf_field() }}
+            <select name="lanmu" class="lanmu">
+                <option value="0">所有栏目</option>
+                @foreach ($all_category as $value)
+                  <option value="{{$value['category_id']}}">{{$value['name']}}</option>
+                @endforeach
+              </select>
+              <input type="hidden" name='id' value="{$list_id}" />
+              <input type="text" class="text" name="text" placeholder="输入关键词" />
+              <input type="submit" class="submit"  />
         </form>
         </ul>
-        
-        
+
+
         <ul class="toolbar1">
             <li class="paginItem"><a href="{{($page-1) < 1 ? 1 : ($page-1)}}">上一页</a></li>
 		    @for ($i=1;$i<=$max_page;$i++)
@@ -91,52 +104,55 @@ $(document).ready(function(){
             @endif
 	        <li class="paginItem"><a href="{{($page+1) > $max_page ? $max_page : $page+1}}">下一页</a></li>
 		</ul>
-    
-    </div>
-    
 
-   
-<form method="post" action="/admin/index/article_delete_duo">    
-    
+    </div>
+
+
+
+<form method="post" action="/admin/task/select" enctype="multipart/form-data" id="selectEvent">
+    {{ csrf_field() }}
+    <input type="hidden" name="judge" id="judge"/>
     <table class="tablelist">
     	<thead>
     	<tr>
-        <th><input name="checkbox101" type="checkbox" value="101"  id="quanxuan"/></th>
-        <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-        <th>标题</th>
-        @if ($admin)
-        <th>用户</th>
-        @endif
-        <th>分类</th>
-        <th>时间</th>
-        <th>邮箱</th>
-        <th>手机</th>
-        <th>操作</th>
+            <th><input type="checkbox" id="select_all" /></th>
+            <th>任务编号<i class="sort"><img src="/images/px.gif" /></i></th>
+            <th>任务标题</th>
+            @if ($admin)
+            <th>用户</th>
+            @endif
+            <th>分类</th>
+            <th>提醒时间</th>
+            <th>提醒计划</th>
+            <th>接收邮箱</th>
+            <th>接收手机</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody>
         @foreach ($list_task as $row)
             <tr>
-                <td><input name="xuanze{++$i}" value="{$row[aid]}" type="checkbox" id="xuanze"/></td>
-                <td>{{$row['id']}}</td>
+                <td><input name="check[]" value="{{$row['task_id']}}" type="checkbox"/></td>
+                <td>{{$row['task_id']}}</td>
                 <td>{{$row['title']}}</td>
                 @if ($admin)
                 <td>{{$row['user_id']}}</td>
                 @endif
                 <td>{{$row['name']}}</td>
                 <td>{{$row['start_time']}} {{$row['end_time'] or ''}}</td>
+                <td>{{$plan::plan($row['plan'])}}</td>
                 <td>{{$row['email']}}</td>
                 <td>{{$row['phone']}}</td>
                 <td>
-                    <a href="/admin/task/update/{{$row['id']}}/edit" class="tablelink">修改</a>
-                    <a href="/admin/task/delete/{{$row['id']}}" class="tablelink"> 删除</a>
+                    <a href="/admin/task/update/{{$row['category_id']}}/{{$row['task_id']}}" class="tablelink">修改</a>
+                    <a href="/admin/task/delete/{{$row['task_id']}}" class="tablelink"> 删除</a>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
-    
-   
+</form>
+
     <div class="pagin">
     	<div class="message">共<i class="blue">{{$count}}</i>条记录，当前显示第<i class="blue">{{$page}}</i>页</div>
         <ul class="paginList">
@@ -157,33 +173,29 @@ $(document).ready(function(){
             <li class="paginItem"><a href="{{($page+1) > $max_page ? $max_page : $page+1}}">下一页</a></li>
         </ul>
     </div>
-    
-    
-    <div class="tip">
-    	<div class="tiptop"><span>提示信息</span><a></a></div>
-        
-      <div class="tipinfo">
-        <span><img src="/images/ticon.png" /></span>
-        <div class="tipright">
-        <p>是否确认对信息的修改 ？</p>
-        <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+        {{--弹出删除确认框--}}
+        <div class="tip">
+            <div class="tiptop"><span>提示信息</span><a></a></div>
+
+            <div class="tipinfo">
+                <span><img src="/images/ticon.png" /></span>
+                <div class="tipright">
+                    <p>是否确认对信息的修改 ？</p>
+                    <cite>如果是请点击确定按钮 ，否则请点取消。</cite>
+                </div>
+            </div>
+
+            <div class="tipbtn">
+                <input type="button"  class="sure" value="确定" />&nbsp;
+                <input name="" type="button"  class="cancel" value="取消" />
+            </div>
         </div>
-      </div>
-        
-        <div class="tipbtn">
-        <input name="submit" type="submit"  class="sure" value="确定" />&nbsp;
-        <input name="" type="button"  class="cancel" value="取消" />
-        </div>
-    
+        {{--删除确认框结束--}}
     </div>
-</form>    
- 
-    
-    </div>
-    
+
 <script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
-	</script>
+</script>
 
 </body>
 

@@ -23,7 +23,7 @@ class CategoryService
      */
     public function getSelect()
     {
-        $value = ['name','parent_id','id'];
+        $value = ['name','parent_id','category_id'];
         return $this->category->selectGet($value)->toArray();
     }
 

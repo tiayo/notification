@@ -16,27 +16,28 @@ class TaskRepositories
     public function getAll($page, $num)
     {
         return $this->task
-            ->join('category', 'task.category', '=', 'category.id')
+            ->leftJoin('category', 'task.category', '=', 'category.category_id')
             ->skip(($page-1)*$num)
             ->take($num)
-            ->orderBy('task.id', 'desc')
+            ->orderBy('task.task_id', 'desc')
             ->get();
     }
 
     public function findMulti($option, $value, $page, $num)
     {
         return $this->task
-            ->join('category', 'task.category', '=', 'category.id')
+            ->join('category', 'task.category', '=', 'category.category_id')
             ->skip(($page-1)*$num)
             ->take($num)
             ->where($option, $value)
-            ->orderBy('task.id', 'desc')
+            ->orderBy('task.task_id', 'desc')
             ->get();
     }
 
-    public function findOne($option, $value)
+    public function findOne($option, $value, $data = '*')
     {
         return $this->task
+            ->select($data)
             ->where($option, $value)
             ->first();
     }
@@ -47,9 +48,10 @@ class TaskRepositories
             ->create($value);
     }
 
-    public function update($value)
+    public function update($value, $task_id)
     {
         return $this->task
+            ->where('task_id', $task_id)
             ->update($value);
     }
 
@@ -61,8 +63,15 @@ class TaskRepositories
     public function userCount($user_id)
     {
         return $this->task
-            ->where('id', $user_id)
+            ->where('user_id', $user_id)
             ->count();
+    }
+
+    public function destroy($option, $value)
+    {
+        return $this->task
+            ->where($option, $value)
+            ->delete();
     }
 
 }
