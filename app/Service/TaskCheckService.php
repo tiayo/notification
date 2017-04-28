@@ -63,9 +63,11 @@ class TaskCheckService
         if (Carbon::now() <= $item['start_time']) {
             $time_difference = strtotime($item['start_time']) - strtotime(Carbon::now());
             $item['time_difference'] = $time_difference;
-            event(new PerformTaskEvent($item));
+            //设置状态为0防止重复
             $value = ['status' => 0];
             $this->task->update($value, $item['task_id']);
+            //触发事件
+            event(new PerformTaskEvent($item));
         }
         return true;
     }
