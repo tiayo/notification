@@ -103,23 +103,22 @@ $(document).ready(function(){
         <tbody>
         @foreach ($list_category as $row)
             <tr>
-                <td><input name="xuanze{++$i}" value="{$row[aid]}" type="checkbox" id="xuanze"/></td>
-                <td>{{$row['id']}}</td>
+                <td><input name="xuanze{++$i}" value="{{$row['category_id']}}" type="checkbox" id="xuanze"/></td>
+                <td>{{$row['category_id']}}</td>
                 <td>{{$row['name']}}</td>
                 <td>{{$row['parent_name']}}</td>
                 <td>{{$row['alias'] or ''}}</td>
                 <td>{{$row['created_at']}}</td>
                 <td>{{$row['updated_at']}}</td>
                 <td>
-                    <a href="/admin/category/update/{{$row['id']}}" class="tablelink">修改</a>
-                    <a href="/admin/category/delete/{{$row['id']}}" class="tablelink"> 删除</a>
+                    <a href="/admin/category/update/{{$row['category_id']}}" class="tablelink">修改</a>
+                    <a href="/admin/category/delete/{{$row['category_id']}}" class="tablelink"> 删除</a>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
-    
-   
+
     <div class="pagin">
     	<div class="message">共<i class="blue">{{$count}}</i>条记录，当前显示第<i class="blue">{{$page}}</i>页</div>
         <ul class="paginList">

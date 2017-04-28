@@ -62,7 +62,7 @@ class CategoryService
         $all_category = $this->category->show($page, $num)->toarray();
 
         foreach ($all_category as $item) {
-            $item['parent_name'] = $this->category->selectWhereFirst('name', 'id', $item['parent_id'])['name'] ? : '顶级';
+            $item['parent_name'] = $this->category->selectWhereFirst('name', 'category_id', $item['parent_id'])['name'] ? : '顶级';
             $result_category[] = $item;
         }
 

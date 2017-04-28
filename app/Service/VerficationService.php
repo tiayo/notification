@@ -24,19 +24,44 @@ class VerficationService
      */
     public function admin($class)
     {
-        if (!$this->user->find(Auth::id())->can('admin', $class))
-        {
-            throw new \Exception('您没有权限访问（代码：admin）！', 403);
+        if (!$this->user->find(Auth::id())->can('admin', $class)) {
+            throw new \Exception('您没有权限访问（代码：1001）！', 403);
         }
 
         return true;
     }
 
+    /**
+     * 管理员跳过其他认证步骤
+     *
+     * @param $class
+     * @return bool
+     */
+    public function skip($class)
+    {
+        try{
+            $this->admin($class);
+        } catch (\Exception $e) {
+
+        }
+        return true;
+    }
+
+    /**
+     * 任务更新操作权限认证
+     *
+     * @param $class
+     * @return bool
+     * @throws \Exception
+     */
     public function taskUpdate($class)
     {
-        if (!$this->user->find(Auth::id())->can('update', $class))
-        {
-            throw new \Exception('您没有权限访问（代码：task update）！', 403);
+        if ($this->skip(VerficationService::class)) {
+            return true;
+        }
+
+        if (!$this->user->find(Auth::id())->can('update', $class)) {
+            throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
 
         return true;

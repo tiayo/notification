@@ -13,6 +13,6 @@ use Illuminate\Foundation\Inspiring;
 |
 */
 
-Artisan::command('inspire', function () {
+Artisan::command('task:check', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');

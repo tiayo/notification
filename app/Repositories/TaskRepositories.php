@@ -17,7 +17,17 @@ class TaskRepositories
     {
         return $this->task
             ->leftJoin('category', 'task.category', '=', 'category.category_id')
-            ->skip(($page-1)*$num)
+            ->skip(($page-1) * $num)
+            ->take($num)
+            ->orderBy('task.task_id', 'desc')
+            ->get();
+    }
+
+    public function getWhere($value = '*', $page, $num)
+    {
+        return $this->task
+            ->select($value)
+            ->skip(($page-1) * $num)
             ->take($num)
             ->orderBy('task.task_id', 'desc')
             ->get();
@@ -31,6 +41,15 @@ class TaskRepositories
             ->take($num)
             ->where($option, $value)
             ->orderBy('task.task_id', 'desc')
+            ->get();
+    }
+
+    public function findTastCheck($page, $num)
+    {
+        return $this->task
+            ->where('status', '<>', 0)
+            ->skip(($page-1)*$num)
+            ->take($num)
             ->get();
     }
 
