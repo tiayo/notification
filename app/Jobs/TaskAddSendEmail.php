@@ -10,9 +10,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Services\MailService;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
-class SendReminderEmail implements ShouldQueue
+class TaskAddSendEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -36,6 +36,11 @@ class SendReminderEmail implements ShouldQueue
             'task' => $this->task,
             'plan' => 'App\Http\Controllers\Controller'
         ];
+
+        //发送邮件
         $mail->mailSend($template, $user_email, $name, $data);
+
+        //记录到日志
+        Log::info('Task add success notice(email):',$this->task->toArray());
     }
 }

@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\AddTask;
 use App\Http\Controllers\Controller;
-use App\Jobs\SendReminderEmail;
 use App\Service\CategoryService;
 use App\Service\IndexService;
 use App\Service\TaskService;
-use App\Services\MailService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
+
 
 class TaskController extends Controller
 {
@@ -24,15 +21,13 @@ class TaskController extends Controller
     public function __construct(
         CategoryService $category,
         Request $request,
-        TaskService $task,
-        SendReminderEmail $mail
+        TaskService $task
     )
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
         $this->request = $request;
         $this->task = $task;
-        $this->mail = $mail;
     }
 
     /**
