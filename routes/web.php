@@ -49,6 +49,12 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //删除分类
     Route::get('/category/delete/{id}', 'CategoryController@delete');
+
+
+    //测试
+    Route::get('/test', '\App\Service\TaskCheckService@screenTask');
+
+
 });
 
 

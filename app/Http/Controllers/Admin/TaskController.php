@@ -46,26 +46,17 @@ class TaskController extends Controller
         $category = $current['alias'];
 
         //填入表格的内容及post提交url
-        if (empty($task_id)) {
-            $old_input = $this->request->session()->get('_old_input');
-            $uri = route('task_add_post', ['category' => $category_id]);
-        } else {
-            //验证权限
-            try {
-                $this->task->verfication($task_id);
-            } catch (\Exception $e) {
-                return response($e->getMessage(), $e->getCode());
-            }
-            //验证通过
-            $old_input = $this->task->findFirst($task_id);
-            $uri = route('task_update_post', ['category' => $category_id, 'id' => $task_id]);
+        try{
+            $result = $this->task->storeOrUpdateView($category_id, $task_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
         }
 
         return view("home.$category", [
             'all_category' => $this->all_category,
             'current' => $current,
-            'old_input' => $old_input,
-            'uri' => $uri,
+            'old_input' => $result['old_input'],
+            'uri' => $result['uri'],
         ]);
     }
 

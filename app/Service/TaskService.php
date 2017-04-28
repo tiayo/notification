@@ -8,6 +8,8 @@ use App\Repositories\UserRepositories;
 use App\Task;
 use App\Facades\Verfication;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class TaskService
 {
@@ -15,12 +17,19 @@ class TaskService
     protected $user;
     protected $verfication;
     protected $category;
+    protected $request;
 
-    public function __construct(TaskRepositories $tack, UserRepositories $user, CategoryRepositories $category)
+    public function __construct(
+        TaskRepositories $tack,
+        UserRepositories $user,
+        CategoryRepositories $category,
+        Request $request
+    )
     {
         $this->task = $tack;
         $this->user = $user;
         $this->category = $category;
+        $this->request = $request;
     }
 
     /**
@@ -84,6 +93,49 @@ class TaskService
         return $this->task->adminCount();
     }
 
+    public function storeOrUpdateView($category_id, $task_id)
+    {
+        if (!empty($task_id)) {
+            return $this->updateView($category_id, $task_id);
+        }
+        return $this->storeView($category_id);
+    }
+
+    /**
+     * 返回插入任务视图需要的数据
+     *
+     * @param $category_id
+     * @param $task_id
+     * @return mixed
+     */
+    public function storeView($category_id)
+    {
+        $result['old_input'] = $this->request->session()->get('_old_input');
+        $result['uri'] = route('task_add_post', ['category' => $category_id]);
+        return $result;
+    }
+
+    /**
+     * 返回更新试图需要的数据
+     *
+     * @param $category_id
+     * @param $task_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function updateView($category_id, $task_id)
+    {
+        try {
+            //验证权限
+            $this->verfication($task_id);
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+        $result['old_input'] = $this->findFirst($task_id);
+        $result['uri'] = route('task_update_post', ['category' => $category_id, 'id' => $task_id]);
+
+        return $result;
+    }
+
     /**
      * 插入任务
      *
@@ -129,6 +181,7 @@ class TaskService
         $value['phone'] = $data['phone'];
         $value['email'] = $data['email'];
         $value['content'] = $data['content'];
+        $value['status'] = 1;
 
         return $this->task->update($value, $task_id);
     }

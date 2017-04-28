@@ -7,6 +7,7 @@ use App\Policies\ViewPolicy;
 use App\Service\CategoryService;
 use App\Service\IndexService;
 use App\Service\TaskService;
+use App\Service\VerficationService;
 use App\Task;
 use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -26,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         CategoryService::class => ViewPolicy::class,
         User::class => ViewPolicy::class,
         IndexService::class => ViewPolicy::class,
+        VerficationService::class => ViewPolicy::class,
     ];
 
     /**

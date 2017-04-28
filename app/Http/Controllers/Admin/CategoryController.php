@@ -34,7 +34,7 @@ class CategoryController extends Controller
         try{
             $list_category = $this->category->show($page, Config('site.page'));
         } catch (\Exception $e) {
-            return response($e->getMessage(), $e->getCode());
+            return response($e->getMessage());
         }
 
         // 任务数量
