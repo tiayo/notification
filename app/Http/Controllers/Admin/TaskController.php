@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\AddTask;
+use App\Events\AddTaskEvent;
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
 use App\Service\IndexService;
@@ -160,7 +160,7 @@ class TaskController extends Controller
     {
         $task = $this->task->findFirst($task_id);
 
-        event(new AddTask($task));
+        event(new AddTaskEvent($task));
     }
 
     /**
