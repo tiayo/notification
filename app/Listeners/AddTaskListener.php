@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\AddTask;
-use App\Jobs\SendReminderEmail;
+use App\Jobs\TaskAddSendEmail;
 use Carbon\Carbon;
 
 class AddTaskListener
@@ -25,7 +25,7 @@ class AddTaskListener
      */
     public function handle(AddTask $event)
     {
-        $job = (new SendReminderEmail($event->task))->delay(Carbon::now()->addSecond(10));
+        $job = (new TaskAddSendEmail($event->task))->delay(Carbon::now()->addSecond(1));
         dispatch($job);
     }
 }
