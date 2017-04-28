@@ -49,11 +49,11 @@ class TaskCheckService
         foreach ($data as $item) {
             switch ($item['plan']) {
                 case 1:
-                    return $this->singleTask($item);
+                    $this->singleTask($item);
                 case 2:
-                    return $this->dailyTask($item);
+                    $this->dailyTask($item);
                 case 3:
-                    return $this->workTask($item);
+                    $this->workTask($item);
             }
         }
     }
