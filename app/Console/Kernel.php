@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Service\TaskCheckService;
+use App\Console\Commands\TaskCheck;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\TaskCheck::class
+        TaskCheck::class
     ];
 
     /**
