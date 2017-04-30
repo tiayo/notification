@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
 use App\Service\VerficationService;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
