@@ -6,7 +6,6 @@ use App\Events\PerformTaskEvent;
 use App\Repositories\CategoryRepositories;
 use App\Repositories\TaskRepositories;
 use Carbon\Carbon;
-use Illuminate\Console\Scheduling\Event;
 use Illuminate\Support\Facades\Log;
 
 class TaskCheckService
@@ -26,7 +25,6 @@ class TaskCheckService
      */
     public function screenTask()
     {
-        Log::info('check task:'.Carbon::now());
         //全站任务总数
         $task_num = $this->task->adminCount();
 
@@ -36,12 +34,17 @@ class TaskCheckService
         // 循环次数
         $num = ceil($task_num/$serch_num);
 
+        //初始化
+        $data = null;
+
         for ($i=1; $i<=$num; $i++) {
             $data = $this->task->findTastCheck($i, $serch_num);
             if (!empty($data)) {
                 $this->handle($data);
             }
+            continue;
         }
+        Log::info('check task:'.Carbon::now());
     }
 
     public function handle($data)
@@ -50,12 +53,16 @@ class TaskCheckService
             switch ($item['plan']) {
                 case 1:
                     $this->singleTask($item);
+                    break;
                 case 2:
                     $this->dailyTask($item);
+                    break;
                 case 3:
                     $this->workTask($item);
+                    break;
             }
         }
+        return true;
     }
 
     public function singleTask($item)
@@ -68,8 +75,9 @@ class TaskCheckService
             $value = ['status' => 0];
             try{
                 $this->task->update($value, $item['task_id']);
-            } catch (\Exception $e) { }
-            
+            } catch (\Exception $e) {
+
+            }
             //触发事件
             event(new PerformTaskEvent($item));
         }
