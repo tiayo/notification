@@ -47,7 +47,7 @@ class TaskRepositories
     public function findTastCheck($page, $num)
     {
         return $this->task
-            ->where('status', '<>', 0)
+            ->where('task_status', '<>', 0)
             ->skip(($page-1)*$num)
             ->take($num)
             ->get();

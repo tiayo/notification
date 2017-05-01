@@ -24,7 +24,7 @@ class CreateTask extends Migration
             $table->string('email', 50);
             $table->string('phone', 15);
             $table->longText('content');
-            $table->integer('status')->default(1);
+            $table->integer('task_status')->default(1);
             $table->timestamps();
 
         });
