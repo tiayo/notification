@@ -42,7 +42,7 @@ class VerficationService
         try{
             $this->admin($class);
         } catch (\Exception $e) {
-
+            return false;
         }
         return true;
     }
