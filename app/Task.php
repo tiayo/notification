@@ -17,7 +17,7 @@ class Task extends Model
         'email',
         'phone',
         'content',
-        'status',
+        'task_status',
     ];
     protected $connection = 'mysql';
     protected $table = 'task';

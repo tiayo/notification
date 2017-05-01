@@ -39,12 +39,13 @@ class TaskCheckService
 
         for ($i=1; $i<=$num; $i++) {
             $data = $this->task->findTastCheck($i, $serch_num);
+            Log::info('event data:'.json_encode($data));
             if (!empty($data)) {
                 $this->handle($data);
             }
             continue;
         }
-        Log::info('check task:'.Carbon::now());
+        Log::info('check task end:'.Carbon::now());
     }
 
     public function handle($data)
@@ -72,7 +73,7 @@ class TaskCheckService
             $item['time_difference'] = $time_difference;
 
             //设置状态为0防止重复
-            $value = ['status' => 0];
+            $value = ['task_status' => 0];
             try{
                 $this->task->update($value, $item['task_id']);
             } catch (\Exception $e) {

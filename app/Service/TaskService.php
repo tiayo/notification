@@ -181,7 +181,7 @@ class TaskService
         $value['phone'] = $data['phone'];
         $value['email'] = $data['email'];
         $value['content'] = $data['content'];
-        $value['status'] = 1;
+        $value['task_status'] = 1;
 
         return $this->task->update($value, $task_id);
     }
