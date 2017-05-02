@@ -83,8 +83,6 @@ class TaskCheckService
 
     public function dailyTask($item)
     {
-        Log::info('daily tast:'.$item);
-
         //新任务
         if ($item['task_status'] == 1) {
             //开始时间大于当前时间，加入队列
@@ -99,6 +97,7 @@ class TaskCheckService
             } catch (\Exception $e) {
 
             }
+            Log::info('daily tast:'.$item);
             //触发事件
             event(new PerformTaskEvent($item));
         }
@@ -125,6 +124,7 @@ class TaskCheckService
             } catch (\Exception $e) {
 
             }
+            Log::info('daily tast:'.$item);
             //触发事件
             event(new PerformTaskEvent($item));
         }
