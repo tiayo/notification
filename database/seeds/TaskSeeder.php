@@ -9,7 +9,7 @@ class TaskSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(\App\Repositories\UserRepositories $user)
     {
         //清除表
         App\Task::truncate();
@@ -17,7 +17,7 @@ class TaskSeeder extends Seeder
         factory(App\Task::class)->create([
             'category' => 2,
             'title' => 'admin任务',
-            'user_id' => 1,
+            'user_id' => $user->selectFirst('id', 'name', 'admin')['id'],
             'start_time' => \Carbon\Carbon::now(),
             'plan' => 1,
             'email' => '656861622@qq.com',
@@ -28,7 +28,7 @@ class TaskSeeder extends Seeder
         factory(App\Task::class)->create([
             'category' => 2,
             'title' => 'tiayo任务',
-            'user_id' => 2,
+            'user_id' => $user->selectFirst('id', 'name', 'tiayo')['id'],
             'start_time' => \Carbon\Carbon::now(),
             'plan' => 2,
             'email' => '474993693@qq.com',

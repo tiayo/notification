@@ -39,7 +39,6 @@ class TaskCheckService
 
         for ($i=1; $i<=$num; $i++) {
             $data = $this->task->findTastCheck($i, $serch_num);
-            Log::info('event data:'.json_encode($data));
             if (!empty($data)) {
                 $this->handle($data);
             }
@@ -69,9 +68,6 @@ class TaskCheckService
     public function singleTask($item)
     {
         if (Carbon::now() <= $item['start_time']) {
-            $time_difference = strtotime($item['start_time']) - strtotime(Carbon::now());
-            $item['time_difference'] = $time_difference;
-
             //设置状态为0防止重复
             $value = ['task_status' => 0];
             try{
@@ -87,6 +83,49 @@ class TaskCheckService
 
     public function dailyTask($item)
     {
+        //新任务
+        if ($item['task_status'] == 1) {
+            //开始时间大于当前时间，加入队列
+            if (Carbon::now() >= $item['start_time']) {
+                $item['start_time'] = Carbon::now()->addMinute(2);
+            }
+
+            //修改状态防止重复定义任务
+            $value = ['task_status' => $this->task->findOne('task_id', $item['task_id'], 'task_status')['task_status'] + 1];
+            try{
+                $this->task->update($value, $item['task_id']);
+            } catch (\Exception $e) {
+
+            }
+            //触发事件
+            event(new PerformTaskEvent($item));
+        }
+
+        //老任务
+        if ($item['task_status'] > 1) {
+            //情况一：定义的时间还大于当前
+            if ($item['start_time'] >= Carbon::now()) {
+                return false;
+            }
+
+            $time_difference = strtotime(Carbon::now()) - strtotime($item['start_time']);
+
+            //情况二：生成任务时间小于整数天
+            if ($time_difference < 120*$item['task_status']) {
+                return false;
+            }
+
+            $item['start_time'] = $item['start_time'] = Carbon::now()->addMinute(2);
+            //修改状态防止重复定义任务
+            $value = ['task_status' => $this->task->findOne('task_id', $item['task_id'], 'task_status')['task_status'] + 1];
+            try{
+                $this->task->update($value, $item['task_id']);
+            } catch (\Exception $e) {
+
+            }
+            //触发事件
+            event(new PerformTaskEvent($item));
+        }
 
     }
 
