@@ -42,6 +42,7 @@ class PerformTastJob implements ShouldQueue
         //发送邮件
         $mail->mailSend($template, $user_email, $name, $data);
 
+        sleep(3);
         //记录到日志
         Log::info('Perform task success(email):',$this->task->toArray());
     }

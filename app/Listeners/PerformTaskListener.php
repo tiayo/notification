@@ -27,6 +27,7 @@ class PerformTaskListener
     public function handle(PerformTaskEvent $event)
     {
         $time_difference = strtotime($event->task['start_time']) - strtotime(Carbon::now());
+        Log::info('task data:'.$event->task);
         Log::info('diff time:'.$time_difference);
         $job = (new PerformTastJob($event->task))->delay(Carbon::now()->addSecond($time_difference));
         dispatch($job);

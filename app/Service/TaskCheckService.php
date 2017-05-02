@@ -87,7 +87,7 @@ class TaskCheckService
         if ($item['task_status'] == 1) {
             //开始时间大于当前时间，加入队列
             if (Carbon::now() >= $item['start_time']) {
-                $item['start_time'] = Carbon::now()->addMinute(1);
+                $item['start_time'] = Carbon::now()->addMinute(2);
             }
 
             //修改状态防止重复定义任务
@@ -97,7 +97,6 @@ class TaskCheckService
             } catch (\Exception $e) {
 
             }
-            Log::info('daily tast:'.$item);
             //触发事件
             event(new PerformTaskEvent($item));
         }
@@ -112,11 +111,11 @@ class TaskCheckService
             $time_difference = strtotime(Carbon::now()) - strtotime($item['start_time']);
 
             //情况二：生成任务时间小于整数天
-            if ($time_difference < 60*$item['task_status']) {
+            if ($time_difference < 120*$item['task_status']) {
                 return false;
             }
 
-            $item['start_time'] = Carbon::now()->addMinute(1);
+            $item['start_time'] = $item['start_time'] = Carbon::now()->addMinute(2);
             //修改状态防止重复定义任务
             $value = ['task_status' => $this->task->findOne('task_id', $item['task_id'], 'task_status')['task_status'] + 1];
             try{
@@ -124,7 +123,6 @@ class TaskCheckService
             } catch (\Exception $e) {
 
             }
-            Log::info('daily tast:'.$item);
             //触发事件
             event(new PerformTaskEvent($item));
         }
