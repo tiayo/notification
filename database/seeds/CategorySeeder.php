@@ -9,7 +9,7 @@ class CategorySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(\App\Repositories\CategoryRepositories $category)
     {
         //清除表
         App\Category::truncate();
@@ -22,7 +22,7 @@ class CategorySeeder extends Seeder
 
         factory(\App\Category::class)->create([
             'name' => '闹钟任务',
-            'parent_id' => '1',
+            'parent_id' => $category->selectWhereFirst('category_id', 'alias', 'default')['category_id'],
             'alias' => 'alarm',
         ]);
     }

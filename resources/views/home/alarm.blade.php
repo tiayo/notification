@@ -37,7 +37,7 @@
             flatpickr("#range", {
                 enableTime: true,
                 altInput: true,
-                altFormat: "H:i:S"
+                altFormat: "Y-m-d H:i:S"
             });
         }
     </script>
