@@ -27,7 +27,13 @@ class Controller extends BaseController
                 return '每天';
                 break;
             case 3 :
-                return '工作日';
+                return '工作日（周一到周五）';
+                break;
+            case 4 :
+                return '工作日（周一到周六）';
+                break;
+            case 5 :
+                return '工作日（跳过法定节假日）';
                 break;
         }
     }

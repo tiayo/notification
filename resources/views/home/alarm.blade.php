@@ -102,9 +102,14 @@
                         <li><label>计划<b>*</b></label>
                             <div class="vocation">
                                 <select class="select1" name="plan" style="width: 347px;">
+                                    @if (!empty($old_input['plan']))
+                                        <option value="{{$old_input['plan']}}">{{$plan::plan($old_input['plan'])}}</option>
+                                    @endif
                                     <option value="1">一次</option>
                                     <option value="2">每天</option>
-                                    <option value="3">工作日</option>
+                                    <option value="3">工作日（周一到周五）</option>
+                                    <option value="4">工作日（周一到周六）</option>
+                                    <option value="5">工作日（智能跳过法定节假日）</option>
                                 </select>
                             </div>
                         </li>

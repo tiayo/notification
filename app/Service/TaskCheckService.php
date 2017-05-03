@@ -58,13 +58,22 @@ class TaskCheckService
                     $this->dailyTask($item);
                     break;
                 case 3:
-                    $this->workTask($item);
+                    $this->workTaskOne($item);
+                    break;
+                case 4:
+                    $this->workTaskTwo($item);
                     break;
             }
         }
         return true;
     }
 
+    /**
+     * 单次任务
+     *
+     * @param $item
+     * @return bool
+     */
     public function singleTask($item)
     {
         if (Carbon::now() <= $item['start_time']) {
@@ -81,18 +90,26 @@ class TaskCheckService
         return true;
     }
 
+    /**
+     * 每日任务
+     *
+     * @param $item
+     * @return bool
+     */
     public function dailyTask($item)
     {
         //新任务
         if ($item['task_status'] == 1) {
-            //开始时间大于当前时间，加入队列
+            //当前时间大于开始时间，排到下一天执行
             if (Carbon::now() >= $item['start_time']) {
                 //设置开始时间
-                $item['start_time'] = Carbon::parse($item['start_time'])->addDay(1);
-
-                //更新提醒时间
-                $this->task->update(['start_time' => $item['start_time']], $item['task_id']);
+                while ($item['start_time'] < Carbon::now()) {
+                    $item['start_time'] = Carbon::parse($item['start_time'])->addDay(1);
+                }
             }
+
+            //更新提醒时间
+            $this->task->update(['start_time' => $item['start_time']], $item['task_id']);
 
             //修改状态防止重复定义任务
             $value = ['task_status' => $this->task->findOne('task_id', $item['task_id'], 'task_status')['task_status'] + 1];
@@ -132,9 +149,65 @@ class TaskCheckService
 
     }
 
-    public function workTask($item)
+    /**
+     * 工作日（周一到周五）任务
+     *
+     * @param $item
+     */
+    public function workTaskOne($item)
     {
+        while (true) {
+            if ($this->isWeekend($item['start_time'])) {
+                break;
+            }
+            $item['start_time'] = Carbon::parse($item['start_time'])->addDay(1);
+        }
 
+        $this->dailyTask($item);
+    }
+
+    /**
+     * 工作日（周一到周六）任务
+     *
+     * @param $item
+     */
+    public function workTaskTwo($item)
+    {
+        while (true) {
+            if ($this->isSunday($item['start_time'])) {
+                break;
+            }
+            $item['start_time'] = Carbon::parse($item['start_time'])->addDay(1);
+        }
+
+        $this->dailyTask($item);
+    }
+
+    /**
+     * 判断是否为工作日（周一到周五）
+     *
+     * @param $time
+     */
+    public function isWeekend($time)
+    {
+        if (Carbon::parse($time)->isWeekend()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 判断是否为周日
+     *
+     * @param $time
+     * @return bool
+     */
+    public function isSunday($time)
+    {
+        if (Carbon::parse($time)->isSunday()) {
+            return false;
+        }
+        return true;
     }
 }
 

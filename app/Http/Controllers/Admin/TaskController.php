@@ -57,6 +57,7 @@ class TaskController extends Controller
             'current' => $current,
             'old_input' => $result['old_input'],
             'uri' => $result['uri'],
+            'plan' => 'App\Http\Controllers\Controller',
         ]);
     }
 

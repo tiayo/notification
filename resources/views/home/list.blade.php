@@ -122,7 +122,7 @@ $(document).ready(function(){
             <th>用户</th>
             @endif
             <th>分类</th>
-            <th>提醒时间</th>
+            <th>下次提醒时间</th>
             <th>提醒计划</th>
             <th>接收邮箱</th>
             <th>接收手机</th>
