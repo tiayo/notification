@@ -44,8 +44,12 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/category/page/{page}', 'CategoryController@index')->name('category');
 
     //添加分类
-    Route::get('/category/add', 'CategoryController@storeView');
-    Route::post('/category/add', 'CategoryController@store')->name('category_add');
+    Route::get('/category/add', 'CategoryController@storeOrUpdateView');
+    Route::post('/category/add', 'CategoryController@storeOrUpdate')->name('category_add');
+
+    //更新分类
+    Route::get('/category/update/{category_id}', 'CategoryController@storeOrUpdateView');
+    Route::post('/category/update/{category_id}', 'CategoryController@storeOrUpdate')->name('category_update_post');
 
     //删除分类
     Route::get('/category/delete/{id}', 'CategoryController@delete');

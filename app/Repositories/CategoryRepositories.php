@@ -69,6 +69,13 @@ class CategoryRepositories
            ->create($data);
    }
 
+   public function update($data, $category_id)
+   {
+       return $this->category
+           ->where('category_id', $category_id)
+           ->update($data);
+   }
+
    public function delete($id)
    {
        return $this->category

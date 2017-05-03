@@ -98,6 +98,42 @@ class CategoryService
     }
 
     /**
+     * 更新分类
+     *
+     * @param $name
+     * @param $parent_id
+     * @param $alias
+     * @param $category_id
+     * @param $old
+     * @return mixed
+     */
+    public function update($name, $parent_id, $alias, $category_id, $old)
+    {
+        //复制模板文件
+        $old_alias = $old['alias'];
+        if ($alias != $old_alias) {
+            if ($old_alias == 'alarm' || $old_alias == 'default') {
+                copy(dirname(__DIR__)."/../resources/views/home/$old_alias.blade.php",dirname(__DIR__)."/../resources/views/home/$alias.blade.php");
+            } else {
+                if ($alias == 'alarm' || $alias == 'default') {
+                    unlink(dirname(__DIR__)."/../resources/views/home/$old_alias.blade.php");
+                } else {
+                    rename(dirname(__DIR__)."/../resources/views/home/$old_alias.blade.php",dirname(__DIR__)."/../resources/views/home/$alias.blade.php");
+                }
+            }
+        }
+
+        //构造更新数组
+        $data = [
+            'name' => $name,
+            'parent_id' => $parent_id,
+            'alias' => $alias
+        ];
+
+        return $this->category->update($data, $category_id);
+    }
+
+    /**
      * 删除分类
      * 非管理员操作抛403
      *

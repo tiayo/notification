@@ -67,7 +67,7 @@
                 </div>
             @endif
 
-            <form method="post" action="{{route('category_add')}}">
+            <form method="post" action="{{$uri}}">
                 {{ csrf_field() }}
                 <ul class="forminfo">
                     <div id="xinxi_zhaoping" class="xinxi_zhaoping">
@@ -76,8 +76,11 @@
                             <label>父级<b>*</b></label>
                             <div class="vocation">
                                 <select class="select1" name="parent_id" style="width: 347px;">
+                                    @if (!empty($parent_name['category_id']))
+                                        <option value="{{$parent_name['category_id']}}">{{$parent_name['name']}}</option>
+                                    @endif
                                     @foreach ($all_category as $value)
-                                        <option value="{{$value['id']}}">{{$value['name']}}</option>
+                                        <option value="{{$value['category_id']}}">{{$value['name']}}</option>
                                     @endforeach
                                 </select>
                             </div>
