@@ -53,23 +53,33 @@ class CategoryController extends Controller
     }
 
     /**
-     * 添加分类页面
+     * 添加/更新分类页面
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeView()
+    public function storeOrUpdateView($category_id = null)
     {
+        if (empty($category_id)) {
+            $old_input = $this->request->session()->get('_old_input');
+            $uri = route('category_add');
+        } else {
+            $old_input = $this->category->current($category_id);
+            $uri = route('category_update_post', ['category_id' => $category_id]);
+        }
+
         return view('home.category_add', [
-            'old_input' => $this->request->session()->get('_old_input'),
+            'old_input' => $old_input,
             'all_category' => $this->all_category,
+            'uri' => $uri,
+            'parent_name' => $this->category->current($old_input['parent_id'])
         ]);
     }
 
     /**
-     * 插入新分类
+     * 插入/更新分类
      */
-    public function store()
+    public function storeOrUpdate($category_id = null)
     {
         $this->validate($this->request,[
             'name' => 'bail|required|max:50',
@@ -81,10 +91,11 @@ class CategoryController extends Controller
         $parent_id = $this->request->get('parent_id');
         $alias = $this->request->get('alias');
 
-        try{
+        if (empty($category_id)) {
             $this->category->store($name, $parent_id, $alias);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), $e->getCode());
+        } else {
+            $old = $this->category->current($category_id);
+            $this->category->update($name, $parent_id, $alias, $category_id, $old);
         }
 
         return redirect()->route('category', ['page' => 1]);
