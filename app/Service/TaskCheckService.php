@@ -83,14 +83,13 @@ class TaskCheckService
 
     public function dailyTask($item)
     {
-        //初始化
-        $implement = 0;
-
         //新任务
         if ($item['task_status'] == 1) {
             //开始时间大于当前时间，加入队列
             if (Carbon::now() >= $item['start_time']) {
-                $item['start_time'] = Carbon::now()->addSecond(strtotime(Carbon::now()->addMinute(2)) - strtotime($item['start_time']));
+                //设置开始时间
+                $item['start_time'] = Carbon::parse($item['start_time'])->addDay(1);
+
                 //更新提醒时间
                 $this->task->update(['start_time' => $item['start_time']], $item['task_id']);
             }
@@ -114,7 +113,8 @@ class TaskCheckService
                 return false;
             }
 
-            $item['start_time'] = Carbon::now()->addMinute(strtotime(Carbon::now()->addMinute(2)) - strtotime($item['start_time']));
+            //设置开始时间
+            $item['start_time'] = Carbon::parse($item['start_time'])->addDay(1);
 
             //更新提醒时间
             $this->task->update(['start_time' => $item['start_time']], $item['task_id']);
