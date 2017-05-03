@@ -83,11 +83,14 @@ class TaskCheckService
 
     public function dailyTask($item)
     {
+        //初始化
+        $implement = 0;
+
         //新任务
         if ($item['task_status'] == 1) {
             //开始时间大于当前时间，加入队列
             if (Carbon::now() >= $item['start_time']) {
-                $item['start_time'] = Carbon::now()->addMinute(2);
+                $item['start_time'] = Carbon::now()->addSecond(strtotime(Carbon::now()->addMinute(2)) - strtotime($item['start_time']));
                 //更新提醒时间
                 $this->task->update(['start_time' => $item['start_time']], $item['task_id']);
             }
@@ -105,19 +108,17 @@ class TaskCheckService
 
         //老任务
         if ($item['task_status'] > 1) {
-            //情况一：定义的时间还大于当前
-            if ($item['start_time'] >= Carbon::now()) {
+
+            //定义的时间还大于当前，不继续执行
+            if ($item['start_time'] > Carbon::now()) {
                 return false;
             }
 
-            $time_difference = strtotime(Carbon::now()) - strtotime($item['start_time']);
+            $item['start_time'] = Carbon::now()->addMinute(strtotime(Carbon::now()->addMinute(2)) - strtotime($item['start_time']));
 
-            //情况二：生成任务时间小于整数天
-            if ($time_difference < (120 * $item['task_status'])) {
-                return false;
-            }
+            //更新提醒时间
+            $this->task->update(['start_time' => $item['start_time']], $item['task_id']);
 
-            $item['start_time'] = Carbon::now()->addMinute(2);
             //修改状态防止重复定义任务
             $value = ['task_status' => $this->task->findOne('task_id', $item['task_id'], 'task_status')['task_status'] + 1];
             try{
