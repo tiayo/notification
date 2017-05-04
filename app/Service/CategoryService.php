@@ -147,4 +147,52 @@ class CategoryService
         return $this->category->delete($id);
     }
 
+    /**
+     * checkbox事件
+     * 进行批量删除及选择修改
+     * 删除需要权限验证
+     *
+     * @param $post
+     */
+    public function selectEvent($post)
+    {
+        $judge = $post['judge'];
+        if ($judge == 'modified') {
+            return $this->selectModified($post['check'][0]);
+        } else if ($judge == 'delete') {
+            return $this->selectDelete($post['check']);
+        }
+
+        return redirect()->route('category', ['page' => 1]);
+    }
+
+    /**
+     * checkbox 修改事件
+     *
+     * @param $task_id
+     */
+    public function selectModified($category_id)
+    {
+        return redirect()->route('category_update', ['category_id' => $category_id]);
+    }
+
+    /**
+     * checkbox 删除事件
+     * 有权限验证
+     * 只可以删除自己的任务，违规id会被忽略
+     *
+     * @param $check
+     */
+    public function selectDelete($check)
+    {
+        foreach ($check as $item) {
+            try {
+                $this->delete($item);
+            } catch (\Exception $e) {
+                continue;
+            }
+        }
+        return redirect()->route('category', ['page' => 1]);
+    }
+
 }

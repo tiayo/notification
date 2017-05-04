@@ -229,7 +229,7 @@ class TaskService
     public function selectModified($task_id)
     {
         $task = $this->findFirst($task_id, 'category');
-        return redirect()->route('task_update', ['category' => $task['category'], 'task_is' => $task_id]);
+        return redirect()->route('task_update', ['category' => $task['category'], 'task' => $task_id]);
     }
 
     /**
