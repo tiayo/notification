@@ -27,7 +27,7 @@ $(document).ready(function(){
         if ($("input:checked").length == 1) {
             $("#selectEvent").submit();
         } else {
-            alert('只能选中一个产品');
+            alert('只能且必须选中一个产品');
         }
     });
 

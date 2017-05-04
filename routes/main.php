@@ -14,7 +14,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/left', 'IndexController@left');
     Route::get('/main', 'IndexController@main');
 
-    //分页访问
+    //任务显示
     Route::get('/task/page', function () {
         return redirect()->route('task_page', ['page' => 1]);
     });
@@ -34,7 +34,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //删除任务
     Route::get('/task/delete/{id}', 'TaskController@destroy');
 
-    //多选删除及选择修改
+    //多选删除及选择修改(任务)
     Route::post('/task/select/', 'TaskController@selectEvent');
 
     //管理分类
@@ -48,19 +48,17 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::post('/category/add', 'CategoryController@storeOrUpdate')->name('category_add');
 
     //更新分类
-    Route::get('/category/update/{category_id}', 'CategoryController@storeOrUpdateView');
+    Route::get('/category/update/{category_id}', 'CategoryController@storeOrUpdateView')->name('category_update');
     Route::post('/category/update/{category_id}', 'CategoryController@storeOrUpdate')->name('category_update_post');
 
     //删除分类
     Route::get('/category/delete/{id}', 'CategoryController@delete');
 
-
-    //测试
-    Route::get('/test', '\App\Service\TaskCheckService@screenTask');
+    //多选删除及选择修改(分类)
+    Route::post('/category/select/', 'CategoryController@selectEvent');
 
 
 });
-
 
 // Authentication Routes...
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');

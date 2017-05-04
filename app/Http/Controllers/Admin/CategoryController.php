@@ -122,25 +122,13 @@ class CategoryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * checkbox事件
+     * 进行批量删除及选择修改
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function update(Request $request, $id)
+    public function selectEvent()
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $this->category->selectEvent($this->request->all());
     }
 }
