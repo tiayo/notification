@@ -20,7 +20,7 @@ class AlipayTradeService {
 	//支付宝公钥
 	public $alipay_public_key;
 
-	//商户私钥
+	//商户私钥文件路径
 	public $private_key;
 
 	//应用id
@@ -40,7 +40,7 @@ class AlipayTradeService {
 	function __construct(){
 		$this->gateway_url = config('alipay.gatewayUrl');
 		$this->appid = config('alipay.app_id');
-		$this->private_key = config('alipay.merchant_private_key');
+		$this->private_key = config('alipay.rsaPrivateKeyFilePath');
 		$this->alipay_public_key = config('alipay.alipay_public_key');
 		$this->charset = config('alipay.charset');
 		$this->signtype = config('alipay.sign_type');
@@ -96,7 +96,7 @@ class AlipayTradeService {
 		$aop = new AopClient ();
 		$aop->gatewayUrl = $this->gateway_url;
 		$aop->appId = $this->appid;
-		$aop->rsaPrivateKey =  $this->private_key;
+		$aop->rsaPrivateKeyFilePath =  $this->private_key;
 		$aop->alipayrsaPublicKey = $this->alipay_public_key;
 		$aop->apiVersion ="1.0";
 		$aop->postCharset = $this->charset;

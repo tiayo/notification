@@ -3,14 +3,14 @@ return [
 		//应用ID,您的APPID。
 		'app_id' => env('ALIPAY_APP_ID'),
 
-		//商户私钥，您的原始格式RSA私钥
-		'merchant_private_key' => file_get_contents(base_path().'/.private_key'),
+		//商户私钥文件路径
+		'rsaPrivateKeyFilePath' => base_path().'/app_private_key.pem',
 
 		//异步通知地址
-		'notify_url' => env('ALIPAY_NOTIFY_URL'),
+		'notify_url' => env('APP_URL').env('ALIPAY_NOTIFY_URL'),
 		
 		//同步跳转
-		'return_url' => env('ALIPAY_RETURN_URL'),
+		'return_url' => env('APP_URL').env('ALIPAY_RETURN_URL'),
 
 		//编码格式
 		'charset' => env('ALIPAY_CHARSET'),

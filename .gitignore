@@ -10,4 +10,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
-.private_key
+app_private_key.pem
