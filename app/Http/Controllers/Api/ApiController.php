@@ -16,11 +16,11 @@ class ApiController extends Controller
 
     public function get()
     {
-        var_dump($this->request->user()->toArray());
+        //
     }
 
     public function post()
     {
-        var_dump($this->request->all());
+        //
     }
 }
