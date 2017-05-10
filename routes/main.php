@@ -57,6 +57,11 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //多选删除及选择修改(分类)
     Route::post('/category/select/', 'CategoryController@selectEvent');
 
+    //支付接口
+    Route::get('/alipay', 'AlipayController@alipay');
+    Route::post('/alipay', 'AlipayController@alipayPay');
+    Route::get('/alipay/app', 'AlipayController@alipayApp');
+    Route::get('/alipay/callback', 'AlipayController@alipayCallback');
 
 });
 
