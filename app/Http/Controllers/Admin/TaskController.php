@@ -18,11 +18,7 @@ class TaskController extends Controller
     protected $task;
     protected $mail;
 
-    public function __construct(
-        CategoryService $category,
-        Request $request,
-        TaskService $task
-    )
+    public function __construct(CategoryService $category, Request $request, TaskService $task)
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
@@ -46,7 +42,7 @@ class TaskController extends Controller
         $category = $current['alias'];
 
         //填入表格的内容及post提交url
-        try{
+        try {
             $result = $this->task->storeOrUpdateView($category_id, $task_id);
         } catch (\Exception $e) {
             return response($e->getMessage());
@@ -81,7 +77,7 @@ class TaskController extends Controller
             'email' => 'bail|required|email',
             'content' => 'bail|required',
         ]);
-        try{
+        try {
             if (empty($task_id)) {
                 $result = $this->task->store($this->request->all(), $id);
                 $this->sendEmailTaskAdd($result['task_id']);
