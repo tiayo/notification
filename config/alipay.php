@@ -4,7 +4,7 @@ return [
 		'app_id' => env('ALIPAY_APP_ID'),
 
 		//商户私钥，您的原始格式RSA私钥
-		'merchant_private_key' => env('ALIPAY_MERCHANT_PRIVATE_KEY'),
+		'merchant_private_key' => file_get_contents(base_path().'/.private_key'),
 
 		//异步通知地址
 		'notify_url' => env('ALIPAY_NOTIFY_URL'),

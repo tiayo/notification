@@ -40,8 +40,6 @@ class AlipayTradeService {
 	function __construct(){
 		$this->gateway_url = config('alipay.gatewayUrl');
 		$this->appid = config('alipay.app_id');
-		var_dump(config('alipay.merchant_private_key'));
-		exit();
 		$this->private_key = config('alipay.merchant_private_key');
 		$this->alipay_public_key = config('alipay.alipay_public_key');
 		$this->charset = config('alipay.charset');
