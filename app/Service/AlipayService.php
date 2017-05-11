@@ -6,6 +6,7 @@ use App\Alipay\Wappay\Service\AlipayTradeService;
 use App\Alipay\Wappay\Buildermodel\AlipayTradeWapPayContentBuilder;
 use App\Alipay\Wappay\Buildermodel\AlipayTradeQueryContentBuilder;
 use App\Repositories\OrderRepositories;
+use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 
 class AlipayService
@@ -110,6 +111,12 @@ class AlipayService
     {
         $order_id = $get['out_trade_no'];
         $order_detail = $this->order->findOne($order_id);
+
+        //如果已经接收到异步请求并验证通过，则直接跳过回调查询
+        if ($order_detail['payment_status'] == 1) {
+            return true;
+        }
+        Log::info('jinru');
 
         //查询订单详情
         if (empty($order_detail)) {
