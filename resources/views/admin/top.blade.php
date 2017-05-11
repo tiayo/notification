@@ -26,6 +26,7 @@ $(function(){
     <ul class="nav">
         <li><a href="/admin/task/page" target="rightFrame">我的任务</a></li>
         <li><a href="/admin/task/add" target="rightFrame">添加任务</a></li>
+        <li><a href="/admin/sponsor">赞助我们</a> </li>
     </ul>
             
     <div class="topright">    

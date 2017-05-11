@@ -11,6 +11,7 @@ namespace App\Alipay\Wappay\Service;
 
 use App\Alipay\Aop\Request\AlipayTradeWapPayRequest;
 use App\Alipay\Aop\AopClient;
+use App\Alipay\Aop\Request\AlipayTradeQueryRequest;
 
 class AlipayTradeService {
 
@@ -134,7 +135,6 @@ class AlipayTradeService {
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
 		$response = $response->alipay_trade_query_response;
-		var_dump($response);
 		return $response;
 	}
 	
