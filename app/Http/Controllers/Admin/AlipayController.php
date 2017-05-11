@@ -98,6 +98,15 @@ class AlipayController extends Controller
         $alipaySevice = new AlipayTradeService();
         $app = $this->request->all();
         $result = $alipaySevice->check($app);
-        Log::info('alipay:'.json_encode($app).'result:'.$result);
+        if ($result) {
+            if($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
+                $this->order->update('order_id', $result['out_trade_no'], [
+                    'payment_type' => 'alipay',
+                    'trade_no' => $result['trade_no'],
+                    'payment_status' => 1
+                ]);
+            }
+        }
+        Log::info('alipay:'.json_encode($result));
     }
 }
