@@ -108,9 +108,6 @@ class AlipayController extends Controller
             }
             //成功记录到日志
             Log::info('alipay_success_post:'.json_encode($app));
-            return true;
         }
-        //错误记录到日志
-        Log::info('alipay_faile_post:'.json_encode($app));
     }
 }
