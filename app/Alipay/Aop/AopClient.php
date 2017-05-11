@@ -15,8 +15,10 @@ class AopClient {
 
 	//网关
 	public $gatewayUrl;
+
 	//返回数据格式
 	public $format = "json";
+
 	//api版本
 	public $apiVersion = "1.0";
 
@@ -316,7 +318,6 @@ class AopClient {
 		auther:笙默
 	*/
 	public function pageExecute($request,$httpmethod = "POST") {
-
 		$this->setupCharsets($request);
 
 		if (strcasecmp($this->fileCharset, $this->postCharset)) {

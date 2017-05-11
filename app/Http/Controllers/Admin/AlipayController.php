@@ -61,6 +61,9 @@ class AlipayController extends Controller
     {
         $callback = $this->request->all();
 
+        //验签
+
+
         if ($this->alipay->callback($callback)) {
             return view('payment.success', [
                 'order' => $this->order->findOne($callback['out_trade_no']),
@@ -68,7 +71,7 @@ class AlipayController extends Controller
             ]);
         }
 
-        return view('payment.success', [
+        return view('payment.faile', [
             'order' => $this->order->findOne($callback['out_trade_no']),
             'callback' => $callback,
         ]);
