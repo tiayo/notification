@@ -117,7 +117,7 @@ class AlipayService
             return true;
         }
         Log::info('jinru');
-        
+
         //查询订单详情
         if (empty($order_detail)) {
             throw new Exception('找不到订单', 404);
