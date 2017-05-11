@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Alipay\Wappay\Service\AlipayTradeService;
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Service\AlipayService;
@@ -61,9 +62,6 @@ class AlipayController extends Controller
     {
         $callback = $this->request->all();
 
-        //验签
-
-
         if ($this->alipay->callback($callback)) {
             return view('payment.success', [
                 'order' => $this->order->findOne($callback['out_trade_no']),
@@ -97,6 +95,9 @@ class AlipayController extends Controller
      */
     public function app()
     {
-        Log::info('alipay:'.json_encode($this->request->all()));
+        $alipaySevice = new AlipayTradeService();
+        $app = $this->request->all();
+        $result = $alipaySevice->check($app);
+        Log::info('alipay:'.json_encode($app).'result:'.$result);
     }
 }
