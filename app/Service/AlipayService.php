@@ -114,9 +114,12 @@ class AlipayService
 
         //如果已经接收到异步请求并验证通过，则直接跳过回调查询
         if ($order_detail['payment_status'] == 1) {
+            //记录成功到日志
+            Log::info('order_detail_success:'.json_encode($order_detail));
             return true;
         }
-        Log::info('jinru');
+        //记录错误到日志
+        Log::info('order_detail_faile:'.json_encode($order_detail));
 
         //查询订单详情
         if (empty($order_detail)) {
