@@ -13,6 +13,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/top', 'IndexController@top');
     Route::get('/left', 'IndexController@left');
     Route::get('/main', 'IndexController@main');
+    Route::get('/sponsor', 'IndexController@sponsor');
+    Route::post('/sponsor', 'IndexController@sponsor');
 
     //任务显示
     Route::get('/task/page', function () {
@@ -57,11 +59,12 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //多选删除及选择修改(分类)
     Route::post('/category/select/', 'CategoryController@selectEvent');
 
-    //支付接口
-    Route::get('/alipay', 'AlipayController@alipay');
-    Route::post('/alipay', 'AlipayController@alipayPay');
-    Route::get('/alipay/app', 'AlipayController@alipayApp');
-    Route::get('/alipay/callback', 'AlipayController@alipayCallback');
+    //支付宝
+    Route::get('/alipay/order/{order}', 'AlipayController@alipay')->name('alipay');
+    Route::get('/alipay/query/{order}', 'AlipayController@query');
+    Route::post('/alipay/pay', 'AlipayController@pay');
+    Route::get('/alipay/app', 'AlipayController@app');
+    Route::get('/alipay/callback', 'AlipayController@callback');
 
 });
 

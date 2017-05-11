@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepositories;
 use App\Service\IndexService;
-use App\Service\VerficationService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
     protected $index;
+    protected $request;
 
-    public  function __construct(IndexService $index)
+    public  function __construct(IndexService $index, Request $request)
     {
         $this->index = $index;
+        $this->request = $request;
     }
 
     /**
@@ -66,5 +68,22 @@ class IndexController extends Controller
             'user_name' => Auth::user()['name'],
             'next_login_time' => $next_login_time ? : date('Y-m-d H:i:s')
         ]);
+    }
+
+    /**
+     * 赞助页面
+     */
+    public function sponsor()
+    {
+        $money = $this->request->get('money');
+        if (empty($money)) {
+            return view('admin.sponsor');
+        }
+
+        //新建订单
+        $order = $this->index->sponsor($money);
+
+        //转到支付接口
+        return redirect()->route('alipay', ['order' => $order->order_id]);
     }
 }

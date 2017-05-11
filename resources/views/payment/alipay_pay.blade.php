@@ -142,31 +142,31 @@
     <h1>随想校园社区收银台</h1>
 </header>
 <div id="main">
-    <form name=alipayment action='' method=post target="_blank">
+    <form name=alipayment action='/admin/alipay/pay' method=post target="_blank">
         {{ csrf_field() }}
         <div id="body" style="clear:left">
             <dl class="content">
                 <dt>商户订单号
                     ：</dt>
                 <dd>
-                    <input id="WIDout_trade_no" name="WIDout_trade_no" />
+                    <input id="WIDout_trade_no" name="WIDout_trade_no" value="{{$WIDout_trade_no}}" />
                 </dd>
                 <hr class="one_line">
                 <dt>订单名称
                     ：</dt>
                 <dd>
-                    <input id="WIDsubject" name="WIDsubject" />
+                    <input id="WIDsubject" name="WIDsubject" value="{{$WIDsubject}}" />
                 </dd>
                 <hr class="one_line">
                 <dt>付款金额
                     ：</dt>
                 <dd>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" />
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="{{$WIDtotal_amount}}" />
                 </dd>
                 <hr class="one_line">
                 <dt>商品描述：</dt>
                 <dd>
-                    <input id="WIDbody" name="WIDbody" />
+                    <input id="WIDbody" name="WIDbody" value="{{$WIDbody}}" />
                 </dd>
                 <hr class="one_line">
                 <dt></dt>
@@ -188,22 +188,4 @@
     </div>
 </div>
 </body>
-<script language="javascript">
-    function GetDateNow() {
-        var vNow = new Date();
-        var sNow = "";
-        sNow += String(vNow.getFullYear());
-        sNow += String(vNow.getMonth() + 1);
-        sNow += String(vNow.getDate());
-        sNow += String(vNow.getHours());
-        sNow += String(vNow.getMinutes());
-        sNow += String(vNow.getSeconds());
-        sNow += String(vNow.getMilliseconds());
-        document.getElementById("WIDout_trade_no").value =  sNow;
-        document.getElementById("WIDsubject").value = "测试";
-        document.getElementById("WIDtotal_amount").value = "0.01";
-        document.getElementById("WIDbody").value = "购买测试商品0.01元";
-    }
-    GetDateNow();
-</script>
 </html>
