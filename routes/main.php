@@ -64,6 +64,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/alipay/query/{order}', 'AlipayController@query');
     Route::post('/alipay/pay', 'AlipayController@pay');
     Route::get('/alipay/app', 'AlipayController@app');
+    Route::post('/alipay/app', 'AlipayController@app');
     Route::get('/alipay/callback', 'AlipayController@callback');
 
 });

@@ -894,3 +894,135 @@
 2017-05-11 12:00:02  response: '<form id=\'alipaysubmit\' name=\'alipaysubmit\' action=\'https://openapi.alipaydev.com/gateway.do?charset=UTF-8\' method=\'POST\'><input type=\'hidden\' name=\'biz_content\' value=\'{"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统10.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"1","total_amount":"10","timeout_express":"1m"}\'/><input type=\'hidden\' name=\'app_id\' value=\'2016080700187391\'/><input type=\'hidden\' name=\'version\' value=\'1.0\'/><input type=\'hidden\' name=\'format\' value=\'json\'/><input type=\'hidden\' name=\'sign_type\' value=\'RSA2\'/><input type=\'hidden\' name=\'method\' value=\'alipay.trade.wap.pay\'/><input type=\'hidden\' name=\'timestamp\' value=\'2017-05-11 12:00:02\'/><input type=\'hidden\' name=\'alipay_sdk\' value=\'alipay-sdk-php-20161101\'/><input type=\'hidden\' name=\'notify_url\' value=\'http://192.168.10.204:8885/admin/alipay/app\'/><input type=\'hidden\' name=\'return_url\' value=\'http://192.168.10.204:8885/admin/alipay/callback\'/><input type=\'hidden\' name=\'charset\' value=\'UTF-8\'/><input type=\'hidden\' name=\'sign\' value=\'AkVz7e/FeQtCar8ju2heq92VqKBV8B6zBM1VzvUFA+rbN/WQllQl0EmMgEOrXpOhKAzfvf3xwk3n3CjrEN8MwX6zDLlae7ztqs0k7u9UGQfODvrcBkaDUzmJEDsUrGgnds8g9sIj7gXDZXshWubk45TBGertFqFOjKnj9+0SNciKk/xZakyGVSL8YM3lRBeh0u825Hi1AxGgwCnTTg2XjzoT7z6zinasx5sHLSSkzQ9Hk7y1A6eICGVw1JTNvnE2RbLkaHz9i7swkyb60LqQxGFdpsLXI6oCWDHwm5L8PlJgoxOabtTiSvzzo5JelJcl741Weuno/mB/gs3OJN80Yr0=\'/><input type=\'submit\' value=\'ok\' style=\'display:none;\'\'></form><script>document.forms[\'alipaysubmit\'].submit();</script>'
 2017-05-11 12:00:15  {"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统10.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"1","total_amount":"10","timeout_express":"1m"}
 2017-05-11 12:00:15  response: '<form id=\'alipaysubmit\' name=\'alipaysubmit\' action=\'https://openapi.alipaydev.com/gateway.do?charset=UTF-8\' method=\'POST\'><input type=\'hidden\' name=\'biz_content\' value=\'{"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统10.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"1","total_amount":"10","timeout_express":"1m"}\'/><input type=\'hidden\' name=\'app_id\' value=\'2016080700187391\'/><input type=\'hidden\' name=\'version\' value=\'1.0\'/><input type=\'hidden\' name=\'format\' value=\'json\'/><input type=\'hidden\' name=\'sign_type\' value=\'RSA2\'/><input type=\'hidden\' name=\'method\' value=\'alipay.trade.wap.pay\'/><input type=\'hidden\' name=\'timestamp\' value=\'2017-05-11 12:00:15\'/><input type=\'hidden\' name=\'alipay_sdk\' value=\'alipay-sdk-php-20161101\'/><input type=\'hidden\' name=\'notify_url\' value=\'http://192.168.10.204:8885/admin/alipay/app\'/><input type=\'hidden\' name=\'return_url\' value=\'http://192.168.10.204:8885/admin/alipay/callback\'/><input type=\'hidden\' name=\'charset\' value=\'UTF-8\'/><input type=\'hidden\' name=\'sign\' value=\'AK8vJS+PgB7UC3XLsHD9ELZRhBLArjLDyzL1U+UGGTXwsbWfQSrf1MaAHjUAS7p9KbaPacZcdBD/HErCjwIaILEvdjHG7aA1yowVn6smglDVhA5+lbNxte+jU4zNS9g6d8VI1WzCFhHrCvEdlZKVE+mxZuo4tnWw+PGvSgwMb3rfNOv3UQiEmPvVIHxhcjgc7HA2iOD6HM3+8cZj6IiTBXNTN6WoklrePQbCIBU7CEjQkyTnzZpROPm4X8jMzcx6QayzY/VniTBLeRxtqGfY1kpy8wpMSk12aYSAXlKoPVGvid+tX4k8g163WN7mTmrA0E23wJ89QefA30qi4aRTDF8=\'/><input type=\'submit\' value=\'ok\' style=\'display:none;\'\'></form><script>document.forms[\'alipaysubmit\'].submit();</script>'
+2017-05-11 13:56:48  {"trade_no":"2017051121001004170200197613","out_trade_no":"3"}
+2017-05-11 13:56:49  response: stdClass::__set_state(array(
+   'alipay_trade_query_response' => 
+  stdClass::__set_state(array(
+     'code' => '10000',
+     'msg' => 'Success',
+     'buyer_logon_id' => 'uxo***@sandbox.com',
+     'buyer_pay_amount' => '0.00',
+     'buyer_user_id' => '2088102172074170',
+     'invoice_amount' => '0.00',
+     'open_id' => '20881086268085391449858751712917',
+     'out_trade_no' => '3',
+     'point_amount' => '0.00',
+     'receipt_amount' => '0.00',
+     'send_pay_date' => '2017-05-11 11:37:00',
+     'total_amount' => '50.00',
+     'trade_no' => '2017051121001004170200197613',
+     'trade_status' => 'TRADE_SUCCESS',
+  )),
+   'sign' => 'Bj7I8b4o5sChz0J99hoaqIgvX+0clMB1wYLE1lClj05guhkJnay7O2aPpWEvQaqBFXOa5YlTE+TqxJQApkTNbCeBYL83Z7G+RLsFv0StByGGN2gZ4WV7KxmugKAVKFTMpGTT6cLtJL+8GIrIgqlTIsmIaA8E7v1Whq1w8o3aGjmgWzm5aVgJPWti+eZFE6qMeXS3WgYYnezAtlM4GsHi9tK6NO2UXATJTzZPEuQrAJJyMpvf6wmk4t2lzGnNLUbyrjRpz8GwhrBZFhBFXzxiPMmUkKHZWoO2iH6NzdFNwlEdAfCsNN2mN8jzyZE9OOUBdR0hXun6uPcgYT8QAkxrSw==',
+))
+2017-05-11 13:59:05  {"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统50.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"3","total_amount":"10","timeout_express":"1m"}
+2017-05-11 13:59:05  response: '<form id=\'alipaysubmit\' name=\'alipaysubmit\' action=\'https://openapi.alipaydev.com/gateway.do?charset=UTF-8\' method=\'POST\'><input type=\'hidden\' name=\'biz_content\' value=\'{"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统50.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"3","total_amount":"10","timeout_express":"1m"}\'/><input type=\'hidden\' name=\'app_id\' value=\'2016080700187391\'/><input type=\'hidden\' name=\'version\' value=\'1.0\'/><input type=\'hidden\' name=\'format\' value=\'json\'/><input type=\'hidden\' name=\'sign_type\' value=\'RSA2\'/><input type=\'hidden\' name=\'method\' value=\'alipay.trade.wap.pay\'/><input type=\'hidden\' name=\'timestamp\' value=\'2017-05-11 13:59:05\'/><input type=\'hidden\' name=\'alipay_sdk\' value=\'alipay-sdk-php-20161101\'/><input type=\'hidden\' name=\'notify_url\' value=\'http://192.168.10.204:8885/admin/alipay/app\'/><input type=\'hidden\' name=\'return_url\' value=\'http://192.168.10.204:8885/admin/alipay/callback\'/><input type=\'hidden\' name=\'charset\' value=\'UTF-8\'/><input type=\'hidden\' name=\'sign\' value=\'AEhY/3rjkWb4XrIGyXLQqI/uooTvZ99Pbbj/YHsITdERsX970OV4D1wAWTmFHHTxg/pP6r6YVrmyssQSvBOS7ULhOIeE7p3svFPcDLP/FwM+ZAgpdHyNXv0Ug8IExP1a3a5ZqvNl62dEkmfJ1efFI9uo2YBesI140R+zsTfb46LStwBXnn8kdHlMDVEV6IzW0J1ZukvkEBNds9JjWRccebmBoc+x/xeg+0frV5QBqbcfd4eqchRUd6puGp0Jnvhqsxccr3j2QNsTofaEuepXtUPieeVhNvqS5K4bdLSdPfZIz5p0yC9EOqqEMufMuL+XYxXVQh8qj9qMpBnvY4rek7g=\'/><input type=\'submit\' value=\'ok\' style=\'display:none;\'\'></form><script>document.forms[\'alipaysubmit\'].submit();</script>'
+2017-05-11 14:03:03  {"trade_no":"2017051121001004170200197613","out_trade_no":"3"}
+2017-05-11 14:03:03  response: stdClass::__set_state(array(
+   'alipay_trade_query_response' => 
+  stdClass::__set_state(array(
+     'code' => '10000',
+     'msg' => 'Success',
+     'buyer_logon_id' => 'uxo***@sandbox.com',
+     'buyer_pay_amount' => '0.00',
+     'buyer_user_id' => '2088102172074170',
+     'invoice_amount' => '0.00',
+     'open_id' => '20881086268085391449858751712917',
+     'out_trade_no' => '3',
+     'point_amount' => '0.00',
+     'receipt_amount' => '0.00',
+     'send_pay_date' => '2017-05-11 11:37:00',
+     'total_amount' => '50.00',
+     'trade_no' => '2017051121001004170200197613',
+     'trade_status' => 'TRADE_SUCCESS',
+  )),
+   'sign' => 'Bj7I8b4o5sChz0J99hoaqIgvX+0clMB1wYLE1lClj05guhkJnay7O2aPpWEvQaqBFXOa5YlTE+TqxJQApkTNbCeBYL83Z7G+RLsFv0StByGGN2gZ4WV7KxmugKAVKFTMpGTT6cLtJL+8GIrIgqlTIsmIaA8E7v1Whq1w8o3aGjmgWzm5aVgJPWti+eZFE6qMeXS3WgYYnezAtlM4GsHi9tK6NO2UXATJTzZPEuQrAJJyMpvf6wmk4t2lzGnNLUbyrjRpz8GwhrBZFhBFXzxiPMmUkKHZWoO2iH6NzdFNwlEdAfCsNN2mN8jzyZE9OOUBdR0hXun6uPcgYT8QAkxrSw==',
+))
+2017-05-11 14:03:25  {"trade_no":"2017051121001004170200197613","out_trade_no":"3"}
+2017-05-11 14:03:26  response: stdClass::__set_state(array(
+   'alipay_trade_query_response' => 
+  stdClass::__set_state(array(
+     'code' => '10000',
+     'msg' => 'Success',
+     'buyer_logon_id' => 'uxo***@sandbox.com',
+     'buyer_pay_amount' => '0.00',
+     'buyer_user_id' => '2088102172074170',
+     'invoice_amount' => '0.00',
+     'open_id' => '20881086268085391449858751712917',
+     'out_trade_no' => '3',
+     'point_amount' => '0.00',
+     'receipt_amount' => '0.00',
+     'send_pay_date' => '2017-05-11 11:37:00',
+     'total_amount' => '50.00',
+     'trade_no' => '2017051121001004170200197613',
+     'trade_status' => 'TRADE_SUCCESS',
+  )),
+   'sign' => 'Bj7I8b4o5sChz0J99hoaqIgvX+0clMB1wYLE1lClj05guhkJnay7O2aPpWEvQaqBFXOa5YlTE+TqxJQApkTNbCeBYL83Z7G+RLsFv0StByGGN2gZ4WV7KxmugKAVKFTMpGTT6cLtJL+8GIrIgqlTIsmIaA8E7v1Whq1w8o3aGjmgWzm5aVgJPWti+eZFE6qMeXS3WgYYnezAtlM4GsHi9tK6NO2UXATJTzZPEuQrAJJyMpvf6wmk4t2lzGnNLUbyrjRpz8GwhrBZFhBFXzxiPMmUkKHZWoO2iH6NzdFNwlEdAfCsNN2mN8jzyZE9OOUBdR0hXun6uPcgYT8QAkxrSw==',
+))
+2017-05-11 14:03:36  {"trade_no":"2017051121001004170200197613","out_trade_no":"3"}
+2017-05-11 14:03:37  response: stdClass::__set_state(array(
+   'alipay_trade_query_response' => 
+  stdClass::__set_state(array(
+     'code' => '10000',
+     'msg' => 'Success',
+     'buyer_logon_id' => 'uxo***@sandbox.com',
+     'buyer_pay_amount' => '0.00',
+     'buyer_user_id' => '2088102172074170',
+     'invoice_amount' => '0.00',
+     'open_id' => '20881086268085391449858751712917',
+     'out_trade_no' => '3',
+     'point_amount' => '0.00',
+     'receipt_amount' => '0.00',
+     'send_pay_date' => '2017-05-11 11:37:00',
+     'total_amount' => '50.00',
+     'trade_no' => '2017051121001004170200197613',
+     'trade_status' => 'TRADE_SUCCESS',
+  )),
+   'sign' => 'Bj7I8b4o5sChz0J99hoaqIgvX+0clMB1wYLE1lClj05guhkJnay7O2aPpWEvQaqBFXOa5YlTE+TqxJQApkTNbCeBYL83Z7G+RLsFv0StByGGN2gZ4WV7KxmugKAVKFTMpGTT6cLtJL+8GIrIgqlTIsmIaA8E7v1Whq1w8o3aGjmgWzm5aVgJPWti+eZFE6qMeXS3WgYYnezAtlM4GsHi9tK6NO2UXATJTzZPEuQrAJJyMpvf6wmk4t2lzGnNLUbyrjRpz8GwhrBZFhBFXzxiPMmUkKHZWoO2iH6NzdFNwlEdAfCsNN2mN8jzyZE9OOUBdR0hXun6uPcgYT8QAkxrSw==',
+))
+2017-05-11 14:03:39  {"trade_no":"2017051121001004170200197613","out_trade_no":"3"}
+2017-05-11 14:03:40  response: stdClass::__set_state(array(
+   'alipay_trade_query_response' => 
+  stdClass::__set_state(array(
+     'code' => '10000',
+     'msg' => 'Success',
+     'buyer_logon_id' => 'uxo***@sandbox.com',
+     'buyer_pay_amount' => '0.00',
+     'buyer_user_id' => '2088102172074170',
+     'invoice_amount' => '0.00',
+     'open_id' => '20881086268085391449858751712917',
+     'out_trade_no' => '3',
+     'point_amount' => '0.00',
+     'receipt_amount' => '0.00',
+     'send_pay_date' => '2017-05-11 11:37:00',
+     'total_amount' => '50.00',
+     'trade_no' => '2017051121001004170200197613',
+     'trade_status' => 'TRADE_SUCCESS',
+  )),
+   'sign' => 'Bj7I8b4o5sChz0J99hoaqIgvX+0clMB1wYLE1lClj05guhkJnay7O2aPpWEvQaqBFXOa5YlTE+TqxJQApkTNbCeBYL83Z7G+RLsFv0StByGGN2gZ4WV7KxmugKAVKFTMpGTT6cLtJL+8GIrIgqlTIsmIaA8E7v1Whq1w8o3aGjmgWzm5aVgJPWti+eZFE6qMeXS3WgYYnezAtlM4GsHi9tK6NO2UXATJTzZPEuQrAJJyMpvf6wmk4t2lzGnNLUbyrjRpz8GwhrBZFhBFXzxiPMmUkKHZWoO2iH6NzdFNwlEdAfCsNN2mN8jzyZE9OOUBdR0hXun6uPcgYT8QAkxrSw==',
+))
+2017-05-11 14:05:06  {"trade_no":"2017051121001004170200197613","out_trade_no":"3"}
+2017-05-11 14:05:07  response: stdClass::__set_state(array(
+   'alipay_trade_query_response' => 
+  stdClass::__set_state(array(
+     'code' => '10000',
+     'msg' => 'Success',
+     'buyer_logon_id' => 'uxo***@sandbox.com',
+     'buyer_pay_amount' => '0.00',
+     'buyer_user_id' => '2088102172074170',
+     'invoice_amount' => '0.00',
+     'open_id' => '20881086268085391449858751712917',
+     'out_trade_no' => '3',
+     'point_amount' => '0.00',
+     'receipt_amount' => '0.00',
+     'send_pay_date' => '2017-05-11 11:37:00',
+     'total_amount' => '50.00',
+     'trade_no' => '2017051121001004170200197613',
+     'trade_status' => 'TRADE_SUCCESS',
+  )),
+   'sign' => 'Bj7I8b4o5sChz0J99hoaqIgvX+0clMB1wYLE1lClj05guhkJnay7O2aPpWEvQaqBFXOa5YlTE+TqxJQApkTNbCeBYL83Z7G+RLsFv0StByGGN2gZ4WV7KxmugKAVKFTMpGTT6cLtJL+8GIrIgqlTIsmIaA8E7v1Whq1w8o3aGjmgWzm5aVgJPWti+eZFE6qMeXS3WgYYnezAtlM4GsHi9tK6NO2UXATJTzZPEuQrAJJyMpvf6wmk4t2lzGnNLUbyrjRpz8GwhrBZFhBFXzxiPMmUkKHZWoO2iH6NzdFNwlEdAfCsNN2mN8jzyZE9OOUBdR0hXun6uPcgYT8QAkxrSw==',
+))
+2017-05-11 14:27:47  {"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统20.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"5","total_amount":"20","timeout_express":"1m"}
+2017-05-11 14:27:58  {"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统20.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"5","total_amount":"20","timeout_express":"1m"}
+2017-05-11 14:28:25  {"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统20.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"5","total_amount":"20","timeout_express":"1m"}
+2017-05-11 14:28:25  response: '<form id=\'alipaysubmit\' name=\'alipaysubmit\' action=\'https://openapi.alipaydev.com/gateway.do?charset=UTF-8\' method=\'POST\'><input type=\'hidden\' name=\'biz_content\' value=\'{"productCode":"QUICK_WAP_PAY","body":"赞助随享任务管理系统20.00块钱","subject":"赞助随享任务管理系统","out_trade_no":"5","total_amount":"20","timeout_express":"1m"}\'/><input type=\'hidden\' name=\'app_id\' value=\'2016080700187391\'/><input type=\'hidden\' name=\'version\' value=\'1.0\'/><input type=\'hidden\' name=\'format\' value=\'json\'/><input type=\'hidden\' name=\'sign_type\' value=\'RSA2\'/><input type=\'hidden\' name=\'method\' value=\'alipay.trade.wap.pay\'/><input type=\'hidden\' name=\'timestamp\' value=\'2017-05-11 14:28:25\'/><input type=\'hidden\' name=\'alipay_sdk\' value=\'alipay-sdk-php-20161101\'/><input type=\'hidden\' name=\'notify_url\' value=\'http://192.168.10.204:8885/admin/alipay/app\'/><input type=\'hidden\' name=\'return_url\' value=\'http://192.168.10.204:8885/admin/alipay/callback\'/><input type=\'hidden\' name=\'charset\' value=\'UTF-8\'/><input type=\'hidden\' name=\'sign\' value=\'ACota2TasDV6bbX64qfoGJhwR8sLdscWTzlkF4BOead9c9j4gYEDZP8uSCt3hsWcuD2ZenzcPC62CVEn0jC67VwWxv+7UECv5YuzaDu/nvRw0C9VytkPthojjaGlbYpQVUyWieDMbgbwljhcPcAEmZy/LWyhkqGN0eLyYnTZy5Q5ivUvp2oz00fHMKLTqS45LgKadDZNPlt7gfI8X4m/q99/pN7DNBitJU4VL1EcVd5H/P+w/Wj7D1WpaDiaBDXsMn9kyDadyYZ7sD2Bo9kU4QKBPwGnUZHMGHKzLMEqbZMQlsIiTrmLblx6OKys4aVUojmbM6+VMtA0C5achCCtJ8U=\'/><input type=\'submit\' value=\'ok\' style=\'display:none;\'\'></form><script>document.forms[\'alipaysubmit\'].submit();</script>'
