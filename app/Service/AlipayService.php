@@ -66,6 +66,10 @@ class AlipayService
         //从数据库获取订单数据
         $order_detail = $this->order->findOne('order_id', $order_id);
 
+        if (empty($order_detail)) {
+            return false;
+        }
+
         if (!empty($order_detail['order_number']) || !empty($order_detail['trade_no'])){
 
             //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
