@@ -70,7 +70,7 @@ class AlipayService
             return false;
         }
 
-        if (!empty($order_detail['order_number']) || !empty($order_detail['trade_no'])){
+        if (!empty($order_detail['order_number']) && !empty($order_detail['trade_no'])){
 
             //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
             //商户订单号，和支付宝交易号二选一
