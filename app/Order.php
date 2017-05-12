@@ -8,6 +8,7 @@ class Order extends Model
 {
     public $timestamps = true;
     protected $fillable = [
+        'order_number',
     	'user_id',
     	'product_id',
         'title',

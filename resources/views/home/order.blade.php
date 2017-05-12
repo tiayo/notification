@@ -58,7 +58,7 @@ $(document).ready(function(){
     <span>位置：</span>
     <ul class="placeul">
     <li><a href="#">首页</a></li>
-    <li><a href="#">分类管理</a></li>
+    <li><a href="#">订单管理</a></li>
     </ul>
     </div>
     
@@ -103,23 +103,25 @@ $(document).ready(function(){
             <tr>
                 <th><input type="checkbox" id="select_all" /></th>
                 <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                <th>名称</th>
-                <th>父级</th>
-                <th>别名</th>
+                <th>订单号</th>
+                <th>交易号</th>
+                <th>订单名称</th>
+                <th>订单内容</th>
+                <th>交易状态</th>
                 <th>创建时间</th>
-                <th>更新时间</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
-        @foreach ($list_category as $row)
+        @foreach ($list_order as $row)
             <tr>
-                <td><input name="check[]" value="{{$row['category_id']}}" type="checkbox"/></td>
-                <td>{{$row['category_id']}}</td>
-                <td>{{$row['name']}}</td>
-                <td>{{$row['parent_name']}}</td>
-                <td>{{$row['alias'] or ''}}</td>
-                <td>{{$row['created_at']}}</td>
+                <td><input name="check[]" value="{{$row['order_id']}}" type="checkbox"/></td>
+                <td>{{$row['order_id']}}</td>
+                <td>{{$row['order_number']}}</td>
+                <td>{{$row['trade_no']}}</td>
+                <td>{{$row['title']}}</td>
+                <td>{{$row['content']}}</td>
+                <td>{{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})</td>
                 <td>{{$row['updated_at']}}</td>
                 <td>
                     <a href="/admin/category/update/{{$row['category_id']}}" class="tablelink">修改</a>

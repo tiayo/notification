@@ -33,9 +33,9 @@ class AlipayController extends Controller
      */
     public function alipay($order)
     {
-        $order = $this->order->findOne($order);
+        $order = $this->order->findOne('order_id', $order);
         return view('payment.alipay_pay', [
-            'WIDout_trade_no' => $order['order_id'],
+            'WIDout_trade_no' => $order['order_number'],
             'WIDsubject' => $order['title'],
             'WIDtotal_amount' => $order['total_amount'],
             'WIDbody' => $order['content']
@@ -64,13 +64,13 @@ class AlipayController extends Controller
 
         if ($this->alipay->callback($callback)) {
             return view('payment.success', [
-                'order' => $this->order->findOne($callback['out_trade_no']),
+                'order' => $this->order->findOne('order_number', $callback['out_trade_no']),
                 'callback' => $callback,
             ]);
         }
 
         return view('payment.faile', [
-            'order' => $this->order->findOne($callback['out_trade_no']),
+            'order' => $this->order->findOne('order_number', $callback['out_trade_no']),
             'callback' => $callback,
         ]);
     }
@@ -84,7 +84,7 @@ class AlipayController extends Controller
      */
     public function query($order_id)
     {
-        if ($this->query($order_id)) {
+        if ($this->alipay->query($order_id)) {
             return '付款成功!';
         }
         return '未付款';
@@ -100,7 +100,7 @@ class AlipayController extends Controller
         $result = $alipaySevice->check($app);
         if ($result) {
             if($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
-                $this->order->update('order_id', $app['out_trade_no'], [
+                $this->order->update('order_number', $app['out_trade_no'], [
                     'payment_type' => 'alipay',
                     'trade_no' => $app['trade_no'],
                     'payment_status' => 1

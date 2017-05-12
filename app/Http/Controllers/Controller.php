@@ -37,4 +37,16 @@ class Controller extends BaseController
                 break;
         }
     }
+
+    public static function paymentStatus($num)
+    {
+        switch ($num) {
+            case 0 :
+                return '未付款';
+                break;
+            case 1 :
+                return '付款成功';
+                break;
+        }
+    }
 }

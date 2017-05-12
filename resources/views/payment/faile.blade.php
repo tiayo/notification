@@ -12,7 +12,7 @@
     <div class="page-container">
         <div class="page-main">
             <h3>
-                <strong>未成功付款！</strong>订单号：{{$callback['out_trade_no']}}<span>&emsp;({{config('site.version')}})</span>
+                <strong>未成功付款！</strong>订单号：{{$callback['out_trade_no']}}
             </h3>
             <div class="page-actions">
                 <div class="detail">

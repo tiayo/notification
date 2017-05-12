@@ -6,6 +6,7 @@ use App\Category;
 use App\Policies\ViewPolicy;
 use App\Service\CategoryService;
 use App\Service\IndexService;
+use App\Service\OrderService;
 use App\Service\TaskService;
 use App\Service\VerficationService;
 use App\Task;
@@ -28,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         CategoryService::class => ViewPolicy::class,
         User::class => ViewPolicy::class,
         IndexService::class => ViewPolicy::class,
+        OrderService::class => ViewPolicy::class,
         VerficationService::class => ViewPolicy::class,
     ];
 

@@ -64,13 +64,13 @@ class AlipayService
         $result = [];
 
         //从数据库获取订单数据
-        $order_detail = $this->order->findOne($order_id);
+        $order_detail = $this->order->findOne('order_id', $order_id);
 
-        if (!empty($order_detail['order_id']) || !empty($order_detail['trade_no'])){
+        if (!empty($order_detail['order_number']) || !empty($order_detail['trade_no'])){
 
             //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
             //商户订单号，和支付宝交易号二选一
-            $out_trade_no = trim($order_detail['order_id']);
+            $out_trade_no = trim($order_detail['order_number']);
 
             //支付宝交易号，和商户订单号二选一
             $trade_no = trim($order_detail['trade_no']);
@@ -109,8 +109,9 @@ class AlipayService
      */
     public function callback($get)
     {
-        $order_id = $get['out_trade_no'];
-        $order_detail = $this->order->findOne($order_id);
+        $order_number = $get['out_trade_no'];
+        $order_detail = $this->order->findOne('order_number', $order_number);
+        $order_id = $order_detail['order_id'];
 
         //如果已经接收到异步请求并验证通过，则直接跳过回调查询
         if ($order_detail['payment_status'] == 1) {

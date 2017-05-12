@@ -8,8 +8,8 @@ a:hover{text-decoration:underline}
 .page-container{position:relative;z-index:1}
 .page-main{position:relative;background:#f9f9f9;margin:0 auto;width:617px;-ms-box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;padding:50px 50px 70px}
 .page-main:before{content:'';display:block;background:url(img/errorPageBorder.png?1427783409637);height:7px;position:absolute;top:-7px;width:100%;left:0}
-.page-main h3{font-size:16px;font-weight:400;border-bottom:1px solid #d0d0d0}
-.page-main h3 strong{font-size:54px;font-weight:400;margin-right:20px}
+.page-main h3{font-size:15px;font-weight:400;border-bottom:1px solid #d0d0d0}
+.page-main h3 strong{font-size:54px;font-weight:400;}
 .page-main h3 span{font-size:14px;}
 .page-main h4{float:left;font-size:20px;font-weight:400;color:#333}
 .page-actions{font-size:0;z-index:100}
