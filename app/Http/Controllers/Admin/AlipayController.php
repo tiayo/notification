@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Alipay\Wappay\Service\AlipayTradeService;
+use App\Payment\Alipay\Wappay\Service\AlipayTradeService;
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Service\AlipayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
 
 class AlipayController extends Controller
 {
@@ -48,7 +47,7 @@ class AlipayController extends Controller
     public function pay()
     {
         $post = $this->request->all();
-        $this->alipay->pay($post);
+        $this->alipay->Pay($post);
     }
 
     /**

@@ -7,11 +7,12 @@
  * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
  */
 
-namespace App\Alipay\Wappay\Service;
+namespace App\Payment\Alipay\Wappay\Service;
 
-use App\Alipay\Aop\Request\AlipayTradeWapPayRequest;
-use App\Alipay\Aop\AopClient;
-use App\Alipay\Aop\Request\AlipayTradeQueryRequest;
+use App\Payment\Alipay\Aop\Request\AlipayTradeWapPayRequest;
+use App\Payment\Alipay\Aop\Request\AlipayTradePagePayRequest;
+use App\Payment\Alipay\Aop\AopClient;
+use App\Payment\Alipay\Aop\Request\AlipayTradeQueryRequest;
 
 class AlipayTradeService {
 
@@ -63,9 +64,26 @@ class AlipayTradeService {
 		}
 
 	}
+
 	function AlipayWapPayService($alipay_config) {
 		$this->__construct($alipay_config);
 	}
+
+	function pagePay($builder, $return_url, $notify_url)
+    {
+        //打印业务参数
+        $this->writeLog($builder);
+
+        $request = new AlipayTradePagePayRequest();
+        $request->setNotifyUrl($notify_url);
+        $request->setReturnUrl($return_url);
+        $request->setBizContent($builder);
+
+        // 首先调用支付api
+        $response = $this->aopclientRequestExecute($request, true);
+
+        return $response;
+    }
 
 	/**
 	 * alipay.trade.wap.pay
@@ -74,26 +92,24 @@ class AlipayTradeService {
 	 * @param $notify_url 异步通知地址，公网可以访问
 	 * @return $response 支付宝返回的信息
  	*/
-	function wapPay($builder,$return_url,$notify_url) {
-	
-		$biz_content = $builder->getBizContent();
-		//打印业务参数
-		$this->writeLog($biz_content);
+	function wapPay($builder,$return_url,$notify_url)
+    {
+        //打印业务参数
+		$this->writeLog($builder);
 	
 		$request = new AlipayTradeWapPayRequest();
 	
 		$request->setNotifyUrl($notify_url);
 		$request->setReturnUrl($return_url);
-		$request->setBizContent ( $biz_content );
+		$request->setBizContent ($builder);
 	
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request,true);
-		// $response = $response->alipay_trade_wap_pay_response;
+
 		return $response;
 	}
 
 	 function aopclientRequestExecute($request,$ispage=false) {
-
 		$aop = new AopClient ();
 		$aop->gatewayUrl = $this->gateway_url;
 		$aop->appId = $this->appid;

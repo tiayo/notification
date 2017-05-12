@@ -1,14 +1,17 @@
 <?php
 /**
- * ALIPAY API: alipay.trade.page.pay request
+ * ALIPAY API: alipay.trade.wap.pay request
  *
  * @author auto create
- * @since 1.0, 2017-04-06 15:55:36
+ * @since 1.0, 2017-04-05 17:31:42
  */
-class AlipayTradePagePayRequest
+
+namespace App\Payment\Alipay\Aop\Request;
+
+class AlipayTradeWapPayRequest
 {
 	/** 
-	 * 统一收单下单并支付页面接口
+	 * 手机网站支付接口2.0
 	 **/
 	private $bizContent;
 
@@ -35,7 +38,7 @@ class AlipayTradePagePayRequest
 
 	public function getApiMethodName()
 	{
-		return "alipay.trade.page.pay";
+		return "alipay.trade.wap.pay";
 	}
 
 	public function setNotifyUrl($notifyUrl)
