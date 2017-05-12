@@ -2,12 +2,13 @@
 
 namespace App\Service;
 
-use App\Alipay\Wappay\Service\AlipayTradeService;
-use App\Alipay\Wappay\Buildermodel\AlipayTradeWapPayContentBuilder;
-use App\Alipay\Wappay\Buildermodel\AlipayTradeQueryContentBuilder;
+use App\Payment\Alipay\Wappay\Service\AlipayTradeService;
+use App\Payment\Alipay\Wappay\Buildermodel\AlipayTradeWapPayContentBuilder;
+use App\Payment\Alipay\Wappay\Buildermodel\AlipayTradeQueryContentBuilder;
 use App\Repositories\OrderRepositories;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
+use BrowserDetect;
 
 class AlipayService
 {
@@ -18,39 +19,49 @@ class AlipayService
         $this->order = $order;
     }
 
+    public function Pay($post)
+    {
+        if (!empty($post['WIDout_trade_no'])&& trim($post['WIDout_trade_no'])!="") {
+            $array['out_trade_no'] = $post['WIDout_trade_no'];
+            $array['total_amount'] = $post['WIDtotal_amount'];
+            $array['subject'] = $post['WIDsubject'];
+            $array['body'] = $post['WIDbody'];
+        }
+
+        //判断电脑端或手机端，调用对应方法
+        if (BrowserDetect::isMobile() || BrowserDetect::isTablet()) {
+            $this->wapPay($array);
+        } elseif (BrowserDetect::isDesktop()) {
+            $this->pagePay($array);
+        }
+    }
+
     /**
-     * 支付
+     * 电脑端支付
      *
      * @param $post
      */
-    public function pay($post)
+    public function pagePay($array)
     {
-        if (!empty($post['WIDout_trade_no'])&& trim($post['WIDout_trade_no'])!=""){
-            //商户订单号，商户网站订单系统中唯一订单号，必填
-            $out_trade_no = $post['WIDout_trade_no'];
+        $array['product_code'] = 'FAST_INSTANT_TRADE_PAY';
+        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
 
-            //订单名称，必填
-            $subject = $post['WIDsubject'];
+        $alipayTradeService = new AlipayTradeService();
+        $alipayTradeService->pagePay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
+    }
 
-            //付款金额，必填
-            $total_amount = $post['WIDtotal_amount'];
+    /**
+     * 手机端支付
+     *
+     * @param $post
+     */
+    public function wapPay($array)
+    {
+        $array['product_code'] = 'QUICK_WAP_PAY';
+        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
 
-            //商品描述，可空
-            $body = $post['WIDbody'];
-
-            //超时时间
-            $timeout_express="1m";
-
-            $payRequestBuilder = new AlipayTradeWapPayContentBuilder();
-            $payRequestBuilder->setBody($body);
-            $payRequestBuilder->setSubject($subject);
-            $payRequestBuilder->setOutTradeNo($out_trade_no);
-            $payRequestBuilder->setTotalAmount($total_amount);
-            $payRequestBuilder->setTimeExpress($timeout_express);
-
-            $alipayTradeService = new AlipayTradeService();
-            $alipayTradeService->wapPay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
-        }
+        $alipayTradeService = new AlipayTradeService();
+        $alipayTradeService->wapPay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
     }
 
     /**
@@ -66,26 +77,30 @@ class AlipayService
         //从数据库获取订单数据
         $order_detail = $this->order->findOne('order_id', $order_id);
 
+        //判断订单是否存在
         if (empty($order_detail)) {
+            throw new \Exception('订单不存在！', 403);
+        }
+
+        //判断交易码是否存在
+        if (empty($order_detail['order_number']) || empty($order_detail['trade_no'])) {
             return false;
         }
 
-        if (!empty($order_detail['order_number']) && !empty($order_detail['trade_no'])){
+        //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
+        //商户订单号，和支付宝交易号二选一
+        $out_trade_no = trim($order_detail['order_number']);
 
-            //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
-            //商户订单号，和支付宝交易号二选一
-            $out_trade_no = trim($order_detail['order_number']);
+        //支付宝交易号，和商户订单号二选一
+        $trade_no = trim($order_detail['trade_no']);
 
-            //支付宝交易号，和商户订单号二选一
-            $trade_no = trim($order_detail['trade_no']);
+        $RequestBuilder = new AlipayTradeQueryContentBuilder();
+        $RequestBuilder->setTradeNo($trade_no);
+        $RequestBuilder->setOutTradeNo($out_trade_no);
 
-            $RequestBuilder = new AlipayTradeQueryContentBuilder();
-            $RequestBuilder->setTradeNo($trade_no);
-            $RequestBuilder->setOutTradeNo($out_trade_no);
+        $Response = new AlipayTradeService();
+        $result = $Response->Query($RequestBuilder);
 
-            $Response = new AlipayTradeService();
-            $result = $Response->Query($RequestBuilder);
-        }
 
         //验证返回的订单交易号
         if ($result->trade_no == $order_detail['trade_no'] && $result->out_trade_no == $order_detail['order_number'])

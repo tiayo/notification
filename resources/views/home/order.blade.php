@@ -63,37 +63,6 @@ $(document).ready(function(){
     </div>
     
     <div class="rightinfo">
-    
-    <div class="tools">
-    
-    	<ul class="toolbar">
-        <li><a href="/admin/category/add"><span><img src="/images/t01.png" /></span>添加</a></li>
-        <li id="modified"><span><img src="/images/t02.png" /></span>修改</li>
-        <li class="click"><span><img src="/images/t03.png" /></span>删除</li>
-        </ul>
-        
-        
-        <ul class="toolbar1">
-            <li class="paginItem"><a href="{{($page-1) < 1 ? 1 : ($page-1)}}">上一页</a></li>
-		    @for ($i=1;$i<=$max_page;$i++)
-                <li class="paginItem"><a href="{{$i}}">第{{$i}}页</a></li>
-		    @endfor
-   			@if ($max_page > 5)
-                <li class="paginItem">
-                    <select class="lanmu" onchange="window.location=this.value;">
-                        <option value="">更多</option>
-                        @for ($i=6;$i<=$max_page;$i++)
-                            <option value="{{$i}}">第{{$i}}页</option>
-                        @endfor
-                    </select>
-                </li>
-            @endif
-	        <li class="paginItem"><a href="{{($page+1) > $max_page ? $max_page : $page+1}}">下一页</a></li>
-		</ul>
-    
-    </div>
-    
-
    
 <form method="post" action="/admin/category/select" id="selectEvent">
     {{ csrf_field() }}
@@ -103,7 +72,9 @@ $(document).ready(function(){
             <tr>
                 <th><input type="checkbox" id="select_all" /></th>
                 <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                <th>用户ID</th>
+                @if ($is_admin)
+                    <th>用户ID</th>
+                @endif
                 <th>订单号</th>
                 <th>交易号</th>
                 <th>订单名称</th>
@@ -118,7 +89,9 @@ $(document).ready(function(){
             <tr>
                 <td><input name="check[]" value="{{$row['order_id']}}" type="checkbox"/></td>
                 <td>{{$row['order_id']}}</td>
-                <td>{{$row['user_id']}}</td>
+                @if ($is_admin)
+                    <td>{{$row['user_id']}}</td>
+                @endif
                 <td>{{$row['order_number']}}</td>
                 <td>{{$row['trade_no']}}</td>
                 <td>{{$row['title']}}</td>
@@ -126,8 +99,10 @@ $(document).ready(function(){
                 <td>{{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})</td>
                 <td>{{$row['updated_at']}}</td>
                 <td>
-                    <a href="/admin/category/update/{{$row['category_id']}}" class="tablelink">修改</a>
-                    <a href="/admin/category/delete/{{$row['category_id']}}" class="tablelink"> 删除</a>
+                    <a href="/admin/order/view/{{$row['order_id']}}" class="tablelink">查看</a>
+                    @if ($is_admin)
+                        <a href="/admin/order/refund/{{$row['order_id']}}" class="tablelink">退款</a>
+                    @endif
                 </td>
             </tr>
         @endforeach

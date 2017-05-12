@@ -34,9 +34,16 @@ class OrderRepositories
             ->create($data);
     }
 
-    public function count()
+    public function adminCount()
     {
         return $this->order->count();
+    }
+
+    public function userCount()
+    {
+        return $this->order
+            ->where('user_id', Auth::id())
+            ->count();
     }
 
     public function adminShow($page, $num)

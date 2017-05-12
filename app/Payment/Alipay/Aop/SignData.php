@@ -6,7 +6,7 @@
  * Time: 下午6:21
  */
 
-namespace App\Alipay\Aop;
+namespace App\Payment\Alipay\Aop;
 
 class SignData {
 
