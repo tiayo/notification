@@ -84,7 +84,7 @@ class AlipayService
         }
 
         //验证返回的订单交易号
-        if ($result->trade_no == $order_detail['trade_no'])
+        if ($result->trade_no == $order_detail['trade_no'] && $result->out_trade_no == $order_detail['order_number'])
         {
             //获取交易结果
             if ($result->trade_status == 'TRADE_SUCCESS' || $result->trade_status == 'TRADE_FINISHED') {

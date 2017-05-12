@@ -103,10 +103,11 @@ $(document).ready(function(){
             <tr>
                 <th><input type="checkbox" id="select_all" /></th>
                 <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
+                <th>用户ID</th>
                 <th>订单号</th>
                 <th>交易号</th>
                 <th>订单名称</th>
-                <th>订单内容</th>
+                <th>金额</th>
                 <th>交易状态</th>
                 <th>创建时间</th>
                 <th>操作</th>
@@ -117,10 +118,11 @@ $(document).ready(function(){
             <tr>
                 <td><input name="check[]" value="{{$row['order_id']}}" type="checkbox"/></td>
                 <td>{{$row['order_id']}}</td>
+                <td>{{$row['user_id']}}</td>
                 <td>{{$row['order_number']}}</td>
                 <td>{{$row['trade_no']}}</td>
                 <td>{{$row['title']}}</td>
-                <td>{{$row['content']}}</td>
+                <td>{{$row['total_amount']}}</td>
                 <td>{{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})</td>
                 <td>{{$row['updated_at']}}</td>
                 <td>
