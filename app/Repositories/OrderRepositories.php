@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Order;
+use Illuminate\Support\Facades\Auth;
 
 class OrderRepositories
 {
@@ -13,10 +14,10 @@ class OrderRepositories
         $this->order = $order;
     }
 
-    public function findOne($order_id)
+    public function findOne($option, $value)
     {
         return $this->order
-            ->where('order_id', $order_id)
+            ->where($option, $value)
             ->first();
     }
 
@@ -33,4 +34,27 @@ class OrderRepositories
             ->create($data);
     }
 
+    public function count()
+    {
+        return $this->order->count();
+    }
+
+    public function adminShow($page, $num)
+    {
+        return $this->order
+            ->skip(($page-1)*$num)
+            ->take($num)
+            ->orderBy('order_id', 'desc')
+            ->get();
+    }
+
+    public function userShow($page, $num)
+    {
+        return $this->order
+            ->where('user_id', Auth::id())
+            ->skip(($page-1)*$num)
+            ->take($num)
+            ->orderBy('order_id', 'desc')
+            ->get();
+    }
 }

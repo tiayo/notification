@@ -38,8 +38,10 @@ class IndexService
 
     public function sponsor($money)
     {
+        $user_id = Auth::id();
         $data = [
-            'user_id' => Auth::id(),
+            'order_number' => $user_id.date('YmdHis') . str_pad(mt_rand(1, 99999), 5, '0', STR_PAD_LEFT),
+            'user_id' => $user_id,
             'title' => '赞助'.config('site.title'),
             'content' => '赞助'.config('site.title').$money.'块钱',
             'total_amount' => $money,

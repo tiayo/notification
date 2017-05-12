@@ -15,6 +15,7 @@ class Order extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->bigIncrements('order_id');
+            $table->text('order_number');
             $table->integer('user_id');
             $table->integer('product_id')->nullable();
             $table->text('title');
