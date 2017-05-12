@@ -2,9 +2,8 @@
 
 namespace App\Service;
 
-use App\Payment\Alipay\Wappay\Service\AlipayTradeService;
-use App\Payment\Alipay\Wappay\Buildermodel\AlipayTradeWapPayContentBuilder;
-use App\Payment\Alipay\Wappay\Buildermodel\AlipayTradeQueryContentBuilder;
+use App\Payment\Alipay\Pay\Service\AlipayTradeService;
+use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeQueryContentBuilder;
 use App\Repositories\OrderRepositories;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
@@ -30,10 +29,13 @@ class AlipayService
 
         //判断电脑端或手机端，调用对应方法
         if (BrowserDetect::isMobile() || BrowserDetect::isTablet()) {
-            $this->wapPay($array);
+            $payRequestBuilder = $this->wapPay($array);
         } elseif (BrowserDetect::isDesktop()) {
-            $this->pagePay($array);
+            $payRequestBuilder = $this->pagePay($array);
         }
+
+        $alipayTradeService = new AlipayTradeService();
+        $alipayTradeService->pagePay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
     }
 
     /**
@@ -44,10 +46,7 @@ class AlipayService
     public function pagePay($array)
     {
         $array['product_code'] = 'FAST_INSTANT_TRADE_PAY';
-        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
-
-        $alipayTradeService = new AlipayTradeService();
-        $alipayTradeService->pagePay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
+        return json_encode($array, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -58,10 +57,7 @@ class AlipayService
     public function wapPay($array)
     {
         $array['product_code'] = 'QUICK_WAP_PAY';
-        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
-
-        $alipayTradeService = new AlipayTradeService();
-        $alipayTradeService->wapPay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
+        return json_encode($array, JSON_UNESCAPED_UNICODE);
     }
 
     /**
