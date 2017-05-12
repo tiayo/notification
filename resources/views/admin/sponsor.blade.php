@@ -36,6 +36,15 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        function other_money() {
+            var option_money = $('.select1').val();
+            if (option_money === '1.00') {
+                $('#other_input').css('display', 'block');
+                $('#money_select').css('display', 'none');
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -66,18 +75,20 @@
                 {{ csrf_field() }}
                 <ul class="forminfo">
                     <div class="xinxi_zhaoping">
-                        <li>
+                        <li id="money_select">
                             <label>金额<b>*</b></label>
                             <div class="vocation">
-                                <select class="select1" name="money" style="width: 347px;">
+                                <select class="select1" name="money" style="width: 347px;" onchange="other_money()">
                                     <option value="10.00">10.00</option>
                                     <option value="20.00">20.00</option>
                                     <option value="30.00">30.00</option>
                                     <option value="50.00">50.00</option>
                                     <option value="100.00">100.00</option>
+                                    <option value="1.00">输入其他金额</option>
                                 </select>
                             </div>
                         </li>
+                        <li id="other_input" style="display: none;"><label>金额<b>*</b></label><input name="money" type="text" class="dfinput"/></li>
                     </div>
                 </ul>
                 <input type="hidden" id="payment_type" name="payment_type">
