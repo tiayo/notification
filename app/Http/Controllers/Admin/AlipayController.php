@@ -84,10 +84,16 @@ class AlipayController extends Controller
      */
     public function query($order_id)
     {
-        if ($this->alipay->query($order_id)) {
-            return '付款成功!';
+        try {
+            $query = $this->alipay->query($order_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
         }
-        return '未付款';
+
+        if ($query) {
+            return response('付款成功');
+        }
+        return response('未付款');
     }
 
     /**

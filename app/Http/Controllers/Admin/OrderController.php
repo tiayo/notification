@@ -8,6 +8,7 @@ use App\Repositories\OrderRepositories;
 use App\Service\AlipayService;
 use App\Service\OrderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
