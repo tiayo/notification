@@ -29,13 +29,10 @@ class AlipayService
 
         //判断电脑端或手机端，调用对应方法
         if (BrowserDetect::isMobile() || BrowserDetect::isTablet()) {
-            $payRequestBuilder = $this->wapPay($array);
+            $this->wapPay($array);
         } elseif (BrowserDetect::isDesktop()) {
-            $payRequestBuilder = $this->pagePay($array);
+            $this->pagePay($array);
         }
-
-        $alipayTradeService = new AlipayTradeService();
-        $alipayTradeService->pagePay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
     }
 
     /**
@@ -46,7 +43,10 @@ class AlipayService
     public function pagePay($array)
     {
         $array['product_code'] = 'FAST_INSTANT_TRADE_PAY';
-        return json_encode($array, JSON_UNESCAPED_UNICODE);
+        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
+
+        $alipayTradeService = new AlipayTradeService();
+        $alipayTradeService->pagePay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
     }
 
     /**
@@ -57,7 +57,10 @@ class AlipayService
     public function wapPay($array)
     {
         $array['product_code'] = 'QUICK_WAP_PAY';
-        return json_encode($array, JSON_UNESCAPED_UNICODE);
+        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
+
+        $alipayTradeService = new AlipayTradeService();
+        $alipayTradeService->wapPay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
     }
 
     /**
