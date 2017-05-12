@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Payment\Alipay\Wappay\Service\AlipayTradeService;
+use App\Payment\Alipay\Pay\Service\AlipayTradeService;
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Service\AlipayService;
