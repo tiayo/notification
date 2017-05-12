@@ -32,14 +32,18 @@
         $(document).ready(function() {
             $('#alipay').click(function(){
                 $('#payment_type').val('alipay');
-                $('#form').submit();
+                if ($('#money_select').css('display') === 'none') {
+                    $('#form2').submit();
+                } else {
+                    $('#form').submit();
+                }
             });
         });
     </script>
     <script type="text/javascript">
         function other_money() {
             var option_money = $('.select1').val();
-            if (option_money === '1.00') {
+            if (option_money === '0') {
                 $('#other_input').css('display', 'block');
                 $('#money_select').css('display', 'none');
             }
@@ -84,15 +88,24 @@
                                     <option value="30.00">30.00</option>
                                     <option value="50.00">50.00</option>
                                     <option value="100.00">100.00</option>
-                                    <option value="1.00">输入其他金额</option>
+                                    <option value="0">输入其他金额</option>
                                 </select>
                             </div>
                         </li>
-                        <li id="other_input" style="display: none;"><label>金额<b>*</b></label><input name="money" type="text" class="dfinput"/></li>
                     </div>
                 </ul>
                 <input type="hidden" id="payment_type" name="payment_type">
             </form>
+
+            <form id="form2" method="post" action="/admin/sponsor">
+                {{ csrf_field() }}
+                <ul class="forminfo">
+                    <div class="xinxi_zhaoping">
+                        <li id="other_input" style="display: none;"><label>金额<b>*</b></label><input name="money" type="text" class="dfinput"/></li>
+                    </div>
+                </ul>
+            </form>
+
             <p>选择支付方式：<input id="alipay" type="button" class="btn" value="支付宝"/></p>
         </div>
     </div>
