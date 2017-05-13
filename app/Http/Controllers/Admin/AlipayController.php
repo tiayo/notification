@@ -105,15 +105,22 @@ class AlipayController extends Controller
         $result = $alipaySevice->check($app);
         if ($result) {
             if($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
-                $this->order->update('order_number', $app['out_trade_no'], [
-                    'payment_type' => 'alipay',
-                    'trade_no' => $app['trade_no'],
-                    'payment_status' => 1
-                ]);
+                //本地验证订单合法性
+                $order_detail = $this->order->findOne('order_number', $app['out_trade_no']);
+                if ($app['total_amount'] == $order_detail['total_amount'] &&
+                    $app['seller_id'] == config('alipay.seller_id') &&
+                    $app['app_id'] == config('alipay.app_id')
+                ) {
+                    $this->order->update('order_number', $app['out_trade_no'], [
+                        'payment_type' => 'alipay',
+                        'trade_no' => $app['trade_no'],
+                        'payment_status' => 1
+                    ]);
+                    //成功记录到日志
+                    Log::info('alipay_success_post:'.json_encode($app));
+                    return response('success');
+                }
             }
-            //成功记录到日志
-            Log::info('alipay_success_post:'.json_encode($app));
-            return response('success');
         }
         //验证失败记录到日志
         Log::info('alipay_faile_post:'.json_encode($app));
