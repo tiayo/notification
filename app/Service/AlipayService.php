@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Facades\Verfication;
 use App\Payment\Alipay\Pay\Service\AlipayTradeService;
 use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeQueryContentBuilder;
 use App\Repositories\OrderRepositories;
@@ -16,6 +17,21 @@ class AlipayService
     public function __construct(OrderRepositories $order)
     {
         $this->order = $order;
+    }
+
+    /**
+     * 权限验证
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        try {
+            Verfication::admin(AlipayService::class);
+        } catch (\Exception $e) {
+            return false;
+        }
+        return true;
     }
 
     public function Pay($post)
@@ -115,6 +131,79 @@ class AlipayService
             return false;
         }
         throw new Exception('返回的订单验证不通过，请联系管理员。', 401);
+    }
+
+    /**
+     * 退款视图
+     *
+     * @param $order_id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function refundView($order_id)
+    {
+        $order = $this->order->findOne('order_id', $order_id);
+        if ($order['payment_status'] != 1) {
+            throw new \Exception('当前订单付款状态不允许退款，请稍候再试。');
+        }
+        return $order;
+    }
+
+    /**
+     * 发起退款
+     *
+     * @param $data
+     */
+    public function refundAction($data, $order_id)
+    {
+        $order = $this->order->findOne('order_id', $order_id);
+
+        //验证订单正确性
+        if ($data['out_trade_no'] == $order['order_number'] &&
+            $data['trade_no'] == $order['trade_no']
+        ) {
+            //验证退款金额
+
+        }
+
+        throw new \Exception('订单信息有误！');
+    }
+
+    /**
+     * 提交退款
+     *
+     * @param $data
+     */
+    public function refund($data)
+    {
+        if (!empty($_POST['WIDout_trade_no']) || !empty($_POST['WIDtrade_no'])) {
+
+            //商户订单号，和支付宝交易号二选一
+            $out_trade_no = trim($_POST['WIDout_trade_no']);
+
+            //支付宝交易号，和商户订单号二选一
+            $trade_no = trim($_POST['WIDtrade_no']);
+
+            //退款金额，不能大于订单总金额
+            $refund_amount=trim($_POST['WIDrefund_amount']);
+
+            //退款的原因说明
+            $refund_reason=trim($_POST['WIDrefund_reason']);
+
+            //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传。
+            $out_request_no=trim($_POST['WIDout_request_no']);
+
+            $RequestBuilder = new AlipayTradeRefundContentBuilder();
+            $RequestBuilder->setTradeNo($trade_no);
+            $RequestBuilder->setOutTradeNo($out_trade_no);
+            $RequestBuilder->setRefundAmount($refund_amount);
+            $RequestBuilder->setRefundReason($refund_reason);
+            $RequestBuilder->setOutRequestNo($out_request_no);
+
+            $Response = new AlipayTradeService($config);
+            $result=$Response->Refund($RequestBuilder);
+            return ;
+        }
     }
 
 

@@ -1,188 +1,115 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>随想校园社区收银台</title>
+    <title>{{config('site.title')}}收银台</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <style>
-        *{
-            margin:0;
-            padding:0;
-        }
-        ul,ol{
-            list-style:none;
-        }
-        body{
-            font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-        }
-        .hidden{
-            display:none;
-        }
-        .new-btn-login-sp{
-            padding: 1px;
-            display: inline-block;
-            width: 75%;
-        }
-        .new-btn-login {
-            background-color: #02aaf1;
-            color: #FFFFFF;
-            font-weight: bold;
-            border: none;
-            width: 100%;
-            height: 30px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        #main{
-            width:100%;
-            margin:0 auto;
-            font-size:14px;
-        }
-        .red-star{
-            color:#f00;
-            width:10px;
-            display:inline-block;
-        }
-        .null-star{
-            color:#fff;
-        }
-        .content{
-            margin-top:5px;
-        }
-        .content dt{
-            width:100px;
-            display:inline-block;
-            float: left;
-            margin-left: 20px;
-            color: #666;
-            font-size: 13px;
-            margin-top: 8px;
-        }
-        .content dd{
-            margin-left:120px;
-            margin-bottom:5px;
-        }
-        .content dd input {
-            width: 85%;
-            height: 28px;
-            border: 0;
-            -webkit-border-radius: 0;
-            -webkit-appearance: none;
-        }
-        #foot{
-            margin-top:10px;
-            position: absolute;
-            bottom: 15px;
-            width: 100%;
-        }
-        .foot-ul{
-            width: 100%;
-        }
-        .foot-ul li {
-            width: 100%;
-            text-align:center;
-            color: #666;
-        }
-        .note-help {
-            color: #999999;
-            font-size: 12px;
-            line-height: 130%;
-            margin-top: 5px;
-            width: 100%;
-            display: block;
-        }
-        #btn-dd{
-            margin: 20px;
-            text-align: center;
-        }
-        .foot-ul{
-            width: 100%;
-        }
-        .one_line{
-            display: block;
-            height: 1px;
-            border: 0;
-            border-top: 1px solid #eeeeee;
-            width: 100%;
-            margin-left: 20px;
-        }
-        .am-header {
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: box;
-            width: 100%;
-            position: relative;
-            padding: 7px 0;
-            -webkit-box-sizing: border-box;
-            -ms-box-sizing: border-box;
-            box-sizing: border-box;
-            background: #1D222D;
-            height: 50px;
-            text-align: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            box-pack: center;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            box-align: center;
-        }
-        .am-header h1 {
-            -webkit-box-flex: 1;
-            -ms-flex: 1;
-            box-flex: 1;
-            line-height: 18px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 300;
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/pay_confirm.css">
+    <script type="text/javascript" src="/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#alipay').click(function () {
+                $('#pay_form').attr('action', '/admin/alipay/pay');
+                $('#pay_form').submit();
+           });
+           
+           $('#weixin').click(function () {
+               $('#pay_form').attr('action', '/admin/weixin/pay');
+               $('#pay_form').submit();
+           });
+        });
+    </script>
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 <header class="am-header">
-    <h1>随想校园社区收银台</h1>
+    <h1>{{config('site.title')}}收银台</h1>
 </header>
 <div id="main">
-    <form name=alipayment action='/admin/alipay/pay' method=post target="_blank">
+    <form id='pay_form' method=post target="_blank">
         {{ csrf_field() }}
         <div id="body" style="clear:left">
             <dl class="content">
                 <dt>商户订单号
                     ：</dt>
                 <dd>
-                    <input id="WIDout_trade_no" name="WIDout_trade_no" value="{{$WIDout_trade_no}}" />
+                    <input id="WIDout_trade_no" name="WIDout_trade_no" value="{{$order['order_number']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>订单名称
                     ：</dt>
                 <dd>
-                    <input id="WIDsubject" name="WIDsubject" value="{{$WIDsubject}}" />
+                    <input id="WIDsubject" name="WIDsubject" value="{{$order['title']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>付款金额
                     ：</dt>
                 <dd>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="{{$WIDtotal_amount}}" />
+                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="{{$order['total_amount']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>商品描述：</dt>
                 <dd>
-                    <input id="WIDbody" name="WIDbody" value="{{$WIDbody}}" />
+                    <input id="WIDbody" name="WIDbody" value="{{$order['content']}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>订单状态：</dt>
+                <dd>
+                    <input value="{{$judge::orderStatus($order['order_status'])}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>付款类型：</dt>
+                <dd>
+                    <input value="{{$judge::paymentType($order['payment_type'])}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>付款状态：</dt>
+                <dd>
+                    <input value="{{$judge::paymentStatus($order['payment_status'])}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>交易号：</dt>
+                <dd>
+                    <input value="{{$order['trade_no'] or '未获取'}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>下单用户：</dt>
+                <dd>
+                    <input value="{{$order['name']}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>创建时间：</dt>
+                <dd>
+                    <input value="{{$order['created_at']}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>更新时间：</dt>
+                <dd>
+                    <input value="{{$order['updated_at']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt></dt>
                 <dd id="btn-dd">
                         <span class="new-btn-login-sp">
-                            <button class="new-btn-login" type="submit" style="text-align:center;">确 认</button>
+                            <button class="new-btn-login" id="alipay" type="button">支付宝 支付</button>
                         </span>
+
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" id="weixin"  type="button">微信 支付</button>
+                        </span>
+
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" type="button" onclick="location.href='/admin/alipay/refund/{{$order['order_id']}}'">退 款(申请)</button>
+                        </span>
+
                     <span class="note-help">如果您点击“确认”按钮，即表示您同意该次的执行操作。</span>
                 </dd>
             </dl>
         </div>
     </form>
+
     <div id="foot">
         <ul class="foot-ul">
             <li>
-                随想校园社区所有 2015-2018 TIAYO.COM
+                {{config('site.title')}}版权所有 2015-2018 TIAYO.COM
             </li>
         </ul>
     </div>

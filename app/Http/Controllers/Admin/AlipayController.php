@@ -32,8 +32,10 @@ class AlipayController extends Controller
      */
     public function alipay($order)
     {
-        $order = $this->order->findOne('order_id', $order);
+        $order = $this->order->findOrderAndUser('order_id', $order);
         return view('payment.alipay_pay', [
+            'order' => $order,
+            'judge' => app('App\Http\Controllers\Controller'),
             'WIDout_trade_no' => $order['order_number'],
             'WIDsubject' => $order['title'],
             'WIDtotal_amount' => $order['total_amount'],
@@ -93,6 +95,40 @@ class AlipayController extends Controller
             return response('付款成功');
         }
         return response('未付款');
+    }
+
+    /**
+     * 订单退款视图
+     *
+     * @param $order_id
+     *
+     */
+    public function refundView($order_id)
+    {
+        try {
+            $order = $this->alipay->refundView($order_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+        return view('payment.refund', [
+                'order' => $order,
+                'refund_number' => $order_id.strtotime(date('YmdHis')),
+            ]
+        );
+    }
+
+    public function refundAction($order_id)
+    {
+        $this->validate($this->request, [
+            'out_trade_no' => 'required',
+            'trade_no' => 'required',
+            'refund_amount' => "required",
+            'refund_reason' => 'required',
+            'out_request_no' => 'required|integer',
+        ]);
+
+        $data = $this->request->all();
+        $this->alipay->refundAction($data, $order_id);
     }
 
     /**

@@ -21,6 +21,15 @@ class OrderRepositories
             ->first();
     }
 
+    public function findOrderAndUser($option, $value)
+    {
+        return $this->order
+            ->join('users', 'order.user_id', '=', 'users.id')
+            ->select('order.*', 'users.name')
+            ->where($option, $value)
+            ->first();
+    }
+
     public function update($option, $value, $data)
     {
         return $this->order

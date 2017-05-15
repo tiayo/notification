@@ -100,9 +100,6 @@ $(document).ready(function(){
                 <td>{{$row['updated_at']}}</td>
                 <td>
                     <a href="/admin/order/view/{{$row['order_id']}}" class="tablelink">查看</a>
-                    @if ($is_admin)
-                        <a href="/admin/order/refund/{{$row['order_id']}}" class="tablelink">退款</a>
-                    @endif
                 </td>
             </tr>
         @endforeach
