@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Category;
 use App\Policies\ViewPolicy;
+use App\Service\AlipayService;
 use App\Service\CategoryService;
 use App\Service\IndexService;
 use App\Service\OrderService;
@@ -31,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         IndexService::class => ViewPolicy::class,
         OrderService::class => ViewPolicy::class,
         VerficationService::class => ViewPolicy::class,
+        AlipayService::class => ViewPolicy::class,
     ];
 
     /**

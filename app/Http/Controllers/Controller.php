@@ -49,4 +49,42 @@ class Controller extends BaseController
                 break;
         }
     }
+
+    public static function paymentType($type)
+    {
+        switch ($type) {
+            case 'alipay' :
+                return '支付宝';
+                break;
+            case 'weixin' :
+                return '微信支付';
+                break;
+            default :
+                return '未付款';
+        }
+    }
+
+    public static function orderStatus($num)
+    {
+        switch ($num) {
+            case 0 :
+                return '异常订单';
+                break;
+            case 1 :
+                return '正常订单';
+                break;
+            case 2 :
+                return '申请退款';
+                break;
+            case 3 :
+                return '退款完毕';
+                break;
+            case 4 :
+                return '退款失败';
+                break;
+            case 5 :
+                return '订单取消';
+                break;
+        }
+    }
 }

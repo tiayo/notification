@@ -7,4 +7,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/alipay/pay', 'AlipayController@pay');
     Route::get('/alipay/callback', 'AlipayController@callback');
     Route::post('/alipay/app', 'AlipayController@app');
+    Route::get('/alipay/refund/{order_id}', 'AlipayController@refundView');
+    Route::post('/alipay/refund/{order_id}', 'AlipayController@refundAction');
 });
