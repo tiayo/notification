@@ -80,6 +80,7 @@ $(document).ready(function(){
                 <th>订单名称</th>
                 <th>金额</th>
                 <th>交易状态</th>
+                <th>订单状态</th>
                 <th>创建时间</th>
                 <th>操作</th>
             </tr>
@@ -97,6 +98,7 @@ $(document).ready(function(){
                 <td>{{$row['title']}}</td>
                 <td>{{$row['total_amount']}}</td>
                 <td>{{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})</td>
+                <td>{{$status::orderStatus($row['order_status'])}}</td>
                 <td>{{$row['updated_at']}}</td>
                 <td>
                     <a href="/admin/order/view/{{$row['order_id']}}" class="tablelink">查看</a>

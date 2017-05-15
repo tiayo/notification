@@ -6,6 +6,7 @@ use App\Facades\Verfication;
 use App\Payment\Alipay\Pay\Service\AlipayTradeService;
 use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeQueryContentBuilder;
 use App\Repositories\OrderRepositories;
+use App\Repositories\RefundRepositories;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 use BrowserDetect;
@@ -13,10 +14,12 @@ use BrowserDetect;
 class AlipayService
 {
     protected $order;
+    protected $refund;
 
-    public function __construct(OrderRepositories $order)
+    public function __construct(OrderRepositories $order, RefundRepositories $refund)
     {
         $this->order = $order;
+        $this->refund = $refund;
     }
 
     /**
@@ -32,6 +35,21 @@ class AlipayService
             return false;
         }
         return true;
+    }
+
+    /**
+     * 验证用户是否可以操作本条订单
+     * 验证失败抛错误
+     *
+     * @param $order_id
+     * @return bool
+     * @throws \Exception
+     */
+    public function verfication($order_id)
+    {
+        if (!Verfication::update($this->order->findOne('order_id', $order_id))) {
+            throw new \Exception('您没有权限访问（代码：1003）！', 403);
+        }
     }
 
     public function Pay($post)
@@ -135,6 +153,7 @@ class AlipayService
 
     /**
      * 退款视图
+     * 订单状态为1,2，付款状态为1的订单才可以发起退款
      *
      * @param $order_id
      * @return mixed
@@ -142,31 +161,80 @@ class AlipayService
      */
     public function refundView($order_id)
     {
+        //权限验证
+        $this->verfication($order_id);
+
         $order = $this->order->findOne('order_id', $order_id);
-        if ($order['payment_status'] != 1) {
-            throw new \Exception('当前订单付款状态不允许退款，请稍候再试。');
+
+        if ($order['order_status'] != 1 && $order['order_status'] != 2) {
+            throw new \Exception('当前订单状态不允许退款，请联系管理员。');
         }
+
+        if ($order['payment_status'] != 1) {
+            throw new \Exception('当前订单付款状态不允许退款，请确定订单已经完成付款。');
+        }
+
         return $order;
     }
 
     /**
      * 发起退款
+     * 金额不超过订单总额，并且限制小数点为两位
+     * 退款订单存在则执行更新方s法（退款状态为2：申请退款 才可以修改）
      *
      * @param $data
      */
     public function refundAction($data, $order_id)
     {
-        $order = $this->order->findOne('order_id', $order_id);
+        //权限验证
+        $this->verfication($order_id);
+
+        //初始化
+        $value = [];
+
+        //验证订单状态、付款状态是否符合条件
+        $order = $this->refundView($order_id);
 
         //验证订单正确性
-        if ($data['out_trade_no'] == $order['order_number'] &&
-            $data['trade_no'] == $order['trade_no']
+        if ($data['out_trade_no'] != $order['order_number'] ||
+            $data['trade_no'] != $order['trade_no']
         ) {
-            //验证退款金额
-
+            throw new \Exception('订单本地验证失败！');
         }
 
-        throw new \Exception('订单信息有误！');
+        //验证退款金额
+        $refund_amount = (float)$data['refund_amount'];
+        $decimal = explode('.', (string)$refund_amount)[1] ?? null;
+        if (strlen($decimal) > 2 || $refund_amount > $order['total_amount'] || $refund_amount <= 0) {
+            throw new \Exception('退款金额验证失败！');
+        }
+
+        //提交数组
+        $value['refund_number'] = $data['refund_number'];
+        $value['user_id'] = $order['user_id'];
+        $value['order_id'] = $order_id;
+        $value['order_number'] = $order['order_number'];
+        $value['trade_no'] =  $order['trade_no'];
+        $value['refund_amount'] = $data['refund_amount'];
+        $value['refund_reason'] = $data['refund_reason'];
+        $value['payment_type'] = $order['payment_type'];
+
+        //判断订单退款是否存在
+        if (!empty($refund_exist = $this->refund->findOne('order_id', $order_id))) {
+            //验证状态是否可以更改
+            if ($refund_exist['refund_status'] != 2) {
+                throw new \Exception('当前退款状态不允许修改！');
+            }
+            //更新退款信息
+            return $this->refund->update($order_id, $value);
+        }
+
+        //加入退款信息
+        $this->refund->create($value);
+        //更新订单状态￥
+        $this->order->update('order_id', $order, [
+            'order_status' => 2,//申请退款状态
+        ]);
     }
 
     /**
