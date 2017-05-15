@@ -124,12 +124,11 @@ class TaskService
      */
     public function updateView($category_id, $task_id)
     {
-        try {
-            //验证权限
-            $this->verfication($task_id);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
+        //验证权限
+        if (!$this->verfication($task_id)) {
+            throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
+
         $result['old_input'] = $this->findFirst($task_id);
         $result['uri'] = route('task_update_post', ['category' => $category_id, 'id' => $task_id]);
 
@@ -170,8 +169,10 @@ class TaskService
      */
     public function update($data, $task_id)
     {
-        //权限验证
-        $this->verfication($task_id);
+        //验证权限
+        if (!$this->verfication($task_id)) {
+            throw new \Exception('您没有权限访问（代码：1002）！', 403);
+        }
 
         //权限验证通过
         $value['title'] = $data['title'];
@@ -195,8 +196,10 @@ class TaskService
      */
     public function destroy($task_id)
     {
-        //权限验证
-        $this->verfication($task_id);
+        //验证权限
+        if (!$this->verfication($task_id)) {
+            throw new \Exception('您没有权限访问（代码：1002）！', 403);
+        }
 
         //权限验证通过
         $this->task->destroy('task_id', $task_id);
@@ -260,6 +263,6 @@ class TaskService
      */
     public function verfication($task_id)
     {
-        return Verfication::taskUpdate($this->task->findOne('task_id', $task_id));
+        return Verfication::update($this->task->findOne('task_id', $task_id));
     }
 }

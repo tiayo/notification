@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Payment\Alipay\Pay\Service\AlipayTradeService;
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
+use App\Repositories\RefundRepositories;
 use App\Service\AlipayService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,31 +17,18 @@ class AlipayController extends Controller
     protected $config;
     protected $alipay;
     protected $order;
+    protected $refund;
 
-    public function __construct(Request $request, AlipayService $alipay, OrderRepositories $order)
+    public function __construct(Request $request,
+                                AlipayService $alipay,
+                                OrderRepositories $order,
+                                RefundRepositories $refund
+    )
     {
         $this->request = $request;
         $this->alipay = $alipay;
         $this->order = $order;
-    }
-
-    /**
-     * 确认付款页面
-     *
-     * @param $order
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function alipay($order)
-    {
-        $order = $this->order->findOrderAndUser('order_id', $order);
-        return view('payment.alipay_pay', [
-            'order' => $order,
-            'judge' => app('App\Http\Controllers\Controller'),
-            'WIDout_trade_no' => $order['order_number'],
-            'WIDsubject' => $order['title'],
-            'WIDtotal_amount' => $order['total_amount'],
-            'WIDbody' => $order['content']
-        ]);
+        $this->refund = $refund;
     }
 
     /**
@@ -112,11 +100,19 @@ class AlipayController extends Controller
         }
         return view('payment.refund', [
                 'order' => $order,
+                'refund' => $this->refund->findOne('order_id', $order['order_id']),
                 'refund_number' => $order_id.strtotime(date('YmdHis')),
             ]
         );
     }
 
+    /**
+     * 发起退款
+     * 有权限验证
+     *
+     * @param $order_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function refundAction($order_id)
     {
         $this->validate($this->request, [
@@ -124,11 +120,17 @@ class AlipayController extends Controller
             'trade_no' => 'required',
             'refund_amount' => "required",
             'refund_reason' => 'required',
-            'out_request_no' => 'required|integer',
+            'refund_number' => 'required|integer',
         ]);
 
         $data = $this->request->all();
-        $this->alipay->refundAction($data, $order_id);
+        try {
+            $this->alipay->refundAction($data, $order_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+
+        redirect()->route('');
     }
 
     /**

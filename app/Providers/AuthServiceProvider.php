@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Category;
+use App\Order;
 use App\Policies\ViewPolicy;
+use App\Refund;
 use App\Service\AlipayService;
 use App\Service\CategoryService;
 use App\Service\IndexService;
@@ -13,6 +15,7 @@ use App\Service\VerficationService;
 use App\Task;
 use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\View\View;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
@@ -24,11 +27,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        User::class => ViewPolicy::class,
         Task::class => ViewPolicy::class,
         Category::class => ViewPolicy::class,
+        Order::class => ViewPolicy::class,
+        Refund::class => ViewPolicy::class,
         TaskService::class => ViewPolicy::class,
         CategoryService::class => ViewPolicy::class,
-        User::class => ViewPolicy::class,
         IndexService::class => ViewPolicy::class,
         OrderService::class => ViewPolicy::class,
         VerficationService::class => ViewPolicy::class,

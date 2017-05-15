@@ -17,6 +17,7 @@ class Refund extends Model
         'refund_reason',
         'payment_type',
         'refund_status',
+        'refund_number',
     ];
     protected $connection = 'mysql';
     protected $table = 'refund';

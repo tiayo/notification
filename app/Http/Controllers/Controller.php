@@ -77,13 +77,31 @@ class Controller extends BaseController
                 return '申请退款';
                 break;
             case 3 :
-                return '退款完毕';
+                return '退款成功';
                 break;
             case 4 :
                 return '退款失败';
                 break;
             case 5 :
                 return '订单取消';
+                break;
+        }
+    }
+
+    public static function refundStatus($num)
+    {
+        switch ($num) {
+            case 2 :
+                return '申请退款';
+                break;
+            case 3 :
+                return '退款成功';
+                break;
+            case 4 :
+                return '退款失败';
+                break;
+            default :
+                return '退款异常';
                 break;
         }
     }

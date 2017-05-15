@@ -54,14 +54,14 @@ class VerficationService
      * @return bool
      * @throws \Exception
      */
-    public function taskUpdate($class)
+    public function update($class)
     {
         if ($this->skip(VerficationService::class)) {
             return true;
         }
 
         if (!$this->user->find(Auth::id())->can('update', $class)) {
-            throw new \Exception('您没有权限访问（代码：1002）！', 403);
+            return false;
         }
 
         return true;
