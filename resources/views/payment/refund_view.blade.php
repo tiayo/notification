@@ -21,7 +21,7 @@
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 <header class="am-header">
-    <h1>{{config('site.title')}}收银台</h1>
+    <h1>{{config('site.title')}}收银台-退款信息</h1>
 </header>
 <div id="main">
     <form id='confirm_form' method=get>
@@ -77,6 +77,11 @@
                     <input value="{{$refund['name']}}" readonly/>
                 </dd>
                 <hr class="one_line">
+                <dt>商家回复：</dt>
+                <dd>
+                    <input value="{{$refund['reply'] or ''}}" readonly/>
+                </dd>
+                <hr class="one_line">
                 <dt>创建时间：</dt>
                 <dd>
                     <input value="{{$refund['created_at']}}" readonly/>
@@ -89,6 +94,7 @@
                 <hr class="one_line">
                 <dt></dt>
                 <dd id="btn-dd">
+                    @if ($refund['refund_status'] != 3)
                      <span class="new-btn-login-sp">
                             <button class="new-btn-login" id="refuse"  type="button">拒绝 退款</button>
                      </span>
@@ -96,6 +102,7 @@
                     <span class="new-btn-login-sp">
                             <button class="new-btn-login" id="agree" type="button">同意 退款</button>
                     </span>
+                    @endif
 
                     <span class="new-btn-login-sp">
                         <button class="new-btn-login" type="button" onclick="location.href='/admin/refund/page/1'">返回</button>

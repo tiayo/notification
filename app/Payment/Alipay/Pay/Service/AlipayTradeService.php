@@ -13,6 +13,7 @@ use App\Payment\Alipay\Aop\Request\AlipayTradeWapPayRequest;
 use App\Payment\Alipay\Aop\Request\AlipayTradePagePayRequest;
 use App\Payment\Alipay\Aop\AopClient;
 use App\Payment\Alipay\Aop\Request\AlipayTradeQueryRequest;
+use App\Payment\Alipay\Aop\Request\AlipayTradeRefundRequest;
 
 class AlipayTradeService {
 
@@ -169,7 +170,7 @@ class AlipayTradeService {
 		// 首先调用支付api
 		$response = $this->aopclientRequestExecute ($request);
 		$response = $response->alipay_trade_refund_response;
-		var_dump($response);
+
 		return $response;
 	}
 

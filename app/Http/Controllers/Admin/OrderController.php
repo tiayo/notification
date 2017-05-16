@@ -113,9 +113,9 @@ class OrderController extends Controller
      */
     public function refundView($refund_id)
     {
-        $redund = $this->order->findRefundAndUser($refund_id);
+        $refund = $this->order->findRefundAndUser($refund_id);
         return view('payment.refund_view', [
-            'refund' => $redund,
+            'refund' => $refund,
             'judge' => app('App\Http\Controllers\Controller'),
         ]);
     }
@@ -132,7 +132,11 @@ class OrderController extends Controller
         $refund_id = $this->request->get('refund_id');
 
         //退款确认类型（同意、拒绝）
-        $action_value = $this->order->configmView($action);
+        try {
+            $action_value = $this->order->configmView($refund_id, $action);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
 
         return view('payment.refund_confirm', [
             'action' => $action,
@@ -156,9 +160,12 @@ class OrderController extends Controller
         $request = $this->request->all();
 
         if ($action == 'agree') {
-            if ($this->order->refundAgree($request)) {
-                return redirect()->route('refund_page', ['page' => 1]);
+            try {
+                $this->order->refundAgree($request);
+            } catch (\Exception $e) {
+                return response($e->getMessage());
             }
+            return redirect()->route('refund_page', ['page' => 1]);
         } else if ($action == 'refuse') {
             if ($this->order->refundRefuse($request)) {
                 return redirect()->route('refund_page', ['page' => 1]);
