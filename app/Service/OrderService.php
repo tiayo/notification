@@ -91,7 +91,10 @@ class OrderService
             throw new \Exception('您没有权限访问（代码：1003）！', 403);
         }
 
-        return $this->order->findOrderAndUser('order_id', $order_id);
+        $order = $this->order->findOrderAndUser('order_id', $order_id);
+        if (empty($order)) {
+            throw new \Exception('没有找到该订单（代码：1004）！', 403);
+        }
     }
 
     /**

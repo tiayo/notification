@@ -125,9 +125,11 @@
                     @endif
 
                     @if (empty($refund) || $refund['refund_status'] == 2)
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" type="button" onclick="location.href='{{$refund_url}}'">退 款(申请)</button>
-                        </span>
+                        @if (!empty($refund_url))
+                            <span class="new-btn-login-sp">
+                                <button class="new-btn-login" type="button" onclick="location.href='{{$refund_url}}'">退 款(申请)</button>
+                            </span>
+                        @endif
                     @endif
                 </dd>
             </dl>
