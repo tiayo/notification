@@ -64,7 +64,7 @@
                     <input id="out_trade_no" name="out_trade_no" value="{{$order['order_number']}}" readonly/>
                 </dd>
                 <hr class="one_line">
-                <dt>支付宝交易号：</dt>
+                <dt>交易号：</dt>
                 <dd>
                     <input id="trade_no" name="trade_no" value="{{$order['trade_no']}}" readonly/>
                 </dd>

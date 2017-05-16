@@ -12,12 +12,14 @@ class OrderService
     protected $order;
     protected $refund;
     protected $alipay;
+    protected $weixin;
 
-    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay)
+    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay, WeixinService $weixin)
     {
         $this->order = $order;
         $this->refund = $refund;
         $this->alipay = $alipay;
+        $this->weixin = $weixin;
     }
 
     public function isAdmin()
@@ -179,6 +181,8 @@ class OrderService
             case 'alipay' :
                 $this->alipayRedund($refund, $request);
                 break;
+            case 'weixin' :
+                $this->weixinRefund($refund, $request);
         }
     }
 
@@ -193,6 +197,22 @@ class OrderService
     {
         try {
             return $this->alipay->refund($refund, $request);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+    }
+
+    /**
+     * 微信退款方法
+     *
+     * @param $refund
+     * @param $request
+     * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function weixinRefund($refund, $request)
+    {
+        try {
+            return $this->weixin->refund($refund, $request);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }

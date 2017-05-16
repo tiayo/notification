@@ -130,7 +130,7 @@ class AlipayController extends Controller
             return response($e->getMessage());
         }
 
-        return redirect()->route('order_page', ['page' => 1]);
+        return redirect()->route('refund_page', ['page' => 1]);
     }
 
     /**

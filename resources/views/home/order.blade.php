@@ -76,7 +76,6 @@ $(document).ready(function(){
                     <th>用户ID</th>
                 @endif
                 <th>订单号</th>
-                <th>交易号</th>
                 <th>订单名称</th>
                 <th>金额</th>
                 <th>交易状态</th>
@@ -94,11 +93,18 @@ $(document).ready(function(){
                     <td>{{$row['user_id']}}</td>
                 @endif
                 <td>{{$row['order_number']}}</td>
-                <td>{{$row['trade_no']}}</td>
                 <td>{{$row['title']}}</td>
                 <td>{{$row['total_amount']}}</td>
-                <td>{{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})</td>
-                <td>{{$status::orderStatus($row['order_status'])}}</td>
+                <td>
+                    <span style="color: @if ($row['payment_status'] != 1) red @endif">
+                       {{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})
+                    </span>
+                </td>
+                <td>
+                    <span style="color: @if ($row['order_status'] != 1) red @endif">
+                        {{$status::orderStatus($row['order_status'])}}
+                    </span>
+                </td>
                 <td>{{$row['created_at']}}</td>
                 <td>
                     <a href="/admin/order/view/{{$row['order_id']}}" class="tablelink">查看</a>
