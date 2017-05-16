@@ -10,6 +10,7 @@ use App\Repositories\RefundRepositories;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 use BrowserDetect;
+use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeRefundContentBuilder;
 
 class AlipayService
 {
@@ -251,25 +252,26 @@ class AlipayService
      * 提交退款
      *
      * @param $data
+     * @return bool
      */
-    public function refund($data)
+    public function refund($refund, $request)
     {
-        if (!empty($_POST['WIDout_trade_no']) || !empty($_POST['WIDtrade_no'])) {
+        if (!empty($refund['order_number']) || !empty($refund['trade_no'])) {
 
             //商户订单号，和支付宝交易号二选一
-            $out_trade_no = trim($_POST['WIDout_trade_no']);
+            $out_trade_no = trim($refund['order_number']);
 
             //支付宝交易号，和商户订单号二选一
-            $trade_no = trim($_POST['WIDtrade_no']);
+            $trade_no = trim($refund['trade_no']);
 
             //退款金额，不能大于订单总金额
-            $refund_amount=trim($_POST['WIDrefund_amount']);
+            $refund_amount=trim($refund['refund_amount']);
 
             //退款的原因说明
-            $refund_reason=trim($_POST['WIDrefund_reason']);
+            $refund_reason=trim($refund['refund_reason']);
 
             //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传。
-            $out_request_no=trim($_POST['WIDout_request_no']);
+            $out_request_no=trim($refund['refund_number']);
 
             $RequestBuilder = new AlipayTradeRefundContentBuilder();
             $RequestBuilder->setTradeNo($trade_no);
@@ -278,10 +280,29 @@ class AlipayService
             $RequestBuilder->setRefundReason($refund_reason);
             $RequestBuilder->setOutRequestNo($out_request_no);
 
-            $Response = new AlipayTradeService($config);
-            $result=$Response->Refund($RequestBuilder);
-            return ;
+            $Response = new AlipayTradeService();
+            $result = $Response->Refund($RequestBuilder);
+        } else {
+            throw new \Exception('退款订单号未提供！');
         }
+
+        //成功处理
+        if (!empty($result->code) && $result->code == 10000 && $refund['trade_no'] == $result->trade_no) {
+            //更新退款信息
+            $data['refund_status'] = 3;//状态：退款成功
+            $data['reply'] = $request['reply'];
+            $this->refund->update('refund_id', $request['refund_id'], $data);
+
+            //更新订单信息
+            $order_id = $this->refund->findOne('refund_id', $request['refund_id'])['order_id'];
+            $value['order_status'] = 3;//状态：退款成功
+            $this->order->update('order_id', $order_id, $value);
+
+            return true;
+        }
+
+        //错误抛错
+        throw new \Exception($result->msg ?? '退款出问题了！请联系管理员！');
     }
 
 

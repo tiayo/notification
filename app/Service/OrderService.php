@@ -11,11 +11,13 @@ class OrderService
 {
     protected $order;
     protected $refund;
+    protected $alipay;
 
-    public function __construct(OrderRepositories $order, RefundRepositories $refund)
+    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay)
     {
         $this->order = $order;
         $this->refund = $refund;
+        $this->alipay = $alipay;
     }
 
     public function isAdmin()
@@ -136,8 +138,11 @@ class OrderService
      * @param $action
      * @return string
      */
-    public function configmView($action)
+    public function configmView($refund_id, $action)
     {
+        //判断是否可以拒绝退款
+        $this->isRefundSuccess($refund_id);
+
         switch ($action) {
             case 'agree' :
                 return '同意';
@@ -158,29 +163,76 @@ class OrderService
      */
     public function refundAgree($request)
     {
+        //获取订单信息和付款方式
+        $refund = $this->refund->findOne('refund_id', $request['refund_id']);
+        //$order = $this->order->findOne('order_id', $refund['order_id']);
+        $payment_type = $refund['payment_type'];
 
+        switch ($payment_type) {
+            case 'alipay' :
+                $this->alipayRedund($refund, $request);
+                break;
+        }
+    }
+
+    public function alipayRedund($refund, $request)
+    {
+        try {
+            return $this->alipay->refund($refund, $request);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
     }
 
     /**
      * 拒绝退款
      *
      * @param $action
+     * @return bool
      */
     public function refundRefuse($request)
     {
+        $refund_id = $request['refund_id'];
+
+        //判断是否可以拒绝退款
+        $this->isRefundSuccess($refund_id);
+
         //更新退款信息
-        $data['refund_status'] = 5;
+        $data['refund_status'] = 5;//状态：退款被拒绝
         $data['reply'] = $request['reply'];
-        $this->refund->update('refund_id', $request['refund_id'], $data);
+        $this->refund->update('refund_id', $refund_id, $data);
 
         //更新订单信息
-        $order_id = $this->refund->findOne('refund_id', $request['refund_id'])['order_id'];
-        $value['order_status'] = 4;
+        $order_id = $this->refund->findOne('refund_id', $refund_id)['order_id'];
+        $value['order_status'] = 4;//状态：退款失败
         $this->order->update('order_id', $order_id, $value);
 
         return true;
     }
 
+    /**
+     * 判断订单是否退款成功
+     *
+     * @param $refund_id
+     * @return bool
+     * @throws \Exception
+     */
+    public function isRefundSuccess($refund_id)
+    {
+        $reund = $this->refund->findOne('refund_id', $refund_id);
+        if ($reund['refund_status'] == 3) {
+            throw new \Exception('该订单已经退款成功了！');
+        }
+
+        return true;
+    }
+
+    /**
+     * 获取退款订单信息
+     *
+     * @param $order_id
+     * @return mixed
+     */
     public function refundInfo($order_id)
     {
         return $this->refund->findOne('order_id', $order_id);

@@ -86,9 +86,9 @@
                     <input value="{{$order['updated_at']}}" readonly/>
                 </dd>
                 {{--退款信息开始--}}
-                <hr class="one_line">
-                <dt><span style="line-height: 28px; color:red;">(退款订单)</span></dt>
                 @if (!empty($refund))
+                    <hr class="one_line">
+                    <dt><span style="line-height: 28px; color:red;">(退款订单)</span></dt>
                     <hr class="one_line">
                     <dt>退款金额：</dt>
                     <dd>
