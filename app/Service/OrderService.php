@@ -158,6 +158,7 @@ class OrderService
 
     /**
      * 同意退款
+     * 不同支付方式调用不同方法
      *
      * @param $action
      */
@@ -175,6 +176,13 @@ class OrderService
         }
     }
 
+    /**
+     * 支付宝退款方法
+     *
+     * @param $refund
+     * @param $request
+     * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function alipayRedund($refund, $request)
     {
         try {
@@ -186,6 +194,7 @@ class OrderService
 
     /**
      * 拒绝退款
+     * 通用
      *
      * @param $action
      * @return bool
@@ -236,5 +245,24 @@ class OrderService
     public function refundInfo($order_id)
     {
         return $this->refund->findOne('order_id', $order_id);
+    }
+
+    /**
+     * 获取退款链接
+     *
+     * @param $refund
+     * @return string
+     */
+    public function refundUrl($order_id)
+    {
+        $order = $this->order->findOne('order_id', $order_id);
+        switch ($order['payment_type']) {
+            case 'alipay' :
+                return "/admin/alipay/refund/$order_id";
+                break;
+            case 'weixin' :
+                return "/admin/weixin/refund/$order_id";
+                break;
+        }
     }
 }
