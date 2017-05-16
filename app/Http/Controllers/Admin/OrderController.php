@@ -61,6 +61,8 @@ class OrderController extends Controller
         }
 
         $refund = $this->order->refundInfo($order_id);
+        $refund_url = $this->order->refundUrl($order_id);
+
         return view('payment.pay', [
             'order' => $order,
             'refund' => $refund,
@@ -68,7 +70,8 @@ class OrderController extends Controller
             'WIDout_trade_no' => $order['order_number'],
             'WIDsubject' => $order['title'],
             'WIDtotal_amount' => $order['total_amount'],
-            'WIDbody' => $order['content']
+            'WIDbody' => $order['content'],
+            'refund_url' => $refund_url,
         ]);
     }
 
