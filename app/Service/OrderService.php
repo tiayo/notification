@@ -92,9 +92,12 @@ class OrderService
         }
 
         $order = $this->order->findOrderAndUser('order_id', $order_id);
+
         if (empty($order)) {
             throw new \Exception('没有找到该订单（代码：1004）！', 403);
         }
+
+        return $order;
     }
 
     /**
