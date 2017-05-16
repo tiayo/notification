@@ -18,6 +18,8 @@ class Refund extends Model
         'payment_type',
         'refund_status',
         'refund_number',
+        'order_title',
+        'product_id'
     ];
     protected $connection = 'mysql';
     protected $table = 'refund';

@@ -7,14 +7,14 @@
     <script type="text/javascript" src="/jquery.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#alipay').click(function () {
-                $('#pay_form').attr('action', '/admin/alipay/pay');
-                $('#pay_form').submit();
+            $('#agree').click(function () {
+                $('#confirm_form').attr('action', '/admin/refund/confirm/agree/');
+                $('#confirm_form').submit();
            });
            
-           $('#weixin').click(function () {
-               $('#pay_form').attr('action', '/admin/weixin/pay');
-               $('#pay_form').submit();
+           $('#refuse').click(function () {
+               $('#confirm_form').attr('action', '/admin/refund/confirm/refuse');
+               $('#confirm_form').submit();
            });
         });
     </script>
@@ -24,81 +24,82 @@
     <h1>{{config('site.title')}}收银台</h1>
 </header>
 <div id="main">
-    <form id='pay_form' method=post target="_blank">
+    <form id='confirm_form' method=get>
         {{ csrf_field() }}
+        <input type="hidden" name="refund_id" value="{{$refund['refund_id']}}">
         <div id="body" style="clear:left">
             <dl class="content">
-                <dt>商户订单号
+                <dt>退款编号
                     ：</dt>
                 <dd>
-                    <input id="WIDout_trade_no" name="WIDout_trade_no" value="{{$order['order_number']}}" readonly/>
+                    <input value="{{$refund['refund_number']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>订单名称
                     ：</dt>
                 <dd>
-                    <input id="WIDsubject" name="WIDsubject" value="{{$order['title']}}" readonly/>
+                    <input value="{{$refund['order_title']}}" readonly/>
                 </dd>
                 <hr class="one_line">
-                <dt>付款金额
+                <dt>退款金额
                     ：</dt>
                 <dd>
-                    <input id="WIDtotal_amount" name="WIDtotal_amount" value="{{$order['total_amount']}}" readonly/>
+                    <input value="{{$refund['refund_amount']}}" readonly/>
                 </dd>
                 <hr class="one_line">
-                <dt>商品描述：</dt>
+                <dt>退款原因：</dt>
                 <dd>
-                    <input id="WIDbody" name="WIDbody" value="{{$order['content']}}" readonly/>
+                    <input value="{{$refund['refund_reason']}}" readonly/>
                 </dd>
                 <hr class="one_line">
-                <dt>订单状态：</dt>
+                <dt>退款状态：</dt>
                 <dd>
-                    <input value="{{$judge::orderStatus($order['order_status'])}}" readonly/>
+                    <input value="{{$judge::refundStatus($refund['refund_status'])}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>付款类型：</dt>
                 <dd>
-                    <input value="{{$judge::paymentType($order['payment_type'])}}" readonly/>
-                </dd>
-                <hr class="one_line">
-                <dt>付款状态：</dt>
-                <dd>
-                    <input value="{{$judge::paymentStatus($order['payment_status'])}}" readonly/>
+                    <input value="{{$judge::paymentType($refund['payment_type'])}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>交易号：</dt>
                 <dd>
-                    <input value="{{$order['trade_no'] or '未获取'}}" readonly/>
+                    <input value="{{$refund['trade_no'] or '未获取'}}" readonly/>
                 </dd>
                 <hr class="one_line">
-                <dt>下单用户：</dt>
+                <dt>订单号：</dt>
                 <dd>
-                    <input value="{{$order['name']}}" readonly/>
+                    <input value="{{$refund['order_number'] or '未获取'}}" readonly/>
+                </dd>
+                <hr class="one_line">
+                <dt>用户：</dt>
+                <dd>
+                    <input value="{{$refund['name']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>创建时间：</dt>
                 <dd>
-                    <input value="{{$order['created_at']}}" readonly/>
+                    <input value="{{$refund['created_at']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt>更新时间：</dt>
                 <dd>
-                    <input value="{{$order['updated_at']}}" readonly/>
+                    <input value="{{$refund['updated_at']}}" readonly/>
                 </dd>
                 <hr class="one_line">
                 <dt></dt>
                 <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" id="alipay" type="button">支付宝 支付</button>
-                        </span>
+                     <span class="new-btn-login-sp">
+                            <button class="new-btn-login" id="refuse"  type="button">拒绝 退款</button>
+                     </span>
 
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" id="weixin"  type="button">微信 支付</button>
-                        </span>
+                    <span class="new-btn-login-sp">
+                            <button class="new-btn-login" id="agree" type="button">同意 退款</button>
+                    </span>
 
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" type="button" onclick="location.href='/admin/alipay/refund/{{$order['order_id']}}'">退 款(申请)</button>
-                        </span>
+                    <span class="new-btn-login-sp">
+                        <button class="new-btn-login" type="button" onclick="location.href='/admin/refund/page/1'">返回</button>
+                    </span>
 
                     <span class="note-help">如果您点击“确认”按钮，即表示您同意该次的执行操作。</span>
                 </dd>

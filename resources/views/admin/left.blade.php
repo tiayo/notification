@@ -60,7 +60,7 @@ $(function(){
             </div>
             <ul class="menuson">
                 <li class="active"><cite></cite><a href="/admin/category/page/1" target="rightFrame">管理分类</a><i></i></li>
-                <li><cite></cite><a href="#" target="rightFrame">预留位置</a><i></i></li>
+                <li><cite></cite><a href="/admin/refund/page/1" target="rightFrame">管理退款</a><i></i></li>
             </ul>
         </dd>
         @endif

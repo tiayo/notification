@@ -100,6 +100,9 @@ class Controller extends BaseController
             case 4 :
                 return '退款失败';
                 break;
+            case 5 :
+                return '退款被拒绝';
+                break;
             default :
                 return '退款异常';
                 break;

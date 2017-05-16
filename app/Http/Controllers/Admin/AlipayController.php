@@ -98,7 +98,7 @@ class AlipayController extends Controller
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
-        return view('payment.refund', [
+        return view('payment.refund_apply', [
                 'order' => $order,
                 'refund' => $this->refund->findOne('order_id', $order['order_id']),
                 'refund_number' => $order_id.strtotime(date('YmdHis')),
@@ -130,7 +130,7 @@ class AlipayController extends Controller
             return response($e->getMessage());
         }
 
-        redirect()->route('');
+        return redirect()->route('order_page', ['page' => 1]);
     }
 
     /**

@@ -72,36 +72,30 @@ $(document).ready(function(){
             <tr>
                 <th><input type="checkbox" id="select_all" /></th>
                 <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                @if ($is_admin)
-                    <th>用户ID</th>
-                @endif
                 <th>订单号</th>
-                <th>交易号</th>
+                <th>订单号</th>
                 <th>订单名称</th>
-                <th>金额</th>
-                <th>交易状态</th>
+                <th>退款金额</th>
                 <th>订单状态</th>
                 <th>创建时间</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
-        @foreach ($list_order as $row)
+        @foreach ($list_refund as $row)
             <tr>
-                <td><input name="check[]" value="{{$row['order_id']}}" type="checkbox"/></td>
-                <td>{{$row['order_id']}}</td>
+                <td><input name="check[]" value="{{$row['refund_id']}}" type="checkbox"/></td>
+                <td>{{$row['refund_id']}}</td>
                 @if ($is_admin)
-                    <td>{{$row['user_id']}}</td>
+                    <td>{{$row['order_id']}}</td>
                 @endif
                 <td>{{$row['order_number']}}</td>
-                <td>{{$row['trade_no']}}</td>
-                <td>{{$row['title']}}</td>
-                <td>{{$row['total_amount']}}</td>
-                <td>{{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})</td>
-                <td>{{$status::orderStatus($row['order_status'])}}</td>
+                <td>{{$row['order_title']}}</td>
+                <td>{{$row['refund_amount']}}</td>
+                <td>{{$status::refundStatus($row['refund_status'])}}</td>
                 <td>{{$row['created_at']}}</td>
                 <td>
-                    <a href="/admin/order/view/{{$row['order_id']}}" class="tablelink">查看</a>
+                    <a href="/admin/refund/view/{{$row['refund_id']}}" class="tablelink">查看</a>
                 </td>
             </tr>
         @endforeach

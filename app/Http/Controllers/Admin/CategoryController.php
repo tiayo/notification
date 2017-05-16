@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
-use App\Service\VerficationService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +12,7 @@ class CategoryController extends Controller
     protected $all_category;
     protected $request;
 
-    public function __construct(CategoryService $category, Request $request, VerficationService $verfication)
+    public function __construct(CategoryService $category, Request $request)
     {
         $this->category = $category;
         $this->all_category = $category->getSelect();
@@ -22,8 +21,7 @@ class CategoryController extends Controller
 
     /**
      * 显示分类管理页面
-     * 超级管理员才可以访问
-     * 普通用户抛403错误
+     * 中间件鉴权
      *
      * @param $page 页码
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -31,11 +29,7 @@ class CategoryController extends Controller
     public function index($page)
     {
         // 所有分类
-        try{
-            $list_category = $this->category->show($page, Config('site.page'));
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
+        $list_category = $this->category->show($page, Config('site.page'));
 
         // 任务数量
         $count = $this->category->count();
@@ -104,20 +98,17 @@ class CategoryController extends Controller
 
     /**
      * 删除分类
-     * 管理员操作成功，返回上一个路由
-     *  非管理员抛403错误
+     * 中间件鉴权
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function delete($id)
     {
-        try{
-            $this->category->delete($id);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), $e->getCode());
-        }
+        //执行
+        $this->category->delete($id);
 
+        //执行完毕
         return redirect()->to($this->getRedirectUrl());
     }
 

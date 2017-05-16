@@ -20,10 +20,10 @@ class RefundRepositories
             ->create($data);
     }
 
-    public function update($order_id, $value)
+    public function update($option, $order_id, $value)
     {
         return $this->refund
-            ->where('order_id', $order_id)
+            ->where($option, $order_id)
             ->update($value);
     }
 
@@ -34,6 +34,12 @@ class RefundRepositories
             ->count();
     }
 
+    public function countNoWhere()
+    {
+        return $this->refund
+            ->count();
+    }
+
     public function findOne($option, $value)
     {
         return $this->refund
@@ -41,4 +47,21 @@ class RefundRepositories
             ->first();
     }
 
+    public function get($page, $num)
+    {
+        return $this->refund
+            ->skip(($page-1)*$num)
+            ->take($num)
+            ->orderBy('refund_id', 'desc')
+            ->get();
+    }
+
+    public function findRefundAndUser($option, $value)
+    {
+        return $this->refund
+            ->join('users', 'refund.user_id', '=', 'users.id')
+            ->select('refund.*', 'users.name')
+            ->where($option, $value)
+            ->first();
+    }
 }

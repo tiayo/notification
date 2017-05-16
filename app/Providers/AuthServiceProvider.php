@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Category;
+use App\Http\Middleware\AdminAction;
 use App\Order;
 use App\Policies\ViewPolicy;
 use App\Refund;
@@ -38,6 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         OrderService::class => ViewPolicy::class,
         VerficationService::class => ViewPolicy::class,
         AlipayService::class => ViewPolicy::class,
+        AdminAction::class => ViewPolicy::class,
     ];
 
     /**
