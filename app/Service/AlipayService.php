@@ -153,7 +153,8 @@ class AlipayService
 
     /**
      * 退款视图
-     * 订单状态为1,2，付款状态为1的订单才可以发起退款
+     * 订单状态为1,2 + 付款状态为1 的订单才可以发起退款
+     * 退款订单存在则判断退款状态（退款状态为2：申请退款 才可以修改）
      *
      * @param $order_id
      * @return mixed
@@ -161,6 +162,13 @@ class AlipayService
      */
     public function refundView($order_id)
     {
+        //验证状态是否可以操作
+        if (!empty($refund_exist = $this->refund->findOne('order_id', $order_id))) {
+            if ($refund_exist['refund_status'] != 2) {
+                throw new \Exception('当前退款状态不允许修改！');
+            }
+        }
+
         //权限验证
         $this->verfication($order_id);
 
@@ -180,7 +188,7 @@ class AlipayService
     /**
      * 发起退款
      * 金额不超过订单总额，并且限制小数点为两位
-     * 退款订单存在则执行更新方s法（退款状态为2：申请退款 才可以修改）
+     * 退款订单存在则执行更新方法（退款状态为2：申请退款 才可以修改）
      *
      * @param $data
      */
@@ -218,6 +226,7 @@ class AlipayService
         $value['refund_amount'] = $data['refund_amount'];
         $value['refund_reason'] = $data['refund_reason'];
         $value['payment_type'] = $order['payment_type'];
+        $value['order_title'] = $order['title'];
 
         //判断订单退款是否存在
         if (!empty($refund_exist = $this->refund->findOne('order_id', $order_id))) {
@@ -226,13 +235,14 @@ class AlipayService
                 throw new \Exception('当前退款状态不允许修改！');
             }
             //更新退款信息
-            return $this->refund->update($order_id, $value);
+            $this->refund->update('order_id', $order_id, $value);
+        } else {
+            //加入退款信息
+            $this->refund->create($value);
         }
 
-        //加入退款信息
-        $this->refund->create($value);
-        //更新订单状态￥
-        $this->order->update('order_id', $order, [
+        //更新订单状态
+        $this->order->update('order_id', $order_id, [
             'order_status' => 2,//申请退款状态
         ]);
     }

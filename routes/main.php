@@ -39,33 +39,11 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //多选删除及选择修改(任务)
     Route::post('/task/select/', 'TaskController@selectEvent');
 
-    //管理分类
-    Route::get('/category/page', function () {
-        return redirect()->route('category', ['page' => 1]);
-    });
-    Route::get('/category/page/{page}', 'CategoryController@index')->name('category');
-
-    //添加分类
-    Route::get('/category/add', 'CategoryController@storeOrUpdateView');
-    Route::post('/category/add', 'CategoryController@storeOrUpdate')->name('category_add');
-
-    //更新分类
-    Route::get('/category/update/{category_id}', 'CategoryController@storeOrUpdateView')->name('category_update');
-    Route::post('/category/update/{category_id}', 'CategoryController@storeOrUpdate')->name('category_update_post');
-
-    //删除分类
-    Route::get('/category/delete/{id}', 'CategoryController@delete');
-
-    //多选删除及选择修改(分类)
-    Route::post('/category/select/', 'CategoryController@selectEvent');
-
     //订单列表
     Route::get('/order/page', function () {
         return redirect()->route('order_page', ['page' => 1]);
     });
     Route::get('/order/page/{page}', 'OrderController@index')->name('order_page');
-
-
 });
 
 // Authentication Routes...

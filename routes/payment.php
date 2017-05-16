@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
+Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     //通用
     Route::get('/order/view/{order_id}', 'OrderController@view');
 

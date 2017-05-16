@@ -15,15 +15,18 @@ class Refund extends Migration
     {
         Schema::create('refund', function (Blueprint $table) {
             $table->bigIncrements('refund_id');
-            $table->double('refund_number', 50, 0);
+            $table->text('refund_number');
             $table->integer('user_id');
             $table->integer('order_id');
-            $table->double('order_number', 50, 0);
-            $table->double('trade_no', 50, 0);
+            $table->text('order_number');
+            $table->text('order_title');
+            $table->text('product_id')->nullable();
+            $table->text('trade_no');
             $table->float('refund_amount', 8, 2);
             $table->text('refund_reason');
+            $table->text('reply')->nullable();
             $table->text('payment_type');
-            $table->integer('refund_status')->default(3);
+            $table->integer('refund_status')->default(2);
             $table->timestamps();
         });
     }

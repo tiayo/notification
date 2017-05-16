@@ -49,16 +49,13 @@ class CategoryService
 
     /**
      * 根据条件获取分类
-     * 非管理操作抛403
+     *
      * @param $page 页码
      * @param $num 每页显示条数
      * @return mixed
      */
     public function show($page, $num)
     {
-        //权限验证
-        Verfication::admin(CategoryService::class);
-
         $all_category = $this->category->show($page, $num)->toarray();
 
         foreach ($all_category as $item) {
@@ -141,9 +138,6 @@ class CategoryService
      */
     public function delete($id)
     {
-        //权限验证
-        Verfication::admin(CategoryService::class);
-
         return $this->category->delete($id);
     }
 

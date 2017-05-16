@@ -25,7 +25,7 @@ class VerficationService
     public function admin($class)
     {
         if (!$this->user->find(Auth::id())->can('admin', $class)) {
-            throw new \Exception('您没有权限访问（代码：1001）！', 403);
+            throw new \Exception('拒绝访问！（代码：1001）', 403);
         }
 
         return true;
