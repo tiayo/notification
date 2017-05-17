@@ -11,7 +11,6 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/alipay/callback', 'AlipayController@callback');
 
     //微信
-    Route::get('/alipay/query/{order}', 'AlipayController@query');
     Route::get('/weixin/refund/{order_id}', 'WeixinController@refundView');
     Route::post('/weixin/refund/{order_id}', 'WeixinController@refundAction');
     Route::post('/weixin/pay', 'WeixinController@pay');
