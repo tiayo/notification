@@ -86,54 +86,6 @@ class AlipayController extends Controller
     }
 
     /**
-     * 订单退款视图
-     *
-     * @param $order_id
-     *
-     */
-    public function refundView($order_id)
-    {
-        try {
-            $order = $this->alipay->refundView($order_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
-        return view('payment.refund_apply', [
-                'order' => $order,
-                'refund' => $this->refund->findOne('order_id', $order['order_id']),
-                'refund_number' => $order_id.strtotime(date('YmdHis')),
-            ]
-        );
-    }
-
-    /**
-     * 发起退款
-     * 有权限验证
-     *
-     * @param $order_id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function refundAction($order_id)
-    {
-        $this->validate($this->request, [
-            'out_trade_no' => 'required',
-            'trade_no' => 'required',
-            'refund_amount' => "required",
-            'refund_reason' => 'required',
-            'refund_number' => 'required|integer',
-        ]);
-
-        $data = $this->request->all();
-        try {
-            $this->alipay->refundAction($data, $order_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
-
-        return redirect()->route('refund_page', ['page' => 1]);
-    }
-
-    /**
      * 接收支付宝主动发送的数据
      */
     public function app()

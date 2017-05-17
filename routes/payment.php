@@ -3,13 +3,13 @@
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     //通用
     Route::get('/order/view/{order_id}', 'OrderController@view')->name('order_view');
+    Route::get('/order/refund/{order_id}', 'OrderController@refundApply');
+    Route::post('/order/refund/{order_id}', 'OrderController@refundSave');
 
     //支付宝
     Route::get('/alipay/query/{order}', 'AlipayController@query');
     Route::post('/alipay/pay', 'AlipayController@pay');
     Route::get('/alipay/callback', 'AlipayController@callback');
-    Route::get('/alipay/refund/{order_id}', 'AlipayController@refundView');
-    Route::post('/alipay/refund/{order_id}', 'AlipayController@refundAction');
 
     //微信
     Route::get('/weixin/refund/{order_id}', 'WeixinController@refundView');

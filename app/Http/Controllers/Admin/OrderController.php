@@ -61,7 +61,6 @@ class OrderController extends Controller
         }
 
         $refund = $this->order->refundInfo($order_id);
-        $refund_url = $this->order->refundUrl($order_id);
 
         return view('payment.pay', [
             'order' => $order,
@@ -71,8 +70,55 @@ class OrderController extends Controller
             'WIDsubject' => $order['title'],
             'WIDtotal_amount' => $order['total_amount'],
             'WIDbody' => $order['content'],
-            'refund_url' => $refund_url,
         ]);
+    }
+
+    /**
+     * 订单退款视图
+     *
+     * @param $order_id
+     *
+     */
+    public function refundApply($order_id)
+    {
+        try {
+            $order = $this->order->refundApply($order_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+        return view('payment.refund_apply', [
+                'order' => $order,
+                'refund' => $this->order->refundInfo('order_id'),
+                'refund_number' => $order_id.strtotime(date('YmdHis')),
+            ]
+        );
+    }
+
+    /**
+     * 发起退款
+     * 有权限验证
+     *
+     * @param $order_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function refundSave($order_id)
+    {
+        $this->validate($this->request, [
+            'out_trade_no' => 'required',
+            'trade_no' => 'required',
+            'refund_amount' => "required",
+            'refund_reason' => 'required',
+            'refund_number' => 'required|integer',
+        ]);
+
+        $data = $this->request->all();
+        try {
+            $this->order->refundSave($data, $order_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+
+        return redirect()->route('refund_page', ['page' => 1]);
     }
 
     /**
