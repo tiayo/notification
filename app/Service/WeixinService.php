@@ -7,12 +7,18 @@ use App\Payment\Alipay\Pay\Service\AlipayTradeService;
 use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeQueryContentBuilder;
 use App\Repositories\OrderRepositories;
 use App\Repositories\RefundRepositories;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Mockery\Exception;
 use BrowserDetect;
-use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeRefundContentBuilder;
+use App\Payment\Weixin\Pay\CLogFileHandler;
+use App\Payment\Weixin\Pay\LogWeixin;
+use App\Payment\Weixin\Lib\WxPayRefund;
+use App\Payment\Weixin\Lib\WxPayApi;
+use App\Payment\Weixin\Lib\WxPayUnifiedOrder;
+use App\Payment\Weixin\Lib\NativePay;
 
-class AlipayService
+class WeixinService
 {
     protected $order;
     protected $refund;
@@ -23,6 +29,120 @@ class AlipayService
         $this->refund = $refund;
     }
 
+    public function Pay($post)
+    {
+        //判断电脑端或手机端，调用对应方法
+        if (BrowserDetect::isMobile() || BrowserDetect::isTablet()) {
+            $this->wapPay($post);
+        } elseif (BrowserDetect::isDesktop()) {
+            $this->pagePay($post);
+        }
+    }
+
+    /**
+     * 电脑端支付
+     *
+     * @param $post
+     */
+    public function pagePay($array)
+    {
+        $notify = new NativePay();
+        $input = new WxPayUnifiedOrder();
+        $input->SetBody($array['WIDbody']);
+        $input->SetAttach(config('site.title'));
+        $input->SetOut_trade_no($array['WIDout_trade_no']);
+        $input->SetTotal_fee($array['WIDtotal_amount']*100);
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        //$input->SetGoods_tag("test");//商品标记，使用代金券或立减优惠功能时需要的参数，说明详见代金券或立减优惠
+        $input->SetNotify_url(config('weixin.NOTIFY_URL'));
+        dd(config('weixin.NOTIFY_URL'));
+        $input->SetTrade_type("NATIVE");
+        $input->SetProduct_id("WIDout_trade_no");
+        $result = $notify->GetPayUrl($input);
+        $url2 = $result["code_url"] ?? null;
+
+        //判断订单是否已经生成过支付链接
+        if (empty($url2)) {
+            $url2 = $this->order->findOne('order_number', $array['WIDout_trade_no'])['trade_no'];
+        }
+
+        //记录二维码地址
+        $this->order->update('order_number', $array['WIDout_trade_no'], ['trade_no' => $url2]);
+
+        //返回支付
+        return $url2;
+    }
+
+    /**
+     * 手机端支付
+     *
+     * @param $post
+     */
+    public function wapPay($array)
+    {
+        $array['product_code'] = 'QUICK_WAP_PAY';
+        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
+
+        $alipayTradeService = new AlipayTradeService();
+        $alipayTradeService->wapPay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
+    }
+
+
+    /**
+     * 提交退款
+     *
+     * @param $data
+     * @return bool
+     */
+    public function refund($refund, $request)
+    {
+        //初始化日志
+        $logHandler= new CLogFileHandler(__DIR__."/../Payment/Weixin/logs/".date('Y-m-d').'.log');
+        $log = LogWeixin::Init($logHandler, 15);
+
+        function printf_info($data)
+        {
+            foreach($data as $key=>$value){
+                echo "<font color='#f00;'>$key</font> : $value <br/>";
+            }
+        }
+
+        if(!empty($refund["order_number"])){
+            $out_trade_no = $refund["order_number"];
+            $total_fee = $refund["total_amount"];
+            $refund_fee = $refund["refund_amount"];
+            $input = new WxPayRefund();
+            $input->SetOut_trade_no($out_trade_no);
+            $input->SetTotal_fee($total_fee);
+            $input->SetRefund_fee($refund_fee);
+            $input->SetOut_refund_no($refund['refund_number']);
+            $input->SetOp_user_id(Auth::id());
+
+            //获取退款结果
+            $result = WxPayApi::refund($input);
+        }
+
+        //处理完毕
+        if ($result['result_code'] == 'SUCCESS' && $refund['trade_no'] == $result['transaction_id']) {
+            //更新退款信息
+            $data['refund_status'] = 3;//状态：退款成功
+            $data['reply'] = $request['reply'];
+            $this->refund->update('refund_id', $request['refund_id'], $data);
+
+            //更新订单信息
+            $order_id = $this->refund->findOne('refund_id', $request['refund_id'])['order_id'];
+            $value['order_status'] = 3;//状态：退款成功
+            $this->order->update('order_id', $order_id, $value);
+
+            return true;
+        }
+
+        //错误抛错
+        throw new \Exception($result['return_msg'] ?? '退款出问题了！请联系管理员！');
+    }
+
+
     /**
      * 权限验证
      *
@@ -31,7 +151,7 @@ class AlipayService
     public function isAdmin()
     {
         try {
-            Verfication::admin(AlipayService::class);
+            Verfication::admin(WeixinService::class);
         } catch (\Exception $e) {
             return false;
         }
@@ -51,51 +171,6 @@ class AlipayService
         if (!Verfication::update($this->order->findOne('order_id', $order_id))) {
             throw new \Exception('您没有权限访问（代码：1003）！', 403);
         }
-    }
-
-    public function Pay($post)
-    {
-        if (!empty($post['WIDout_trade_no'])&& trim($post['WIDout_trade_no'])!="") {
-            $array['out_trade_no'] = $post['WIDout_trade_no'];
-            $array['total_amount'] = $post['WIDtotal_amount'];
-            $array['subject'] = $post['WIDsubject'];
-            $array['body'] = $post['WIDbody'];
-        }
-
-        //判断电脑端或手机端，调用对应方法
-        if (BrowserDetect::isMobile() || BrowserDetect::isTablet()) {
-            $this->wapPay($array);
-        } elseif (BrowserDetect::isDesktop()) {
-            $this->pagePay($array);
-        }
-    }
-
-    /**
-     * 电脑端支付
-     *
-     * @param $post
-     */
-    public function pagePay($array)
-    {
-        $array['product_code'] = 'FAST_INSTANT_TRADE_PAY';
-        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
-
-        $alipayTradeService = new AlipayTradeService();
-        $alipayTradeService->pagePay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
-    }
-
-    /**
-     * 手机端支付
-     *
-     * @param $post
-     */
-    public function wapPay($array)
-    {
-        $array['product_code'] = 'QUICK_WAP_PAY';
-        $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
-
-        $alipayTradeService = new AlipayTradeService();
-        $alipayTradeService->wapPay($payRequestBuilder, config('alipay.return_url'), config('alipay.notify_url'));
     }
 
     /**
@@ -248,62 +323,7 @@ class AlipayService
         ]);
     }
 
-    /**
-     * 提交退款
-     *
-     * @param $data
-     * @return bool
-     */
-    public function refund($refund, $request)
-    {
-        if (!empty($refund['order_number']) || !empty($refund['trade_no'])) {
 
-            //商户订单号，和支付宝交易号二选一
-            $out_trade_no = trim($refund['order_number']);
-
-            //支付宝交易号，和商户订单号二选一
-            $trade_no = trim($refund['trade_no']);
-
-            //退款金额，不能大于订单总金额
-            $refund_amount=trim($refund['refund_amount']);
-
-            //退款的原因说明
-            $refund_reason=trim($refund['refund_reason']);
-
-            //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传。
-            $out_request_no=trim($refund['refund_number']);
-
-            $RequestBuilder = new AlipayTradeRefundContentBuilder();
-            $RequestBuilder->setTradeNo($trade_no);
-            $RequestBuilder->setOutTradeNo($out_trade_no);
-            $RequestBuilder->setRefundAmount($refund_amount);
-            $RequestBuilder->setRefundReason($refund_reason);
-            $RequestBuilder->setOutRequestNo($out_request_no);
-
-            $Response = new AlipayTradeService();
-            $result = $Response->Refund($RequestBuilder);
-        } else {
-            throw new \Exception('退款订单号未提供！');
-        }
-
-        //处理完毕
-        if (!empty($result->code) && $result->code == 10000 && $refund['trade_no'] == $result->trade_no) {
-            //更新退款信息
-            $data['refund_status'] = 3;//状态：退款成功
-            $data['reply'] = $request['reply'];
-            $this->refund->update('refund_id', $request['refund_id'], $data);
-
-            //更新订单信息
-            $order_id = $this->refund->findOne('refund_id', $request['refund_id'])['order_id'];
-            $value['order_status'] = 3;//状态：退款成功
-            $this->order->update('order_id', $order_id, $value);
-
-            return true;
-        }
-
-        //错误抛错
-        throw new \Exception($result->msg ?? '退款出问题了！请联系管理员！');
-    }
 
 
     /**

@@ -64,4 +64,13 @@ class RefundRepositories
             ->where($option, $value)
             ->first();
     }
+
+    public function findRefundAndOrder($option, $value)
+    {
+        return $this->refund
+            ->join('order', 'refund.order_id', '=', 'order.order_id')
+            ->select('refund.*', 'order.*')
+            ->where($option, $value)
+            ->first();
+    }
 }

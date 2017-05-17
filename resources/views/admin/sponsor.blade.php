@@ -30,8 +30,7 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#alipay').click(function(){
-                $('#payment_type').val('alipay');
+            $('#pay_submit').click(function(){
                 if ($('#money_select').css('display') === 'none') {
                     $('#form2').submit();
                 } else {
@@ -94,7 +93,6 @@
                         </li>
                     </div>
                 </ul>
-                <input type="hidden" id="payment_type" name="payment_type">
             </form>
 
             <form id="form2" method="post" action="/admin/sponsor">
@@ -106,7 +104,7 @@
                 </ul>
             </form>
 
-            <p>选择支付方式：<input id="alipay" type="button" class="btn" value="支付宝"/></p>
+            <p><input id="pay_submit" type="button" class="btn" value="确定"/></p>
         </div>
     </div>
 

@@ -7,82 +7,35 @@ use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Repositories\RefundRepositories;
 use App\Service\AlipayService;
+use App\Service\WeixinService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class AlipayController extends Controller
+class WeixinController extends Controller
 {
 
     protected $request;
-    protected $config;
-    protected $alipay;
     protected $order;
     protected $refund;
+    protected $weixin;
 
-    public function __construct(Request $request,
-                                AlipayService $alipay,
-                                OrderRepositories $order,
-                                RefundRepositories $refund
-    )
+    public function __construct(Request $request, OrderRepositories $order, RefundRepositories $refund, WeixinService $weixin)
     {
         $this->request = $request;
-        $this->alipay = $alipay;
         $this->order = $order;
         $this->refund = $refund;
+        $this->weixin = $weixin;
     }
 
     /**
-     * 跳转到支付宝网关付款
+     * 跳转到微信付款
      */
     public function pay()
     {
         $post = $this->request->all();
-        $this->alipay->Pay($post);
-    }
+        $this->weixin->Pay($post);
 
-    /**
-     * 接收返回数据并验证
-     * 验证通过现在验证通过view
-     * 否则显示失败view
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function callback()
-    {
-        $callback = $this->request->all();
-
-        if ($this->alipay->callback($callback)) {
-            return view('payment.success', [
-                'order' => $this->order->findOne('order_number', $callback['out_trade_no']),
-                'callback' => $callback,
-            ]);
-        }
-
-        return view('payment.faile', [
-            'order' => $this->order->findOne('order_number', $callback['out_trade_no']),
-            'callback' => $callback,
-        ]);
-    }
-
-
-    /**
-     * 查询订单付款状态
-     *
-     * @param $order_id
-     * @return string
-     */
-    public function query($order_id)
-    {
-        try {
-            $query = $this->alipay->query($order_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
-
-        if ($query) {
-            return response('付款成功');
-        }
-        return response('未付款');
+        return view();
     }
 
     /**
@@ -94,7 +47,7 @@ class AlipayController extends Controller
     public function refundView($order_id)
     {
         try {
-            $order = $this->alipay->refundView($order_id);
+            $order = $this->weixin->refundView($order_id);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
@@ -125,7 +78,7 @@ class AlipayController extends Controller
 
         $data = $this->request->all();
         try {
-            $this->alipay->refundAction($data, $order_id);
+            $this->weixin->refundAction($data, $order_id);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
@@ -134,33 +87,33 @@ class AlipayController extends Controller
     }
 
     /**
-     * 接收支付宝主动发送的数据
+     * 接收微信异步数据
      */
     public function app()
     {
-        $alipaySevice = new AlipayTradeService();
         $app = $this->request->all();
-        $result = $alipaySevice->check($app);
-        if ($result) {
-            if($app['trade_status'] == 'TRADE_FINISHED' || $app['trade_status'] == 'TRADE_SUCCESS') {
+        if ($app) {
+            if($app['return_code'] == 'SUCCESS' || $app['result_code'] == 'SUCCESS') {
                 //本地验证订单合法性
                 $order_detail = $this->order->findOne('order_number', $app['out_trade_no']);
-                if ($app['total_amount'] == $order_detail['total_amount'] &&
-                    $app['seller_id'] == config('alipay.seller_id') &&
-                    $app['app_id'] == config('alipay.app_id')
+                if ($app['total_fee'] == $order_detail['total_amount'] &&
+                    $app['mch_id'] == config('weixin.MCHID') &&
+                    $app['appid'] == config('weixin.APPID')
                 ) {
                     $this->order->update('order_number', $app['out_trade_no'], [
-                        'payment_type' => 'alipay',
-                        'trade_no' => $app['trade_no'],
+                        'payment_type' => 'weixin',
+                        'trade_no' => $app['transaction_id'],
                         'payment_status' => 1
                     ]);
                     //成功记录到日志
-                    Log::info('alipay_success_post:'.json_encode($app));
+                    Log::info('weixin_success_post:'.json_encode($app));
                     return response('success');
                 }
             }
         }
         //验证失败记录到日志
-        Log::info('alipay_faile_post:'.json_encode($app));
+        Log::info('weixin_faile_post:'.json_encode($app));
+        return response('faile');
     }
+
 }
