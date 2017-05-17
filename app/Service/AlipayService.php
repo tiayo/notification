@@ -55,6 +55,16 @@ class AlipayService
 
     public function Pay($post)
     {
+        $order = $this->order->findOne('order_number', $post['WIDout_trade_no']);
+
+        //验证权限
+        $this->verfication($order['order_id']);
+
+        //判断订单状态（已付款不再往下执行）
+        if ($order['payment_status'] == 1) {
+            throw new \Exception('订单已经支付，不腰重复支付！');
+        }
+
         if (!empty($post['WIDout_trade_no'])&& trim($post['WIDout_trade_no'])!="") {
             $array['out_trade_no'] = $post['WIDout_trade_no'];
             $array['total_amount'] = $post['WIDtotal_amount'];
@@ -104,52 +114,31 @@ class AlipayService
      * @param $post
      * @return bool
      */
-    public function query($order_id)
+    public function query($order)
     {
-        $result = [];
-
-        //从数据库获取订单数据
-        $order_detail = $this->order->findOne('order_id', $order_id);
-
         //判断订单是否存在
-        if (empty($order_detail)) {
-            throw new \Exception('订单不存在！', 403);
+        if (empty($order)) {
+            return false;
         }
 
         //判断交易码是否存在
-        if (empty($order_detail['order_number']) || empty($order_detail['trade_no'])) {
+        if (empty($order['order_number']) || empty($order['trade_no'])) {
             return false;
         }
 
         //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
         //商户订单号，和支付宝交易号二选一
-        $out_trade_no = trim($order_detail['order_number']);
+        $out_trade_no = trim($order['order_number']);
 
         //支付宝交易号，和商户订单号二选一
-        $trade_no = trim($order_detail['trade_no']);
+        $trade_no = trim($order['trade_no']);
 
         $RequestBuilder = new AlipayTradeQueryContentBuilder();
         $RequestBuilder->setTradeNo($trade_no);
         $RequestBuilder->setOutTradeNo($out_trade_no);
 
         $Response = new AlipayTradeService();
-        $result = $Response->Query($RequestBuilder);
-
-
-        //验证返回的订单交易号
-        if ($result->trade_no == $order_detail['trade_no'] && $result->out_trade_no == $order_detail['order_number'])
-        {
-            //获取交易结果
-            if ($result->trade_status == 'TRADE_SUCCESS' || $result->trade_status == 'TRADE_FINISHED') {
-                //修改订单付款状态和付款方式
-                $this->order->update('order_id', $order_id, [
-                    'payment_status' => 1,
-                ]);
-                return true;
-            }
-            return false;
-        }
-        throw new Exception('返回的订单验证不通过，请联系管理员。', 401);
+        return $Response->Query($RequestBuilder);
     }
 
     /**
@@ -160,6 +149,9 @@ class AlipayService
      */
     public function refund($refund, $request)
     {
+        //验证权限
+        $this->verfication($refund['order_id']);
+
         if (!empty($refund['order_number']) || !empty($refund['trade_no'])) {
 
             //商户订单号，和支付宝交易号二选一

@@ -5,6 +5,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/pay_confirm.css">
     <script type="text/javascript" src="/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#refresh').click(function () {
+                $.ajax({
+                    type: "get",
+                    url: "/admin/weixin/refresh/{{$order['order_id']}}",
+                    dataType: "json",
+                    success: function (data) {
+                        $('#weixin_pay_code').attr('src', 'http://paysdk.weixin.qq.com/example/qrcode.php?data='+data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            })
+        });
+    </script>
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
 <header class="am-header">
@@ -18,7 +35,14 @@
                 <hr class="one_line">
                 <dt></dt>
                 <dd id="btn-dd">
-                    <img alt="模式二扫码支付" src="http://paysdk.weixin.qq.com/example/qrcode.php?data={{urlencode($pay_url)}}" style="width:150px;height:150px;"/>
+                    <img id="weixin_pay_code" src="http://paysdk.weixin.qq.com/example/qrcode.php?data={{urlencode($pay_url)}}" style="width:150px;height:150px;"/>
+                </dd>
+                <hr class="one_line">
+                <dd id="btn-dd">
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" id="refresh" type="button" style="text-align:center;">刷 新</button>
+                        </span>
+                    <span class="note-help">如果显示订单过期，请按‘刷新’按钮重新生成。</span>
                 </dd>
             </dl>
         </div>
