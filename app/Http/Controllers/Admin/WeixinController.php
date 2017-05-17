@@ -95,8 +95,8 @@ class WeixinController extends Controller
      */
     public function app()
     {
-        $app = file_get_contents('php://input');
-        $app = simplexml_load_string($app);
+        $input = file_get_contents('php://input');
+        $app = simplexml_load_string($input);
 
         if (!empty($app)) {
             if($app->return_code == 'SUCCESS' || $app->result_code == 'SUCCESS') {
@@ -112,14 +112,14 @@ class WeixinController extends Controller
                         'payment_status' => 1
                     ]);
                     //成功记录到日志
-                    Log::info('weixin_success_post:'.json_encode($app));
+                    Log::info('weixin_success_post:'.$input);
                     return response('success');
                 }
             }
         }
         //验证失败记录到日志
-        Log::info('weixin_faile_post:'.json_encode($app));
-        return response('faile');
+        Log::info('weixin_faile_post:'.$input);
+        return response('faile', 400);
     }
 
 }
