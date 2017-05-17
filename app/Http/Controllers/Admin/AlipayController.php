@@ -33,6 +33,8 @@ class AlipayController extends Controller
 
     /**
      * 跳转到支付宝网关付款
+     * 过滤已经付款的订单
+     *
      */
     public function pay()
     {
@@ -73,16 +75,14 @@ class AlipayController extends Controller
      */
     public function query($order_id)
     {
+        $order = $this->order->findOne('order_id', $order_id);
         try {
-            $query = $this->alipay->query($order_id);
+            $query = $this->alipay->query($order);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
 
-        if ($query) {
-            return response('付款成功');
-        }
-        return response('未付款');
+       dd($query);
     }
 
     /**

@@ -73,4 +73,11 @@ class OrderRepositories
             ->orderBy('order_id', 'desc')
             ->get();
     }
+
+    public function getWhere($option, $value, $conditions = '=')
+    {
+        return $this->order
+            ->where($option, $conditions, $value)
+            ->get();
+    }
 }

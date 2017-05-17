@@ -16,3 +16,7 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('task:check', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('payment:check', function () {
+    $this->comment(Inspiring::quote());
+})->describe('Display an inspiring quote');

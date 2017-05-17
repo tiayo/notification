@@ -29,63 +29,23 @@ class WeixinController extends Controller
 
     /**
      * 跳转到微信付款
+     * 过滤已经付款的订单
+     *
      */
     public function pay()
     {
         $post = $this->request->all();
-        $pay_url = $this->weixin->Pay($post);
+        $order = $this->order->findOne('order_number', $post['WIDout_trade_no']);
+        try {
+            $pay_url = $this->weixin->Pay($post, $order);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
 
         return view('payment.weixin_pay', [
             'pay_url' => $pay_url,
+            'order' => $order,
         ]);
-    }
-
-    /**
-     * 订单退款视图
-     *
-     * @param $order_id
-     *
-     */
-    public function refundView($order_id)
-    {
-        try {
-            $order = $this->weixin->refundView($order_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
-        return view('payment.refund_apply', [
-                'order' => $order,
-                'refund' => $this->refund->findOne('order_id', $order['order_id']),
-                'refund_number' => $order_id.strtotime(date('YmdHis')),
-            ]
-        );
-    }
-
-    /**
-     * 发起退款
-     * 有权限验证
-     *
-     * @param $order_id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function refundAction($order_id)
-    {
-        $this->validate($this->request, [
-            'out_trade_no' => 'required',
-            'trade_no' => 'required',
-            'refund_amount' => "required",
-            'refund_reason' => 'required',
-            'refund_number' => 'required|integer',
-        ]);
-
-        $data = $this->request->all();
-        try {
-            $this->weixin->refundAction($data, $order_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
-
-        return redirect()->route('refund_page', ['page' => 1]);
     }
 
     /**
@@ -119,7 +79,42 @@ class WeixinController extends Controller
         }
         //验证失败记录到日志
         Log::info('weixin_faile_post:'.$input);
-        return response('faile', 400);
+        return response('faile', 403);
+    }
+
+    /**
+     * 查询订单
+     *
+     * @param $order_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function query($order_id)
+    {
+        $order = $this->order->findOne('order_id', $order_id);
+        try {
+            $query = $this->weixin->query($order);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+        return $query;
+    }
+
+    /**
+     * 刷新订单（重新生成订单号后再重新获取二维码URL）
+     * 返回json格式数据
+     *
+     * @param $order_id
+     * @return string
+     */
+    public function refresh($order_id)
+    {
+        try {
+            $url = $this->weixin->refresh($order_id);
+        } catch (\Exception $e) {
+            return response()->json($e->getMessage());
+        }
+
+        return response()->json(urlencode($url));
     }
 
 }

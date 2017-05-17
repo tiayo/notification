@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\TaskCheck;
+use App\Console\Commands\PaymentCheck;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        TaskCheck::class
+        TaskCheck::class,
+        PaymentCheck::class,
     ];
 
     /**
@@ -28,6 +30,10 @@ class Kernel extends ConsoleKernel
          $schedule->command('task:check')->when(function () {
              return true;
          });
+
+        $schedule->command('payment:check')->when(function () {
+            return true;
+        });
     }
 
     /**
