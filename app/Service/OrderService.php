@@ -173,7 +173,8 @@ class OrderService
     public function refundAgree($request)
     {
         //获取订单信息和付款方式
-        $refund = $this->refund->findOne('refund_id', $request['refund_id']);
+        $refund = $this->refund->findRefundAndOrder('refund_id', $request['refund_id']);
+
         //$order = $this->order->findOne('order_id', $refund['order_id']);
         $payment_type = $refund['payment_type'];
 

@@ -142,7 +142,7 @@ class AlipayController extends Controller
         $app = $this->request->all();
         $result = $alipaySevice->check($app);
         if ($result) {
-            if($_POST['trade_status'] == 'TRADE_FINISHED' || $_POST['trade_status'] == 'TRADE_SUCCESS') {
+            if($app['trade_status'] == 'TRADE_FINISHED' || $app['trade_status'] == 'TRADE_SUCCESS') {
                 //本地验证订单合法性
                 $order_detail = $this->order->findOne('order_number', $app['out_trade_no']);
                 if ($app['total_amount'] == $order_detail['total_amount'] &&

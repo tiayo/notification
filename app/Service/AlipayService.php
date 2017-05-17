@@ -286,7 +286,7 @@ class AlipayService
             throw new \Exception('退款订单号未提供！');
         }
 
-        //成功处理
+        //处理完毕
         if (!empty($result->code) && $result->code == 10000 && $refund['trade_no'] == $result->trade_no) {
             //更新退款信息
             $data['refund_status'] = 3;//状态：退款成功

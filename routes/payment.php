@@ -2,7 +2,7 @@
 
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     //通用
-    Route::get('/order/view/{order_id}', 'OrderController@view');
+    Route::get('/order/view/{order_id}', 'OrderController@view')->name('order_view');
 
     //支付宝
     Route::get('/alipay/query/{order}', 'AlipayController@query');
@@ -15,4 +15,5 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //微信
     Route::get('/weixin/refund/{order_id}', 'WeixinController@refundView');
     Route::post('/weixin/refund/{order_id}', 'WeixinController@refundAction');
+    Route::post('/weixin/pay', 'WeixinController@pay');
 });

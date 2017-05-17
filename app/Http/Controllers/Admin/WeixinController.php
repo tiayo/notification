@@ -28,6 +28,17 @@ class WeixinController extends Controller
     }
 
     /**
+     * 跳转到微信付款
+     */
+    public function pay()
+    {
+        $post = $this->request->all();
+        $this->weixin->Pay($post);
+
+        return view();
+    }
+
+    /**
      * 订单退款视图
      *
      * @param $order_id
@@ -74,4 +85,35 @@ class WeixinController extends Controller
 
         return redirect()->route('refund_page', ['page' => 1]);
     }
+
+    /**
+     * 接收微信异步数据
+     */
+    public function app()
+    {
+        $app = $this->request->all();
+        if ($app) {
+            if($app['return_code'] == 'SUCCESS' || $app['result_code'] == 'SUCCESS') {
+                //本地验证订单合法性
+                $order_detail = $this->order->findOne('order_number', $app['out_trade_no']);
+                if ($app['total_fee'] == $order_detail['total_amount'] &&
+                    $app['mch_id'] == config('weixin.MCHID') &&
+                    $app['appid'] == config('weixin.APPID')
+                ) {
+                    $this->order->update('order_number', $app['out_trade_no'], [
+                        'payment_type' => 'weixin',
+                        'trade_no' => $app['transaction_id'],
+                        'payment_status' => 1
+                    ]);
+                    //成功记录到日志
+                    Log::info('weixin_success_post:'.json_encode($app));
+                    return response('success');
+                }
+            }
+        }
+        //验证失败记录到日志
+        Log::info('weixin_faile_post:'.json_encode($app));
+        return response('faile');
+    }
+
 }

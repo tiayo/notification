@@ -83,7 +83,7 @@ class IndexController extends Controller
         //新建订单
         $order = $this->index->sponsor($money);
 
-        //转到支付接口
-        return redirect()->route('alipay', ['order' => $order->order_id]);
+        //转到订单详情页
+        return redirect()->route('order_view', ['order_id' => $order->order_id]);
     }
 }
