@@ -16,4 +16,5 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/weixin/refund/{order_id}', 'WeixinController@refundView');
     Route::post('/weixin/refund/{order_id}', 'WeixinController@refundAction');
     Route::post('/weixin/pay', 'WeixinController@pay');
+    Route::post('/weixin/app', 'WeixinController@app');
 });

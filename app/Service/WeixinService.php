@@ -56,6 +56,7 @@ class WeixinService
         $input->SetTime_expire(date("YmdHis", time() + 600));
         //$input->SetGoods_tag("test");//商品标记，使用代金券或立减优惠功能时需要的参数，说明详见代金券或立减优惠
         $input->SetNotify_url(config('weixin.NOTIFY_URL'));
+        dd(config('weixin.NOTIFY_URL'));
         $input->SetTrade_type("NATIVE");
         $input->SetProduct_id("WIDout_trade_no");
         $result = $notify->GetPayUrl($input);

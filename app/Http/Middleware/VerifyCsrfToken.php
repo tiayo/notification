@@ -13,5 +13,6 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         '/admin/alipay/app',
+        '/admin/weixin/app',
     ];
 }
