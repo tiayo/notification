@@ -33,9 +33,11 @@ class WeixinController extends Controller
     public function pay()
     {
         $post = $this->request->all();
-        $this->weixin->Pay($post);
+        $pay_url = $this->weixin->Pay($post);
 
-        return view();
+        return view('payment.weixin_pay', [
+            'pay_url' => $pay_url,
+        ]);
     }
 
     /**
