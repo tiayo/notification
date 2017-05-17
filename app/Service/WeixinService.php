@@ -113,8 +113,8 @@ class WeixinService
             $refund_fee = $refund["refund_amount"];
             $input = new WxPayRefund();
             $input->SetOut_trade_no($out_trade_no);
-            $input->SetTotal_fee($total_fee);
-            $input->SetRefund_fee($refund_fee);
+            $input->SetTotal_fee($total_fee*100);
+            $input->SetRefund_fee($refund_fee*100);
             $input->SetOut_refund_no($refund['refund_number']);
             $input->SetOp_user_id(Auth::id());
 

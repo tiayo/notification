@@ -43,7 +43,7 @@
     <h1>{{config('site.title')}}-退款</h1>
 </header>
 <div id="main">
-    <form id='alipayment' action='/admin/alipay/refund/{{$order['order_id']}}' method='post'>
+    <form id='alipayment' action='/admin/order/refund/{{$order['order_id']}}' method='post'>
         {{ csrf_field() }}
         <div id="body" style="clear:left">
             <dl class="content">

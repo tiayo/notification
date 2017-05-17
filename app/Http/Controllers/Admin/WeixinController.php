@@ -94,7 +94,7 @@ class WeixinController extends Controller
     public function app()
     {
         $app = $this->request->all();
-        if ($app) {
+        if (!empty($app)) {
             if($app['return_code'] == 'SUCCESS' || $app['result_code'] == 'SUCCESS') {
                 //本地验证订单合法性
                 $order_detail = $this->order->findOne('order_number', $app['out_trade_no']);
