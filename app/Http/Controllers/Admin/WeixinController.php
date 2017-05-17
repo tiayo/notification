@@ -102,7 +102,7 @@ class WeixinController extends Controller
             if($app->return_code == 'SUCCESS' || $app->result_code == 'SUCCESS') {
                 //本地验证订单合法性
                 $order_detail = $this->order->findOne('order_number', $app->out_trade_no);
-                if ($app->total_fee == $order_detail['total_amount'] &&
+                if ($app->total_fee == ($order_detail['total_amount']*100) &&
                     $app->mch_id == config('weixin.MCHID') &&
                     $app->appid == config('weixin.APPID')
                 ) {
