@@ -20,5 +20,6 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/alipay/app', 'AlipayController@app');
+    Route::get('/weixin/app', 'WeixinController@app');
     Route::post('/weixin/app', 'WeixinController@app');
 });
