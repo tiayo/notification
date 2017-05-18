@@ -6,7 +6,7 @@
  *
  */
 
-namespace App\Payment\Weixin\Lib;
+namespace App\Payment\Wxpay\Lib;
 
 class WxPayOrderQuery extends WxPayDataBase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payment\Weixin\Lib;
+namespace App\Payment\Wxpay\Lib;
 
 /**
  * 
@@ -44,11 +44,11 @@ class WxPayApi
 		
 		//异步通知url未设置，则使用配置文件中的url
 		if(!$inputObj->IsNotify_urlSet()){
-			$inputObj->SetNotify_url(config('weixin.NOTIFY_URL'));//异步通知url
+			$inputObj->SetNotify_url(config('Wxpay.NOTIFY_URL'));//异步通知url
 		}
 		
-		$inputObj->SetAppid(config('weixin.APPID'));//公众账号ID
-		$inputObj->SetMch_id(config('weixin.MCHID'));//商户号
+		$inputObj->SetAppid(config('wxpay.APPID'));//公众账号ID
+		$inputObj->SetMch_id(config('wxpay.MCHID'));//商户号
 		$inputObj->SetSpbill_create_ip($_SERVER['REMOTE_ADDR']);//终端ip	  
 		//$inputObj->SetSpbill_create_ip("1.1.1.1");  	    
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
@@ -80,8 +80,8 @@ class WxPayApi
 		if(!$inputObj->IsOut_trade_noSet() && !$inputObj->IsTransaction_idSet()) {
 			throw new WxPayException("订单查询接口中，out_trade_no、transaction_id至少填一个！");
 		}
-        $inputObj->SetAppid(config('weixin.APPID'));//公众账号ID
-        $inputObj->SetMch_id(config('weixin.MCHID'));//商户号
+        $inputObj->SetAppid(config('wxpay.APPID'));//公众账号ID
+        $inputObj->SetMch_id(config('wxpay.MCHID'));//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 		
 		$inputObj->SetSign();//签名
@@ -111,8 +111,8 @@ class WxPayApi
 		if(!$inputObj->IsOut_trade_noSet()) {
 			throw new \Exception("订单查询接口中，out_trade_no必填！");
 		}
-        $inputObj->SetAppid(config('weixin.APPID'));//公众账号ID
-        $inputObj->SetMch_id(config('weixin.MCHID'));//商户号
+        $inputObj->SetAppid(config('wxpay.APPID'));//公众账号ID
+        $inputObj->SetMch_id(config('wxpay.MCHID'));//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 		
 		$inputObj->SetSign();//签名
@@ -151,8 +151,8 @@ class WxPayApi
 		}else if(!$inputObj->IsOp_user_idSet()){
 			throw new \Exception("退款申请接口中，缺少必填参数op_user_id！");
 		}
-		$inputObj->SetAppid(config('weixin.APPID'));//公众账号ID
-		$inputObj->SetMch_id(config('weixin.MCHID'));//商户号
+		$inputObj->SetAppid(config('wxpay.APPID'));//公众账号ID
+		$inputObj->SetMch_id(config('wxpay.MCHID'));//商户号
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 
 		$inputObj->SetSign();//签名
@@ -327,8 +327,8 @@ class WxPayApi
 		} if(!$inputObj->IsExecute_time_Set()) {
 			throw new \Exception("接口耗时，缺少必填参数execute_time_！");
 		}
-		$inputObj->SetAppid(config('weixin.APPID'));//公众账号ID
-		$inputObj->SetMch_id(config('weixin.MCHID'));//商户号
+		$inputObj->SetAppid(config('wxpay.APPID'));//公众账号ID
+		$inputObj->SetMch_id(config('wxpay.MCHID'));//商户号
 		$inputObj->SetTime(date("YmdHis"));//商户上报时间	 
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 		
@@ -355,8 +355,8 @@ class WxPayApi
 			throw new WxPayException("生成二维码，缺少必填参数product_id！");
 		}
 		
-		$inputObj->SetAppid(config('weixin.APPID'));//公众账号ID
-		$inputObj->SetMch_id(config('weixin.MCHID'));//商户号
+		$inputObj->SetAppid(config('wxpay.APPID'));//公众账号ID
+		$inputObj->SetMch_id(config('wxpay.MCHID'));//商户号
 		$inputObj->SetTime_stamp(time());//时间戳	 
 		$inputObj->SetNonce_str(self::getNonceStr());//随机字符串
 		
@@ -456,11 +456,11 @@ class WxPayApi
 	private static function reportCostTime($url, $startTimeStamp, $data)
 	{
 		//如果不需要上报数据
-		if(config('weixin.REPORT_LEVENL') == 0){
+		if(config('wxpay.REPORT_LEVENL') == 0){
 			return;
 		} 
 		//如果仅失败上报
-		if(config('weixin.REPORT_LEVENL') == 1 &&
+		if(config('wxpay.REPORT_LEVENL') == 1 &&
 			 array_key_exists("return_code", $data) &&
 			 $data["return_code"] == "SUCCESS" &&
 			 array_key_exists("result_code", $data) &&
@@ -526,9 +526,9 @@ class WxPayApi
 		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
 		
 		//如果有配置代理这里就设置代理
-		if(config('weixin.CURL_PROXY_HOST') != "0.0.0.0"
+		if(config('wxpay.CURL_PROXY_HOST') != "0.0.0.0"
 			&& config('CURL_PROXY_PORT') != 0){
-			curl_setopt($ch,CURLOPT_PROXY, config('weixin.CURL_PROXY_HOST'));
+			curl_setopt($ch,CURLOPT_PROXY, config('wxpay.CURL_PROXY_HOST'));
 			curl_setopt($ch,CURLOPT_PROXYPORT, config('CURL_PROXY_PORT'));
 		}
 		curl_setopt($ch,CURLOPT_URL, $url);
@@ -543,9 +543,9 @@ class WxPayApi
 			//设置证书
 			//使用证书：cert 与 key 分别属于两个.pem文件
 			curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-			curl_setopt($ch,CURLOPT_SSLCERT, config('weixin.SSLCERT_PATH'));
+			curl_setopt($ch,CURLOPT_SSLCERT, config('wxpay.SSLCERT_PATH'));
 			curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-			curl_setopt($ch,CURLOPT_SSLKEY, config('weixin.SSLKEY_PATH'));
+			curl_setopt($ch,CURLOPT_SSLKEY, config('wxpay.SSLKEY_PATH'));
 		}
 		//post提交方式
 		curl_setopt($ch, CURLOPT_POST, TRUE);

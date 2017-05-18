@@ -6,28 +6,28 @@ use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Repositories\RefundRepositories;
 use App\Service\PaymentCheckService;
-use App\Service\WeixinService;
+use App\Service\WxpayService;
 use Illuminate\Http\Request;
 
-class WeixinController extends Controller
+class WxpayController extends Controller
 {
     protected $request;
     protected $order;
     protected $refund;
-    protected $weixin;
+    protected $wxpay;
     protected $payment;
 
     public function __construct(Request $request,
                                 OrderRepositories $order,
                                 RefundRepositories $refund,
-                                WeixinService $weixin,
+                                WxpayService $wxpay,
                                 PaymentCheckService $payment
     )
     {
         $this->request = $request;
         $this->order = $order;
         $this->refund = $refund;
-        $this->weixin = $weixin;
+        $this->wxpay = $wxpay;
         $this->payment = $payment;
     }
 
@@ -41,12 +41,12 @@ class WeixinController extends Controller
         $post = $this->request->all();
         $order = $this->order->findOne('order_number', $post['WIDout_trade_no']);
         try {
-            $pay_url = $this->weixin->Pay($post, $order);
+            $pay_url = $this->wxpay->Pay($post, $order);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
 
-        return view('payment.weixin_pay', [
+        return view('payment.wxpay_pay', [
             'pay_url' => $pay_url,
             'order' => $order,
         ]);
@@ -60,7 +60,7 @@ class WeixinController extends Controller
     public function app()
     {
         $input = file_get_contents('php://input');
-        return response($this->weixin->app($input));
+        return response($this->wxpay->app($input));
     }
 
     /**
@@ -74,14 +74,14 @@ class WeixinController extends Controller
     {
         // 权限验证
         try {
-            $this->weixin->verfication($order_id);
+            $this->wxpay->verfication($order_id);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }
 
         //获取支付结果
         $order = $this->order->findOne('order_id', $order_id);
-        if ($this->payment->weixin($order_id, $order)) {
+        if ($this->payment->wxpay($order_id, $order)) {
             //成功
             return response()->json('success');
         }
@@ -100,7 +100,7 @@ class WeixinController extends Controller
     public function callback($order_id)
     {
         try {
-            $this->weixin->callback($order_id);
+            $this->wxpay->callback($order_id);
         } catch (\Exception $e) {
             //支付失败页面
             return view('payment.faile', [
@@ -126,7 +126,7 @@ class WeixinController extends Controller
     public function refresh($order_id)
     {
         try {
-            $url = $this->weixin->refresh($order_id);
+            $url = $this->wxpay->refresh($order_id);
         } catch (\Exception $e) {
             return response()->json($e->getMessage());
         }

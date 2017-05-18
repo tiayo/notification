@@ -11,15 +11,15 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/alipay/callback', 'AlipayController@callback');
 
     //微信
-    Route::get('/weixin/query/{order_id}', 'WeixinController@query');
-    Route::post('/weixin/pay', 'WeixinController@pay');
-    Route::get('/weixin/refresh/{order_id}', 'WeixinController@refresh');
-    Route::get('/weixin/callback/{order_id}', 'WeixinController@callback');
+    Route::get('/wxpay/query/{order_id}', 'WxpayController@query');
+    Route::post('/wxpay/pay', 'WxpayController@pay');
+    Route::get('/wxpay/refresh/{order_id}', 'WxpayController@refresh');
+    Route::get('/wxpay/callback/{order_id}', 'WxpayController@callback');
 
 });
 
 //异步通知
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/alipay/app', 'AlipayController@app');
-    Route::post('/weixin/app', 'WeixinController@app');
+    Route::post('/wxpay/app', 'WxpayController@app');
 });

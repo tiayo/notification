@@ -14,7 +14,7 @@ class OrderService
     protected $alipay;
     protected $weixin;
 
-    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay, WeixinService $weixin)
+    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay, WxpayService $weixin)
     {
         $this->order = $order;
         $this->refund = $refund;

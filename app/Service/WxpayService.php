@@ -7,16 +7,16 @@ use App\Repositories\OrderRepositories;
 use App\Repositories\RefundRepositories;
 use Illuminate\Support\Facades\Auth;
 use BrowserDetect;
-use App\Payment\Weixin\Pay\CLogFileHandler;
-use App\Payment\Weixin\Pay\LogWeixin;
-use App\Payment\Weixin\Lib\WxPayRefund;
-use App\Payment\Weixin\Lib\WxPayApi;
-use App\Payment\Weixin\Lib\WxPayUnifiedOrder;
-use App\Payment\Weixin\Lib\NativePay;
-use App\Payment\Weixin\Lib\WxPayOrderQuery;
+use App\Payment\Wxpay\Pay\CLogFileHandler;
+use App\Payment\Wxpay\Pay\LogWeixin;
+use App\Payment\Wxpay\Lib\WxPayRefund;
+use App\Payment\Wxpay\Lib\WxPayApi;
+use App\Payment\Wxpay\Lib\WxPayUnifiedOrder;
+use App\Payment\Wxpay\Lib\NativePay;
+use App\Payment\Wxpay\Lib\WxPayOrderQuery;
 use Illuminate\Support\Facades\Log;
 
-class WeixinService implements PayInterfaces
+class WxpayService implements PayInterfaces
 {
     protected $order;
     protected $refund;
@@ -35,7 +35,7 @@ class WeixinService implements PayInterfaces
     public function isAdmin()
     {
         try {
-            Verfication::admin(WeixinService::class);
+            Verfication::admin(WxpayService::class);
         } catch (\Exception $e) {
             return false;
         }
@@ -99,7 +99,7 @@ class WeixinService implements PayInterfaces
         $input->SetTime_start(date("YmdHis"));
         $input->SetTime_expire(date("YmdHis", time() + 600));
         //$input->SetGoods_tag("test");//商品标记，使用代金券或立减优惠功能时需要的参数，说明详见代金券或立减优惠
-        $input->SetNotify_url(config('weixin.NOTIFY_URL'));
+        $input->SetNotify_url(config('wxpay.NOTIFY_URL'));
         $input->SetTrade_type("NATIVE");
         $input->SetProduct_id("WIDout_trade_no");
         $result = $notify->GetPayUrl($input);
@@ -165,7 +165,7 @@ class WeixinService implements PayInterfaces
         $this->verfication($refund['order_id']);
 
         //初始化日志
-        $logHandler= new CLogFileHandler(__DIR__."/../Payment/Weixin/logs/".date('Y-m-d').'.log');
+        $logHandler= new CLogFileHandler(__DIR__."/../Payment/Wxpay/logs/".date('Y-m-d').'.log');
         $log = LogWeixin::Init($logHandler, 15);
 
         function printf_info($data)
@@ -274,23 +274,23 @@ class WeixinService implements PayInterfaces
                 //本地验证订单合法性
                 $order_detail = $this->order->findOne('order_number', $app->out_trade_no);
                 if ($app->total_fee == ($order_detail['total_amount']*100) &&
-                    $app->mch_id == config('weixin.MCHID') &&
-                    $app->appid == config('weixin.APPID')
+                    $app->mch_id == config('wxpay.MCHID') &&
+                    $app->appid == config('wxpay.APPID')
                 ) {
                     $this->order->update('order_number', $app->out_trade_no, [
-                        'payment_type' => 'weixin',
+                        'payment_type' => 'wxpay',
                         'trade_no' => $app->transaction_id,
                         'payment_status' => 1
                     ]);
                     //成功记录到日志
-                    Log::info('weixin_success_post:'.$input);
+                    Log::info('wxpay_success_post:'.$input);
                     return 'Success';
                 }
             }
         }
 
         //验证失败记录到日志
-        Log::info('weixin_faile_post:'.$input);
+        Log::info('wxpay_faile_post:'.$input);
         return 'Faile';
     }
 

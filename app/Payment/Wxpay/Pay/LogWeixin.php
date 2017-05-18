@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Payment\Weixin\Pay;
+namespace App\Payment\Wxpay\Pay;
 
 class LogWeixin
 {
