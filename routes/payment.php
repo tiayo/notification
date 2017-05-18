@@ -11,10 +11,10 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/alipay/callback', 'AlipayController@callback');
 
     //微信
-    Route::get('/weixin/refund/{order_id}', 'WeixinController@refundView');
-    Route::post('/weixin/refund/{order_id}', 'WeixinController@refundAction');
+    Route::get('/weixin/query/{order_id}', 'WeixinController@query');
     Route::post('/weixin/pay', 'WeixinController@pay');
     Route::get('/weixin/refresh/{order_id}', 'WeixinController@refresh');
+    Route::get('/weixin/callback/{order_id}', 'WeixinController@callback');
 
 });
 

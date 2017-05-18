@@ -6,6 +6,8 @@
 namespace App\Service;
 
 use App\Repositories\OrderRepositories;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 
 class PaymentCheckService
@@ -30,6 +32,9 @@ class PaymentCheckService
             }
             $this->weixin($order['order_id'], $order);
         }
+
+        //记录
+        Log::info('run payment end:'.Carbon::now());
     }
 
     public function alipay($order_id, $order)
@@ -86,7 +91,7 @@ class PaymentCheckService
         }
 
         //判断返回的数据是否达到要求
-        if (empty($result['return_code']) || empty($result['result_code']) || empty($result['trade_state'])) {
+        if ($result['return_code'] != 'SUCCESS' || $result['result_code'] != 'SUCCESS'|| $result['trade_state'] != 'SUCCESS') {
             return false;
         }
 

@@ -244,6 +244,20 @@ class WeixinService implements PayInterfaces
         return $url;
     }
 
+    public function callback($order_id)
+    {
+        // 权限验证
+        $this->verfication($order_id);
+
+        //订单验证
+        $order = $this->order->findOne('order_id', $order_id);
+        if ($order['payment_status'] != 1) {
+            throw new \Exception('支付未成功！');
+        }
+
+        return true;
+    }
+
     /**
      * 接收微信异步数据
      * XML数据
