@@ -7,6 +7,9 @@
     <script type="text/javascript" src="/jquery.js"></script>
     <script>
         $(document).ready(function () {
+            //查询订单状态
+            setInterval("push()",1000);
+            //刷新二维码
             $('#refresh').click(function () {
                 $.ajax({
                     type: "get",
@@ -21,6 +24,20 @@
                 });
             })
         });
+
+        //查询订单
+        function push() {
+            $.ajax({
+                type: "get",
+                url: "/admin/weixin/query/{{$order['order_id']}}",
+                dataType: "json",
+                success: function (data) {
+                    if (data == 'success') {
+                        window.location.href='/admin/weixin/callback/{{$order['order_id']}}';
+                    }
+                }
+            });
+        }
     </script>
 </head>
 <body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
@@ -41,6 +58,9 @@
                 <dd id="btn-dd">
                         <span class="new-btn-login-sp">
                             <button class="new-btn-login" id="refresh" type="button" style="text-align:center;">刷 新</button>
+                        </span>
+                        <span class="new-btn-login-sp">
+                            <button class="new-btn-login" type="button" style="text-align:center;" onclick="location.href='/admin/weixin/callback/{{$order['order_id']}}'">已完成 付款</button>
                         </span>
                     <span class="note-help">如果显示订单过期，请按‘刷新’按钮重新生成。</span>
                 </dd>

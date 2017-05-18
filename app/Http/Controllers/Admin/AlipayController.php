@@ -55,13 +55,13 @@ class AlipayController extends Controller
         if ($this->alipay->callback($callback)) {
             return view('payment.success', [
                 'order' => $this->order->findOne('order_number', $callback['out_trade_no']),
-                'callback' => $callback,
+                'status' => app('App\Http\Controllers\Controller'),
             ]);
         }
 
         return view('payment.faile', [
             'order' => $this->order->findOne('order_number', $callback['out_trade_no']),
-            'callback' => $callback,
+            'status' => app('App\Http\Controllers\Controller'),
         ]);
     }
 

@@ -12,7 +12,7 @@
     <div class="page-container">
         <div class="page-main">
             <h3>
-                <strong>付款成功！</strong>订单号：{{$callback['out_trade_no']}}
+                <strong>付款成功！</strong>订单号：{{$order['order_number']}}
             </h3>
             <div class="page-actions">
                 <div class="detail">
@@ -20,7 +20,8 @@
                    		<h4>订单信息：</h4>
                         <li>订单名称：{{$order['title']}}</li>
                         <li>订单内容：{{$order['content']}}</li>
-                        <li>订单价格：{{$callback['total_amount']}}</li>
+                        <li>订单价格：{{$order['total_amount']}}</li>
+                        <li>支付状态:{{$status::paymentType($order['payment_type']).'('.$status::paymentStatus($order['payment_status']).')'}}</li>
                     </ol>
                 </div>
                 <div class="option">
