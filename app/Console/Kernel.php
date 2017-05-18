@@ -31,9 +31,7 @@ class Kernel extends ConsoleKernel
              return true;
          });
 
-        $schedule->command('payment:check')->when(function () {
-            return true;
-        });
+        $schedule->command('payment:check')->everyTenMinutes();
     }
 
     /**

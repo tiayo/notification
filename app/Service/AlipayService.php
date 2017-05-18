@@ -12,7 +12,7 @@ use Mockery\Exception;
 use BrowserDetect;
 use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeRefundContentBuilder;
 
-class AlipayService
+class AlipayService implements PayInterfaces
 {
     protected $order;
     protected $refund;
@@ -53,10 +53,8 @@ class AlipayService
         }
     }
 
-    public function Pay($post)
+    public function Pay($post, $order)
     {
-        $order = $this->order->findOne('order_number', $post['WIDout_trade_no']);
-
         //验证权限
         $this->verfication($order['order_id']);
 
@@ -85,7 +83,7 @@ class AlipayService
      *
      * @param $post
      */
-    public function pagePay($array)
+    public function pagePay($array, $order = null)
     {
         $array['product_code'] = 'FAST_INSTANT_TRADE_PAY';
         $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);
@@ -247,6 +245,37 @@ class AlipayService
         }
 
         throw new Exception('订单本地验证不通过，请联系管理员。', 403);
+    }
+
+    /**
+     * 接收支付宝主动发送的数据
+     */
+    public function app($app)
+    {
+        $alipaySevice = new AlipayTradeService();
+        $result = $alipaySevice->check($app);
+        if ($result) {
+            if($app['trade_status'] == 'TRADE_FINISHED' || $app['trade_status'] == 'TRADE_SUCCESS') {
+                //本地验证订单合法性
+                $order_detail = $this->order->findOne('order_number', $app['out_trade_no']);
+                if ($app['total_amount'] == $order_detail['total_amount'] &&
+                    $app['seller_id'] == config('alipay.seller_id') &&
+                    $app['app_id'] == config('alipay.app_id')
+                ) {
+                    $this->order->update('order_number', $app['out_trade_no'], [
+                        'payment_type' => 'alipay',
+                        'trade_no' => $app['trade_no'],
+                        'payment_status' => 1
+                    ]);
+                    //成功记录到日志
+                    Log::info('alipay_success_post:'.json_encode($app));
+                    return 'Success';
+                }
+            }
+        }
+        //验证失败记录到日志
+        Log::info('alipay_faile_post:'.json_encode($app));
+        return 'Faile';
     }
 
 }

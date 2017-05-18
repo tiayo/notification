@@ -23,7 +23,7 @@ class PaymentCheckService
 
     public function check()
     {
-        $all_order = $this->order->getWhere('payment_id', 1, '<>');
+        $all_order = $this->order->getWhere('payment_status', 1, '<>');
         foreach ($all_order as $order) {
             if ($this->alipay($order['order_id'], $order)) {
                 continue;
