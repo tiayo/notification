@@ -36,20 +36,35 @@ class WxpayController extends Controller
      * 过滤已经付款的订单
      *
      */
-    public function pay()
+    public function pay($order_id = null)
     {
         $post = $this->request->all();
-        $order = $this->order->findOne('order_number', $post['WIDout_trade_no']);
-        try {
-            $pay_url = $this->wxpay->Pay($post, $order);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
+        if (empty($order_id)) {
+            $order = $this->order->findOne('order_number', $post['WIDout_trade_no']);
+        } else {
+            $order = $this->order->findOne('order_id', $order_id);
         }
 
-        return view('payment.wxpay_pay', [
-            'pay_url' => $pay_url,
-            'order' => $order,
-        ]);
+
+            $array = $this->wxpay->Pay($post, $order);
+
+
+        //电脑扫码支付页面
+        if ($array['type'] = 'pagePay') {
+            return view('payment.wxpay_pagepay', [
+                'pay_url' => $array['data'],
+                'order' => $order,
+            ]);
+        }
+
+        //手机JSAPI支付
+        if ($array['type'] = 'wapPay') {
+            return view('payment.wxpay_wappay', [
+                'info' => $array['data'],
+                'order' => $order,
+            ]);
+        }
+
     }
 
     /**

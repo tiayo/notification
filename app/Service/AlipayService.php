@@ -97,7 +97,7 @@ class AlipayService implements PayInterfaces
      *
      * @param $post
      */
-    public function wapPay($array)
+    public function wapPay($array, $order = null)
     {
         $array['product_code'] = 'QUICK_WAP_PAY';
         $payRequestBuilder = json_encode($array, JSON_UNESCAPED_UNICODE);

@@ -12,3 +12,4 @@ npm-debug.log
 .env
 app_private_key.pem
 /app/Payment/Alipay/log.txt
+/app/Payment/Wxpay/logs

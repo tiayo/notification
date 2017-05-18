@@ -13,6 +13,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //微信
     Route::get('/wxpay/query/{order_id}', 'WxpayController@query');
     Route::post('/wxpay/pay', 'WxpayController@pay');
+    Route::get('/wxpay/pay/{order_id}', 'WxpayController@pay');
     Route::get('/wxpay/refresh/{order_id}', 'WxpayController@refresh');
     Route::get('/wxpay/callback/{order_id}', 'WxpayController@callback');
 
