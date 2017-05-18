@@ -18,8 +18,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
 });
 
+//异步通知
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('/alipay/app', 'AlipayController@app');
-    Route::get('/weixin/app', 'WeixinController@app');
     Route::post('/weixin/app', 'WeixinController@app');
 });

@@ -2,18 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Payment\Alipay\Pay\Service\AlipayTradeService;
 use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Repositories\RefundRepositories;
-use App\Service\AlipayService;
 use App\Service\WeixinService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class WeixinController extends Controller
 {
-
     protected $request;
     protected $order;
     protected $refund;
@@ -56,30 +52,7 @@ class WeixinController extends Controller
     public function app()
     {
         $input = file_get_contents('php://input');
-        $app = simplexml_load_string($input);
-
-        if (!empty($app)) {
-            if($app->return_code == 'SUCCESS' || $app->result_code == 'SUCCESS') {
-                //本地验证订单合法性
-                $order_detail = $this->order->findOne('order_number', $app->out_trade_no);
-                if ($app->total_fee == ($order_detail['total_amount']*100) &&
-                    $app->mch_id == config('weixin.MCHID') &&
-                    $app->appid == config('weixin.APPID')
-                ) {
-                    $this->order->update('order_number', $app->out_trade_no, [
-                        'payment_type' => 'weixin',
-                        'trade_no' => $app->transaction_id,
-                        'payment_status' => 1
-                    ]);
-                    //成功记录到日志
-                    Log::info('weixin_success_post:'.$input);
-                    return response('success');
-                }
-            }
-        }
-        //验证失败记录到日志
-        Log::info('weixin_faile_post:'.$input);
-        return response('faile', 403);
+        return response($this->weixin->app($input));
     }
 
     /**
