@@ -13,7 +13,7 @@
             $('#refresh').click(function () {
                 $.ajax({
                     type: "get",
-                    url: "/admin/weixin/refresh/{{$order['order_id']}}",
+                    url: "/admin/wxpay/refresh/{{$order['order_id']}}",
                     dataType: "json",
                     success: function (data) {
                         $('#weixin_pay_code').attr('src', 'http://paysdk.weixin.qq.com/example/qrcode.php?data='+data);
@@ -29,11 +29,11 @@
         function push() {
             $.ajax({
                 type: "get",
-                url: "/admin/weixin/query/{{$order['order_id']}}",
+                url: "/admin/wxpay/query/{{$order['order_id']}}",
                 dataType: "json",
                 success: function (data) {
                     if (data == 'success') {
-                        window.location.href='/admin/weixin/callback/{{$order['order_id']}}';
+                        window.location.href='/admin/wxpay/callback/{{$order['order_id']}}';
                     }
                 }
             });
@@ -60,7 +60,7 @@
                             <button class="new-btn-login" id="refresh" type="button" style="text-align:center;">刷 新</button>
                         </span>
                         <span class="new-btn-login-sp">
-                            <button class="new-btn-login" type="button" style="text-align:center;" onclick="location.href='/admin/weixin/callback/{{$order['order_id']}}'">已完成 付款</button>
+                            <button class="new-btn-login" type="button" style="text-align:center;" onclick="location.href='/admin/wxpay/callback/{{$order['order_id']}}'">已完成 付款</button>
                         </span>
                     <span class="note-help">如果显示订单过期，请按‘刷新’按钮重新生成。</span>
                 </dd>

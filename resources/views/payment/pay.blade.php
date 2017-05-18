@@ -12,8 +12,8 @@
                 $('#pay_form').submit();
            });
            
-           $('#weixin').click(function () {
-               $('#pay_form').attr('action', '/admin/weixin/pay');
+           $('#wxpay').click(function () {
+               $('#pay_form').attr('action', '/admin/wxpay/pay');
                $('#pay_form').submit();
            });
         });
@@ -120,7 +120,7 @@
                         </span>
 
                         <span class="new-btn-login-sp">
-                            <button class="new-btn-login" id="weixin"  type="button">微信 支付</button>
+                            <button class="new-btn-login" id="wxpay"  type="button">微信 支付</button>
                         </span>
                     @endif
 

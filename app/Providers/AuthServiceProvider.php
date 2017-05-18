@@ -13,7 +13,7 @@ use App\Service\IndexService;
 use App\Service\OrderService;
 use App\Service\TaskService;
 use App\Service\VerficationService;
-use App\Service\WeixinService;
+use App\Service\WxpayService;
 use App\Task;
 use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -41,7 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         VerficationService::class => ViewPolicy::class,
         AlipayService::class => ViewPolicy::class,
         AdminAction::class => ViewPolicy::class,
-        WeixinService::class => ViewPolicy::class,
+        WxpayService::class => ViewPolicy::class,
     ];
 
     /**

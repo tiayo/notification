@@ -3,7 +3,7 @@
 * 2015-06-29 修复签名问题
 **/
 
-namespace App\Payment\Weixin\Lib;
+namespace App\Payment\Wxpay\Lib;
 
 /**
  * 
@@ -114,7 +114,7 @@ class WxPayDataBase
 		ksort($this->values);
 		$string = $this->ToUrlParams();
 		//签名步骤二：在string后加入KEY
-		$string = $string . "&key=".config('weixin.KEY');
+		$string = $string . "&key=".config('wxpay.KEY');
 		//签名步骤三：MD5加密
 		$string = md5($string);
 		//签名步骤四：所有字符转为大写

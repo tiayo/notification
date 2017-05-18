@@ -14,13 +14,13 @@ class PaymentCheckService
 {
     protected $order;
     protected $alipay;
-    protected $weixin;
+    protected $wxpay;
 
-    public function __construct(OrderRepositories $order, AlipayService $alipay, WeixinService $weixin)
+    public function __construct(OrderRepositories $order, AlipayService $alipay, WxpayService $wxpay)
     {
         $this->order = $order;
         $this->alipay = $alipay;
-        $this->weixin = $weixin;
+        $this->wxpay = $wxpay;
     }
 
     public function check()
@@ -30,7 +30,7 @@ class PaymentCheckService
             if ($this->alipay($order['order_id'], $order)) {
                 continue;
             }
-            $this->weixin($order['order_id'], $order);
+            $this->wxpay($order['order_id'], $order);
         }
 
         //记录
@@ -76,11 +76,11 @@ class PaymentCheckService
         return false;
     }
 
-    public function weixin($order_id, $order)
+    public function wxpay($order_id, $order)
     {
         //报错直接跳过
         try {
-            $result = $this->weixin->query($order);
+            $result = $this->wxpay->query($order);
         } catch (\Exception $e) {
             return false;
         }
