@@ -15,6 +15,7 @@ use App\Payment\Wxpay\Lib\WxPayUnifiedOrder;
 use App\Payment\Wxpay\Lib\NativePay;
 use App\Payment\Wxpay\Lib\WxPayOrderQuery;
 use Illuminate\Support\Facades\Log;
+use App\Payment\Wxpay\Pay\JsApiPay;
 
 class WxpayService implements PayInterfaces
 {
@@ -77,9 +78,9 @@ class WxpayService implements PayInterfaces
 
         //判断电脑端或手机端，调用对应方法
         if (BrowserDetect::isMobile()) {
-            $this->wapPay($post);
+            return ['type' => 'wapPay', 'data' => $this->wapPay($post, $order)];
         } elseif (BrowserDetect::isDesktop() || BrowserDetect::isTablet()) {
-            return $this->pagePay($post, $order);
+            return ['type' => 'pagePay', 'data' => $this->pagePay($post, $order)];
         }
     }
 
@@ -122,9 +123,34 @@ class WxpayService implements PayInterfaces
      *
      * @param $post
      */
-    public function wapPay($array)
+    public function wapPay($array, $order_detail)
     {
-        throw new \Exception('由于微信限制，手机端将无法使用微信付款，请使用支付宝付款！');
+        //①、获取用户openid
+        $tools = new JsApiPay();
+        $openId = $tools->GetOpenid($order_detail['order_id']);
+
+        //②、统一下单
+        $input = new WxPayUnifiedOrder();
+
+        $input->SetBody($order_detail['content']);
+        $input->SetAttach(config('site.title'));
+        $input->SetOut_trade_no($order_detail['order_number']);
+        $input->SetTotal_fee($order_detail['total_amount']*100);
+        $input->SetTime_start(date("YmdHis"));
+        $input->SetTime_expire(date("YmdHis", time() + 600));
+        //$input->SetGoods_tag("test");//商品标记，使用代金券或立减优惠功能时需要的参数，说明详见代金券或立减优惠
+        $input->SetNotify_url(config('wxpay.NOTIFY_URL'));
+        $input->SetTrade_type("JSAPI");
+        $input->SetOpenid($openId);
+
+        $order = WxPayApi::unifiedOrder($input);
+
+        $jsApiParameters = $tools->GetJsApiParameters($order);
+
+        //获取共享收货地址js函数参数
+        $editAddress = $tools->GetEditAddressParameters();
+
+        return ['jsApiParameters' => $jsApiParameters, 'editAddress' => $editAddress];
     }
 
     /**
@@ -200,6 +226,24 @@ class WxpayService implements PayInterfaces
             //更新订单信息
             $order_id = $this->refund->findOne('refund_id', $request['refund_id'])['order_id'];
             $value['order_status'] = 3;//状态：退款成功
+            $this->order->update('order_id', $order_id, $value);
+
+            return true;
+        }
+
+        //退款没有返回成功时执行
+        if ($result['result_code'] == 'FAIL' && !empty($result['err_code_des'])) {
+            //记录到日志
+            Log::info('order id:'.$refund['order_id'].' refund error (code:4):'.$result['err_code_des']);
+
+            //更新退款信息
+            $data['refund_status'] = 4;//状态：退款失败
+            $data['reply'] = $request['reply'];
+            $this->refund->update('refund_id', $request['refund_id'], $data);
+
+            //更新订单信息
+            $order_id = $this->refund->findOne('refund_id', $request['refund_id'])['order_id'];
+            $value['order_status'] = 4;//状态：退款失败
             $this->order->update('order_id', $order_id, $value);
 
             return true;
