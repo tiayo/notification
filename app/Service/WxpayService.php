@@ -128,6 +128,7 @@ class WxpayService implements PayInterfaces
         //①、获取用户openid
         $tools = new JsApiPay();
         $openId = $tools->GetOpenid($order_detail['order_id']);
+        Log::info('open Id:'.$openId);
 
         //②、统一下单
         $input = new WxPayUnifiedOrder();
