@@ -88,6 +88,7 @@ class WxpayService implements PayInterfaces
      * 电脑端支付
      *
      * @param $post
+     * @return string
      */
     public function pagePay($array, $order)
     {
@@ -122,6 +123,7 @@ class WxpayService implements PayInterfaces
      * 手机端支付
      *
      * @param $post
+     * @return array
      */
     public function wapPay($array, $order_detail)
     {
@@ -289,6 +291,13 @@ class WxpayService implements PayInterfaces
         return $url;
     }
 
+    /**
+     * 回调方法
+     *
+     * @param $order_id
+     * @return bool
+     * @throws \Exception
+     */
     public function callback($order_id)
     {
         // 权限验证
@@ -307,6 +316,8 @@ class WxpayService implements PayInterfaces
      * 接收微信异步数据
      * XML数据
      *
+     * @param $input
+     * @return string
      */
     public function app($input)
     {

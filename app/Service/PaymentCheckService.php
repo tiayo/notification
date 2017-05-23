@@ -9,7 +9,6 @@ use App\Repositories\OrderRepositories;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
-
 class PaymentCheckService
 {
     protected $order;
@@ -23,6 +22,9 @@ class PaymentCheckService
         $this->wxpay = $wxpay;
     }
 
+    /**
+     * 选择相应的验证方法
+     */
     public function check()
     {
         $all_order = $this->order->getWhere('payment_status', 1, '<>');
@@ -37,6 +39,13 @@ class PaymentCheckService
         Log::info('run payment end:'.Carbon::now());
     }
 
+    /**
+     * 支付宝验证
+     *
+     * @param $order_id
+     * @param $order
+     * @return bool
+     */
     public function alipay($order_id, $order)
     {
         //报错直接跳过
@@ -76,6 +85,13 @@ class PaymentCheckService
         return false;
     }
 
+    /**
+     * 微信验证
+     *
+     * @param $order_id
+     * @param $order
+     * @return bool
+     */
     public function wxpay($order_id, $order)
     {
         //报错直接跳过

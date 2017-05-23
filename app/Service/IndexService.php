@@ -27,7 +27,7 @@ class IndexService
      */
     static public function admin()
     {
-        try{
+        try {
             Verfication::admin(IndexService::class);
         } catch (\Exception $e) {
             return false;

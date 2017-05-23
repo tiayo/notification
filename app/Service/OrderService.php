@@ -12,14 +12,14 @@ class OrderService
     protected $order;
     protected $refund;
     protected $alipay;
-    protected $weixin;
+    protected $wxpay;
 
-    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay, WxpayService $weixin)
+    public function __construct(OrderRepositories $order, RefundRepositories $refund, AlipayService $alipay, WxpayService $wxpay)
     {
         $this->order = $order;
         $this->refund = $refund;
         $this->alipay = $alipay;
-        $this->weixin = $weixin;
+        $this->wxpay = $wxpay;
     }
 
     public function isAdmin()
@@ -113,15 +113,15 @@ class OrderService
      */
     public function refundApply($order_id)
     {
+        //权限验证
+        $this->verfication($order_id);
+
         //验证状态是否可以操作
         if (!empty($refund_exist = $this->refund->findOne('order_id', $order_id))) {
             if ($refund_exist['refund_status'] != 2) {
                 throw new \Exception('当前退款状态不允许修改！');
             }
         }
-
-        //权限验证
-        $this->verfication($order_id);
 
         $order = $this->order->findOne('order_id', $order_id);
 
@@ -280,7 +280,7 @@ class OrderService
                 $this->alipayRedund($refund, $request);
                 break;
             case 'weixin' :
-                $this->weixinRefund($refund, $request);
+                $this->wxpayRefund($refund, $request);
         }
     }
 
@@ -307,10 +307,10 @@ class OrderService
      * @param $request
      * @return bool|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function weixinRefund($refund, $request)
+    public function wxpayRefund($refund, $request)
     {
         try {
-            return $this->weixin->refund($refund, $request);
+            return $this->wxpay->refund($refund, $request);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
