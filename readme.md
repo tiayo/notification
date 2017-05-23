@@ -1,7 +1,7 @@
 ## Notification
 
 ````
-本套程序通过laravel事件系统及队列、redis、cron、supervisor
+本套程序通过laravel事件系统、队列及redis、cron、supervisor
 实现创建自动邮件通知任务，并且包含了一个订单系统，接入了支付宝、
 微信支付接口，将支付宝、微信支付接口较好的融入到laravel程序中。
 ````
