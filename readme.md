@@ -1,5 +1,8 @@
 ## Notification
 
+````
+本套程序通过laravel事件系统及队列、redis、cron、supervisor实现创建自动邮件通知任务，并且包含了一个订单系统，接入了支付宝、微信支付接口，将支付宝、微信支付接口较好的融入到laravel程序中。
+````
 #### 配置：
 
 运行`composer install`
