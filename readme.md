@@ -9,21 +9,21 @@
 运行`crontab -e`
 
 ````
-* * * * * php /site/artisan task:check
-* * * * * sleep 10; php /site/artisan task:check
-* * * * * sleep 20; php /site/artisan task:check
-* * * * * sleep 30; php /site/artisan task:check
-* * * * * sleep 40; php /site/artisan task:check
-* * * * * sleep 50; php /site/artisan task:check
-10 0 * * * chmod 777 -R /site/storage/logs
-* * * * * sleep 50; php /site/artisan payment:check
+* * * * * php /{ site }/artisan task:check
+* * * * * sleep 10; php /{ site }/artisan task:check
+* * * * * sleep 20; php /{ site }/artisan task:check
+* * * * * sleep 30; php /{ site }/artisan task:check
+* * * * * sleep 40; php /{ site }/artisan task:check
+* * * * * sleep 50; php /{ site }/artisan task:check
+10 0 * * * chmod 777 -R /{ site }/storage/logs
+* * * * * sleep 50; php /{ site }/artisan payment:check
 ````
 
 supervisor配置文件：
 ````
 [program:laravel-worker]
 process_name=%(program_name)s_%(process_num)02d
-command=php /site/artisan queue:work redis --sleep=3 --tries=3
+command=php /{ site }/artisan queue:work redis --sleep=3 --tries=3
 autostart=true
 autorestart=true
 user=root
