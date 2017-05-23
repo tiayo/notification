@@ -20,8 +20,7 @@ class TaskCheckService
     }
 
     /**
-     * 分批获取任务传到handle方法处理
-     *
+     * 分页获取任务传到handle方法处理
      */
     public function screenTask()
     {
@@ -47,6 +46,12 @@ class TaskCheckService
         Log::info('check task end:'.Carbon::now());
     }
 
+    /**
+     * 调用不同的任务策略
+     *
+     * @param $data
+     * @return bool
+     */
     public function handle($data)
     {
         foreach ($data as $item) {

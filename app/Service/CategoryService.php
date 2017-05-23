@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Facades\Verfication;
 use App\Repositories\CategoryRepositories;
 use App\Repositories\UserRepositories;
 
@@ -19,6 +18,7 @@ class CategoryService
 
     /**
      * 获取所有分类（获取主要字段）
+     *
      * @return array
      */
     public function getSelect()
@@ -29,6 +29,7 @@ class CategoryService
 
     /**
      * 获取所有分类（有指定字段）
+     *
      * @return array
      */
     public function get()
@@ -39,6 +40,7 @@ class CategoryService
 
     /**
      * 根据id获取分类
+     *
      * @param $category_id
      * @return mixed
      */
@@ -68,6 +70,7 @@ class CategoryService
 
     /**
      * 统计分类个数
+     *
      * @return int
      */
     public function count()
@@ -147,6 +150,7 @@ class CategoryService
      * 删除需要权限验证
      *
      * @param $post
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectEvent($post)
     {
@@ -164,6 +168,7 @@ class CategoryService
      * checkbox 修改事件
      *
      * @param $task_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectModified($category_id)
     {
@@ -176,6 +181,7 @@ class CategoryService
      * 只可以删除自己的任务，违规id会被忽略
      *
      * @param $check
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectDelete($check)
     {

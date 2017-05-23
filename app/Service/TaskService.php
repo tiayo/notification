@@ -35,6 +35,7 @@ class TaskService
     /**
      * 获取任务列表
      * 根据权限执行不同操作
+     *
      * @param $page 当前页数
      * @param $num 每页条数
      * @return mixed
@@ -52,6 +53,7 @@ class TaskService
 
     /**
      * 普通用户获取任务列表
+     *
      * @param $page 当前页数
      * @param $num 每页条数
      * @return array
@@ -65,6 +67,7 @@ class TaskService
 
     /**
      * 管理员获取任务列表
+     *
      * @param $page 当前页数
      * @param $num 每页条数
      * @return array
@@ -211,6 +214,7 @@ class TaskService
      * 删除需要权限验证
      *
      * @param $post
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectEvent($post)
     {
@@ -228,6 +232,7 @@ class TaskService
      * checkbox 修改事件
      *
      * @param $task_id
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectModified($task_id)
     {
@@ -241,6 +246,7 @@ class TaskService
      * 只可以删除自己的任务，违规id会被忽略
      *
      * @param $check
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectDelete($check)
     {
