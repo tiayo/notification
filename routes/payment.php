@@ -17,6 +17,10 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/wxpay/refresh/{order_id}', 'WxpayController@refresh');
     Route::get('/wxpay/callback/{order_id}', 'WxpayController@callback');
 
+    //paypal
+    Route::get('/paypal/query', 'PayPalController@index');
+    Route::post('/paypal/query', 'PayPalController@query');
+
 });
 
 //异步通知

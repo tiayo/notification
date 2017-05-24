@@ -1,109 +1,70 @@
-<!DOCTYPE html  "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>随享任务系统</title>
-    <link href="/style.css" rel="stylesheet" type="text/css" />
-    <script language="JavaScript" src="/jquery-1.11.3.min.js"></script>
-    <script src="/cloud.js" type="text/javascript"></script>
+<!doctype html>
+<html lang="en" class="fixed accounts sign-in">
 
-    <script language="javascript">
-        $(function(){
-            $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
-            $(window).resize(function(){
-                $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
-            })
-        });
-    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{{config('site.title')}}</title>
+    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="/stylesheets/css/style.css">
 </head>
 
-<body style="background-color:#1c77ac; background-image:url(/images/light.png); background-repeat:no-repeat; background-position:center top; overflow:hidden;">
+<body>
 
 
 
-<div id="mainBody">
-    <div id="cloud1" class="cloud"></div>
-    <div id="cloud2" class="cloud"></div>
-</div>
-
-
-<div class="logintop">
-    <span>随享任务系统</span>
-    <ul>
-        <li><a href="/">回首页</a></li>
-        <li><a href="#">帮助</a></li>
-        <li><a href="#">关于</a></li>
-    </ul>
-</div>
-
-<div class="loginbody">
-
-    <span class="systemlogo"></span>
-
-    <div class="loginbox">
-
-        <ul>
-            <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
-                {{ csrf_field() }}
-
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <div class="col-md-6">
-
-                        <li><input id="email" type="email" class="loginuser" name="email" value="{{ old('email') }}" placeholder="输入帐号" required autofocus></li>
-
-                        @if ($errors->has('email'))
-                            <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-
-                    <div class="col-md-6">
-
-                        <li><input id="password" type="password" class="loginpwd" name="password" placeholder="输入密码" required></li>
-
-                        @if ($errors->has('password'))
-                            <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6 col-md-offset-4">
-                        <div class="checkbox">
-                            <label>
-                                <li><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me</li>
-                            </label>
+<div class="wrap">
+    <div class="page-body animated slideInDown">
+        <div class="logo">
+            <h3 align="center">{{config('site.title')}}</h3>
+        </div>
+        <div class="box">
+            <div class="panel mb-none">
+                <div class="panel-content bg-scale-0">
+                    <form method="post" action="{{ route('login') }}">
+                        {{ csrf_field() }}
+                        <div class="form-group mt-md">
+                            <span class="input-with-icon">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                    <i class="fa fa-envelope"></i>
+                            </span>
                         </div>
-                    </div>
+                        <div class="form-group">
+                                <span class="input-with-icon">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox-custom checkbox-primary">
+                                <input type="checkbox" id="remember-me" value="option1" checked>
+                                @if ($errors->has('email'))
+                                    <label for="remember-me">{{ $errors->first('email') }}</label>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-block">
+                        </div>
+                        <div class="form-group text-center">
+                            <a href="/pages_forgot-password.html">Forgot password?</a>
+                        </div>
+                    </form>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-md-8 col-md-offset-4">
-                        <li>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                            <a class="btn-link" href="{{ route('password.request') }}">忘记密码</a>
-                        </li>
-                    </div>
-                </div>
-            </form>
-        </ul>
-
-
+            </div>
+        </div>
     </div>
-
 </div>
-
-
-
-<div class="loginbm">版权所有：郑祥景</div>
-
-
+<script src="/js/app.js"></script>
+<script src="/vendor/nano-scroller/nano-scroller.js"></script>
+<script src="/javascripts/template-script.min.js"></script>
+<script src="/javascripts/template-init.min.js"></script>
 </body>
 
 </html>
