@@ -77,6 +77,7 @@ class TaskController extends Controller
             'email' => 'bail|required|email',
             'content' => 'bail|required',
         ]);
+
         try {
             if (empty($task_id)) {
                 $result = $this->task->store($this->request->all(), $id);
@@ -110,7 +111,7 @@ class TaskController extends Controller
         //判断管理员
         $admin = IndexService::admin();
 
-        return view('home.list',[
+        return view('home.task_list',[
             'list_task' => $list_task,
             'count' => ($count <= 5) ? $count : 5,
             'page' => $page,

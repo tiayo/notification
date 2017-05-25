@@ -63,28 +63,46 @@ $(function() {
         wrapper: 'li',
 
         rules: {
-            username: {
+            title: {
                 required: true
             },
-            email: {
+            start_time: {
                 required: true,
                 email: true
             },
-            password: {
+            plan: {
+                required: true
+            },
+            phone: {
+                required: true
+            },
+            email: {
+                required: true
+            },
+            content: {
                 required: true
             }
         },
 
         messages: {
-            username: {
-                required: "Please enter your username"
+            title: {
+                required: "请输入标题！"
+            },
+            start_time: {
+                required: "请选择提醒时间！"
+            },
+            plan: {
+                required: "请选择计划！"
+            },
+            phone: {
+                required: "请输入接收提醒的手机号码！"
             },
             email: {
-                required: "Please enter your email address",
-                email: "Please enter a valid email address"
+                required: "请输入接收提醒的邮箱！",
+                email: "请输入有效的邮箱！"
             },
-            password: {
-                required: "Please enter your password",
+            content: {
+                required: "请输入提醒的内容！"
             }
         }
     });

@@ -1,20 +1,212 @@
-<!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{{config('site.title').config('site.version')}}</title>
-<link href="/style.css" rel="stylesheet"/>
-<script src="/jquery.js"></script>
-<link href="/style.css" rel="stylesheet" type="text/css" />
-</head>
-  
-<frameset rows="88,*" cols="*" frameborder="NO" border="0" framespacing="0">
-  <frame src="/admin/top" name="topFrame" scrolling="NO" noresize="noresize" id="topFrame" title="topFrame" />
-  <frameset cols="187,*" frameborder="NO" border="0" framespacing="0">
-    <frame src="/admin/left" name="leftFrame" scrolling="NO" noresize="noresize" id="leftFrame" title="leftFrame" />
-    <frame src="/admin/main" name="rightFrame" id="rightFrame" title="rightFrame" />
-  </frameset>
-</frameset>
-<noframes><body>
-</body></noframes>
-</html>
+@extends('layouts.app')
+
+@section('title', '控制台')
+
+@section('link')
+    @parent
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="/vendor/toastr/toastr.min.css">
+    <link rel="stylesheet" href="/vendor/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/stylesheets/css/style.css">
+@endsection
+
+            @section('breadcrumbs')
+                <li><i class="fa fa-home" aria-hidden="true"></i><a href="">控制台</a></li>
+            @endsection
+
+            @section('content_body')
+            <div class="row animated fadeInUp">
+                <div class="col-sm-12 col-lg-9">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4">
+                            <div class="panel widgetbox wbox-2 bg-scale-0">
+                                <a href="#">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-globe color-darker-1"></span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h4 class="subtitle color-darker-1">上次登录时间</h4>
+                                                <h4 class="color-primary"> {{$next_login_time}}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel widgetbox wbox-2 bg-lighter-2 color-light">
+                                <a href="#">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-user color-lighter"></span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h4 class="subtitle color-lighter">欢迎您</h4>
+                                                <h1 class="title color-w">{{$user_name}}</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel widgetbox wbox-2 bg-darker-2 color-light">
+                                <a href="#">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-envelope color-lighter"></span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h4 class="subtitle color-lighter">未读信息</h4>
+                                                <h1 class="title color-light"> 1</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel widgetbox wbox-2 bg-darker-3 color-light">
+                                <a href="#">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-mail-reply color-lighter"></span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h4 class="subtitle color-light">联系我们</h4>
+                                                <h5 class="color-light">656861622@qq.com</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel widgetbox wbox-2 bg-darker-4 color-light">
+                                <a href="/admin/sponsor">
+                                    <div class="panel-content">
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <span class="icon fa fa-money color-lighter"></span>
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <h4 class="subtitle color-light">赞助我们</h4>
+                                                <h5 class="color-light">支付宝、微信支付</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <div class="tabs mt-none">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="active"><a href="#home" data-toggle="tab">最新任务</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="home">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th>主题</th>
+                                                    <th>下次提醒时间</th>
+                                                    <th>分类</th>
+                                                    <th><i class="fa fa-cog" aria-hidden="true"></i>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($tasks as $task)
+                                                    <tr>
+                                                        <td>{{$task['title']}}</td>
+                                                        <td>{{$task['start_time']}} {{$task['end_time'] or ''}}</td>
+                                                        <td>{{$task['name']}}</td>
+                                                        <td><a href="/admin/task/update/{{$task['category_id']}}/{{$task['task_id']}}" class="tablelink">修改</a></td>
+                                                    </tr>
+                                                @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-8">
+                            <div class="panel b-primary bt-md">
+                                <div class="panel-content p-none">
+                                    <div class="widget-list list-to-do">
+                                        <h4 class="list-title">我的消息</h4>
+                                        <button class="add-item btn btn-o btn-primary btn-xs">
+                                            <a href="/admin/sponsor"> <i class="fa fa-plus"></i></a>
+                                        </button>
+                                        <ul>
+                                            <li>
+                                                <div class="checkbox-custom checkbox-primary">
+                                                    <input type="checkbox" id="check-h1" value="option1">
+                                                    <label for="check-h1">Accusantium eveniet ipsam neque</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="checkbox-custom checkbox-primary">
+                                                    <input type="checkbox" id="check-h2" value="option1" checked>
+                                                    <label for="check-h2">Lorem ipsum dolor sit</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="checkbox-custom checkbox-primary">
+                                                    <input type="checkbox" id="check-h3" value="option1">
+                                                    <label for="check-h3">Dolor eligendi in ipsum sapiente</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-lg-3">
+                    <div class="timeline">
+                        @foreach ($orders as $order)
+                            <div class="timeline-box">
+                                <div class="timeline-icon bg-primary">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <div class="timeline-content">
+                                    <h4 class="tl-title">{{$order['title']}}</h4>
+                                    <p style="line-height: 2rem; margin: 0;">
+                                        {{$order['content']}}<br>
+                                        订单号:{{$order['order_number']}}<br>
+                                        <a href="/admin/order/view/{{$order['order_id']}}">
+                                        @if ($order['payment_status'] == 0)
+                                                <button type="button" class="btn btn-danger">
+                                                    还未付款哦！
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-success">
+                                                    已经通过{{$status::paymentType($order['payment_type'])}}付款
+                                                </button>
+                                        @endif
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="timeline-footer">
+                                    <span>{{$order['updated_at']}}</span>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @endsection
+
+@section('script')
+    @parent
+    <script src="vendor/nano-scroller/nano-scroller.js"></script>
+    <script src="javascripts/template-script.min.js"></script>
+    <script src="javascripts/template-init.min.js"></script>
+    <script src="vendor/toastr/toastr.min.js"></script>
+    <script src="vendor/chart-js/chart.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="javascripts/examples/dashboard.js"></script>
+@endsection
