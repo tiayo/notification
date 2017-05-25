@@ -29,23 +29,24 @@
                 <div class="panel-content bg-scale-0">
                     <form method="post" action="{{ route('login') }}">
                         {{ csrf_field() }}
-                        <div class="form-group mt-md">
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <span class="input-with-icon">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
                                     <i class="fa fa-envelope"></i>
                             </span>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <span class="input-with-icon">
-                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                         <i class="fa fa-key"></i>
                                     </span>
                         </div>
                         <div class="form-group">
                             <div class="checkbox-custom checkbox-primary">
-                                <input type="checkbox" id="remember-me" value="option1" checked>
                                 @if ($errors->has('email'))
                                     <label for="remember-me">{{ $errors->first('email') }}</label>
+                                    @elseif ($errors->has('password'))
+                                    <label for="remember-me">{{ $errors->first('password') }}</label>
                                 @endif
                             </div>
                         </div>
@@ -53,7 +54,7 @@
                             <input type="submit" class="btn btn-primary btn-block">
                         </div>
                         <div class="form-group text-center">
-                            <a href="/pages_forgot-password.html">Forgot password?</a>
+                            <a href="#">Forgot password?</a>
                         </div>
                     </form>
                 </div>

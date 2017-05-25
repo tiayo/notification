@@ -2574,7 +2574,7 @@ label.error {
   margin-left: 54px;
   background: white;
   border-radius: 4px 4px 0px 0px;
-  padding: 8px 15px;
+  padding: 8px 15px 0;
 }
 .timeline .timeline-box .timeline-content:before {
   font-family: 'FontAwesome';
@@ -3114,6 +3114,14 @@ ul.user-contact-info li:last-child {
 
 .bg-darker-2 {
   background: #002d53 !important;
+}
+
+.bg-darker-3 {
+  background: #660099 !important;
+}
+
+.bg-darker-4 {
+  background: #006633 !important;
 }
 
 .bg-scale-0 {

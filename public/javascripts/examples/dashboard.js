@@ -8,14 +8,14 @@ $(function () {
     toastr.options = {
     "progressBar": true,
     "positionClass": "toast-bottom-right",
-    "timeOut": 3500,
+    "timeOut": 5500,
     "showEasing": "swing",
     "hideEasing": "linear",
     "showMethod": "slideDown",
     "hideMethod": "fadeOut"
     };
 
-    toastr.info('Enjoy it!', '<h5 style="margin-top: 0px; margin-bottom: 5px;"><b>This is Helsinki Template!</b></h5>');
+    toastr.info('祝您使用愉快!', '<h5 style="margin-top: 0px; margin-bottom: 5px;"><b>随享任务管理系统欢迎您!</b></h5>');
 
     //AREA CHART EXAMPLE
     // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
