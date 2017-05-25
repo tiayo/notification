@@ -11,8 +11,8 @@
 @endsection
 
 @section('breadcrumbs')
-    <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">控制台</a></li>
-    <li><a href="/admin/task/page/">我的任务</a></li>
+    <li value="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">控制台</a></li>
+    <li value="nav_1_1"><a href="/admin/task/page/">我的任务</a></li>
 @endsection
 
 @section('content_body')
@@ -98,4 +98,10 @@
     <script src="/javascripts/template-init.min.js"></script>
     <script src="/vendor/data-table/media/js/jquery.dataTables.min.js"></script>
     <script src="/vendor/data-table/media/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var value = $('.breadcrumbs li');
+            console.log(value.length);
+        })
+    </script>
 @endsection
