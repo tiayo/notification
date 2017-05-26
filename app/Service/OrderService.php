@@ -243,10 +243,10 @@ class OrderService
      * @param $action
      * @return string
      */
-    public function configmView($refund_id, $action)
+    public function configmView($refund_number, $action)
     {
         //判断是否可以拒绝退款
-        $this->isRefundSuccess($refund_id);
+        $this->isRefundSuccess($refund_number);
 
         switch ($action) {
             case 'agree' :
@@ -350,9 +350,9 @@ class OrderService
      * @return bool
      * @throws \Exception
      */
-    public function isRefundSuccess($refund_id)
+    public function isRefundSuccess($refund_number)
     {
-        $reund = $this->refund->findOne('refund_id', $refund_id);
+        $reund = $this->refund->findOne('refund_number', $refund_number);
         if ($reund['refund_status'] == 3) {
             throw new \Exception('该订单已经退款成功了！');
         }

@@ -27,7 +27,7 @@ class PaymentCheckService
      */
     public function check()
     {
-        $all_order = $this->order->getWhere('payment_status', 1, '<>');
+        $all_order = $this->order->getWhere('order_id', 28, '=');
         foreach ($all_order as $order) {
             if ($this->alipay($order['order_id'], $order)) {
                 continue;
@@ -48,6 +48,7 @@ class PaymentCheckService
      */
     public function alipay($order_id, $order)
     {
+
         //报错直接跳过
         try {
             $result = $this->alipay->query($order);

@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{config('site.title')}}收银台</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" href="/pay_confirm.css">
-    <script type="text/javascript" src="/jquery.js"></script>
+@extends('layouts.app')
+
+@section('title', '收银台-退款批复')
+
+@section('link')
+    @parent
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/css/style.css">
+@endsection
+
+@section('breadcrumbs')
+    <li navValue="nav_3"><i class="fa fa-home" aria-hidden="true"></i><a href="">管理操作</a></li>
+    <li navValue="nav_3_2"><a href="">管理退款</a></li>
+    <li><a href="">退款批复</a></li>
+@endsection
+
+@section('content_body')
+    <div class="row animated fadeInRight">
+        <div class="col-md-12">
+            <h4 class="section-subtitle"><b>{{config('site.title')}}收银台</b></h4>
+            <div class="panel">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="form-horizontal form-stripe" id='refund_form' method='post'>
+                                {{ csrf_field() }}
+                                <h6 class="mb-xlg text-center"><b>退款批复-(您正在<i class="color-danger"> "{{$action_value}}" </i>退款)</b></h6>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">退款ID</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="refund_id" value="{{$refund_id}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">退款编号</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" value="{{$refund_number}}" readonly/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">回复</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" name='reply'></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button class="btn btn-primary btn-block" id="submit_form" type="button">提交 退款 申请</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('script')
+    @parent
     <script>
         $(document).ready(function () {
             $('#submit_form').click(function () {
@@ -18,53 +73,7 @@
             })
         })
     </script>
-</head>
-<body text=#000000 bgColor="#ffffff" leftMargin=0 topMargin=4>
-<header class="am-header">
-    <h1>{{config('site.title')}}-{{$action_value}}退款</h1>
-</header>
-<div id="main">
-    <form id='refund_form' method='post'>
-        {{ csrf_field() }}
-        <input type="hidden" name="confirm_type" value="{{$action}}">
-        <div id="body" style="clear:left">
-            <dl class="content">
-                <dt></dt>
-                <dd>
-                    {{--输出错误信息--}}
-                    @if (count($errors) > 0)
-                        @foreach ($errors->all() as $error)
-                            <span style="line-height: 28px; color:red;">注意：{{ $error }}</span>
-                        @endforeach
-                    @endif
-                </dd>
-
-                <hr class="one_line">
-                <dt>退款ID：</dt>
-                <dd>
-                    <input name="refund_id" value="{{$refund_id}}" readonly/>
-                </dd>
-                <hr class="one_line">
-                <dt>回复：</dt>
-                <textarea name='reply' rows="3" style="width:60%; border: none;"></textarea>
-                </dd>
-                <hr class="one_line">
-                <dd id="btn-dd">
-                        <span class="new-btn-login-sp">
-                            <button class="new-btn-login" id="submit_form" type="button" style="text-align:center;">{{$action_value}}退款 提交</button>
-                        </span>
-                    <span class="note-help">如果您点击“确认”按钮，即表示您同意该次的执行操作。</span>
-                </dd>
-            </dl>
-        </div>
-    </form>
-    <div id="foot">
-        <ul class="foot-ul">
-            <li>
-                {{config('site.title')}}版权所有 2011-{{date("Y")}} TIAYO.COM
-            </li>
-        </ul>
-    </div>
-</div>
-</body>
-</html>
+    <script src="/vendor/nano-scroller/nano-scroller.js"></script>
+    <script src="/javascripts/template-script.min.js"></script>
+    <script src="/javascripts/template-init.min.js"></script>
+@endsection

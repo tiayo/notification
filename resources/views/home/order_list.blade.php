@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '我的任务')
+@section('title', '我的订单')
 
 @section('link')
     @parent
@@ -10,14 +10,14 @@
 @endsection
 
 @section('breadcrumbs')
-    <li navValue="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的任务</a></li>
-    <li navValue="nav_1_1"><a href="/admin/task/page/">全部任务</a></li>
+    <li navValue="nav_2"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的订单</a></li>
+    <li navValue="nav_2_2"><a href="/admin/task/page/">全部订单</a></li>
 @endsection
 
 @section('content_body')
-            <div class="row animated fadeInRight">
+            <div class="row animated fadeInDown">
                 <div class="col-sm-12">
-                    <h4 class="section-subtitle"><b>我的任务</b></h4>
+                    <h4 class="section-subtitle"><b>全部订单</b></h4>
                     <div class="panel">
                         <div class="panel-content">
                             <div class="table-responsive">
@@ -27,35 +27,42 @@
                                             <table id="basic-table" class="data-table table table-striped nowrap table-hover dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="basic-table_info" style="width: 100%;">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th>任务编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                                                        <th>任务标题</th>
-                                                        @if ($admin)
-                                                            <th>用户</th>
+                                                        <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
+                                                        @if ($is_admin)
+                                                            <th>用户ID</th>
                                                         @endif
-                                                        <th>分类</th>
-                                                        <th>下次提醒时间</th>
-                                                        <th>提醒计划</th>
-                                                        <th>接收邮箱</th>
-                                                        <th>接收手机</th>
+                                                        <th>订单号</th>
+                                                        <th>订单名称</th>
+                                                        <th>金额</th>
+                                                        <th>交易状态</th>
+                                                        <th>订单状态</th>
+                                                        <th>创建时间</th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach ($list_task as $row)
-                                                    <tr role="row" class="odd">
-                                                        <td>{{$row['task_id']}}</td>
-                                                        <td>{{$row['title']}}</td>
-                                                        @if ($admin)
+                                                @foreach ($list_order as $row)
+                                                    <tr>
+                                                        <td>{{$row['order_id']}}</td>
+                                                        @if ($is_admin)
                                                             <td>{{$row['user_id']}}</td>
                                                         @endif
-                                                        <td>{{$row['name']}}</td>
-                                                        <td>{{$row['start_time']}} {{$row['end_time'] or ''}}</td>
-                                                        <td>{{$plan::plan($row['plan'])}}</td>
-                                                        <td>{{$row['email']}}</td>
-                                                        <td>{{$row['phone']}}</td>
+                                                        <td>{{$row['order_number']}}</td>
+                                                        <td>{{$row['title']}}</td>
+                                                        <td>{{$row['total_amount']}}</td>
                                                         <td>
-                                                            <a href="/admin/task/update/{{$row['category_id']}}/{{$row['task_id']}}" class="tablelink">修改</a>
-                                                            <a href="/admin/task/delete/{{$row['task_id']}}" class="tablelink"> 删除</a>
+                    <span class="@if ($row['payment_status'] != 1) color-danger @else color-success @endif">
+                       {{$status::paymentStatus($row['payment_status'])}} ({{$row['payment_type'] or 'no'}})
+                    </span>
+                                                        </td>
+                                                        <td>
+                    <span class="@if ($row['order_status'] != 1) color-danger @else color-success @endif">
+                        {{$status::orderStatus($row['order_status'])}}
+                    </span>
+                                                        </td>
+                                                        <td>{{$row['created_at']}}</td>
+                                                        <td>
+                                                            <a href="/admin/order/view/{{$row['order_id']}}" class="tablelink">查看</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

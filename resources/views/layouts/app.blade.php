@@ -20,12 +20,16 @@
 <div class="wrap">
 
     {{--头部--}}
-    @include('admin.header')
+    @if (!isset($header) || $header != false)
+        @include('admin.header')
+    @endif
 
     <div class="page-body">
 
         {{--这里是侧边栏--}}
-        @include('admin.sidebar')
+        @if (!isset($header) || $header != false)
+            @include('admin.sidebar')
+        @endif
 
         <div class="content">
 
@@ -46,13 +50,28 @@
         </div>
 
         {{--这里是右边快捷栏--}}
-        @include('admin.right')
+        @if (!isset($header) || $header != false)
+            @include('admin.right')
+        @endif
 
     </div>
 </div>
 
 @section('script')
+    {{--主文件--}}
     <script src="/js/app.js"></script>
+    {{--自动打开菜单层级--}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var num = $('.breadcrumbs li').length;
+            for (i=0; i<=num; i++) {
+                var nav_value = $('.breadcrumbs li:eq('+i+')').attr('navValue');
+                $('nav li').removeClass('active-item');
+                $('#'+nav_value).removeClass('close-item');
+                $('#'+nav_value).addClass('open-item active-item');
+            }
+        })
+    </script>
     {{--这里放js文件引用--}}
 @show
 

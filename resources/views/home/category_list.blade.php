@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '退款列表')
+@section('title', '我的订单')
 
 @section('link')
     @parent
@@ -11,13 +11,13 @@
 
 @section('breadcrumbs')
     <li navValue="nav_3"><i class="fa fa-home" aria-hidden="true"></i><a href="/">管理操作</a></li>
-    <li navValue="nav_3_1"><a href="/admin/task/page/">全部管理退款</a></li>
+    <li navValue="nav_3_1"><a href="/admin/task/page/">管理分类</a></li>
 @endsection
 
 @section('content_body')
-    <div class="row animated fadeInRight">
+    <div class="row animated fadeInDown">
         <div class="col-sm-12">
-            <h4 class="section-subtitle"><b>全部退款申请</b></h4>
+            <h4 class="section-subtitle"><b>全部分类</b></h4>
             <div class="panel">
                 <div class="panel-content">
                     <div class="table-responsive">
@@ -28,29 +28,26 @@
                                         <thead>
                                         <tr role="row">
                                             <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                                            <th>订单号</th>
-                                            <th>订单号</th>
-                                            <th>订单名称</th>
-                                            <th>退款金额</th>
-                                            <th>订单状态</th>
+                                            <th>名称</th>
+                                            <th>父级</th>
+                                            <th>别名</th>
                                             <th>创建时间</th>
+                                            <th>更新时间</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach ($list_refund as $row)
-                                            <tr role="row" class="odd">
-                                                <td>{{$row['refund_id']}}</td>
-                                                @if ($is_admin)
-                                                    <td>{{$row['order_id']}}</td>
-                                                @endif
-                                                <td>{{$row['order_number']}}</td>
-                                                <td>{{$row['order_title']}}</td>
-                                                <td>{{$row['refund_amount']}}</td>
-                                                <td>{{$status::refundStatus($row['refund_status'])}}</td>
+                                        @foreach ($list_category as $row)
+                                            <tr>
+                                                <td>{{$row['category_id']}}</td>
+                                                <td>{{$row['name']}}</td>
+                                                <td>{{$row['parent_name']}}</td>
+                                                <td>{{$row['alias'] or ''}}</td>
                                                 <td>{{$row['created_at']}}</td>
+                                                <td>{{$row['updated_at']}}</td>
                                                 <td>
-                                                    <a href="/admin/refund/view/{{$row['refund_id']}}" class="tablelink">查看</a>
+                                                    <a href="/admin/category/update/{{$row['category_id']}}" class="tablelink">修改</a>
+                                                    <a href="/admin/category/delete/{{$row['category_id']}}" class="tablelink"> 删除</a>
                                                 </td>
                                             </tr>
                                         @endforeach
