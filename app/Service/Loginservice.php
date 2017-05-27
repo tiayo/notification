@@ -58,7 +58,7 @@ trait Loginservice
             $request->session()->forget('lock');
 
             //写入profile表信息
-            $profile = $profile->findFirst(Auth::id())->toArray();
+            $profile = $profile->findProfileJoinUser(Auth::id())->toArray();
             $request->session()->put('profile', $profile);
 
             //返回登录

@@ -164,7 +164,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         hisorange\BrowserDetect\Provider\BrowserDetectService::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -180,6 +179,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //bebug
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*

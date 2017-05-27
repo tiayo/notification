@@ -13,9 +13,12 @@ class ProfileRepositories
         $this->profile = $profile;
     }
 
-    public function findFirst($user_id)
+    public function findProfileJoinUser($user_id)
     {
-        return $this->profile->where('user_id', $user_id)->first();
+        return $this->profile
+            ->join('users', 'users.id', '=', 'profile.user_id')
+            ->where('user_id', $user_id)
+            ->first();
     }
 
     public function avator($user_id)
