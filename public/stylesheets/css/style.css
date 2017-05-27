@@ -2670,7 +2670,7 @@ html.lock-screen {
   background: #004E90;
 }
 html.lock-screen body {
-  background: url("../../images/bg/pattern.png") top center no-repeat;
+  background: url("/../../images/bg/pattern.png") top center no-repeat;
 }
 html.lock-screen .wrap .box {
   max-width: 350px;

@@ -1,5 +1,7 @@
 @extends('layouts.single')
 
+@section('page_type', 'fixed accounts sign-in')
+
 @section('title', '登录')
 
 @section('link')
