@@ -21,10 +21,10 @@ class ProfileRepositories
             ->first();
     }
 
-    public function findWhereArray($user_id)
+    public function findWhereArray($option, $value)
     {
         return $this->profile
-            ->where('user_id', $user_id)
+            ->where($option, $value)
             ->first()
             ->toArray();
     }
