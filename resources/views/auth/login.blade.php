@@ -46,7 +46,8 @@
                             <input type="submit" class="btn btn-primary btn-block">
                         </div>
                         <div class="form-group text-center">
-                            <a id="login_type" style="cursor: pointer">使用用户名登录</a>
+                            <a id="login_type" style="cursor: pointer">使用用户名登录</a><br>
+                            <a href="/password/reset">忘记密码？</a>
                         </div>
                     </form>
                 </div>
