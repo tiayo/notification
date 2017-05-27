@@ -1,25 +1,12 @@
-<!doctype html>
-<html lang="en" class="fixed accounts sign-in">
+@extends('layouts.single')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>{{config('site.title')}}</title>
-    <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
-    <link rel="stylesheet" type="text/css" href="/css/app.css">
-    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
-    <link rel="stylesheet" href="/stylesheets/css/style.css">
-</head>
+@section('title', '登录')
 
-<body>
+@section('link')
+    @parent
+@endsection
 
-
-
-<div class="wrap">
+@section('content_body')
     <div class="page-body animated slideInDown">
         <div class="logo">
             <h3 align="center">{{config('site.title')}}</h3>
@@ -30,9 +17,12 @@
                     <form method="post" action="{{ route('login') }}">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <span class="input-with-icon">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required autofocus>
-                                    <i class="fa fa-envelope"></i>
+                            <span class="input-with-icon" id="login_type_block">
+                                {{--邮箱登录--}}
+                                <input type="email" class="form-control show" id="email" name="email" placeholder="Email" required autofocus>
+                                {{--用户名登录--}}
+                                <input type="text" class="form-control hidden" id="name" name="name" placeholder="User Name" autofocus>
+                                <i class="fa fa-envelope"></i>
                             </span>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
@@ -54,18 +44,37 @@
                             <input type="submit" class="btn btn-primary btn-block">
                         </div>
                         <div class="form-group text-center">
-                            <a href="#">Forgot password?</a>
+                            <a id="login_type" style="cursor: pointer">使用用户名登录</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="/js/app.js"></script>
-<script src="/vendor/nano-scroller/nano-scroller.js"></script>
-<script src="/javascripts/template-script.min.js"></script>
-<script src="/javascripts/template-init.min.js"></script>
-</body>
+@endsection
 
-</html>
+@section('script')
+   @parent
+    <script>
+        $(document).ready(function () {
+            $('#login_type').click(function () {
+                var show_id = $("#login_type_block [class='form-control show']").attr('id');
+                var hidden_id = $("#login_type_block [class='form-control hidden']").attr('id');
+
+                if ($('#login_type_block i').prop('class') === 'fa fa-envelope') {
+                    $('#login_type_block i').prop('class', 'fa fa-user')
+                } else {
+                    $('#login_type_block i').prop('class', 'fa fa-envelope')
+                }
+
+                $('#'+show_id).prop('required', false);
+                $('#'+show_id).removeClass('show');
+                $('#'+show_id).addClass('hidden');
+
+                $('#'+hidden_id).prop('required', true);
+                $('#'+hidden_id).removeClass('hidden');
+                $('#'+hidden_id).addClass('show');
+            })
+        })
+    </script>
+@endsection

@@ -197,7 +197,7 @@
         <div class="header-section" id="user-headerbox">
             <div class="user-header-wrap">
                 <div class="user-photo">
-                    <img src="/images/user-avatar.jpg" alt="Jane Doe" />
+                    <img src="{{session('profile')['avatar']}}" alt="Jane Doe" />
                 </div>
                 <div class="user-info">
                     <span class="user-name">Jane Doe</span>

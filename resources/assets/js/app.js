@@ -15,7 +15,7 @@ $(document).ready(function () {
             break;
         }
     }
-    if (typeof result === 'undefine') {
+    if (typeof result === 'undefined') {
         return false;
     }
     $('.paginate_button').removeClass('active');
