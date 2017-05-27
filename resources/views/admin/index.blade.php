@@ -5,14 +5,13 @@
 @section('link')
     @parent
     <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
     <link rel="stylesheet" href="/vendor/toastr/toastr.min.css">
     <link rel="stylesheet" href="/vendor/magnific-popup/magnific-popup.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
 @endsection
 
             @section('breadcrumbs')
-                <li><i class="fa fa-home" aria-hidden="true"></i><a href="">控制台</a></li>
+                <li navValue="nav_0"><i class="fa fa-home" aria-hidden="true"></i><a href="">控制台</a></li>
             @endsection
 
             @section('content_body')

@@ -36,9 +36,9 @@ class OrderController extends Controller
         // 最多页数
         $max_page = ceil($count/Config('site.page'));
 
-        return view('home.order', [
+        return view('home.order_list', [
             'list_order' => $list_order,
-            'count' => ($count <= 5) ? $count : 5,
+            'count' => $count,
             'page' => $page,
             'max_page' => $max_page,
             'status' => app('App\Http\Controllers\Controller'),
@@ -88,7 +88,7 @@ class OrderController extends Controller
         }
         return view('payment.refund_apply', [
                 'order' => $order,
-                'refund' => $this->order->refundInfo('order_id'),
+                'refund' => $this->order->refundInfo($order_id),
                 'refund_number' => $order_id.strtotime(date('YmdHis')),
             ]
         );
@@ -145,7 +145,7 @@ class OrderController extends Controller
 
         return view('payment.refund_list', [
             'list_refund' => $list_refund,
-            'count' => ($count <= 5) ? $count : 5,
+            'count' => $count,
             'page' => $page,
             'max_page' => $max_page,
             'status' => app('App\Http\Controllers\Controller'),
@@ -178,11 +178,11 @@ class OrderController extends Controller
     public function configmView($action)
     {
         //退款ID
-        $refund_id = $this->request->get('refund_id');
+        $refund_number = $this->request->get('refund_number');
 
         //退款确认类型（同意、拒绝）
         try {
-            $action_value = $this->order->configmView($refund_id, $action);
+            $action_value = $this->order->configmView($refund_number, $action);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
@@ -190,7 +190,8 @@ class OrderController extends Controller
         return view('payment.refund_confirm', [
             'action' => $action,
             'action_value' => $action_value,
-            'refund_id' => $refund_id,
+            'refund_number' => $refund_number,
+            'refund_id' => app('App\Repositories\RefundRepositories')->findOne('refund_number', $refund_number)['refund_id'],
         ]);
     }
 

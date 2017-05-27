@@ -37,9 +37,9 @@ class CategoryController extends Controller
         // 最多页数
         $max_page = ceil($count/Config('site.page'));
 
-        return view('home.category', [
+        return view('home.category_list', [
             'list_category' => $list_category,
-            'count' => ($count <= 5) ? $count : 5,
+            'count' => $count,
             'page' => $page,
             'max_page' => $max_page,
             'all_category' => $this->all_category,

@@ -17,8 +17,8 @@
 @endsection
 
 @section('breadcrumbs')
-    <li><i class="fa fa-home" aria-hidden="true"></i><a href="/">控制台</a></li>
-    <li><a href="/admin/task/page/">添加任务</a></li>
+    <li navValue="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">控制台</a></li>
+    <li navValue="nav_1_2"><a href="/admin/task/page/">添加任务</a></li>
 @endsection
 
 @section('content_body')

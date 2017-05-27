@@ -1,121 +1,87 @@
-<!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>无标题文档</title>
-    <link href="/style.css" rel="stylesheet" type="text/css" />
-    <link href="/select.css" rel="stylesheet" type="text/css" />
+@extends('layouts.app')
+
+@section('title', '赞助我们')
+
+@section('link')
+    @parent
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/css/style.css">
     <link href="https://cdn.bootcss.com/flatpickr/2.5.6/flatpickr.css" rel="stylesheet">
-    <script type="text/javascript" src="/jquery.js"></script>
-    <script type="text/javascript" src="/jquery.idTabs.min.js"></script>
-    <script type="text/javascript" src="/select-ui.min.js"></script>
+    {{--编辑器--}}
     <script type="text/javascript" charset="gbk" src="/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="gbk" src="/ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" src="https://cdn.bootcss.com/flatpickr/2.5.6/flatpickr.js"></script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="gbk" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
-    <script type="text/javascript">
-        KE.show({
-            id : 'content7',
-            cssPath : '/css/index.css'
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(e) {
-            $(".select1").uedSelect({
-                width : 345
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#pay_submit').click(function(){
-                if ($('#money_select').css('display') === 'none') {
-                    $('#form2').submit();
-                } else {
-                    $('#form').submit();
-                }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        function other_money() {
-            var option_money = $('.select1').val();
-            if (option_money === '0') {
-                $('#other_input').css('display', 'block');
-                $('#money_select').css('display', 'none');
-            }
-        }
-    </script>
-</head>
+@endsection
 
-<body>
+@section('breadcrumbs')
+    <li navValue="nav_2"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的订单</a></li>
+    <li navValue="nav_2_1"><a href="/admin/task/page/">赞助我们</a></li>
+@endsection
 
-<div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">赞助我们</a></li>
-    </ul>
-</div>
-
-<div class="formbody">
-
-
-    <div id="usual1" class="usual">
-
-        <div class="itab">
-            <ul>
-                <li><a href="#" class="selected">赞助我们</a></li>
-            </ul>
-        </div>
-
-        <!--闹钟页面-->
-        <div id="tab1" class="tabson">
-
-            <form id="form" method="post" action="/admin/sponsor">
-                {{ csrf_field() }}
-                <ul class="forminfo">
-                    <div class="xinxi_zhaoping">
-                        <li id="money_select">
-                            <label>金额<b>*</b></label>
-                            <div class="vocation">
-                                <select class="select1" name="money" style="width: 347px;" onchange="other_money()">
-                                    <option value="10.00">10.00</option>
-                                    <option value="20.00">20.00</option>
-                                    <option value="30.00">30.00</option>
-                                    <option value="50.00">50.00</option>
-                                    <option value="100.00">100.00</option>
-                                    <option value="0">输入其他金额</option>
-                                </select>
-                            </div>
-                        </li>
+@section('content_body')
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <h4 class="section-subtitle"><b>赞助我们</b></h4>
+            <div class="panel panel-default">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="messagebox-validation" action="/admin/sponsor" method="post">
+                                {{ csrf_field() }}
+                                <div class="message-container alert alert-danger">
+                                    <ul>
+                                        {{--输出错误信息--}}
+                                        @if (count($errors) > 0)
+                                            @if (is_array($errors))
+                                                @foreach ($errors->all() as $error)
+                                                    <label class="error">{{ $error }}</label>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="money" class="control-label">金额<span class="required">*</span></label>
+                                    <select name="money" id="money" class="form-control select2-hidden-accessible" required>
+                                        @if (!empty($old_input['plan']))
+                                            <option value="{{$old_input['plan']}}">{{$plan::plan($old_input['plan'])}}</option>
+                                        @endif
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100）</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </ul>
-            </form>
-
-            <form id="form2" method="post" action="/admin/sponsor">
-                {{ csrf_field() }}
-                <ul class="forminfo">
-                    <div class="xinxi_zhaoping">
-                        <li id="other_input" style="display: none;"><label>金额<b>*</b></label><input name="money" type="text" class="dfinput"/></li>
-                    </div>
-                </ul>
-            </form>
-
-            <p><input id="pay_submit" type="button" class="btn" value="确定"/></p>
+                </div>
+            </div>
         </div>
     </div>
+@endsection
 
-    <script type="text/javascript">
-        $("#usual1 ul").idTabs();
+@section('script')
+    @parent
+    <script src="/vendor/nano-scroller/nano-scroller.js"></script>
+    <script src="/javascripts/template-script.min.js"></script>
+    <script src="/javascripts/template-init.min.js"></script>
+    <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/javascripts/examples/forms/validation.js"></script>
+    <script>
+        window.onload = function () {
+            flatpickr("#start_time", {
+                enableTime: true,
+                altInput: true,
+                altFormat: "Y-m-d H:i:S"
+            });
+        }
     </script>
-
-    <script type="text/javascript">
-        $('.tablelist tbody tr:odd').addClass('odd');
-    </script>
-
-</div>
-</body>
-</html>
+@endsection

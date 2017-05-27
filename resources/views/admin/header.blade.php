@@ -197,7 +197,7 @@
         <div class="header-section" id="user-headerbox">
             <div class="user-header-wrap">
                 <div class="user-photo">
-                    <img src="/images/user-avatar.jpg" alt="Jane Doe" />
+                    <img src="{{session('profile')['avatar']}}" alt="Jane Doe" />
                 </div>
                 <div class="user-info">
                     <span class="user-name">Jane Doe</span>
@@ -209,18 +209,16 @@
             <div class="user-options dropdown-box">
                 <div class="drop-content basic">
                     <ul>
-                        <li> <a href="pages_user-profile.html"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
-                        <li> <a href="pages_lock-screen.html"><i class="fa fa-lock" aria-hidden="true"></i> Lock Screen</a></li>
-                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Configurations</a></li>
+                        <li id="login_lock"> <a href="/lock"><i class="fa fa-lock" aria-hidden="true"></i>锁定屏幕</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="header-separator"></div>
         <div class="header-section">
-            <form method="post" action="/logout" target="_parent">
+            <form method="post" action="/logout" id="logout_form">
                 {{ csrf_field() }}
-                <button type="submit" style="border: none; background: none"><i class="fa fa-sign-out log-out" aria-hidden="true"></i></button>
+                <i class="fa fa-sign-out log-out" id="logout" aria-hidden="true"></i>
             </form>
         </div>
     </div>

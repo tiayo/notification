@@ -120,16 +120,16 @@ class AlipayService implements PayInterfaces
         }
 
         //判断交易码是否存在
-        if (empty($order['order_number']) || empty($order['trade_no'])) {
+        if (empty($order['order_number']) && empty($order['trade_no'])) {
             return false;
         }
 
         //商户订单号和支付宝交易号不能同时为空。 trade_no、  out_trade_no如果同时存在优先取trade_no
         //商户订单号，和支付宝交易号二选一
-        $out_trade_no = trim($order['order_number']);
+        $out_trade_no = trim($order['order_number']) ?? null;
 
         //支付宝交易号，和商户订单号二选一
-        $trade_no = trim($order['trade_no']);
+        $trade_no = trim($order['trade_no']) ?? null;
 
         $RequestBuilder = new AlipayTradeQueryContentBuilder();
         $RequestBuilder->setTradeNo($trade_no);
