@@ -197,11 +197,11 @@
         <div class="header-section" id="user-headerbox">
             <div class="user-header-wrap">
                 <div class="user-photo">
-                    <img src="{{session('profile')['avatar']}}" alt="Jane Doe" />
+                    <img src="{{ session('profile')['avatar'] }}" alt="Jane Doe" />
                 </div>
                 <div class="user-info">
-                    <span class="user-name">Jane Doe</span>
-                    <span class="user-profile">Admin</span>
+                    <span class="user-name">{{ session('profile')['name'] }}</span>
+                    <span class="user-profile">{{ session('profile')['real_name'] }}</span>
                 </div>
                 <i class="fa fa-plus icon-open" aria-hidden="true"></i>
                 <i class="fa fa-minus icon-close" aria-hidden="true"></i>
