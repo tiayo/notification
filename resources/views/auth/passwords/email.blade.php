@@ -1,46 +1,53 @@
-@extends('layouts.app')
+@extends('layouts.single')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+@section('page_type', 'fixed accounts forgot-password')
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
+@section('title', '重置密码')
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+@section('link')
+    @parent
+@endsection
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
+@section('content_body')
+    <div class="wrap">
+        <div class="page-body  animated slideInDown">
+            <div class="logo">
+                <h3 class="color-light text-center">{{config('site.title')}}-重置密码</h3>
+            </div>
+            <div class="box">
+                <div class="panel mb-none">
+                    <div class="panel-content bg-scale-0">
+                        <form method="POST" action="{{ route('password.email')}}">
+                            {{ csrf_field() }}
+                            <h3>Forgot your password?</h3> 输入您的邮箱，我们将发送一份邮件给您，您根据邮件操作即可重制密码！
+                            <div class="form-group mt-md{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <span class="input-with-icon">
+                                    {{--成功提醒--}}
+                                    @if (session('status'))
+                                        <div class="alert alert-success">
+                                            {{ session('status') }}
+                                        </div>
+                                    @endif
+                                    <input type="email" class="form-control" id="email" value="{{ old('email') }}" name="email" placeholder="Email">
+                                     <i class="fa fa-envelope"></i>
+                                </span>
+                                {{--失败提醒--}}
                                 @if ($errors->has('email'))
-                                    <span class="help-block">
+                                    <span class="help-block color-danger">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block ">发送</button>
                             </div>
-                        </div>
-                    </form>
+                            <div class="form-group text-center">
+                                You remembered?, <a href="/login">Sign in!</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
