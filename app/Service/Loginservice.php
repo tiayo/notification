@@ -57,10 +57,6 @@ trait Loginservice
             //删除离开模式的session
             $request->session()->forget('lock');
 
-            //写入profile表信息
-            $profile = $profile->findProfileJoinUser(Auth::id())->toArray();
-            $request->session()->put('profile', $profile);
-
             //返回登录
             return $this->sendLoginResponse($request);
         }
