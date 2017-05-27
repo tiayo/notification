@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Service\ForgotPasswordSendEmail;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,5 +32,17 @@ class User extends Authenticatable
     public function profile()
     {
         return $this->hasMany('App\Profile');
+    }
+
+    /**
+     * 发送密码重置通知
+     * 自定义
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ForgotPasswordSendEmail($token));
     }
 }
