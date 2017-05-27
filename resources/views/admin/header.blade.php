@@ -202,7 +202,7 @@
                 <div class="user-info">
                     <span class="user-name">{{ app('App\User')->find(\Illuminate\Support\Facades\Auth::id())->toArray()['name'] }}</span>
                     <span class="user-profile">{{ app('App\Profile')->find(\Illuminate\Support\Facades\Auth::id())->toArray()['real_name'] }}</span>
-                </div>
+                </div> 
                 <i class="fa fa-plus icon-open" aria-hidden="true"></i>
                 <i class="fa fa-minus icon-close" aria-hidden="true"></i>
             </div>
