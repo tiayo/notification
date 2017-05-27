@@ -197,12 +197,12 @@
         <div class="header-section" id="user-headerbox">
             <div class="user-header-wrap">
                 <div class="user-photo">
-                    <img src="{{ app('App\Profile')->find(\Illuminate\Support\Facades\Auth::id())->toArray()['avatar'] }}" alt="Jane Doe" />
+                    <img src="{{ app('App\Profile')->findWhereArray('user_id', app(Auth::id())['avatar'] }}" alt="Jane Doe" />
                 </div>
                 <div class="user-info">
-                    <span class="user-name">{{ app('App\User')->find(\Illuminate\Support\Facades\Auth::id())->toArray()['name'] }}</span>
-                    <span class="user-profile">{{ app('App\Profile')->find(\Illuminate\Support\Facades\Auth::id())->toArray()['real_name'] }}</span>
-                </div> 
+                    <span class="user-name">{{ app('App\User')->find(app(Auth::id())->toArray()['name'] }}</span>
+                    <span class="user-profile">{{ app('App\Profile')->findWhereArray('user_id', Auth::id())['real_name'] }}</span>
+                </div>
                 <i class="fa fa-plus icon-open" aria-hidden="true"></i>
                 <i class="fa fa-minus icon-close" aria-hidden="true"></i>
             </div>

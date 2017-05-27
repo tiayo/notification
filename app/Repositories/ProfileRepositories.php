@@ -21,6 +21,14 @@ class ProfileRepositories
             ->first();
     }
 
+    public function findWhereArray($user_id)
+    {
+        return $this->profile
+            ->where('user_id', $user_id)
+            ->first()
+            ->toArray();
+    }
+
     public function avator($user_id)
     {
         return $this->profile
