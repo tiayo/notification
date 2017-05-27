@@ -18,7 +18,7 @@
         <div class="box animated fadeInUp">
             <div class="panel">
                 <div class="panel-content bg-scale-0">
-                    <form method="post" action="/login" id="lock_unlock_form">
+                    <form method="post" action="{{ route('login') }}" id="lock_unlock_form">
                         {{ csrf_field() }}
                         <h3 class="text-center mb-md">{{ $username }}</h3>
                         <input type="hidden" name="email" value="{{ $email }}">
