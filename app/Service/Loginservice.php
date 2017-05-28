@@ -190,7 +190,6 @@ trait Loginservice
     public function lock(Request $request, ProfileRepositories $profile)
     {
         if (!session('lock.status')[0]) {
-
             //记录认证会员数据
             $user = Auth::user();
 
