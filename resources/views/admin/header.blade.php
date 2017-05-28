@@ -209,10 +209,7 @@
             <div class="user-options dropdown-box">
                 <div class="drop-content basic">
                     <ul>
-                        <form method="post" action="/lock" id="lock_form">
-                            {{ csrf_field() }}
-                        <li id="login_lock"> <a><i class="fa fa-lock" aria-hidden="true"></i>锁定屏幕</a></li>
-                        </form>
+                        <li id="login_lock"> <a href="/lock"><i class="fa fa-lock" aria-hidden="true"></i>锁定屏幕</a></li>
                     </ul>
                 </div>
             </div>

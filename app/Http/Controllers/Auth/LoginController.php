@@ -41,7 +41,7 @@ class LoginController extends Controller
     {
         $this->request = $request;
         $this->profile = $profile;
-        $this->middleware('guest')->except(['logout', 'lock']);
+        $this->middleware('guest')->except(['logout', 'lock', 'lockView']);
     }
 
     /**

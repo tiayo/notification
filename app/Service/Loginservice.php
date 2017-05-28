@@ -187,45 +187,66 @@ trait Loginservice
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function lock(Request $request, ProfileRepositories $profile)
+    public function lock()
+    {
+        //记录认证会员数据
+        $user = Auth::user();
+
+        //正常退出登录
+        $this->guard()->logout();
+
+        $this->request->session()->flush();
+
+        $this->request->session()->regenerate();
+
+        //储存信息到session
+        $avatar = $this->profile->avator($user['id']);
+
+        $this->request->session()->push('lock.status', true);
+
+        $this->request->session()->push('lock.user_email', $user['email']);
+
+        $this->request->session()->push('lock.user_name', $user['name']);
+
+        $this->request->session()->push('lock.user_avatar', $avatar);
+
+        $this->request->session()->push('lock.num', 0);
+
+        //如过session信息找不到认证会员，转到登录界面
+        if (empty($user['email']) && empty(session('lock.user_email'))) {
+            return redirect()->route('login');
+        }
+
+        //退出成功
+        return true;
+    }
+
+    protected $request;
+    protected $profile;
+
+    /**
+     * 离开模式视图
+     *
+     * @param Request $request
+     * @param ProfileRepositories $profile
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function lockView(Request $request, ProfileRepositories $profile)
     {
         if (!session('lock.status')[0]) {
-
-            //记录认证会员数据
-            $user = Auth::user();
-
-            //正常退出登录
-            $this->guard()->logout();
-
-            $request->session()->flush();
-
-            $request->session()->regenerate();
-
-            //储存信息到session
-            $avatar = $profile->avator($user['id']);
-
-            $request->session()->push('lock.status', true);
-
-            $request->session()->push('lock.user_email', $user['email']);
-
-            $request->session()->push('lock.user_name', $user['name']);
-
-            $request->session()->push('lock.user_avatar', $avatar);
-
-            $request->session()->push('lock.num', 0);
-
-            //如过session信息找不到认证会员，转到登录界面
-            if (empty($user['email']) && empty(session('lock.user_email'))) {
-                return redirect()->route('login');
+            $this->request = $request;
+            $this->profile = $profile;
+            if ($this->lock()) {
+                return redirect()->route('lock');
             }
         }
 
         return view('auth.lock', [
             'header' => false,
-            'email' => $user['email'] ?? session('lock.user_email')[0],
-            'username' => $user['name'] ?? session('lock.user_name')[0],
+            'email' => session('lock.user_email')[0],
+            'username' => session('lock.user_name')[0],
             'errors' => count(session('lock.num')) > 1 ? '请输入正确的密码解锁' : '',
-            'avatar' => $avatar ?? session('lock.user_avatar')[0],
+            'avatar' => session('lock.user_avatar')[0],
         ]);
     }
 
