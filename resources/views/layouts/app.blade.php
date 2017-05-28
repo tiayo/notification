@@ -71,20 +71,6 @@
                 $('#'+nav_value).addClass('open-item active-item');
             }
         })
-
-        <!-- 退出登录 -->
-        $(document).ready(function () {
-            $('#logout').click(function () {
-                $('#logout_form').submit();
-            });
-        });
-
-        <!-- 锁定屏幕 -->
-        $(document).ready(function () {
-            $('#login_lock').click(function () {
-                $('#lock_form').submit();
-            });
-        });
     </script>
     {{--这里放js文件引用--}}
 @show
