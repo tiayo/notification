@@ -50,7 +50,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login');
 $this->post('logout', 'Auth\LoginController@logout')->name('logout');
-$this->get('lock', 'Auth\LoginController@lock');
+$this->post('lock', 'Auth\LoginController@lock');
 
 // Registration Routes...
 $this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
