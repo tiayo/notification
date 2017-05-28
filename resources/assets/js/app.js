@@ -29,3 +29,10 @@ $(document).ready(function () {
         $('#logout_form').submit();
     });
 });
+
+//锁定屏幕
+$(document).ready(function () {
+    $('#login_lock').click(function () {
+        $('#lock_form').submit();
+    });
+});
