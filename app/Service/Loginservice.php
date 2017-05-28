@@ -189,6 +189,7 @@ trait Loginservice
      */
     public function lock()
     {
+      
         //记录认证会员数据
         $user = Auth::user();
 
