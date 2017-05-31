@@ -16,6 +16,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/sponsor', 'IndexController@sponsor');
     Route::post('/sponsor', 'IndexController@sponsor');
 
+//------------------------------分隔线-------------------------------------------------//
+
     //任务显示
     Route::get('/task/page', function () {
         return redirect()->route('task_page', ['page' => 1]);
@@ -24,14 +26,14 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //添加任务
     Route::get('/task/add', function () {
-        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst()['category_id']]);
+        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst('task')['category_id']]);
     });
-    Route::get('/task/add/{category}', 'TaskController@storeOrUpdateView')->name('task_add');
-    Route::post('/task/add/{category}', 'TaskController@storeORupdate')->name('task_add_post');
+    Route::get('/task/add/{category}', 'TaskController@storeView')->name('task_add');
+    Route::post('/task/add/{category}', 'TaskController@store')->name('task_add_post');
 
     //更新任务
-    Route::get('/task/update/{category}/{task}', 'TaskController@storeOrUpdateView')->name('task_update');
-    Route::post('/task/update/{category}/{task}', 'TaskController@storeORupdate')->name('task_update_post');
+    Route::get('/task/update/{task}', 'TaskController@UpdateView')->name('task_update');
+    Route::post('/task/update/{task}', 'TaskController@update')->name('task_update_post');
 
     //删除任务
     Route::get('/task/delete/{id}', 'TaskController@destroy');
@@ -44,6 +46,28 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         return redirect()->route('order_page', ['page' => 1]);
     });
     Route::get('/order/page/{page}', 'OrderController@index')->name('order_page');
+
+//------------------------------分隔线-------------------------------------------------//
+
+    //文章显示
+    Route::get('/article/page', function () {
+        return redirect()->route('article_page', ['page' => 1]);
+    });
+    Route::get('/article/page/{page}', 'ArticleController@index')->name('article_page');
+
+    //添加文章
+    Route::get('/article/add', function () {
+        return redirect()->route('article_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst('article')['category_id']]);
+    });
+    Route::get('/article/add/{category}', 'ArticleController@storeView')->name('article_add');
+    Route::post('/article/add/{category}', 'ArticleController@store')->name('article_add_post');
+
+    //更新文章
+    Route::get('/article/update/{article}', 'ArticleController@UpdateView')->name('article_update');
+    Route::post('/article/update/{article}', 'ArticleController@update')->name('article_update_post');
+
+    //删除文章
+    Route::get('/article/delete/{article_id}', 'ArticleController@destroy');
 });
 
 // Authentication Routes...

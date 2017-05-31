@@ -189,7 +189,6 @@ trait Loginservice
      */
     public function lock()
     {
-      
         //记录认证会员数据
         $user = Auth::user();
 
@@ -213,11 +212,6 @@ trait Loginservice
 
         $this->request->session()->push('lock.num', 0);
 
-        //如过session信息找不到认证会员，转到登录界面
-        if (empty($user['email']) && empty(session('lock.user_email'))) {
-            return redirect()->route('login');
-        }
-
         //退出成功
         return true;
     }
@@ -240,6 +234,11 @@ trait Loginservice
             if ($this->lock()) {
                 return redirect()->route('lock');
             }
+        }
+
+        //如过session信息找不到认证会员，转到登录界面
+        if (empty(session('lock.user_email')[0])) {
+            return redirect()->route('login');
         }
 
         return view('auth.lock', [

@@ -39,9 +39,11 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapPaymentRputes();
+        $this->mapPaymentRoutes();
 
-        $this->mapAdminRputes();
+        $this->mapAdminRoutes();
+
+        $this->mapFrontRoutes();
 
         //
     }
@@ -75,17 +77,24 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/api.php'));
     }
 
-    protected function mapPaymentRputes()
+    protected function mapPaymentRoutes()
     {
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/payment.php'));
     }
 
-    protected function mapAdminRputes()
+    protected function mapAdminRoutes()
     {
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/admin.php'));
+    }
+
+    protected function mapFrontRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace.'\Front')
+            ->group(base_path('routes/front.php'));
     }
 }

@@ -108,4 +108,30 @@ class Controller extends BaseController
                 break;
         }
     }
+
+    public static function articleStatus($num)
+    {
+        switch ($num) {
+            case 1 :
+                return '普通';
+                break;
+            case 3 :
+                return '置顶';
+                break;
+            default :
+                return '普通';
+        }
+    }
+
+    public static function StoreOrUpdate($str)
+    {
+        switch ($str) {
+            case 'update' :
+                return '更新';
+                break;
+            case 'store' :
+                return '添加';
+                break;
+        }
+    }
 }

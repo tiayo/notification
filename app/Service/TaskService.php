@@ -96,14 +96,6 @@ class TaskService
         return $this->task->adminCount();
     }
 
-    public function storeOrUpdateView($category_id, $task_id)
-    {
-        if (!empty($task_id)) {
-            return $this->updateView($category_id, $task_id);
-        }
-        return $this->storeView($category_id);
-    }
-
     /**
      * 返回插入任务视图需要的数据
      *
@@ -133,7 +125,7 @@ class TaskService
         }
 
         $result['old_input'] = $this->findFirst($task_id);
-        $result['uri'] = route('task_update_post', ['category' => $category_id, 'id' => $task_id]);
+        $result['uri'] = route('task_update_post', ['task' => $task_id]);
 
         return $result;
     }
@@ -261,7 +253,7 @@ class TaskService
     }
 
     /**
-     * 验证用户是否可以操作本条权限
+     * 验证用户是否可以操作本条任务
      * 验证失败抛错误
      *
      * @param $task_id
