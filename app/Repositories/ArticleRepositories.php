@@ -85,4 +85,21 @@ class ArticleRepositories
             ->delete();
     }
 
+    public function getArticleLimitDesc($num)
+    {
+        return $this->article
+            ->limit($num)
+            ->orderby('updated_at', 'desc')
+            ->get();
+    }
+
+    public function getArticleTopDesc($num)
+    {
+        return $this->article
+            ->where('attribute', 3)
+            ->limit($num)
+            ->orderby('updated_at', 'desc')
+            ->get();
+    }
+
 }

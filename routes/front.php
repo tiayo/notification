@@ -1,3 +1,3 @@
 <?php
 
-Route::get('/index', 'FrontController@index');
+Route::get('/', 'FrontController@index');
