@@ -7,4 +7,5 @@ return [
     'adminstrator' => env('SITE_ADMINISTRATOR'),
     'page' => env('SITE_PAGE'),
     'screen_task' => env('SCREENTASK', '1000'),
+    'article_path' => env('SITE_ARTICLE_PATH', 'article'),
 ];

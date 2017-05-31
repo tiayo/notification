@@ -27,46 +27,75 @@ class TaskController extends Controller
     }
 
     /**
-     * 添加\更新任务视图
-     * 更新操作有权限认证，没有权限抛403
+     * 添加任务视图
+     *
      * @param $category_id
      * @param null $task_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function storeOrUpdateView($category_id, $task_id = null)
+    public function storeView($category_id)
     {
         //获取当前栏目
         $current = $this->category->current($category_id);
 
-        //当前栏目别名
-        $category = $current['alias'];
-
         //填入表格的内容及post提交url
         try {
-            $result = $this->task->storeOrUpdateView($category_id, $task_id);
+            $result = $this->task->storeView($category_id);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }
 
-        return view("home.$category", [
+        return view("home.task_add", [
             'all_category' => $this->all_category,
             'current' => $current,
             'old_input' => $result['old_input'],
             'uri' => $result['uri'],
             'plan' => 'App\Http\Controllers\Controller',
+            'type' => '添加任务',
         ]);
     }
 
     /**
-     *  添加/更新任务
+     * 更新任务视图
+     * 操作有权限认证，没有权限抛403
+     *
+     * @param $task_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Contracts\View\Factory|\Illuminate\View\View|\Symfony\Component\HttpFoundation\Response
+     */
+    public function updateView($task_id)
+    {
+        //获取栏目id
+        $category_id = $this->task->findFirst($task_id)['category'];
+
+        //获取当前栏目
+        $current = $this->category->current($category_id);
+
+        //填入表格的内容及post提交url
+        try {
+            $result = $this->task->updateView($category_id, $task_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage());
+        }
+
+        return view("home.task_add", [
+            'all_category' => $this->all_category,
+            'current' => $current,
+            'old_input' => $result['old_input'],
+            'uri' => $result['uri'],
+            'plan' => 'App\Http\Controllers\Controller',
+            'type' => '更新任务',
+        ]);
+    }
+
+    /**
+     *  添加任务
      *  插入错误抛相应错误和错误代码，默认403
-     *  更新操作有权限认证，没有权限抛403
      *  post请求
      *
      * @param $category_id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function storeORupdate($id, $task_id = null)
+    public function store($category_id)
     {
         $this->validate($this->request, [
             'title' => 'bail|required',
@@ -79,15 +108,45 @@ class TaskController extends Controller
         ]);
 
         try {
-            if (empty($task_id)) {
-                $result = $this->task->store($this->request->all(), $id);
-                $this->sendEmailTaskAdd($result['task_id']);
-            } else {
-                $this->task->update($this->request->all(), $task_id);
-            }
+            $result = $this->task->store($this->request->all(), $category_id);
         } catch (\Exception $e) {
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
         }
+
+        //发送邮件
+        $this->sendEmailTaskAdd($result['task_id']);
+
+        //跳转
+        return redirect()->route('task_page', ['page' => 1]);
+
+    }
+
+    /**
+     *  更新任务
+     *  更新操作有权限认证，没有权限抛403
+     *  post请求
+     *
+     * @param $category_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function update($task_id)
+    {
+        $this->validate($this->request, [
+            'title' => 'bail|required',
+            'start_time' => 'bail|required|date',
+            'end_time' => 'date',
+            'plan' => 'required|integer',
+            'phone' => 'bail|required|integer',
+            'email' => 'bail|required|email',
+            'content' => 'bail|required',
+        ]);
+
+        try {
+            $this->task->update($this->request->all(), $task_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
+        }
+
         return redirect()->route('task_page', ['page' => 1]);
 
     }

@@ -10,6 +10,18 @@
             <nav>
                 <ul class="nav" id="main-nav">
                     <li id="nav_0"><a href="/"><i class="fa fa-home" aria-hidden="true"></i><span>控制台</span></a></li>
+                    <li id="nav_4" class="has-child-item close-item">
+                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>我的文章</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li id="nav_4_1"><a href="/admin/article/page">全部文章</a></li>
+                            <li id="nav_4_2" class="has-child-item close-item">
+                                <a href="#">添加文章</a>
+                                <ul class="nav child-nav level-2">
+                                    {!! app('\App\Service\CategoryService')->categoryHtml('<li id="nav_4_<<num>>"><a href="/admin/article/add/<<category_id>>"><<title>></a></li>', 'article') !!}
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                     <li id="nav_1" class="has-child-item close-item">
                         <a><i class="fa fa-cubes" aria-hidden="true"></i><span>我的任务</span></a>
                         <ul class="nav child-nav level-1">

@@ -23,7 +23,7 @@ $(document).ready(function () {
     $('#paginate_button_'+result+' a').removeAttr("href");
 });
 
-<!-- 退出登录 -->
+//退出登录
 $(document).ready(function () {
     $('#logout').click(function () {
         $('#logout_form').submit();

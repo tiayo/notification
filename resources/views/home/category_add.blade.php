@@ -1,109 +1,77 @@
-<!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>无标题文档</title>
-    <link href="/style.css" rel="stylesheet" type="text/css" />
-    <link href="/select.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.bootcss.com/flatpickr/2.5.6/flatpickr.css" rel="stylesheet">
-    <script type="text/javascript" src="/jquery.js"></script>
-    <script type="text/javascript" src="/jquery.idTabs.min.js"></script>
-    <script type="text/javascript" src="/select-ui.min.js"></script>
-    <script type="text/javascript" charset="gbk" src="/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="gbk" src="/ueditor/ueditor.all.min.js"> </script>
-    <script type="text/javascript" src="https://cdn.bootcss.com/flatpickr/2.5.6/flatpickr.js"></script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="gbk" src="/ueditor/lang/zh-cn/zh-cn.js"></script>
+@extends('layouts.app')
 
-    <script type="text/javascript">
-        KE.show({
-            id : 'content7',
-            cssPath : '/css/index.css'
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function(e) {
-            $(".select1").uedSelect({
-                width : 345
-            });
-        });
-    </script>
+@section('title', '我的任务')
 
-        </head>
+@section('link')
+    @parent
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/animate.css/animate.css">
+    <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/css/style.css">
+@endsection
 
-<body>
+@section('breadcrumbs')
+    <li navValue="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">控制台</a></li>
+    <li navValue="nav_1_2"><a href="/admin/task/page/">添加任务</a></li>
+@endsection
 
-<div class="place">
-    <span>位置：</span>
-    <ul class="placeul">
-        <li><a href="#">首页</a></li>
-        <li><a href="#">添加分类</a></li>
-    </ul>
-</div>
-
-<div class="formbody">
-
-
-    <div id="usual1" class="usual">
-
-        <div class="itab">
-            <ul>
-                <li><a href="#" class="selected">添加分类</a></li>
-            </ul>
-        </div>
-
-        <!--闹钟页面-->
-        <div id="tab1" class="tabson">
-             {{--输出错误信息--}}
-            @if (count($errors) > 0)
-                <div class="category_error">
-                    <p>有错误，请修改：</p>
-                    <ul class="umlist">
-                        @foreach ($errors->all() as $error)
-                            <li><a>{{ $error }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="post" action="{{$uri}}">
-                {{ csrf_field() }}
-                <ul class="forminfo">
-                    <div id="xinxi_zhaoping" class="xinxi_zhaoping">
-                        <li><label>名称<b>*</b></label><input name="name" type="text" class="dfinput" value="{{$old_input['name']}}" placeholder="请输入分类名称" style="width:518px;"/></li>
-                        <li>
-                            <label>父级<b>*</b></label>
-                            <div class="vocation">
-                                <select class="select1" name="parent_id" style="width: 347px;">
-                                    @if (!empty($parent_name['category_id']))
-                                        <option value="{{$parent_name['category_id']}}">{{$parent_name['name']}}</option>
-                                    @endif
-                                    @foreach ($all_category as $value)
-                                        <option value="{{$value['category_id']}}">{{$value['name']}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </li>
-                        <li><label>别名<b>*</b></label><input name="alias" type="text" class="dfinput" value="{{$old_input['alias']}}" placeholder="填写栏目别名" style="width:518px;"/></li>
-                        <li><label>&nbsp;</label><input name="" type="submit" class="btn" value="马上发布"/></li>
+@section('content_body')
+    <div class="row animated fadeInUp">
+        <div class="col-sm-12">
+            <h4 class="section-subtitle"><b>添加任务</b></h4>
+            <div class="panel panel-default">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form id="messagebox-validation" action="{{$uri}}" method="post">
+                                {{ csrf_field() }}
+                                <div class="message-container alert alert-danger">
+                                    <ul>
+                                        {{--输出错误信息--}}
+                                        @if (count($errors) > 0)
+                                            @foreach ($errors->all() as $error)
+                                                <label class="error">{{ $error }}</label>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="control-label">名称<span class="required">*</span></label>
+                                    <input type="text" class="form-control" name="name" value="{{$old_input['title']}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="plan" class="control-label">类型<span class="required">*</span></label>
+                                    <select name="parent_id" class="form-control select2-hidden-accessible" required>
+                                        @if (!empty($parent_name['category_id']))
+                                            <option value="{{$parent_name['category_id']}}">{{$parent_name['name']}}</option>
+                                        @endif
+                                        @foreach ($all_category as $value)
+                                                @if ($value['parent_id'] == 0)
+                                                    <option value="{{$value['category_id']}}">{{$value['name']}}</option>
+                                                @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class=" control-label">别名<span class="required">*</span></label>
+                                    <input type="text" class="form-control" name="alias" value="{{$old_input['phone']}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </ul>
-                <input type="hidden" name="__hash__" value="ae41700ea4c4b69a8b87ee72425d5578_7bf72cf8c97cee9e99fe97970f4f0bae" /></form>
-
+                </div>
+            </div>
         </div>
-
-
     </div>
+@endsection
 
-    <script type="text/javascript">
-        $("#usual1 ul").idTabs();
-    </script>
-
-    <script type="text/javascript">
-        $('.tablelist tbody tr:odd').addClass('odd');
-    </script>
-
-</div>
-</body>
-</html>
+@section('script')
+    @parent
+    <script src="/vendor/nano-scroller/nano-scroller.js"></script>
+    <script src="/javascripts/template-script.min.js"></script>
+    <script src="/javascripts/template-init.min.js"></script>
+    <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+@endsection

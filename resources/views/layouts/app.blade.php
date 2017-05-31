@@ -66,7 +66,6 @@
             var num = $('.breadcrumbs li').length;
             for (i=0; i<=num; i++) {
                 var nav_value = $('.breadcrumbs li:eq('+i+')').attr('navValue');
-                $('nav li').removeClass('active-item');
                 $('#'+nav_value).removeClass('close-item');
                 $('#'+nav_value).addClass('open-item active-item');
             }

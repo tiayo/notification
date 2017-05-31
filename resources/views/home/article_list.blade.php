@@ -10,8 +10,8 @@
 @endsection
 
 @section('breadcrumbs')
-    <li navValue="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的任务</a></li>
-    <li navValue="nav_1_1"><a href="/admin/task/page/">全部任务</a></li>
+    <li navValue="nav_4"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的文章</a></li>
+    <li navValue="nav_4_1"><a href="/admin/task/page/">全部文章</a></li>
 @endsection
 
 @section('content_body')
@@ -27,35 +27,41 @@
                                             <table id="basic-table" class="data-table table table-striped nowrap table-hover dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="basic-table_info" style="width: 100%;">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th>任务编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                                                        <th>任务标题</th>
-                                                        @if ($admin)
-                                                            <th>用户</th>
-                                                        @endif
+                                                        <th>文章ID<i class="sort"><img src="/images/px.gif" /></i></th>
+                                                        <th>标题</th>
+                                                        <th>用户</th>
+                                                        <th>阅读</th>
+                                                        <th>发布时间</th>
                                                         <th>分类</th>
-                                                        <th>下次提醒时间</th>
-                                                        <th>提醒计划</th>
-                                                        <th>接收邮箱</th>
-                                                        <th>接收手机</th>
+                                                        <th>状态</th>
+                                                        <th>置顶</th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach ($list_task as $row)
-                                                    <tr role="row" class="odd">
-                                                        <td>{{$row['task_id']}}</td>
+                                                @foreach ($list_article as $row)
+                                                    <tr role="row" class="odd @if ($row['attribute'] == 3) color-success @endif">
+                                                        <td>{{$row['article_id']}}</td>
                                                         <td>{{$row['title']}}</td>
-                                                        @if ($admin)
-                                                            <td>{{$row['user_id']}}</td>
-                                                        @endif
+                                                        <td>{{app('App\User')->find($row['user_id'])->profile[0]['real_name']}}</td>
+                                                        <td>{{$row['click']}}</td>
+                                                        <td>{{$row['created_at']}}</td>
                                                         <td>{{$row['name']}}</td>
-                                                        <td>{{$row['start_time']}} {{$row['end_time'] or ''}}</td>
-                                                        <td>{{$plan::plan($row['plan'])}}</td>
-                                                        <td>{{$row['email']}}</td>
-                                                        <td>{{$row['phone']}}</td>
+                                                        <td>{{$judge::articleStatus($row['attribute'])}}</td>
                                                         <td>
-                                                            <a href="/admin/task/update/{{$row['task_id']}}" class="tablelink">修改</a>
-                                                            <a href="/admin/task/delete/{{$row['task_id']}}" class="tablelink"> 删除</a>
+                                                            <a href="/Admin/List/beiwang?aid={$row[aid]}" class="tablelink">
+                                                                @if ($row['attribute'] == 1)
+                                                                    设为置顶
+                                                                @endif
+                                                                @if ($row['attribute'] == 3)
+                                                                    取消置顶
+                                                                @endif
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/{{config('site.article_path').$row['links']}}" class="tablelink" target="_blank">查看</a>
+                                                            <a href="/admin/article/update/{{$row['article_id']}}" class="tablelink">编辑</a>
+                                                            <a href="/admin/article/delete/{{$row['article_id']}}" class="tablelink"> 删除</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

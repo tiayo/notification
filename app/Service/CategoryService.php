@@ -37,7 +37,6 @@ class CategoryService
         return $this->category->selectGet()->toArray();
     }
 
-
     /**
      * 根据id获取分类
      *
@@ -79,14 +78,15 @@ class CategoryService
     }
 
     /**
-     * 插入分类
+     * 插入或更新分类
      *
      * @param $name
      * @param $parent_id
      * @param $alias
+     * @param null $category_id
      * @return mixed
      */
-    public function store($name, $parent_id, $alias)
+    public function storeOrUpdate($name, $parent_id, $alias, $category_id = null)
     {
         $data = [
             'name' => $name,
@@ -94,41 +94,9 @@ class CategoryService
             'alias' => $alias
         ];
 
-        return $this->category->store($data);
-    }
-
-    /**
-     * 更新分类
-     *
-     * @param $name
-     * @param $parent_id
-     * @param $alias
-     * @param $category_id
-     * @param $old
-     * @return mixed
-     */
-    public function update($name, $parent_id, $alias, $category_id, $old)
-    {
-        //复制模板文件
-        $old_alias = $old['alias'];
-        if ($alias != $old_alias) {
-            if ($old_alias == 'alarm' || $old_alias == 'default') {
-                copy(dirname(__DIR__)."/../resources/views/home/$old_alias.blade.php",dirname(__DIR__)."/../resources/views/home/$alias.blade.php");
-            } else {
-                if ($alias == 'alarm' || $alias == 'default') {
-                    unlink(dirname(__DIR__)."/../resources/views/home/$old_alias.blade.php");
-                } else {
-                    rename(dirname(__DIR__)."/../resources/views/home/$old_alias.blade.php",dirname(__DIR__)."/../resources/views/home/$alias.blade.php");
-                }
-            }
+        if (empty($category_id)) {
+            return $this->category->store($data);
         }
-
-        //构造更新数组
-        $data = [
-            'name' => $name,
-            'parent_id' => $parent_id,
-            'alias' => $alias
-        ];
 
         return $this->category->update($data, $category_id);
     }
@@ -193,6 +161,21 @@ class CategoryService
             }
         }
         return redirect()->route('category', ['page' => 1]);
+    }
+
+    public function categoryHtml($str, $option)
+    {
+        $all_category = $this->category->getWhereParent($option);
+        $result = null;
+        foreach ($all_category as $key => $category) {
+            $re = $str;
+            $re = str_replace('<<title>>',$category['name'],$re);
+            $re = str_replace('<<category_id>>',$category['category_id'],$re);
+            $re = str_replace('<<num>>',$key,$re);
+            $result .= $re;
+        }
+
+        return $result;
     }
 
 }

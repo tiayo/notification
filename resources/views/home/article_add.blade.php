@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="/vendor/animate.css/animate.css">
     <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
-    <link href="https://cdn.bootcss.com/flatpickr/2.5.6/flatpickr.css" rel="stylesheet">
     {{--编辑器--}}
     <script type="text/javascript" charset="gbk" src="/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="gbk" src="/ueditor/ueditor.all.min.js"> </script>
@@ -17,14 +16,14 @@
 @endsection
 
 @section('breadcrumbs')
-    <li navValue="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">控制台</a></li>
-    <li navValue="nav_1_2"><a href="/admin/task/page/">添加任务</a></li>
+    <li navValue="nav_4"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的文章</a></li>
+    <li navValue="nav_4_2"><a href="#">{{$judge::StoreOrUpdate($type)}}文章</a></li>
 @endsection
 
 @section('content_body')
     <div class="row animated fadeInUp">
         <div class="col-sm-12">
-            <h4 class="section-subtitle"><b>添加任务</b></h4>
+            <h4 class="section-subtitle"><b>当前栏目：{{$current['name']}}</b></h4>
             <div class="panel panel-default">
                 <div class="panel-content">
                     <div class="row">
@@ -42,39 +41,32 @@
                                     </ul>
                                 </div>
                                 <div class="form-group">
-                                    <label for="title" class=" control-label">标题<span class="required">*</span></label>
-                                    <input type="text" class="form-control" id="title" name="title" value="{{$old_input['title']}}" required>
+                                    <label for="title" class=" control-label">主题<span class="required">*</span></label>
+                                    <input type="text" class="form-control" name="title" value="{{$old_input['title']}}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="start_time" class=" control-label">时间<span class="required">*</span></label>
-                                    <input type="hidden" name="order" value="date">
-                                    <input type="text" class="form-control" id="start_time" name="start_time"  value="{{$old_input['start_time']}}" placeholder="Select Time.." required>
+                                    <label for="start_time" class=" control-label">封面图片<span class="required">*</span></label>
+                                    <input type="text" class="form-control" name="picture"  value="{{$old_input['picture']}}" placeholder="上传封面图片...">
                                 </div>
-                                <div class="form-group">
-                                        <label for="plan" class="control-label">计划<span class="required">*</span></label>
-                                        <select name="plan" id="plan" class="form-control select2-hidden-accessible" required>
-                                            @if (!empty($old_input['plan']))
-                                                <option value="{{$old_input['plan']}}">{{$plan::plan($old_input['plan'])}}</option>
+                                @if ($type == 'update')
+                                    <div class="form-group">
+                                        <label for="category" class="control-label">栏目<span class="required">*</span></label>
+                                        <select name="category" class="form-control select2-hidden-accessible" required>
+                                            @if (!empty($current['name']))
+                                                <option value="{{$current['category_id']}}">{{$current['name']}}(当前栏目)</option>
                                             @endif
-                                            <option value="1">一次</option>
-                                            <option value="2">每天</option>
-                                            <option value="3">工作日（周一到周五）</option>
-                                            <option value="4">工作日（周一到周六）</option>
-                                            <option value="5">工作日（智能跳过法定节假日）</option>
+                                                {!! app('\App\Service\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
                                         </select>
+                                    </div>
+                                @endif
+                                <div class="form-group">
+                                    <label for="start_time" class=" control-label">摘要<span class="required">*</span></label>
+                                    <textarea class="form-control" name="abstract" placeholder="输入文章摘要..." >{{$old_input['abstract']}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone" class=" control-label">手机<span class="required">*</span></label>
-                                    <input type="number" class="form-control" id="phone" name="phone" value="{{$old_input['phone']}}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" class=" control-label">邮箱<span class="required">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" value="{{$old_input['email']}}" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="content" class=" control-label">提醒内容<span class="required">*</span></label>
-                                    <script id="editor" type="text/plain" style="width:100%;height:500px;" name="content">
-                                        {!! isset($old_input['content']) ? $old_input['content'] : '' !!}
+                                    <label for="content" class=" control-label">详细内容<span class="required">*</span></label>
+                                    <script id="editor" type="text/plain" style="width:100%;height:500px;" name="body">
+                                        {!! isset($old_input['body']) ? $old_input['body'] : '' !!}
                                     </script>
                                     <script type="text/javascript">
 
@@ -208,14 +200,4 @@
     <script src="/javascripts/template-script.min.js"></script>
     <script src="/javascripts/template-init.min.js"></script>
     <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
-    <script src="/javascripts/examples/forms/validation.js"></script>
-    <script>
-        window.onload = function () {
-            flatpickr("#start_time", {
-                enableTime: true,
-                altInput: true,
-                altFormat: "Y-m-d H:i:S"
-            });
-        }
-    </script>
 @endsection

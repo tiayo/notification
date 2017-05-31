@@ -86,10 +86,9 @@ class CategoryController extends Controller
         $alias = $this->request->get('alias');
 
         if (empty($category_id)) {
-            $this->category->store($name, $parent_id, $alias);
+            $this->category->storeOrUpdate($name, $parent_id, $alias);
         } else {
-            $old = $this->category->current($category_id);
-            $this->category->update($name, $parent_id, $alias, $category_id, $old);
+            $this->category->storeOrUpdate($name, $parent_id, $alias, $category_id);
         }
 
         return redirect()->route('category', ['page' => 1]);

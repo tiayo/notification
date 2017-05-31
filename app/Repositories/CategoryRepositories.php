@@ -33,11 +33,16 @@ class CategoryRepositories
            ->first();
    }
 
-   public function routeFirst()
+   public function routeFirst($option)
    {
+       $parent_id = $this->category
+           ->where('alias', $option)
+           ->first()
+           ->category_id;
+
        return $this->category
            ->select('name','parent_id','category_id')
-           ->where('parent_id', '<>', 0)
+           ->where('parent_id', $parent_id)
            ->first();
    }
 
@@ -81,6 +86,17 @@ class CategoryRepositories
        return $this->category
            ->where('category_id', $id)
            ->delete();
+   }
+
+   public function getWhereParent($option)
+   {
+        $parent_id = $this->category
+            ->where('alias', $option)
+            ->first()['category_id'];
+
+        return $this->category
+            ->where('parent_id', $parent_id)
+            ->get();
    }
 
 }

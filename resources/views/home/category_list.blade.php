@@ -17,7 +17,7 @@
 @section('content_body')
     <div class="row animated fadeInDown">
         <div class="col-sm-12">
-            <h4 class="section-subtitle"><b>全部分类</b></h4>
+            <h4 class="section-subtitle"><b>全部分类<a href="/admin/category/add">[+]</a></b></h4>
             <div class="panel">
                 <div class="panel-content">
                     <div class="table-responsive">
@@ -29,7 +29,7 @@
                                         <tr role="row">
                                             <th>编号<i class="sort"><img src="/images/px.gif" /></i></th>
                                             <th>名称</th>
-                                            <th>父级</th>
+                                            <th>类型</th>
                                             <th>别名</th>
                                             <th>创建时间</th>
                                             <th>更新时间</th>

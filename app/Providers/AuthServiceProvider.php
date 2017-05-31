@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Article;
 use App\Category;
 use App\Http\Middleware\AdminAction;
 use App\Order;
@@ -42,6 +43,7 @@ class AuthServiceProvider extends ServiceProvider
         AlipayService::class => ViewPolicy::class,
         AdminAction::class => ViewPolicy::class,
         WxpayService::class => ViewPolicy::class,
+        Article::class => ViewPolicy::class,
     ];
 
     /**
