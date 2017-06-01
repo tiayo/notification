@@ -1,0 +1,469 @@
+<!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>随享任务管理系统-首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="Keywords" content="随享,随享校园社区,随享笔记本,随享记事本,祥景CMS">
+    <meta name="Description" content="随享校园社区是基于祥景CMS架构的一套分享php学习之路的网站,大量常用的代码和常遇到的问题不断更新中.">
+    <meta name="csrf-token" content="syoLajARsLsjXIfxo6kuJoKg90JhWTgg5fJiMlf5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+                
+    
+    <link href="/index.css" rel="stylesheet" />
+
+<body>
+<!--头部-->
+        <div id="topbar" class="fixed">
+    <div class="headbar" id="headbar">
+        <dl class="headbarnav">
+            <h1><a title="" href="/"><img src="/images/logo.png" /></a></h1>
+            <dd class=""><a href="/category/4.html">Linux日志<i></i></a></dd><dd class=""><a href="/category/5.html">PHP记事本<i></i></a></dd><dd class=""><a href="/category/6.html">JS记事本<i></i></a></dd><dd class=""><a href="/category/7.html">数据库<i></i></a></dd>
+            </dl>
+        <div class="headtool" id="loginbox">
+            <div class="sousuo">
+                <form method="get" action="/Home/index/serch">
+                    <input class="text" type="text" placeholder="例如：mysql,php" name="key"/>
+                    <input class="submit" type="submit" value="搜索"/>
+                    <input type="hidden" name="__hash__" value="e40be545251181a5363811a2e023d9a9_68f211e4a17384c4d292c80d477df3a4" /></form>
+            </div>
+            <i class="line"></i>
+            <div id='loginStatus' style="float:left;">
+                                    <div class="headunlogin"><a href="/admin">控制台<i></i></a><em></em><a href="http://192.168.10.204:8885/logout">退出</a> </div>
+                                </div>
+            <div class="headcart" id="shopbox">
+                <strong><a href="/admin/index/right" target="_blank">发布</a></strong>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--头部-->
+
+<!--主体部分-->
+<div class="zhuti">
+    <div class="i_comcont">
+        <div class="main">
+            <div class="clearfix i_comtab">
+                <dl>
+                    <dd pan="Com-RecommendTag" class="on"><a href="/">首页</a></dd>
+                    <dd pan="Com-RecommendTag" class="on"><a href="/category/4.html">Linux日志<i></i></a></dd><dd pan="Com-RecommendTag" class="on"><a href="/category/5.html">PHP记事本<i></i></a></dd><dd pan="Com-RecommendTag" class="on"><a href="/category/6.html">JS记事本<i></i></a></dd><dd pan="Com-RecommendTag" class="on"><a href="/category/7.html">数据库<i></i></a></dd>
+                </dl>
+            </div>
+                        <div id="M14_B_CommunityIndex_SubNavUnderTG"><div class="mt15">
+                    <img src="/images/ggw.jpg" />
+                </div>
+            </div>            <div class="com_conlist clearfix">
+
+                <ul id="dataListUl">
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/2/3/6/236.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/2/3/6/236.html' target='_blank'>laravel通过mysql实现经纬度计算（实现搜索附近的人）</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：7</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        一、建表CREATE TABLE address (
+ 
+    address CHAR(80) NOT NULL,
+ 
+    address_loc POINT NOT NULL
+                                        <a href='article/2/3/6/236.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/2/3/6/236.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/2/3/8/238.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/2/3/8/238.html' target='_blank'>laravel自定义重置密码邮件模板</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：10</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                            自带的两个文件位置：发送的信息内容在：Illuminate\Auth\Notifications\ResetPassword（命名空间）
+邮件模板在：views/vendor/notifications/email.blade
+                                        <a href='article/2/3/8/238.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/2/3/8/238.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/5/7/57.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/5/7/57.html' target='_blank'>linux备忘录</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：25</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        配置Gzip：http://blog.163.com/tfz_0611_go/blog/static/20849708420142563054682/centos7.0配置基本运行环境：http://www.jb51.net/os/188488.html配置vsftp：http://www.osyunwei.com/archives/90
+                                        <a href='article/5/7/57.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/5/7/57.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/5/9/59.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/5/9/59.html' target='_blank'>使用txt文本作为数据库</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：3</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        &lt;?php&nbsp;
+$filename&nbsp;=&nbsp;&#39;DATA.TXT&#39;;&nbsp;&nbsp;//文档
+if(!empty($_POST[&amp;#39
+                                        <a href='article/5/9/59.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/5/9/59.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/6/0/60.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/6/0/60.html' target='_blank'>添加图片水印（透明添加）</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：1</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        &lt;?php
+header(&quot;Content-type:&nbsp;text/html;&nbsp;charset=utf-8&quot;);&nbsp;
+//原始图
+                                        <a href='article/6/0/60.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/6/0/60.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/6/1/61.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/6/1/61.html' target='_blank'>（自写）正则邮箱地址过滤</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：6</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        &lt;?php
+header(&quot;Content-type:&nbsp;text/html;&nbsp;charset=utf-8&quot;);&nbsp;
+function&amp;nbsp
+                                        <a href='article/6/1/61.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/6/1/61.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/6/2/62.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/6/2/62.html' target='_blank'>php自带函数处理图片</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：3</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        &lt;?php&nbsp;header(&quot;Content-type: text/html; charset=utf-8&quot;);&nbsp;$filename=&quot;./images/zaixiankefu.jpg&quot;;&nbsp;&nbsp;function thumn($background,$width/*要缩放的宽度*/,$newfi
+                                        <a href='article/6/2/62.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/6/2/62.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/6/3/63.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/6/3/63.html' target='_blank'>阻止submit提交，使用ajax提交</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：44</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        核心代码：&lt;script&gt;$(document).ready(function(){	$(&quot;form&quot;).submit(function () { &nbsp; //ajax提交表单	 &nbsp; &nbsp; &nbsp; &nbsp;$.ajax({&nbsp;				type: &#39;POST&#39;,&nbsp;	
+                                        <a href='article/6/3/63.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/6/3/63.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/6/4/64.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/6/4/64.html' target='_blank'>jquery ajax示范代码</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：54</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        function Push() {		$.ajax({&nbsp;		type: &quot;post&quot;,&nbsp;		url: &quot;../home/Ajax/pinglun?aid={$article[aid]}&quot;,&nbsp;		dataType: &quot;json&quot;,		success: function (data) {&amp;nbs
+                                        <a href='article/6/4/64.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/6/4/64.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                        <li class=' __r_c_'>
+                        <dl class='com_movies clearfix __r_c_'>
+                            <dt>
+                                <a href='/6/5/65.html'  target='_blank'></a>
+                            </dt>
+                            <dd style=''>
+                                <div class='com_ulr'>
+                                    <img width='64' height='64' class='img' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'>
+                                    <h3>
+                                        <a href='article/6/5/65.html' target='_blank'>jquery 两个计时器</a>
+                                    </h3>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：12</p>
+                                    <p class='pcont'>
+                                        <i></i>
+                                        setTimeout(&quot;Push()&quot;,200);setInterval(&quot;Push()&quot;,5000);
+                                        <a href='article/6/5/65.html' target='_blank'>查看全文</a>
+                                    </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
+                                                <textarea class='c_a5' onclick="window.open('article/6/5/65.html#pinglun','','');">发表评论</textarea>
+                                            </div>
+                                        </div>
+                                        <i class='comnumi'></i>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                    </li>
+                                    </ul>
+                <div class="news_addmore __r_c_">
+                    <div id="counter" style="display:none">0</div>
+                    <a href="javascript:volid(0);" id="more_article"><i></i>加载更多</a>
+                </div>
+            </div>
+        </div>
+        <div class="sieder">
+    <div id="M14_B_CommunityIndex_HotGroupAboveTG"></div><div class="com_mod">
+        <h4>置顶信息</h4>
+        <dl class="com_hotgroup">
+                            <dd class='__r_c_' pan='Com-RecommendGroup2'>
+                    <h3><a href='article/6/3/63.html' target='_blank'>阻止submit提交，使用ajax提交</a></h3>
+                    <p>2017-05-31 10:39:44</p>
+                </dd>
+                            <dd class='__r_c_' pan='Com-RecommendGroup2'>
+                    <h3><a href='article/6/4/64.html' target='_blank'>jquery ajax示范代码</a></h3>
+                    <p>2017-05-31 10:39:44</p>
+                </dd>
+                            <dd class='__r_c_' pan='Com-RecommendGroup2'>
+                    <h3><a href='article/6/9/69.html' target='_blank'>mysqli方法</a></h3>
+                    <p>2017-05-31 10:39:44</p>
+                </dd>
+                            <dd class='__r_c_' pan='Com-RecommendGroup2'>
+                    <h3><a href='article/7/3/73.html' target='_blank'>php基础知识</a></h3>
+                    <p>2017-05-31 10:39:44</p>
+                </dd>
+                            <dd class='__r_c_' pan='Com-RecommendGroup2'>
+                    <h3><a href='article/7/5/75.html' target='_blank'>Mysql增删改查基本语句</a></h3>
+                    <p>2017-05-31 10:39:44</p>
+                </dd>
+                    </dl>
+        <div class="com_hotgroup">
+            <ul class="clearfix">
+                <li><a href="/category/4.html" target="_blank">Linux日志<i></i></a></dd><li><a href="/category/5.html" target="_blank">PHP记事本<i></i></a></dd><li><a href="/category/6.html" target="_blank">JS记事本<i></i></a></dd><li><a href="/category/7.html" target="_blank">数据库<i></i></a></dd>
+            </ul>
+        </div>
+    </div><div id="M14_B_CommunityIndex_HotUserAboveTG"></div><div class="com_mod">
+        <h4 class="mt25">最新会员</h4>
+        <div id="divHotUsersPerson">
+            <dl class="com_hotuser" id="divHotPerson">
+                                <dd class='__r_c_' pan='Com-HotPerson1'>
+                    <a><img width='52' height='52' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'></a>
+                    <h3><a>郑祥景</a></h3>
+                    <p class='mt6'>城市：</p>
+                    <p class='mt5'>注册时间：2017-06-01 08:45:28</p>
+                </dd>
+                                <dd class='__r_c_' pan='Com-HotPerson1'>
+                    <a><img width='52' height='52' src='https://b.tiayo.com/Uploads/2016-11-23/583526f7f2c6a.jpg'></a>
+                    <h3><a>郑祥景</a></h3>
+                    <p class='mt6'>城市：</p>
+                    <p class='mt5'>注册时间：2017-06-01 08:45:31</p>
+                </dd>
+                            </dl>
+        </div>
+    </div>
+</div>    </div>
+</div>
+<!--主体部分-->
+﻿
+<!--底部-->
+        <div id="bottom">
+    <div class="footout">
+        <span class="topline"></span>
+        <div class="footinner clearfix">
+            <div class="fotlogo">
+                <dl>
+                    <dt><a href="/">随享社区</a></dt>
+                    <dd class="clearfix"><a href="javascript:void();">加入我们</a></dd>
+                    <dd class="clearfix"><a href="/article/version.html" class="ml30">更新日志</a></dd>
+                    <dd class="clearfix"><a href="/article/retrieval.html" class="ml30">检索目录</a></dd>
+                    <dd class="clearfix"><a href="/sitemap.xml">网站地图</a></dd>
+                </dl>
+                <i class="line"></i>
+            </div>
+            <div class="fotmap">
+                <dl style="width:300px;">
+                    <dt>推荐</dt>
+                    <dd><a href="/category/4.html">Linux日志<i></i></a></dd><dd><a href="/category/5.html">PHP记事本<i></i></a></dd><dd><a href="/category/6.html">JS记事本<i></i></a></dd><dd><a href="/category/7.html">数据库<i></i></a></dd>
+                </dl>
+                <i class="line"></i>
+                <div id="divWeiXinPicContainer" class="my_layer" style="display: none;">
+                    <em class="l_arrow">&nbsp;</em><div class="inner p15" style="width:195px;">
+                        <i></i><p>扫描二维码，微信实时关注时光网</p>
+                    </div>
+                </div>
+            </div>
+            <div class="fotweek">
+                <dl>
+                    <dt class="clearfix"><span class="fr">在线客服</span><strong>随享宝宝</strong></dt>
+                    <dd><a href="/liaotian" target="_blank"><img src="/images/zaixiankefu.jpg" width="170"></a></dd>
+                    <dd>有任何问题，都可以戳我反馈哦！</dd>
+                </dl>
+            </div>
+            <div class="fothr">
+                <dl>
+                    <dt><strong>微信公众号</strong> 方便 快速</dt>
+                    <dd><a href="javascript:void();" target="_blank"><i></i></a></dd>
+                    <dd>扫描二维码 关注公众号</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="db_foot">
+        <p><span class="mr12">版权所有：郑祥景 祥景CMS V3.0(1)版本</span>Copyright 2015-2016 tiayo.com Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
+
+    </div>
+</div>
+
+        
+    <script src="/js/app.js"></script>
+    
+
+    <script>
+    $(document).ready(function(){
+        $('#more_article').click(function(){
+            counter = document.getElementById('counter').innerHTML=parseInt(document.getElementById('counter').innerHTML)+1;
+            $.ajax({
+                type: "post",
+                url: "/ajax/more_article/0/"+counter,
+                data:{_token:'syoLajARsLsjXIfxo6kuJoKg90JhWTgg5fJiMlf5'},
+                dataType: "json",
+                success: function (sqlJson) {
+                    var html = '';
+                    var path = '/article';
+                    for (i=0; i<2; i++) {
+                        html = '';
+                        html += "<li class=' __r_c_'><dl class='com_movies clearfix __r_c_'><dt><a href='"+path+sqlJson[i].links+"'  target='_blank'></a></dt><dd style=''><div class='com_ulr'><img width='64' height='64' class='img' src='"+sqlJson[i].avatar+"'><h3><a href='"+path+sqlJson[i].links+"' target='_blank'>"+sqlJson[i].title+"</a></h3><p class='mt12 px14'>作者："+sqlJson[i].real_name+"&emsp;"+sqlJson[i].created_at+"&emsp;阅读："+sqlJson[i].click+"</p><p class='pcont'><i></i>"+sqlJson[i].abstract+"<a href='"+path+sqlJson[i].links+"' target='_blank'>查看全文</a></p><div class='clearfix com_usercom'><div class='ele_replay'><a href='"+path+sqlJson[i].links+"#pinglun' target='_blank' ><div class='textarea'><textarea class='c_a5'>发表评论</textarea></div></div><i class='comnumi'></i></a></div></div></dd></dl></li>";
+                        $("#dataListUl").append(html);//输出
+                    }
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        });
+    })
+</script>
+</body>
+</html>
