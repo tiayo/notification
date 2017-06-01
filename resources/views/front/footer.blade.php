@@ -13,19 +13,9 @@
                 <i class="line"></i>
             </div>
             <div class="fotmap">
-                <dl style="width:42px;">
-                    <dt>栏目</dt>
-                    <dd><a href="/list/1.html">linux</a></dd>
-                    <dd><a href="/list/5.html">php</a></dd>
-                    <dd><a href="/list/6.html">Jquery</a></dd>
-                    <dd><a href="/list/7.html">mysql</a></dd>
-                </dl>
-                <dl style="width:200px;">
+                <dl style="width:300px;">
                     <dt>推荐</dt>
-                    <dd><a href="/list/1.html">linux 日志</a></dd>
-                    <dd><a href="/list/5.html">php 记事本</a></dd>
-                    <dd><a href="/list/6.html">Jquery 记事本</a></dd>
-                    <dd><a href="/list/7.html">mysql 记事本</a></dd>
+                    {!! app('\App\Service\CategoryService')->categoryHtml('<dd><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
                 </dl>
                 <i class="line"></i>
                 <div id="divWeiXinPicContainer" class="my_layer" style="display: none;">

@@ -115,11 +115,11 @@ class Controller extends BaseController
             case 1 :
                 return '普通';
                 break;
+            case 2 :
+                return '私密';
             case 3 :
                 return '置顶';
                 break;
-            default :
-                return '普通';
         }
     }
 

@@ -1005,7 +1005,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 // carry over ID
                 if ((target.id || '') != '')
                     element.id = target.id;
-                //by zhanyi È¥µô¶àÓàµÄÍâÎ§div
+                //by zhanyi È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§div
                 var tmp = element.firstChild.firstChild;
                 tmp.className = element.firstChild.className;
 
@@ -2454,7 +2454,7 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
             { regex: /(-)?(\d)+(\.(\d)?)?(E\+(\d)+)?/g, // numbers
                 css: 'color1' },
 
-            { regex: /(?:&(amp;|gt;|lt;)?|=|   |>|<|¡Ý|>=|¡Ü|<=|\*|\+|-|\/|¡Â|\^)/g,
+            { regex: /(?:&(amp;|gt;|lt;)?|=|   |>|<|ï¿½ï¿½|>=|ï¿½ï¿½|<=|\*|\+|-|\/|ï¿½ï¿½|\^)/g,
                 css: 'color2' },
 
             { regex: /\b(?:and|as|div|mod|not|or|return(?!\s&)(ing)?|equals|(is(n't| not)? )?equal( to)?|does(n't| not) equal|(is(n't| not)? )?(greater|less) than( or equal( to)?)?|(comes|does(n't| not) come) (after|before)|is(n't| not)?( in)? (back|front) of|is(n't| not)? behind|is(n't| not)?( (in|contained by))?|does(n't| not) contain|contain(s)?|(start|begin|end)(s)? with|((but|end) )?(consider|ignor)ing|prop(erty)?|(a )?ref(erence)?( to)?|repeat (until|while|with)|((end|exit) )?repeat|((else|end) )?if|else|(end )?(script|tell|try)|(on )?error|(put )?into|(of )?(it|me)|its|my|with (timeout( of)?|transaction)|end (timeout|transaction))\b/g,

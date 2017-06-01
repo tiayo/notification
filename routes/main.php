@@ -1,10 +1,5 @@
 <?php
 
-//首页,自动判断是否登录
-Route::get('/', function () {
-    return redirect()->route('login');
-});
-
 //登录后路由组
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
@@ -74,6 +69,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login');
 $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+$this->get('logout', 'Auth\LoginController@logout')->name('logout_get');
 $this->get('lock', 'Auth\LoginController@lockView')->name('lock');
 
 // Registration Routes...
