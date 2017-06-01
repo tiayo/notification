@@ -203,7 +203,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     position: relative;
 }
 .headbarnav dd a em {
-    background: url(../Public/images/head.png) -165px 0 no-repeat;
+    background: url(/images/head.png) -165px 0 no-repeat;
     width: 28px;
     height: 14px;
     position: absolute;
@@ -307,21 +307,15 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     z-index: 1;
 }
 .i_newshead ul.bgimg li {
-    background: url() repeat-x center 0;
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 550px;
     z-index: 1;
-    -webkit-transition: opacity 1s all;
-    -moz-transition: opacity 1s all;
-    -o-transition: opacity 1s all;
-    -ms-transition: opacity 1s all;
-    transition: opacity 1s all;
 }
 .i_newsimgs {
-    background: url(../images/index_shadow2.png) no-repeat 0 0;
+    background: url(/images/index_shadow2.png) no-repeat 0 0;
     width: 1000px;
     position: relative;
     margin: 0 auto;
@@ -341,11 +335,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     position: relative;
     zoom: 1;
     z-index: 2;
-    -webkit-transition: opacity 1s all;
-    -moz-transition: opacity 1s all;
-    -o-transition: opacity 1s all;
-    -ms-transition: opacity 1s all;
-    transition: opacity 1s all;
+
 }
 .i_newsimgs dd {
     width: 1000px;
@@ -425,7 +415,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 	float:left;
 }
 .i_conter {
-    background: url(../images/index_shadow.png) no-repeat 0 0;
+    background: url(/images/index_shadow.png) no-repeat 0 0;
     width: 1000px;
     margin:-11px auto 0;
     padding: 11px 11px 0;
@@ -435,7 +425,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 }
 @media screen and (min-width: 801px) { 
 .zhuti{
-	background: url(/Public/images/index_shadow2.png) no-repeat 0 0; 
+	background: url(/images/index_shadow2.png) no-repeat 0 0; 
 	width: 1000px;
 	margin: 4em auto 0;
 	padding: 11px 11px 0;
@@ -445,7 +435,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 }
 @media screen and (max-width: 800px) { 
 .zhuti{
-	background: url(/Public/images/index_shadow2.png) no-repeat 0 0; 
+	background: url(/images/index_shadow2.png) no-repeat 0 0; 
 	width: 100%;
 	margin: 4em auto 0;
 	zoom: 1;z-index: 2;
@@ -891,7 +881,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 }
 }
 .footout .topline {
-    background: url(/Public/images/foot.png) no-repeat center 0 #337fab;
+    background: url(/images/foot.png) no-repeat center 0 #337fab;
     height: 4px;
     width: 100%;
     position: absolute;
@@ -919,7 +909,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     padding-bottom: 10px;
 }
 .fotlogo dt a {
-    background: url(../Public/images/head.png) no-repeat 0 0;
+    background: url(/images/head.png) no-repeat 0 0;
     width: 136px;
     height: 44px;
     display: block;
@@ -934,7 +924,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     color: #333;
 }
 .fotlogo .line, .fotmap .line {
-    background: url(/Public/images/foot.png) no-repeat -495px -9px;
+    background: url(/images/foot.png) no-repeat -495px -9px;
     width: 1px;
     height: 157px;
     overflow: hidden;
@@ -959,6 +949,8 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 .fotmap dd {
     font-size: 16px;
     line-height: 2em;
+    float: left;
+    margin:0 0.5em 0 0.5em;
 }
 .fotmap .my_layer {
     left: 380px;
@@ -978,7 +970,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     margin-top: 10px;
 }
 .fotweek .input {
-    background: url(../Public/images/foot.png) no-repeat -330px -35px;
+    background: url(/images/foot.png) no-repeat -330px -35px;
     width: 163px;
     height: 25px;
     position: relative;
@@ -994,7 +986,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     height: 22px;
 }
 .fotweek .input a {
-    background: url(../Public/images/foot.png) no-repeat -330px -9px;
+    background: url(/images/foot.png) no-repeat -330px -9px;
     width: 54px;
     height: 25px;
     position: absolute;
@@ -1003,7 +995,6 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     text-align: center;
     text-decoration: none;
     color: #fff;
-    font-family: 14px;
     line-height: 25px;
 }
 .footinner .fothr {
@@ -1026,7 +1017,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     margin-top: 12px;
 }
 .fothr i {
-    background: url(../Public/images/foot.png) no-repeat -795px -9px;
+    background: url(/images/foot.png) no-repeat -795px -9px;
     width: 99px;
     height: 99px;
     margin: 0 auto;

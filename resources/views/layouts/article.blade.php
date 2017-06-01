@@ -19,22 +19,9 @@
 <!--头部-->
 
 <!--主体部分-->
-<div class="zhuti">
-    <div class="i_comcont">
-        <div class="main">
-            <div class="clearfix i_comtab">
-                <dl>
-                    <dd pan="Com-RecommendTag" class="on"><a href="/">首页</a></dd>
-                    {!! app('\App\Service\CategoryService')->categoryHtml('<dd pan="Com-RecommendTag" class="on"><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
-                </dl>
-            </div>
-            @section('content_body')
-                {{--这里是主要内容--}}
-            @show
-        </div>
-        @include('front.right')
-    </div>
-</div>
+@section('content_body')
+    {{--这里是主要内容--}}
+@show
 <!--主体部分-->
 ﻿
 <!--底部-->

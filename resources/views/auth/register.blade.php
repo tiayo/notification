@@ -1,8 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.single')
 
-@section('content')
-<div class="container">
-    <div class="row">
+@section('page_type', 'fixed accounts sign-in')
+
+@section('title', '注册')
+
+@section('link')
+    @parent
+@endsection
+
+@section('content_body')
+    <div class="page-body animated slideInDown">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
@@ -72,5 +79,8 @@
             </div>
         </div>
     </div>
-</div>
+@endsection
+
+@section('script')
+    @parent
 @endsection

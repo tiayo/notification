@@ -18,6 +18,14 @@ class UserRepositories
        return $this->user->find($id);
    }
 
+   public function findAndProfile($id)
+   {
+       return $this->user
+           ->join('profile', 'users.id', '=', 'profile.user_id')
+           ->where('id', $id)
+           ->first();
+   }
+
    public function selectFirst($select, $option, $value)
    {
        return $this->user
