@@ -42,6 +42,7 @@
                         <ul class="nav child-nav level-1">
                             <li id="nav_1"><a href="/admin/category/page/1">管理分类</a></li>
                             <li id="nav_2"><a href="/admin/refund/page/1">管理退款</a></li>
+                            <li id="nav_3"><a href="/admin/generate/view">生成文章</a></li>
                         </ul>
                     </li>
                     @endif

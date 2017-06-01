@@ -36,5 +36,11 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
         //多选删除及选择修改(分类)
         Route::post('/category/select/', 'CategoryController@selectEvent');
+
+        //生成视图
+        Route::get('/generate/view', 'GenerateController@view');
+
+        //生成操作
+        Route::post('/generate/{option}', 'GenerateController@option');
     });
 });
