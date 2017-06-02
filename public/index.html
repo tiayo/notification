@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Keywords" content="随享,随享校园社区,随享笔记本,随享记事本,祥景CMS">
     <meta name="Description" content="随享校园社区是基于祥景CMS架构的一套分享php学习之路的网站,大量常用的代码和常遇到的问题不断更新中.">
-    <meta name="csrf-token" content="syoLajARsLsjXIfxo6kuJoKg90JhWTgg5fJiMlf5">
+    <meta name="csrf-token" content="jP2p8KFtlbQNrmgKiudzTY6tsErXxyulSMybyD3U">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
                 
     
@@ -28,8 +28,9 @@
             </div>
             <i class="line"></i>
             <div id='loginStatus' style="float:left;">
-                                    <div class="headunlogin"><a href="/admin">控制台<i></i></a><em></em><a href="http://192.168.10.204:8885/logout">退出</a> </div>
-                                </div>
+                <div class="headunlogin" style="display: none" id="login_status"><a href="/admin">控制台<i></i></a><em></em><a href="http://192.168.10.204:8885/logout">退出</a> </div>
+                <div class="headunlogin" id="no_login_status"><a href="/login">登录<i></i></a><em></em><a href="/register" target="_blank">注册</a> </div>
+            </div>
             <div class="headcart" id="shopbox">
                 <strong><a href="/admin/index/right" target="_blank">发布</a></strong>
             </div>
@@ -447,7 +448,7 @@ function&amp;nbsp
             $.ajax({
                 type: "post",
                 url: "/ajax/more_article/0/"+counter,
-                data:{_token:'syoLajARsLsjXIfxo6kuJoKg90JhWTgg5fJiMlf5'},
+                data:{_token:'jP2p8KFtlbQNrmgKiudzTY6tsErXxyulSMybyD3U'},
                 dataType: "json",
                 success: function (sqlJson) {
                     var html = '';
@@ -464,6 +465,21 @@ function&amp;nbsp
             });
         });
     })
-</script>
+</script>    <script>
+        $(document).ready(function () {
+            axios.get('/ajax/login_status')
+            .then(function (response) {
+                console.log(response);
+                $('#login_status').css('display', 'block');
+                $('#no_login_status').css('display', 'none');
+            })
+            .catch(function (error) {
+                console.log('jinru');
+                $('#login_status').css('display', 'none');
+                $('#no_login_status').css('display', 'block');
+            });
+        })
+    </script>
+
 </body>
 </html>

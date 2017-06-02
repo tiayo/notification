@@ -13,11 +13,8 @@
             </div>
             <i class="line"></i>
             <div id='loginStatus' style="float:left;">
-                @if (!empty(Auth::id()))
-                    <div class="headunlogin"><a href="/admin">控制台<i></i></a><em></em><a href="{{route('logout')}}">退出</a> </div>
-                    @else
-                    <div class="headunlogin"><a href="/login">登录<i></i></a><em></em><a href="/register" target="_blank">注册</a> </div>
-                @endif
+                <div class="headunlogin" style="display: none" id="login_status"><a href="/admin">控制台<i></i></a><em></em><a href="{{route('logout')}}">退出</a> </div>
+                <div class="headunlogin" id="no_login_status"><a href="/login">登录<i></i></a><em></em><a href="/register" target="_blank">注册</a> </div>
             </div>
             <div class="headcart" id="shopbox">
                 <strong><a href="/admin/index/right" target="_blank">发布</a></strong>

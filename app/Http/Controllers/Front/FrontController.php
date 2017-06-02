@@ -38,6 +38,12 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * 列表页视图
+     *
+     * @param $category_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function category($category_id)
     {
         //获取指定条数文章（config/site.app修改）
