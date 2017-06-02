@@ -3,9 +3,8 @@
         $('#more_article').click(function(){
             counter = document.getElementById('counter').innerHTML=parseInt(document.getElementById('counter').innerHTML)+1;
             $.ajax({
-                type: "post",
+                type: "get",
                 url: "/ajax/more_article/0/"+counter,
-                data:{_token:'{{ csrf_token() }}'},
                 dataType: "json",
                 success: function (sqlJson) {
                     var html = '';
