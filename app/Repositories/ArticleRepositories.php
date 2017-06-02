@@ -23,13 +23,20 @@ class ArticleRepositories
             ->get();
     }
 
-    public function getWhere($value = '*', $page, $num)
+    public function getArticleGennerate()
     {
         return $this->article
-            ->select($value)
-            ->skip(($page-1) * $num)
-            ->take($num)
-            ->orderBy('article.updated_at', 'desc')
+            ->select('article_id')
+            ->where('attribute', '<>', '2')
+            ->get();
+    }
+
+    public function getArticleGennerateWhere($category)
+    {
+        return $this->article
+            ->select('article_id')
+            ->where('attribute', '<>', 2)
+            ->where('category', $category)
             ->get();
     }
 

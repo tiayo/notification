@@ -8,6 +8,34 @@
     <link rel="stylesheet" href="/vendor/animate.css/animate.css">
     <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
+    <style>
+        .bgc{
+            width: 100%;
+            height: 100%;
+            float: left;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1;
+        }
+        .float{
+            width: 25%;
+            float: left;
+            background:#fff;
+            position: fixed;
+            padding: 1em;
+            top:0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin:15% 0 0 25%;
+            z-index: 2;
+        }
+        .style-content {
+            text-align: center;
+            height: 130px;
+        }
+    </style>
 @endsection
 
 @section('breadcrumbs')
@@ -16,6 +44,16 @@
 @endsection
 
 @section('content_body')
+    <div class="bgc hidden"></div>
+    <div class="float hidden">
+        <h4 class="text-center">正在生成中</h4>
+        <div class="bs-example m-callback">
+            <div class="style-content">
+                <img src="http://img1.imgtn.bdimg.com/it/u=1625774398,2803856731&fm=26&gp=0.jpg">
+            </div>
+            <p><span class="label label-warning" style="width: 96%;margin: 0 2% 0 2%;" id="m-callback-update">您需要耐心等待一会,请不要刷新页面,否则生成进程会中断哦！</span></p>
+        </div>
+    </div>
     <div class="row animated fadeInUp">
         <div class="col-sm-12">
             <h4 class="section-subtitle"><b>生成文章</b></h4>
@@ -91,20 +129,37 @@
     <script src="/javascripts/template-init.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#generate_button').click(function () {
-                option_type = $('#generate_button').attr('type');
+            //按钮点击触发生成事件
+            $('button').click(function () {
+                //展示进度条
+                $('.bgc').removeClass('hidden');
+                $('.float').removeClass('hidden');
+
+                //后台生成
+                option_type = $(this).attr('type');
                 axios.post('/admin/generate/'+option_type, {
                     _token: '{{csrf_token()}}'
                 })
                     .then(function (response) {
+
                         $('#result_alert').removeClass('hidden');
                         $('#result_alert_div').html('<div class="alert alert-success fade in"> <a href="#" class="close" data-dismiss="alert">×</a> <p>生成完毕！</p> </div>');
+
+                        //关闭进度条
+                        $('.bgc').addClass('hidden');
+                        $('.float').addClass('hidden');
                     })
+
                     .catch(function (error) {
+alert('1');
                         $('#result_alert').removeClass('hidden');
                         $('#result_alert_div').html('<div class="alert alert-danger fade in"> <a href="#" class="close" data-dismiss="alert">×</a> <p>生成失败！</p> </div>');
+
+                        //关闭进度条
+                        $('.bgc').addClass('hidden');
+                        $('.float').addClass('hidden');
                     });
             });
-        })
+        });
     </script>
 @endsection

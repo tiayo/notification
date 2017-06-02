@@ -13,3 +13,6 @@ npm-debug.log
 app_private_key.pem
 /app/Payment/Alipay/log.txt
 /app/Payment/Wxpay/logs
+/public/index.html
+/public/category
+/public/article

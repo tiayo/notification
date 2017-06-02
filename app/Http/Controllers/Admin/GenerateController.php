@@ -39,7 +39,7 @@ class GenerateController extends Controller
     public function option($option)
     {
         try{
-            $this->generate->option($option);
+            $this->generate->$option();
         } catch (\Exception $e) {
             return response()->json('生成失败!', 500);
         }

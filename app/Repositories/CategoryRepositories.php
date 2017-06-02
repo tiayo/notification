@@ -88,15 +88,15 @@ class CategoryRepositories
            ->delete();
    }
 
-   public function getWhereParent($option)
+   public function getWhereParent($option, $select = '*')
    {
         $parent_id = $this->category
             ->where('alias', $option)
             ->first()['category_id'];
 
         return $this->category
+            ->select($select)
             ->where('parent_id', $parent_id)
             ->get();
    }
-
 }

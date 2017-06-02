@@ -8,3 +8,5 @@ Route::group(['middleware' => 'article'], function () {
 });
 
 Route::get('/article/{article_id}', 'FrontController@article');
+Route::get('/ajax/login_status', 'AjaxController@loginStatus');
+Route::post('/ajax/generate_num', 'AjaxController@generate_num');
