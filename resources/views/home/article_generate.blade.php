@@ -20,7 +20,7 @@
             z-index: 1;
         }
         .float{
-            width: 25%;
+            min-width: 35%;
             float: left;
             background:#fff;
             position: fixed;
@@ -31,16 +31,35 @@
             margin:15% 0 0 25%;
             z-index: 2;
         }
+        @media screen and (max-width: 800px) {
+            .float{
+                min-width: 35%;
+                float: left;
+                background:#fff;
+                position: fixed;
+                padding: 1em;
+                top:0;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                margin:15% 0 0 5%;
+                z-index: 2;
+            }
+        }
         .style-content {
             text-align: center;
-            height: 130px;
+            height: 100%;
+        }
+        .float p span{
+            width: 96%;
+            margin: 0 2% 0 2%;
+            float: left;
         }
     </style>
 @endsection
 
 @section('breadcrumbs')
-    <li navValue="nav_4"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的文章</a></li>
-    <li navValue="nav_4_3"><a href="#">生成文章</a></li>
+    <li navValue="nav_3"><i class="fa fa-home" aria-hidden="true"></i><a href="/">管理操作</a></li>
+    <li navValue="nav_3_3"><a href="#">生成页面</a></li>
 @endsection
 
 @section('content_body')
@@ -49,9 +68,9 @@
         <h4 class="text-center">正在生成中</h4>
         <div class="bs-example m-callback">
             <div class="style-content">
-                <img src="http://img1.imgtn.bdimg.com/it/u=1625774398,2803856731&fm=26&gp=0.jpg">
+                <img src="/images/timg.gif">
             </div>
-            <p><span class="label label-warning" style="width: 96%;margin: 0 2% 0 2%;" id="m-callback-update">您需要耐心等待一会,请不要刷新页面,否则生成进程会中断哦！</span></p>
+            <p><span class="label label-warning" id="m-callback-update">您需要耐心等待一会,请不要刷新页面,否则生成进程会中断哦！</span></p>
         </div>
     </div>
     <div class="row animated fadeInUp">
@@ -95,7 +114,7 @@
                             <div class="form-group">
                                 <h4 class="form-signin-heading">生成文章</h4>
                                 <hr>
-                                    <select name="category" class="form-control select2-hidden-accessible" required>
+                                    <select id="category_select" class="form-control select2-hidden-accessible" required>
                                         <option value="0">全部</option>
                                         {!! app('\App\Service\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
                                     </select><br>
@@ -135,10 +154,20 @@
                 $('.bgc').removeClass('hidden');
                 $('.float').removeClass('hidden');
 
-                //后台生成
+                //获取方法
                 option_type = $(this).attr('type');
+
+                //生成文章时带上category参数
+                if (option_type === 'article') {
+                    category_select = $('#category_select').val();
+                } else {
+                    category_select = null;
+                }
+
+                //发送请求
                 axios.post('/admin/generate/'+option_type, {
-                    _token: '{{csrf_token()}}'
+                    _token: '{{csrf_token()}}',
+                    category:category_select
                 })
                     .then(function (response) {
 
@@ -148,16 +177,17 @@
                         //关闭进度条
                         $('.bgc').addClass('hidden');
                         $('.float').addClass('hidden');
+                        $('body').animate({ scrollTop: 0 }, 500);
                     })
 
                     .catch(function (error) {
-alert('1');
                         $('#result_alert').removeClass('hidden');
                         $('#result_alert_div').html('<div class="alert alert-danger fade in"> <a href="#" class="close" data-dismiss="alert">×</a> <p>生成失败！</p> </div>');
 
                         //关闭进度条
                         $('.bgc').addClass('hidden');
                         $('.float').addClass('hidden');
+                        $('body').animate({ scrollTop: 0 }, 500);
                     });
             });
         });

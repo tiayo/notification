@@ -40,9 +40,9 @@
                     <li id="nav_3" class="has-child-item close-item">
                         <a><i class="fa fa-columns" aria-hidden="true"></i><span>管理操作</span></a>
                         <ul class="nav child-nav level-1">
-                            <li id="nav_1"><a href="/admin/category/page/1">管理分类</a></li>
-                            <li id="nav_2"><a href="/admin/refund/page/1">管理退款</a></li>
-                            <li id="nav_3"><a href="/admin/generate/view">生成文章</a></li>
+                            <li id="nav_3_1"><a href="/admin/category/page/1">管理分类</a></li>
+                            <li id="nav_3_2"><a href="/admin/refund/page/1">管理退款</a></li>
+                            <li id="nav_3_3"><a href="/admin/generate/view">生成页面</a></li>
                         </ul>
                     </li>
                     @endif

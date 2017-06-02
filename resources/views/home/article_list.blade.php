@@ -43,7 +43,7 @@
                                                     <tr role="row" class="odd @if ($row['attribute'] == 3) color-success @endif">
                                                         <td>{{$row['article_id']}}</td>
                                                         <td>{{$row['title']}}</td>
-                                                        <td>{{app('App\User')->find($row['user_id'])->profile[0]['real_name']}}</td>
+                                                        <td>{{app('App\Profile')->where('user_id', $row['user_id'])->first()['real_name']}}</td>
                                                         <td>{{$row['click']}}</td>
                                                         <td>{{$row['created_at']}}</td>
                                                         <td>{{$row['name']}}</td>

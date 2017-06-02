@@ -80,11 +80,9 @@ class GenerateService
     {
         if (empty($this->request->get('category'))) {
             $all_article = $this->article->getArticleGennerate();
-            $this->request->session()->put('sssss','jinru');
         } else {
             $all_article = $this->article->getArticleGennerateWhere($this->request->get('category'));
         }
-
 
         //循环生成页面
         foreach ($all_article as $article) {
@@ -101,8 +99,32 @@ class GenerateService
             //写入文件
             $this->fwrite($path.$filename, $data);
         }
-
         return true;
+    }
+
+    public function retrieval()
+    {
+        //获取所有文章
+        $all_article = $this->article->retrieval();
+
+        //初始化
+        $html = '<meta charset="UTF-8">';
+
+        //构建数据
+        foreach ($all_article as $article) {
+            $title = $article['title'];
+            $links = config('site.article_path').$article['links'];
+            $html .= "<a href='/".$links."' target='_blank'>$title</a><br>";
+        }
+
+        //生成目录
+        $path = public_path().'/article/';
+        if (!file_exists($path)) {
+            mkdir($path, 0775, true);
+        }
+
+        //写入文件
+        return $this->fwrite($path.'/retrieval.html', $html);
     }
 
     /**

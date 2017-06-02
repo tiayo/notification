@@ -176,4 +176,10 @@ class ArticleRepositories
             ->get();
     }
 
+    public function retrieval()
+    {
+        return $this->article
+            ->select('links', 'title')
+            ->get();
+    }
 }
