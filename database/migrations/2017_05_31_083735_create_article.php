@@ -24,7 +24,7 @@ class CreateArticle extends Migration
             $table->string('links')->nullable();
             $table->string('place')->nullable();
             $table->string('user_id');
-            $table->integer('user_ip');
+            $table->bigInteger('user_ip');
             $table->longText('body');
             $table->integer('click')->default(0);
             $table->timestamps();
