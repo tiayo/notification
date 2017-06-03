@@ -158,6 +158,7 @@ class ArticleService
         $value['picture'] = $data['picture'] ?? null;
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
+        $value['attribute'] = $data['attribute'];
 
         return $this->article->update($value, $article_id);
     }
@@ -237,6 +238,28 @@ class ArticleService
 
         //返回结果
         return $path;
+    }
+
+    /**
+     * 设置置顶
+     * 管理员权限验证
+     *
+     * @param $article_id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function top($article_id)
+    {
+        //判断管理员
+        if (!$this->isAdmin()) {
+            throw new \Exception('权限不足!（代码:1001）', 403);
+        }
+
+        //更新数据
+        $value['attribute'] = 3;
+
+        //写入数据库
+        return $this->article->update($value, $article_id);
     }
 
     /**

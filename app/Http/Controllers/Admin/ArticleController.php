@@ -128,6 +128,7 @@ class ArticleController extends Controller
         $this->validate($this->request, [
             'title' => 'bail|required',
             'body' => 'bail|required',
+            'attribute' => 'bail|required|integer|max:2|min:1',
         ]);
 
         try {
@@ -153,6 +154,7 @@ class ArticleController extends Controller
             'title' => 'bail|required',
             'body' => 'bail|required',
             'category' => 'bail|required|integer',
+            'attribute' => 'bail|required|integer|max:2|min:1',
         ]);
 
         try {
@@ -161,8 +163,29 @@ class ArticleController extends Controller
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
         }
 
-        return redirect()->route('article_page', ['page' => 1]);
 
+
+    }
+
+    /**
+     * 设置置顶
+     * 管理员操作
+     * 非管理员抛403错误
+     *
+     * @param $article_id
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function top($article_id)
+    {
+        //错误抛错
+        try{
+            $this->article->top($article_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
+        }
+
+        //成功跳转
+        return redirect()->route('article_page', ['page' => 1]);
     }
 
     /**

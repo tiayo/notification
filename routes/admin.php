@@ -42,5 +42,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
         //生成操作
         Route::post('/generate/{option}', 'GenerateController@option');
+
+        //设置文章置顶
+        Route::get('/article/top/{article_id}', 'ArticleController@top');
     });
 });
