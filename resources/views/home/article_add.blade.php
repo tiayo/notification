@@ -17,7 +17,7 @@
 
 @section('breadcrumbs')
     <li navValue="nav_4"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的文章</a></li>
-    <li navValue="nav_4_2"><a href="#">{{$judge::StoreOrUpdate($type)}}文章</a></li>
+    <li navValue="nav_4_2"><a href="#">{{$judge::isStoreOrUpdate($type)}}文章</a></li>
 @endsection
 
 @section('content_body')
