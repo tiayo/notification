@@ -18,7 +18,7 @@
                 <div class="panel-content bg-scale-0">
                     <form method="post" action="{{ route('login') }}">
                         {{ csrf_field() }}
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}{{ $errors->has('name') ? ' has-error' : '' }}">
                             <span class="input-with-icon" id="login_type_block">
                                 {{--邮箱登录--}}
                                 <input type="email" class="form-control show" id="email" name="email" placeholder="Email" required autofocus>
@@ -36,9 +36,11 @@
                         <div class="form-group">
                             <div class="checkbox-custom checkbox-primary">
                                 @if ($errors->has('email'))
-                                    <label for="remember-me">{{ $errors->first('email') }}</label>
+                                    <label for="remember-me">邮箱不存在！</label>
+                                    @elseif ($errors->has('name'))
+                                    <label for="remember-me">用户名不存在！</label>
                                     @elseif ($errors->has('password'))
-                                    <label for="remember-me">{{ $errors->first('password') }}</label>
+                                    <label for="remember-me">密码错误！</label>
                                 @endif
                             </div>
                         </div>
@@ -73,10 +75,12 @@
                 $('#'+show_id).prop('required', false);
                 $('#'+show_id).removeClass('show');
                 $('#'+show_id).addClass('hidden');
+                $('#'+show_id).val('');
 
                 $('#'+hidden_id).prop('required', true);
                 $('#'+hidden_id).removeClass('hidden');
                 $('#'+hidden_id).addClass('show');
+                $('#'+hidden_id).val('');
             })
         })
     </script>
