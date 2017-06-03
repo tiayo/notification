@@ -30,16 +30,16 @@
                         <div class="col-md-12">
                             <form id="messagebox-validation" action="{{$uri}}" method="post">
                                 {{ csrf_field() }}
-                                <div class="message-container alert alert-danger">
-                                    <ul>
-                                        {{--输出错误信息--}}
-                                        @if (count($errors) > 0)
+                                {{--输出错误信息--}}
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
                                             @foreach ($errors->all() as $error)
-                                                <label class="error">{{ $error }}</label>
+                                                <label class="error" style="color: #fff">{{ $error }}</label>
                                             @endforeach
-                                        @endif
-                                    </ul>
-                                </div>
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <label for="title" class=" control-label">主题<span class="required">*</span></label>
                                     <input type="text" class="form-control" name="title" value="{{$old_input['title']}}" required>
@@ -47,6 +47,16 @@
                                 <div class="form-group">
                                     <label for="start_time" class=" control-label">封面图片<span class="required">*</span></label>
                                     <input type="text" class="form-control" name="picture"  value="{{$old_input['picture']}}" placeholder="上传封面图片...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category" class="control-label">类型<span class="required">*</span></label>
+                                    <select name="attribute" class="form-control select2-hidden-accessible" required>
+                                        @if (!empty($old_input['attribute']))
+                                            <option value="{{$old_input['attribute']}}">{{$judge::articleStatus($old_input['attribute'])}}</option>
+                                        @endif
+                                            <option value="1">{{$judge::articleStatus(1)}}</option>
+                                            <option value="2">{{$judge::articleStatus(2)}}</option>
+                                    </select>
                                 </div>
                                 @if ($type == 'update')
                                     <div class="form-group">

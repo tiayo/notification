@@ -34,7 +34,9 @@
                                                         <th>发布时间</th>
                                                         <th>分类</th>
                                                         <th>状态</th>
+                                                        @if ($admin)
                                                         <th>置顶</th>
+                                                        @endif
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
@@ -48,8 +50,9 @@
                                                         <td>{{$row['created_at']}}</td>
                                                         <td>{{$row['name']}}</td>
                                                         <td>{{$judge::articleStatus($row['attribute'])}}</td>
+                                                        @if ($admin)
                                                         <td>
-                                                            <a href="/Admin/List/beiwang?aid={$row[aid]}" class="tablelink">
+                                                            <a href="/admin/article/top/{{$row['article_id']}}" class="tablelink">
                                                                 @if ($row['attribute'] == 1)
                                                                     设为置顶
                                                                 @endif
@@ -58,8 +61,13 @@
                                                                 @endif
                                                             </a>
                                                         </td>
+                                                        @endif
                                                         <td>
+                                                            @if ($row['attribute'] != 2)
                                                             <a href="/{{config('site.article_path').$row['links']}}" class="tablelink" target="_blank">查看</a>
+                                                            @else
+                                                            <a href="/article/{{$row['article_id']}}" class="tablelink" target="_blank">查看</a>
+                                                            @endif
                                                             <a href="/admin/article/update/{{$row['article_id']}}" class="tablelink">编辑</a>
                                                             <a href="/admin/article/delete/{{$row['article_id']}}" class="tablelink"> 删除</a>
                                                         </td>
