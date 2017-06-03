@@ -51,8 +51,15 @@ class GenerateService
      */
     public function category()
     {
-        //生成目录
+        //目录
         $path = public_path().'/category/';
+
+        //删除目录下文章（目录存在）
+        if (file_exists($path)) {
+            $this->deleteAll($path);
+        }
+
+        //生成路径（目录不存在）
         if (!file_exists($path)) {
             mkdir($path, 0775, true);
         }
@@ -80,8 +87,19 @@ class GenerateService
     {
         if (empty($this->request->get('category'))) {
             $all_article = $this->article->getArticleGennerate();
+            //删除目录下文章（目录存在）
+            $category_path = public_path().'/article/';
+            if (file_exists($category_path)) {
+                $this->deleteAll($category_path);
+            }
         } else {
             $all_article = $this->article->getArticleGennerateWhere($this->request->get('category'));
+            //删除目录下文章（目录存在）
+            $alias = $this->category->current($this->request->get('category'))['alias'];
+            $category_path = public_path().'/article/'.$alias;
+            if (file_exists($category_path)) {
+                $this->deleteAll($category_path);
+            }
         }
 
         //循环生成页面
@@ -90,16 +108,49 @@ class GenerateService
             $data = $this->front->article($id)->__toString();
             $filename = $id.'.html';
 
-            //生成目录
-            $path = public_path().'/article'.$this->links($id);
+            //目录
+            $alias = $this->category->current($article->category)['alias'];
+            $path = public_path().'/article'.$this->links($id, $alias);
+
+            //生成路径（目录不存在）
             if (!file_exists($path)) {
                 mkdir($path, 0775, true);
             }
+
+            //更新链接
+//            $this->article->update(['links' => $this->links($id, $alias).$filename], $id);
 
             //写入文件
             $this->fwrite($path.$filename, $data);
         }
         return true;
+    }
+
+
+    /**
+     * 生成单篇文章
+     *
+     * @return bool
+     */
+    public function article_one($article_id)
+    {
+        //获取文章分类
+        $category = $this->article->findOne('article_id', $article_id, 'category')['category'];
+
+        //获取静态页面数据
+        $data = $this->front->article($article_id)->__toString();
+        $filename = $article_id.'.html';
+
+        //生成目录
+        $alias = $this->category->current($category)['alias'];
+        $path = public_path().'/article'.$this->links($article_id, $alias);
+
+        if (!file_exists($path)) {
+            mkdir($path, 0775, true);
+        }
+
+        //写入文件
+        return $this->fwrite($path.$filename, $data);
     }
 
     public function retrieval()
@@ -152,10 +203,10 @@ class GenerateService
      * @param $article_id
      * @return string
      */
-    public function links($article_id)
+    public function links($article_id, $alias)
     {
         //初始化
-        $path = '/';
+        $path = '/'.$alias.'/';
 
         //切割字符串
         $path_array = str_split($article_id, 1);
@@ -166,5 +217,31 @@ class GenerateService
         }
 
         return $path;
+    }
+
+    /**
+     * 删除目录下所有文件
+     *
+     * @param $path
+     */
+    public function deleteAll($dirname) {
+        if (!file_exists($dirname)) {
+            return false;
+        }
+        if (is_file($dirname) || is_link($dirname)) {
+            return unlink($dirname);
+        }
+        $dir = dir($dirname);
+        if($dir){
+            while (false !== $entry = $dir->read()) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+                //递归
+                $this->deleteAll($dirname . DIRECTORY_SEPARATOR . $entry);
+            }
+        }
+        $dir->close();
+        return rmdir($dirname);
     }
 }

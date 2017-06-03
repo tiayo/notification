@@ -26,7 +26,7 @@ class ArticleRepositories
     public function getArticleGennerate()
     {
         return $this->article
-            ->select('article_id')
+            ->select('article_id', 'category')
             ->where('attribute', '<>', '2')
             ->get();
     }
@@ -34,7 +34,7 @@ class ArticleRepositories
     public function getArticleGennerateWhere($category)
     {
         return $this->article
-            ->select('article_id')
+            ->select('article_id', 'category')
             ->where('attribute', '<>', 2)
             ->where('category', $category)
             ->get();
@@ -47,7 +47,7 @@ class ArticleRepositories
             ->skip(($page-1)*$num)
             ->take($num)
             ->where($option, $value)
-            ->orderBy('article.article_id', 'desc')
+            ->orderBy('article.updated_at', 'desc')
             ->get();
     }
 
@@ -106,10 +106,11 @@ class ArticleRepositories
     public function getArticleLimitDesc($num)
     {
         return $this->article
-            ->join('profile', 'article.user_id', 'profile.user_id')
+            ->leftjoin('profile', 'profile.user_id', '=', 'article.user_id')
             ->where('attribute', '<>', 2)
+            ->select('article.*', 'profile.real_name')
+            ->orderBy('article.updated_at', 'desc')
             ->limit($num)
-            ->orderby('article.updated_at', 'desc')
             ->get();
     }
 

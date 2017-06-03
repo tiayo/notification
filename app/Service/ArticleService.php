@@ -14,11 +14,13 @@ class ArticleService
 {
     protected $article;
     protected $request;
+    protected $category;
 
-    public function __construct(ArticleRepositories $article, Request $request)
+    public function __construct(ArticleRepositories $article, Request $request, CategoryService $category)
     {
         $this->article = $article;
         $this->request = $request;
+        $this->category = $category;
     }
 
     /**
@@ -152,13 +154,17 @@ class ArticleService
             throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
 
-        //权限验证通过
+        //获取文章分类信息
+        $category = $this->category->current($data['category']);
+
+        //更新数组
         $value['title'] = $data['title'];
         $value['category'] = $data['category'];
         $value['picture'] = $data['picture'] ?? null;
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
         $value['attribute'] = $data['attribute'];
+        $value['links'] = '/'.$category['alias'].$this->links($article_id);
 
         return $this->article->update($value, $article_id);
     }
@@ -183,10 +189,14 @@ class ArticleService
 
         $result = $this->article->store($data);
 
-        //插入links
-        $this->article->update(['links' => $this->links($result->article_id)], $result->article_id);
+        //获取文章分类信息
+        $article_id = $result->article_id;
+        $category = $this->category->current($result->category);
 
-        return true;
+        //插入links
+        $this->article->update(['links' => '/'.$category['alias'].$this->links($result->article_id)], $article_id);
+
+        return $result->article_id;
     }
 
     /**

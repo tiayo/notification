@@ -123,7 +123,7 @@ class Controller extends BaseController
         }
     }
 
-    public static function StoreOrUpdate($str)
+    public static function isStoreOrUpdate($str)
     {
         switch ($str) {
             case 'update' :
