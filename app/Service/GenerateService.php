@@ -135,7 +135,7 @@ class GenerateService
     public function article_one($article_id)
     {
         //获取文章分类
-        $category = $this->article->findOne('article_id', $article_id, 'category');
+        $category = $this->article->findOne('article_id', $article_id, 'category')['category'];
 
         //获取静态页面数据
         $data = $this->front->article($article_id)->__toString();
