@@ -15,15 +15,13 @@ class ArticleController extends Controller
     protected $category;
     protected $all_category;
     protected $request;
-    protected $generate;
 
-    public  function __construct(ArticleService $article, CategoryService $category, Request $request, GenerateService $generate)
+    public  function __construct(ArticleService $article, CategoryService $category, Request $request)
     {
         $this->article = $article;
         $this->category = $category;
         $this->all_category = $this->category->getSelect();
         $this->request = $request;
-        $this->generate = $generate;
     }
 
     /**
@@ -135,16 +133,9 @@ class ArticleController extends Controller
         ]);
 
         try {
-            $article_id = $this->article->store($this->request->all(), $category_id);
+            $this->article->store($this->request->all(), $category_id);
         } catch (\Exception $e) {
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
-        }
-
-        //生成页面
-        try{
-            $this->generate->article_one($article_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), 500);
         }
 
         //成功跳转
@@ -172,13 +163,6 @@ class ArticleController extends Controller
             $this->article->update($this->request->all(), $article_id);
         } catch (\Exception $e) {
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
-        }
-
-        //生成页面
-        try{
-            $this->generate->article_one($article_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage(), 500);
         }
 
         //成功跳转

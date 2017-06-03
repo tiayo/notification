@@ -15,12 +15,14 @@ class ArticleService
     protected $article;
     protected $request;
     protected $category;
+    protected $generate;
 
-    public function __construct(ArticleRepositories $article, Request $request, CategoryService $category)
+    public function __construct(ArticleRepositories $article, Request $request, CategoryService $category, GenerateService $generate)
     {
         $this->article = $article;
         $this->request = $request;
         $this->category = $category;
+        $this->generate = $generate;
     }
 
     /**
@@ -154,8 +156,25 @@ class ArticleService
             throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
 
-        //获取文章分类信息
-        $category = $this->category->current($data['category']);
+        //获取文章静态链接
+        if ($data['attribute'] == 2) {
+            $category = $this->article->findOne('article_id', $article_id, 'category')['category'];
+            $category = $this->category->current($category);
+            $links = '/'.$category['alias'].$this->links($article_id);
+            $value['links'] = null;
+            //删除静态文章（如果存在）
+            try {
+                if (file_exists(config('site.article_path').$links)) {
+                    $this->generate->deleteAll(config('site.article_path').$links);
+                }
+            } catch (\Exception $e) {
+                return response($e->getMessage(), 500);
+            }
+        } else {
+            $category = $this->category->current($data['category']);
+            $links = '/'.$category['alias'].$this->links($article_id);
+            $value['links'] = $links;
+        }
 
         //更新数组
         $value['title'] = $data['title'];
@@ -164,9 +183,19 @@ class ArticleService
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
         $value['attribute'] = $data['attribute'];
-        $value['links'] = '/'.$category['alias'].$this->links($article_id);
 
-        return $this->article->update($value, $article_id);
+        $this->article->update($value, $article_id);
+
+        //生成页面(非私密属性文章执行)
+        if ($data['attribute'] != 2) {
+            try {
+                $this->generate->article_one($article_id);
+            } catch (\Exception $e) {
+                return response($e->getMessage(), 500);
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -194,9 +223,19 @@ class ArticleService
         $category = $this->category->current($result->category);
 
         //插入links
-        $this->article->update(['links' => '/'.$category['alias'].$this->links($result->article_id)], $article_id);
+        $links = '/' . $category['alias'] . $this->links($result->article_id);
+        $this->article->update(['links' => $links], $article_id);
 
-        return $result->article_id;
+        //生成页面(非私密属性文章执行)
+        if ($data['attribute'] != 2) {
+            try {
+                $this->generate->article_one($article_id);
+            } catch (\Exception $e) {
+                return response($e->getMessage(), 500);
+            }
+        }
+
+        return true;
     }
 
     /**
