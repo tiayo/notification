@@ -11,7 +11,7 @@
                 <ul class="nav" id="main-nav">
                     <li id="nav_0"><a href="/"><i class="fa fa-home" aria-hidden="true"></i><span>控制台</span></a></li>
                     <li id="nav_4" class="has-child-item close-item">
-                        <a><i class="fa fa-cubes" aria-hidden="true"></i><span>我的文章</span></a>
+                        <a><i class="fa fa-files-o" aria-hidden="true"></i><span>我的文章</span></a>
                         <ul class="nav child-nav level-1">
                             <li id="nav_4_1"><a href="/admin/article/page">全部文章</a></li>
                             <li id="nav_4_2" class="has-child-item close-item">
@@ -30,7 +30,7 @@
                         </ul>
                     </li>
                     <li id="nav_2" class="has-child-item close-item">
-                        <a><i class="fa fa-pie-chart" aria-hidden="true"></i><span>我的订单</span></a>
+                        <a><i class="fa fa-sitemap" aria-hidden="true"></i><span>我的订单</span></a>
                         <ul class="nav child-nav level-1">
                             <li id="nav_2_1" ><a href="/admin/sponsor">赞助我们</a></li>
                             <li id="nav_2_2" ><a href="/admin/order/page">全部订单</a></li>
