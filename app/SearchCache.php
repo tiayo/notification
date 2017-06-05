@@ -10,7 +10,7 @@ class SearchCache extends Model
     protected $fillable = [
         'content',
     ];
-    protected $connection = 'mysql';
+    protected $connection = 'mysql2';
     protected $table = 'search_cache';
     protected $primaryKey = 'search_id';
 
