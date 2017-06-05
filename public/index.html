@@ -1,11 +1,11 @@
 <!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>随享任务管理系统-首页</title>
+    <title>首页-随享任务管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Keywords" content="随享,随享校园社区,随享笔记本,随享记事本,祥景CMS">
     <meta name="Description" content="随享校园社区是基于祥景CMS架构的一套分享php学习之路的网站,大量常用的代码和常遇到的问题不断更新中.">
-    <meta name="csrf-token" content="jP2p8KFtlbQNrmgKiudzTY6tsErXxyulSMybyD3U">
+    <meta name="csrf-token" content="XhaHJYrVYfCufYMKhXx3PgJUQWumHlJVLILzYQk5">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
                 
     
@@ -21,10 +21,10 @@
             </dl>
         <div class="headtool" id="loginbox">
             <div class="sousuo">
-                <form method="get" action="/Home/index/serch">
-                    <input class="text" type="text" placeholder="例如：mysql,php" name="key"/>
-                    <input class="submit" type="submit" value="搜索"/>
-                    <input type="hidden" name="__hash__" value="e40be545251181a5363811a2e023d9a9_68f211e4a17384c4d292c80d477df3a4" /></form>
+                <form method="get" id="search_form">
+                    <input class="text" type="text" placeholder="例如：mysql,php" id="search_form_key"/>
+                    <input class="submit" type="submit" id="search_form_button" value="搜索"/>
+                </form>
             </div>
             <i class="line"></i>
             <div id='loginStatus' style="float:left;">
@@ -35,7 +35,6 @@
                 <strong><a href="/admin/index/right" target="_blank">发布</a></strong>
             </div>
         </div>
-
     </div>
 </div>
 <!--头部-->
@@ -67,7 +66,7 @@
                                     <h3>
                                         <a href='article/2/3/6/236.html' target='_blank'>laravel通过mysql实现经纬度计算（实现搜索附近的人）</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：7</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-06-01 09:26:01&emsp;阅读：7</p>
                                     <p class='pcont'>
                                         <i></i>
                                         一、建表CREATE TABLE address (
@@ -97,7 +96,7 @@
                                     <h3>
                                         <a href='article/2/3/8/238.html' target='_blank'>laravel自定义重置密码邮件模板</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：10</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 15:39:28&emsp;阅读：10</p>
                                     <p class='pcont'>
                                         <i></i>
                                             自带的两个文件位置：发送的信息内容在：Illuminate\Auth\Notifications\ResetPassword（命名空间）
@@ -124,7 +123,7 @@
                                     <h3>
                                         <a href='article/5/7/57.html' target='_blank'>linux备忘录</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：25</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：25</p>
                                     <p class='pcont'>
                                         <i></i>
                                         配置Gzip：http://blog.163.com/tfz_0611_go/blog/static/20849708420142563054682/centos7.0配置基本运行环境：http://www.jb51.net/os/188488.html配置vsftp：http://www.osyunwei.com/archives/90
@@ -150,7 +149,7 @@
                                     <h3>
                                         <a href='article/5/9/59.html' target='_blank'>使用txt文本作为数据库</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：3</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：3</p>
                                     <p class='pcont'>
                                         <i></i>
                                         &lt;?php&nbsp;
@@ -178,7 +177,7 @@ if(!empty($_POST[&amp;#39
                                     <h3>
                                         <a href='article/6/0/60.html' target='_blank'>添加图片水印（透明添加）</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：1</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：1</p>
                                     <p class='pcont'>
                                         <i></i>
                                         &lt;?php
@@ -206,7 +205,7 @@ header(&quot;Content-type:&nbsp;text/html;&nbsp;charset=utf-8&quot;);&nbsp;
                                     <h3>
                                         <a href='article/6/1/61.html' target='_blank'>（自写）正则邮箱地址过滤</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：6</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：6</p>
                                     <p class='pcont'>
                                         <i></i>
                                         &lt;?php
@@ -234,7 +233,7 @@ function&amp;nbsp
                                     <h3>
                                         <a href='article/6/2/62.html' target='_blank'>php自带函数处理图片</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：3</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：3</p>
                                     <p class='pcont'>
                                         <i></i>
                                         &lt;?php&nbsp;header(&quot;Content-type: text/html; charset=utf-8&quot;);&nbsp;$filename=&quot;./images/zaixiankefu.jpg&quot;;&nbsp;&nbsp;function thumn($background,$width/*要缩放的宽度*/,$newfi
@@ -260,7 +259,7 @@ function&amp;nbsp
                                     <h3>
                                         <a href='article/6/3/63.html' target='_blank'>阻止submit提交，使用ajax提交</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：44</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：44</p>
                                     <p class='pcont'>
                                         <i></i>
                                         核心代码：&lt;script&gt;$(document).ready(function(){	$(&quot;form&quot;).submit(function () { &nbsp; //ajax提交表单	 &nbsp; &nbsp; &nbsp; &nbsp;$.ajax({&nbsp;				type: &#39;POST&#39;,&nbsp;	
@@ -286,7 +285,7 @@ function&amp;nbsp
                                     <h3>
                                         <a href='article/6/4/64.html' target='_blank'>jquery ajax示范代码</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：54</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：54</p>
                                     <p class='pcont'>
                                         <i></i>
                                         function Push() {		$.ajax({&nbsp;		type: &quot;post&quot;,&nbsp;		url: &quot;../home/Ajax/pinglun?aid={$article[aid]}&quot;,&nbsp;		dataType: &quot;json&quot;,		success: function (data) {&amp;nbs
@@ -312,7 +311,7 @@ function&amp;nbsp
                                     <h3>
                                         <a href='article/6/5/65.html' target='_blank'>jquery 两个计时器</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：郑祥景&emsp;&emsp;阅读：12</p>
+                                    <p class='mt12 px14'>作者：郑祥景&emsp;2017-05-31 10:39:44&emsp;阅读：12</p>
                                     <p class='pcont'>
                                         <i></i>
                                         setTimeout(&quot;Push()&quot;,200);setInterval(&quot;Push()&quot;,5000);
@@ -328,11 +327,11 @@ function&amp;nbsp
                         </dl>
                     </li>
                                     </ul>
-                <div class="news_addmore __r_c_">
-                    <div id="counter" style="display:none">0</div>
-                    <a href="javascript:volid(0);" id="more_article"><i></i>加载更多</a>
-                </div>
-            </div>
+                                    <div class="news_addmore __r_c_">
+                        <div id="counter" style="display:none">0</div>
+                        <a href="javascript:volid(0);" id="more_article"><i></i>加载更多</a>
+                    </div>
+                            </div>
         </div>
         <div class="sieder">
     <div id="M14_B_CommunityIndex_HotGroupAboveTG"></div><div class="com_mod">
@@ -446,9 +445,8 @@ function&amp;nbsp
         $('#more_article').click(function(){
             counter = document.getElementById('counter').innerHTML=parseInt(document.getElementById('counter').innerHTML)+1;
             $.ajax({
-                type: "post",
+                type: "get",
                 url: "/ajax/more_article/0/"+counter,
-                data:{_token:'jP2p8KFtlbQNrmgKiudzTY6tsErXxyulSMybyD3U'},
                 dataType: "json",
                 success: function (sqlJson) {
                     var html = '';
@@ -478,7 +476,17 @@ function&amp;nbsp
                 $('#login_status').css('display', 'none');
                 $('#no_login_status').css('display', 'block');
             });
-        })
+        });
+
+        $(document).ready(function () {
+            $('#search_form').submit(function () {
+                var driver = 'zh';
+                var key = $('#search_form_key').val();
+                var page = 1;
+                window.location.href = '/search/article/' + driver + '/' + key + '/' + page;
+                return false;
+            })
+        });
     </script>
 
 </body>

@@ -127,7 +127,7 @@ class ArticleController extends Controller
     public function store($category_id)
     {
         $this->validate($this->request, [
-            'title' => 'bail|required',
+            'title' => 'bail|required|unique:article',
             'body' => 'bail|required',
             'attribute' => 'bail|required|integer|max:2|min:1',
         ]);
