@@ -139,9 +139,7 @@
 
         //文章点击数
         $(document).ready(function () {
-            axios.post('/ajax/get_click/{{$article['article_id']}}', {
-                _token: '{{csrf_token()}}'
-            })
+            axios.get('/ajax/get_click/{{$article['article_id']}}')
                 .then(function (response) {
                     $('#click').html(response.data);
                 })
