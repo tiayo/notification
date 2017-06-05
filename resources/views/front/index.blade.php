@@ -53,6 +53,13 @@
                         <a href="javascript:volid(0);" id="more_article"><i></i>加载更多</a>
                     </div>
                 @elseif ($type == 'search')
+                    @if (empty($article_list))
+                        <div class="search_page">
+                            <ul>
+                                <i>搜索结果为空！</i>
+                            </ul>
+                        </div>
+                    @else
                     <div class="search_page">
                         <ul>
                             <i>更多搜索结果：</i>
@@ -63,6 +70,7 @@
                             <li><a href="{{$search_url}}/{{($page+1) >= $max_page ? $max_page : $page+1}}">下一页</a></li>
                         </ul>
                     </div>
+                    @endif
                 @endif
             </div>
 @endsection

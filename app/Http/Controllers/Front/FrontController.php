@@ -96,10 +96,20 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * 文章搜索
+     *
+     * @param $driver
+     * @param $value
+     * @param $page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function search($driver, $value, $page)
     {
-        //获取文章信息
+        //获取查询信息
         $article_info = $this->search->article($driver, $value, $page);
+
+        //获取文章信息
         $article_list = $article_info['data'];
 
         //获取5条置顶消息
