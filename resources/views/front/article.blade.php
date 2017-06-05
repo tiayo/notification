@@ -91,7 +91,7 @@
                     <li>
                         <strong>·</strong>
                         <p>
-                            <a href="{{config('site.article_path').$item['links']}}" target="_blank">{{$item['title']}}</a>
+                            <a href="/{{config('site.article_path').$item['links']}}" target="_blank">{{$item['title']}}</a>
                         </p>
                     </li>
                     @endforeach
