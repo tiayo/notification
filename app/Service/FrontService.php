@@ -126,7 +126,9 @@ class FrontService
      */
     public function clickAdd($article_id)
     {
-        Article::where('article_id', $article_id)->increment('click');
+        $article = Article::find($article_id);
+        $article->timestamps = false;
+        $article->increment('click');
 
         return Article::select('click')->where('article_id', $article_id)->first()['click'];
     }
