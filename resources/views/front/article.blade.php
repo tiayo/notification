@@ -149,6 +149,17 @@
                     $('#click').html(0);
                 });
         })
+
+        //搜索
+        $(document).ready(function () {
+            $('#search_form').submit(function () {
+                var driver = 'zh';
+                var key = $('#search_form_key').val();
+                var page = 1;
+                window.location.href = '/search/article/' + driver + '/' + key + '/' + page;
+                return false;
+            })
+        });
     </script>
 
 @endsection
