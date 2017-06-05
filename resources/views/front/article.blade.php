@@ -87,11 +87,11 @@
             <div class="newslinknews" id="tit">
                 <h4>相关文章</h4>
                 <ul>
-                    @foreach ($article_rand as $article)
+                    @foreach ($article_rand as $item)
                     <li>
                         <strong>·</strong>
                         <p>
-                            <a href="{{config('site.article_path').$article['links']}}" target="_blank">{{$article['title']}}</a>
+                            <a href="{{config('site.article_path').$item['links']}}" target="_blank">{{$item['title']}}</a>
                         </p>
                     </li>
                     @endforeach
