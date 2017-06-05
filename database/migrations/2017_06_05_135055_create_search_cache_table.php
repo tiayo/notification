@@ -15,7 +15,7 @@ class CreateSearchCacheTable extends Migration
     {
         Schema::create('search_cache', function (Blueprint $table) {
             $table->increments('search_id');
-            $table->text('content')->unique();
+            $table->string('content')->unique();
             $table->integer('frequency')->default(1);
             $table->timestamps();
         });
