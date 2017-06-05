@@ -181,6 +181,9 @@ return [
 
         //bebug
         Barryvdh\Debugbar\ServiceProvider::class,
+
+        //search
+        TomLingham\Searchy\SearchyServiceProvider::class,
     ],
 
     /*
@@ -231,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Verfication' => \App\Facades\Verfication::class,
         'BrowserDetect' => hisorange\BrowserDetect\Facade\Parser::class,
+        'Searchy' => TomLingham\Searchy\Facades\Searchy::class,
     ],
 
 ];

@@ -5,18 +5,24 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Service\CategoryService;
 use App\Service\FrontService;
+use App\Service\SearchService;
 use function foo\func;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FrontController extends Controller
 {
     protected $front;
     protected $category;
+    protected $search;
+    protected $request;
 
-    public function __construct(FrontService $front, CategoryService $category)
+    public function __construct(FrontService $front, CategoryService $category, SearchService $search, Request $request)
     {
         $this->front = $front;
         $this->category = $category;
+        $this->search = $search;
+        $this->request = $request;
     }
 
     /**
@@ -62,6 +68,12 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * 文章页面视图
+     *
+     * @param $article_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function article($article_id)
     {
         //获取文章信息
@@ -81,6 +93,26 @@ class FrontController extends Controller
             'article_top' => $article_top,
             'article_rand' => $article_rand,
             'me' => $me,
+        ]);
+    }
+
+    public function search($driver, $value, $page)
+    {
+        //获取文章信息
+        $article_info = $this->search->article($driver, $value, $page);
+        $article_list = $article_info['data'];
+
+        //获取5条置顶消息
+        $article_top = $this->front->getArticleTopDesc(5);
+
+        return view('front.index', [
+            'category' => ['name' => '搜索”'.$value.'“结果'],
+            'type' => 'search',
+            'article_list' => $article_list,
+            'article_top' => $article_top,
+            'page' => $page,
+            'max_page' => ceil($article_info['count']/Config('site.page')),
+            'search_url' => '/search/article/'.$driver.'/'.$value,
         ]);
     }
 }

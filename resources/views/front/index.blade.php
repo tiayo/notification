@@ -28,15 +28,15 @@
                                 <div class='com_ulr'>
                                     <img width='64' height='64' class='img' src='{{app('\App\Article')->find($article['article_id'])->profile->avatar}}'>
                                     <h3>
-                                        <a href='{{config('site.article_path').$article['links']}}' target='_blank'>{{$article['title']}}</a>
+                                        <a href='/{{config('site.article_path').$article['links']}}' target='_blank'>{{$article['title']}}</a>
                                     </h3>
                                     <p class='mt12 px14'>作者：{{$article['real_name']}}&emsp;{{$article['updated_at']}}&emsp;阅读：{{$article['click']}}</p>
                                     <p class='pcont'>
                                         <i></i>
                                         {{$article['abstract']}}
-                                        <a href='{{config('site.article_path').$article['links']}}' target='_blank'>查看全文</a>
+                                        <a href='/{{config('site.article_path').$article['links']}}' target='_blank'>查看全文</a>
                                     </p><div class='clearfix com_usercom'><div class='ele_replay'><div class='textarea'>
-                                                <textarea class='c_a5' onclick="window.open('{{config('site.article_path').$article['links']}}#pinglun','','');">发表评论</textarea>
+                                                <textarea class='c_a5' onclick="window.open('/{{config('site.article_path').$article['links']}}#pinglun','','');">发表评论</textarea>
                                             </div>
                                         </div>
                                         <i class='comnumi'></i>
@@ -47,10 +47,23 @@
                     </li>
                     @endforeach
                 </ul>
-                <div class="news_addmore __r_c_">
-                    <div id="counter" style="display:none">0</div>
-                    <a href="javascript:volid(0);" id="more_article"><i></i>加载更多</a>
-                </div>
+                @if (!isset($type) || $type != 'search')
+                    <div class="news_addmore __r_c_">
+                        <div id="counter" style="display:none">0</div>
+                        <a href="javascript:volid(0);" id="more_article"><i></i>加载更多</a>
+                    </div>
+                @elseif ($type == 'search')
+                    <div class="search_page">
+                        <ul>
+                            <i>更多搜索结果：</i>
+                            <li><a href="{{$search_url}}/{{($page-1) <= 0 ? 1 : $page-1}}">上一页</a></li>
+                            @for ($i=1; $i<=$max_page; $i++)
+                                <li><a href="{{$search_url}}/{{$i}}">第{{$i}}页</a></li>
+                            @endfor
+                            <li><a href="{{$search_url}}/{{($page+1) >= $max_page ? $max_page : $page+1}}">下一页</a></li>
+                        </ul>
+                    </div>
+                @endif
             </div>
 @endsection
 
@@ -74,6 +87,16 @@
                 $('#login_status').css('display', 'none');
                 $('#no_login_status').css('display', 'block');
             });
-        })
+        });
+
+        $(document).ready(function () {
+            $('#search_form').submit(function () {
+                var driver = 'zh';
+                var key = $('#search_form_key').val();
+                var page = 1;
+                window.location.href = '/search/article/' + driver + '/' + key + '/' + page;
+                return false;
+            })
+        });
     </script>
 @endsection

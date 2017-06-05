@@ -9,7 +9,7 @@
         <div class="nano-content" tabindex="0" style="right: -15px;">
             <nav>
                 <ul class="nav" id="main-nav">
-                    <li id="nav_0"><a href="/"><i class="fa fa-home" aria-hidden="true"></i><span>控制台</span></a></li>
+                    <li id="nav_0"><a href="/admin"><i class="fa fa-home" aria-hidden="true"></i><span>控制台</span></a></li>
                     <li id="nav_4" class="has-child-item close-item">
                         <a><i class="fa fa-files-o" aria-hidden="true"></i><span>我的文章</span></a>
                         <ul class="nav child-nav level-1">
