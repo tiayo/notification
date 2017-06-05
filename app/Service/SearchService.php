@@ -44,7 +44,7 @@ class SearchService
 
     public function article_cache($driver, $value, $matching)
     {
-        if (Carbon::parse($matching->updated_at)->addMinute(30) < Carbon::now()) {
+        if (Carbon::parse($matching->updated_at)->addMinute(config('site.search_cache_time')) < Carbon::now()) {
             return $this->article_create($driver, $value, $matching);
         }
 
