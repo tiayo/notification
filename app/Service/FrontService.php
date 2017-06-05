@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Article;
 use App\Repositories\ArticleRepositories;
 use App\Repositories\UserRepositories;
 use Illuminate\Support\Facades\Auth;
@@ -115,5 +116,18 @@ class FrontService
     public function me($user_id)
     {
         return $this->user->findAndProfile($user_id);
+    }
+
+    /**
+     * 文章点击数加1
+     *
+     * @param $article_id
+     * @return mixed
+     */
+    public function clickAdd($article_id)
+    {
+        Article::where('article_id', $article_id)->increment('click');
+
+        return Article::select('click')->where('article_id', $article_id)->first()['click'];
     }
 }

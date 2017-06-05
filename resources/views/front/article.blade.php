@@ -18,7 +18,7 @@
         <div class="newsheadtit">
             <h2>{{$article['title']}}</h2>
         </div>
-        <p class="mt15 ml25 newstime ">分类：{{$article['name']}}&emsp;发布时间：{{$article['created_at']}}&emsp;阅读：<span id="click">{{$article['click']}}</span>&emsp;
+        <p class="mt15 ml25 newstime ">分类：{{$article['name']}}&emsp;发布时间：{{$article['created_at']}}&emsp;阅读：<span id="click"></span>&emsp;
             <span class="ml15"><a href="#">作者：{{$article['real_name']}}</a></span>
             <span><a href="#pinglun" class="icon_nbbs" title="评论"></a></span>
         </p>
@@ -136,6 +136,19 @@
                 rootPath: '/ueditor'
             });
         };
+
+        //文章点击数
+        $(document).ready(function () {
+            axios.post('/ajax/get_click/{{$article['article_id']}}', {
+                _token: '{{csrf_token()}}'
+            })
+                .then(function (response) {
+                    $('#click').html(response.data);
+                })
+                .catch(function (response) {
+                    $('#click').html(0);
+                });
+        })
     </script>
 
 @endsection

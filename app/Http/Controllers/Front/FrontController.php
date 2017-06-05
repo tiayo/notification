@@ -125,4 +125,16 @@ class FrontController extends Controller
             'search_url' => '/search/article/'.$driver.'/'.$value,
         ]);
     }
+
+    /**
+     * 获取文章点击数
+     * 以及增加点击数
+     *
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function clickAdd($article_id)
+    {
+        return response()->json($this->front->clickAdd($article_id));
+    }
 }
