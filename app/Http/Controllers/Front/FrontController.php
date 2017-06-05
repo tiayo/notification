@@ -96,10 +96,20 @@ class FrontController extends Controller
         ]);
     }
 
+    /**
+     * 文章搜索
+     *
+     * @param $driver
+     * @param $value
+     * @param $page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function search($driver, $value, $page)
     {
-        //获取文章信息
+        //获取查询信息
         $article_info = $this->search->article($driver, $value, $page);
+
+        //获取文章信息
         $article_list = $article_info['data'];
 
         //获取5条置顶消息
@@ -114,5 +124,17 @@ class FrontController extends Controller
             'max_page' => ceil($article_info['count']/Config('site.page')),
             'search_url' => '/search/article/'.$driver.'/'.$value,
         ]);
+    }
+
+    /**
+     * 获取文章点击数
+     * 以及增加点击数
+     *
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function clickAdd($article_id)
+    {
+        return response()->json($this->front->clickAdd($article_id));
     }
 }
