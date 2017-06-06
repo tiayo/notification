@@ -134,4 +134,10 @@ class Controller extends BaseController
                 break;
         }
     }
+
+    public function jsonResponse($message, $code = 200)
+    {
+        $hearder = array('Content-Type' => 'application/json; charset=utf-8');
+        return response()->json($message, $code, $hearder, JSON_UNESCAPED_UNICODE);
+    }
 }

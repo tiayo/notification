@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Article;
+use App\Comment;
 use App\Repositories\ArticleRepositories;
 use App\Repositories\UserRepositories;
 use Illuminate\Support\Facades\Auth;
@@ -87,12 +88,13 @@ class FrontService
             return $article;
         }
 
-        //私密文章处理
-        if ($article['user_id'] == Auth::id()) {
+        //私密文件处理
+        if ($this->isAttribute($article)) {
             return $article;
         }
 
-        throw new \Exception('您无法查看本篇文章!');
+        throw new \Exception('您无法查看本篇文章!（错误代码：1005）');
+
     }
 
     /**
@@ -131,5 +133,50 @@ class FrontService
         $article->increment('click');
 
         return Article::select('click')->where('article_id', $article_id)->first()['click'];
+    }
+
+    public function comment($article_id, $data)
+    {
+        //获取文章信息
+        $article = $this->article->findOne('article_id', $article_id, 'attribute');
+
+        //判断是否为私密文章
+        if ($article['attribute'] == 2) {
+            //私密文件处理
+            if (!$this->isAttribute($article)) {
+                throw new \Exception('您无法评论本篇文章!（错误代码：1005）');
+            }
+        }
+
+        //构建插入数据库数组
+        $value['user_id'] = Auth::id();
+        $value['article_id'] = $article_id;
+        $value['content'] = $data['content'];
+        $value['user_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
+
+        //写入数据库
+        $result = Comment::create($value);
+
+        if (!empty($result)) {
+            return '评论成功！';
+        }
+
+        return '评论出问题了！';
+    }
+
+    /**
+     * 判断当前权限私密文章是否有操作权限
+     *
+     * @param $article
+     * @return mixed
+     * @throws \Exception
+     */
+    public function isAttribute($article)
+    {
+        if ($article['user_id'] == Auth::id()) {
+            return $article;
+        }
+
+        return false;
     }
 }

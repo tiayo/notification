@@ -4,15 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SearchCache extends Model
+class Comment extends Model
 {
     public $timestamps = true;
     protected $fillable = [
+        'user_id',
+        'user_ip',
         'content',
+        'article_id',
+        'status',
     ];
     protected $connection = 'mysql';
-    protected $table = 'search_cache';
-    protected $primaryKey = 'search_id';
-
+    protected $table = 'comment';
+    protected $primaryKey = 'comment_id';
 }
 
