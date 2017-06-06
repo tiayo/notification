@@ -160,8 +160,6 @@ class FrontController extends Controller
      */
     public function comment($article_id)
     {
-
-
         //返回视图
         return view('front.article_comment', [
             'article_id' => $article_id,
