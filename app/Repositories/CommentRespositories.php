@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class CommentRespositories
 {
@@ -20,6 +21,14 @@ class CommentRespositories
             ->select('comment.*', 'profile.real_name')
             ->where('comment.article_id', $article_id)
             ->where('comment.status', 1)
+            ->orderby('comment.updated_at', 'desc')
             ->get();
+    }
+
+    public function userShow()
+    {
+        return $this->comment
+            ->where('user_id', Auth::id())
+            ->count();
     }
 }

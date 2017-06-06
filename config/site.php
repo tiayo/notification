@@ -11,4 +11,5 @@ return [
     'index_page' => env('SITE_INDEX_PAGE', 10),//首页每页显示条数
     'more_article' => env('SITE_MORE_ARTICLE', 2),//更多文章每次显示出来的数量
     'search_cache_time' => env('SITE_SEARCH_CACHE_TIME', 30),//搜索数据缓存时间
+    'comment_article_limit' => env('SITE_COMMENT_ARTICLE_LIMIT', 3),//每篇文章每个用户最多评论数量
 ];

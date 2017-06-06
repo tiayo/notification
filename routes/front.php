@@ -15,6 +15,8 @@ Route::get('/ajax/get_click/{article_id}', 'FrontController@clickAdd');
 
 Route::get('/comment/view/{article_id}', 'FrontController@comment');
 
+Route::get('/captcha/view', 'FrontController@captcha');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::post('/comment/add/{article_id}', 'FrontController@commentAdd');
 });

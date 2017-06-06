@@ -5007,30 +5007,54 @@ a.tagnews:hover {
 	}
 	.pingluninput img{
 		margin: 1em 0 0 1em;
+		cursor: pointer;
+	}
+	.pinglunsubmit{
+		width:50%;
+		float:right;
+		margin-top:1em;
+	}
+	.pinglunsubmit input{
+		width: 150px;
+		line-height: 35px;
+		float: right;
+		border: none;
+		background: #287ab2;
+		color: #fff;
+		font-weight: bold;
 	}
 }
 @media screen and (max-width: 800px) {
-	.pingluninput input{
-		width: 92%;
+	.pingluninput input {
+		width: 35%;
 		float: left;
 		height: 1.5em;
 		margin-top: 1em;
 		padding: 1em;
 	}
-}
-.pinglunsubmit{
-	width:50%;
-	float:right;
-	margin-top:1em;
-}
-.pinglunsubmit input{
-	width: 150px;
-    line-height: 35px;
-    float: right;
-    border: none;
-    background: #287ab2;
-    color: #fff;
-    font-weight: bold;
+
+	.pingluninput img {
+		width: 45%;
+		float: right;
+		margin: 1em 0 0 1em;
+		cursor: pointer;
+	}
+
+	.pinglunsubmit {
+		width: 100%;
+		float: left;
+		margin-top: 1em;
+	}
+
+	.pinglunsubmit input {
+		width: 100%;
+		line-height: 35px;
+		float: right;
+		border: none;
+		background: #287ab2;
+		color: #fff;
+		font-weight: bold;
+	}
 }
 #shuchu{
 	width:100%;

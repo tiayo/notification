@@ -160,6 +160,9 @@ class FrontController extends Controller
      */
     public function comment($article_id)
     {
+
+
+        //返回视图
         return view('front.article_comment', [
             'article_id' => $article_id,
             'all_comment' => $this->comment->allCommentAndProfile($article_id),
@@ -168,28 +171,49 @@ class FrontController extends Controller
         ])->__toString();
     }
 
+    /**
+     * 生成验证码
+     *
+     * @return string
+     */
+    public function captcha()
+    {
+        //可以设置图片宽高及字体
+        $this->captcha->build($width = 150, $height = 40, $font = null);
+
+        //保存验证码到session
+        $this->request->session()->put('captcha', $this->captcha->getPhrase());
+
+        //生成链接
+        return $this->captcha->inline();
+    }
+
     public function commentAdd($article_id)
     {
         //验证字段
         $this->validate($this->request, [
-            'content' => 'required|max:255',
-            'captcha' => 'required|max:5',
+            'content' => 'required|max:200',
+            'captcha' => 'required',
         ]);
 
         //获取数据
         $data = $this->request->all();
 
         //验证验证码
-        if ($data['captcha'] != $this->captcha->getPhrase()) {
-
-            //存储错误
-            $this->request->session()->put('other_error', '验证码错误！');
-
+        if ($data['captcha'] != $this->request->session()->pull('captcha')) {
             //跳转页面
-            return redirect()->route('article_view', ['article_id' => $article_id]);
+            return $this->jsonResponse('验证码错误!', 403);
         }
 
         //业务执行
-        return response()->json($this->front->comment($article_id, $data));
+        $result = $this->front->comment($article_id, $data);
+
+        //返回
+        if ($result[0]) {
+            return $this->jsonResponse($result[1]);
+        }
+
+        return response()->json($result[1], 403);
+
     }
 }

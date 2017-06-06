@@ -82,19 +82,8 @@
 @section('script')
     @parent
     @include('front.more_article')
+    @include('front.login_status')
     <script>
-        $(document).ready(function () {
-            axios.get('/ajax/login_status')
-            .then(function (response) {
-                $('#login_status').css('display', 'block');
-                $('#no_login_status').css('display', 'none');
-            })
-            .catch(function (error) {
-                $('#login_status').css('display', 'none');
-                $('#no_login_status').css('display', 'block');
-            });
-        });
-
         $(document).ready(function () {
             $('#search_form').submit(function () {
                 var driver = 'zh';
