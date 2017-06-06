@@ -231,7 +231,7 @@ html,body {
 
 .news_headline {
 	height: 545px;
-	background: #000 url() no-repeat center 0;
+	background: #000 no-repeat center 0;
 }
 
 .news_headline .news_heada {
@@ -1227,7 +1227,7 @@ h4.news_tvtit {
 	position: absolute;
 	width: 100%;
 	height: 415px;
-	background: url() no-repeat center 0 #e8e9ee;
+	background: no-repeat center 0 #e8e9ee;
 }
 
 .news_s_head dd a {
@@ -1852,7 +1852,7 @@ h4.news_tvtit {
     padding-top: 50px;
     min-height: 150px;
     border-bottom: 1px solid #e5e5e5;
-    background: url() no-repeat center 0 #f2f2f2;
+    background: no-repeat center 0 #f2f2f2;
 }
 
 .newsheader {
@@ -2918,7 +2918,7 @@ a.tagnews:hover {
 }
 
 .newsvideobox {
-	background: url() no-repeat center center #000;
+	background: no-repeat center center #000;
 }
 
 .newsvideos {
@@ -3056,7 +3056,7 @@ a.tagnews:hover {
 .newsvmout {
 	position: relative;
 	height: 665px;
-	background: url() #f2f2f2 no-repeat center 0;
+	background: #f2f2f2 no-repeat center 0;
 }
 
 .newsvmcover {
@@ -4976,26 +4976,51 @@ a.tagnews:hover {
 	float:left;
 }
 @media screen and (min-width: 801px) { 
-.pingluntext textarea{
-    width: 95.5%;
-    float: left;
-    height: 5em;
-    margin-top: 1em;
-    padding: 1em;
-}
+	.pingluntext textarea{
+		width: 95.5%;
+		float: left;
+		height: 5em;
+		margin-top: 1em;
+		padding: 1em;
+	}
 }
 @media screen and (max-width: 800px) { 
-.pingluntext textarea{
-    width: 92%;
-    float: left;
-    height: 5em;
-    margin-top: 1em;
-    padding: 1em;
+	.pingluntext textarea{
+		width: 92%;
+		float: left;
+		height: 5em;
+		margin-top: 1em;
+		padding: 1em;
+	}
 }
+@media screen and (min-width: 801px) {
+	.pingluninput {
+		width: 50%;
+		float: left;
+	}
+	.pingluninput input{
+		width: 33%;
+		float: left;
+		height: 0.8em;
+		margin-top: 1em;
+		padding: 1em;
+	}
+	.pingluninput img{
+		margin: 1em 0 0 1em;
+	}
+}
+@media screen and (max-width: 800px) {
+	.pingluninput input{
+		width: 92%;
+		float: left;
+		height: 1.5em;
+		margin-top: 1em;
+		padding: 1em;
+	}
 }
 .pinglunsubmit{
-	width:100%;
-	float:left;
+	width:50%;
+	float:right;
 	margin-top:1em;
 }
 .pinglunsubmit input{

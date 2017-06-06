@@ -33,28 +33,7 @@
             <p class="newsediter">&nbsp;&nbsp;&nbsp;编辑：{{$article['real_name']}}</p>
             <div class="newswarm">[随享社区版权所有 未经许可不得转载 ]</div>
             <img src="/images/code.jpg" class="article_img mt15"/>
-            <script>
-                function  kong() {
-                    $("#pinglunform1").css("display","none"),
-                        $("#pinglunform2").css("display","block");
-                    $(".pinglunsubmit input").css("background","#666666");
-                }
-            </script>
-            <div class="pinglun" id="pinglun">
-                <form action="/home/article/pinglun_add" id="pinglunform1"  method="post" target="myiframe" style="display:block;">
-                    <div class="pingluntext"><textarea id="textarea" type="text" name="q"></textarea></div>
-                    <input name="wenzhang_aid" value="238" style="display:none"/>
-                    <input type="hidden" name="__hash__" value="8249e443bb728a80edc42f89e4ef399e_b3da13af824f02322c388aa1601f7b3b" />
-                    <div class="pinglunsubmit"><input type="submit" onclick="kong()"></div>
-                </form>
-                <form action="/home/article/pinglun_add" id="pinglunform2"  method="post" target="myiframe" style="display:none;">
-                    <div class="pingluntext"><textarea id="textarea" type="text" name="q"></textarea></div>
-                    <input name="wenzhang_aid" value="41" style="display:none"/>
-                    <div class="pinglunsubmit"><input type="button" value="您已评论"></div>
-                </form>
-                <iframe name="myiframe" style="position:relative;top:-35px;height:30px;border:none;width:55%;" scrolling="no";></iframe>
-            </div>
-            <div id="shuchu"></div>
+            <div id="comment_block"></div>
         </div>
 
         <div class="newsr">
@@ -158,6 +137,18 @@
                 return false;
             })
         });
+
+        //插入评论
+        $(document).ready(function () {
+            axios.get('/comment/view/{{$article['article_id']}}')
+                .then(function (response) {
+                    $('#comment_block').html(response.data);
+                })
+                .catch(function (response) {
+                    $('#comment_block').html('');
+                });
+        });
+
     </script>
 
 @endsection

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Comment;
 use App\Http\Controllers\Controller;
+use App\Repositories\CommentRespositories;
 use App\Service\CategoryService;
 use App\Service\FrontService;
 use App\Service\SearchService;
 use function foo\func;
+use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,13 +19,24 @@ class FrontController extends Controller
     protected $category;
     protected $search;
     protected $request;
+    protected $comment;
+    protected $captcha;
+    protected $other_error;
 
-    public function __construct(FrontService $front, CategoryService $category, SearchService $search, Request $request)
+    public function __construct(FrontService $front,
+                                CategoryService $category,
+                                SearchService $search,
+                                Request $request,
+                                CommentRespositories $comment,
+                                CaptchaBuilder $captcha
+)
     {
         $this->front = $front;
         $this->category = $category;
         $this->search = $search;
         $this->request = $request;
+        $this->comment = $comment;
+        $this->captcha = $captcha;
     }
 
     /**
@@ -136,5 +150,46 @@ class FrontController extends Controller
     public function clickAdd($article_id)
     {
         return response()->json($this->front->clickAdd($article_id));
+    }
+
+    /**
+     * 添加评论
+     *
+     * @param $article_id
+     * @return mixed
+     */
+    public function comment($article_id)
+    {
+        return view('front.article_comment', [
+            'article_id' => $article_id,
+            'all_comment' => $this->comment->allCommentAndProfile($article_id),
+            'builder' => $this->captcha->build(),
+            'request' => $this->request,
+        ])->__toString();
+    }
+
+    public function commentAdd($article_id)
+    {
+        //验证字段
+        $this->validate($this->request, [
+            'content' => 'required|max:255',
+            'captcha' => 'required|max:5',
+        ]);
+
+        //获取数据
+        $data = $this->request->all();
+
+        //验证验证码
+        if ($data['captcha'] != $this->captcha->getPhrase()) {
+
+            //存储错误
+            $this->request->session()->put('other_error', '验证码错误！');
+
+            //跳转页面
+            return redirect()->route('article_view', ['article_id' => $article_id]);
+        }
+
+        //业务执行
+        return response()->json($this->front->comment($article_id, $data));
     }
 }
