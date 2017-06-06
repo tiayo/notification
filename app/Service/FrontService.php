@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Article;
 use App\Comment;
 use App\Repositories\ArticleRepositories;
+use App\Repositories\CommentRespositories;
 use App\Repositories\UserRepositories;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,11 +13,13 @@ class FrontService
 {
     protected $article;
     protected $user;
+    protected $comment;
 
-    public function __construct(ArticleRepositories $article, UserRepositories $user)
+    public function __construct(ArticleRepositories $article, UserRepositories $user, CommentRespositories $comment)
     {
         $this->article = $article;
         $this->user = $user;
+        $this->comment = $comment;
     }
 
     /**
@@ -148,6 +151,11 @@ class FrontService
             }
         }
 
+        //判断用户评论是否超过限制
+        if ($this->comment->userShow() >= config('site.comment_article_limit')) {
+            return [false, '评论数超过'.config('site.comment_article_limit').'条了！'];
+        }
+
         //构建插入数据库数组
         $value['user_id'] = Auth::id();
         $value['article_id'] = $article_id;
@@ -158,10 +166,10 @@ class FrontService
         $result = Comment::create($value);
 
         if (!empty($result)) {
-            return '评论成功！';
+            return [true, '评论成功！'];
         }
 
-        return '评论出问题了！';
+        return [false, '评论失败！'];
     }
 
     /**
