@@ -32,6 +32,7 @@
                     <p style="max-width: 100%; text-align: center;">
                         <img src="{{$article['picture']}}" style="max-width: 100%;">
                     </p>
+                    <hr style="margin: 1em 0 1.5em 0;borber:1px solid #ccc;">
                 @endif
                 {!! $article['body'] !!}
             </div>  　　
