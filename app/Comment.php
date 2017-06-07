@@ -17,5 +17,15 @@ class Comment extends Model
     protected $connection = 'mysql';
     protected $table = 'comment';
     protected $primaryKey = 'comment_id';
+
+    public function profile()
+    {
+        return $this->belongsTo('App\Profile', 'user_id', 'user_id');
+    }
+
+    public function article()
+    {
+        return $this->belongsTo('App\Article', 'article_id', 'article_id');
+    }
 }
 

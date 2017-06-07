@@ -140,4 +140,15 @@ class Controller extends BaseController
         $hearder = array('Content-Type' => 'application/json; charset=utf-8');
         return response()->json($message, $code, $hearder, JSON_UNESCAPED_UNICODE);
     }
+
+    public static function commentStatus($num)
+    {
+        switch ($num) {
+            case 1 :
+                return '正常';
+                break;
+            case 2 :
+                return '屏蔽';
+        }
+    }
 }

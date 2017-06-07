@@ -36,6 +36,14 @@
                             <li id="nav_2_2" ><a href="/admin/order/page">全部订单</a></li>
                         </ul>
                     </li>
+                    <li id="nav_5" class="has-child-item close-item">
+                        <a><i class="fa fa-users" aria-hidden="true"></i><span>会员中心</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li id="nav_5_1" ><a href="/admin/member/me/view">我的资料</a></li>
+                            <li id="nav_5_2" ><a href="/admin/member/comment/page">我的评论</a></li>
+                            <li id="nav_5_2" ><a href="/admin/member/message">我的消息</a></li>
+                        </ul>
+                    </li>
                     @if (app('App\Service\IndexService')::admin() === true)
                     <li id="nav_3" class="has-child-item close-item">
                         <a><i class="fa fa-columns" aria-hidden="true"></i><span>管理操作</span></a>

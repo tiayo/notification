@@ -313,15 +313,9 @@ class ArticleService
      *
      * @param $article_id
      * @return mixed
-     * @throws \Exception
      */
     public function top($article_id)
     {
-        //判断管理员
-        if (!$this->isAdmin()) {
-            throw new \Exception('权限不足!（代码:1001）', 403);
-        }
-
         //更新数据
         $value['attribute'] = 3;
 
@@ -334,7 +328,7 @@ class ArticleService
      * 需要通过权限验证
      * 验证失败抛403
      *
-     * @param $task_id
+     * @param $article_id
      */
     public function destroy($article_id)
     {

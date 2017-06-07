@@ -4,7 +4,7 @@
         <div class="pingluntext"><textarea id="comment_textarea" type="text" name="content" required></textarea></div>
         <div class="pingluninput">
             <input type="text" id="comment_captcha" name="captcha" placeholder="请输入验证码" required>
-            <img id="comment_captcha_image" src="{{$builder->inline()}}" />
+            <img id="comment_captcha_image" src="" />
         </div>
         <div class="pinglunsubmit">
             @if (Auth::check())
@@ -36,18 +36,22 @@
                 captcha: $('#comment_captcha').val()
             })
                 .then(function (response) {
-                    console.log(response);
+//                    console.log(response);
                     comment_axios();
                 })
                 .catch(function (error) {
-                    console.log(error.response);
+//                    console.log(error.response);
                     $('#comment_info').html('<strong style="color: red; float: left;margin: 1em 0;">'+error.response.data+'</strong>');
                 });
             return false;
         });
 
         //刷新验证码
+        captcha(); //先获取一次
         $('#comment_captcha_image').click(function () {
+            captcha();
+        });
+        function captcha() {
             axios.get('/captcha/view')
                 .then(function (response) {
                     $('#comment_captcha_image').attr('src', ''+response.data+'');
@@ -55,6 +59,6 @@
                 .catch(function (error) {
                     console.log('验证码获取失败！');
                 })
-        })
+        }
     });
 </script>

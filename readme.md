@@ -46,3 +46,7 @@ stdout_logfile= /var/log/supervisor/supervisord.log
 `1003` 订单操作没有权限
 
 `1004` 没有找到订单
+
+`1005` 文章操作权限错误
+
+`1006` 评论操作权限错误
