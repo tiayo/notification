@@ -1,5 +1,4 @@
 @extends('layouts.app')
-删除@extends('layouts.app')
 
 @section('title', '我的订单')
 
