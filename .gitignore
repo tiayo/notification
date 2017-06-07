@@ -16,3 +16,4 @@ app_private_key.pem
 /public/index.html
 /public/category
 /public/article
+/public/upload
