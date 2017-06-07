@@ -79,6 +79,15 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //我的资料
     Route::get('/member/me/view/', 'MeController@view');
+
+    //------------------------------分隔线-------------------------------------------------//
+
+    //留言
+    Route::get('/member/messages/page', function () {
+        return redirect()->route('messages_page', ['page' => 1]);
+    });
+    Route::get('/member/messages/page/{page}', 'MessagesController@index')->name('messages_page');
+
 });
 
 // Authentication Routes...
