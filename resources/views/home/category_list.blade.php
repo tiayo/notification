@@ -47,7 +47,7 @@
                                                 <td>{{$row['updated_at']}}</td>
                                                 <td>
                                                     <a href="/admin/category/update/{{$row['category_id']}}" class="tablelink">修改</a>
-                                                    <a href="/admin/category/delete/{{$row['category_id']}}" class="tablelink"> 删除</a>
+                                                    <a href="/admin/category/delete/{{$row['category_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>
                                                 </td>
                                             </tr>
                                         @endforeach

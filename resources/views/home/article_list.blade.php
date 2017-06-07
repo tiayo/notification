@@ -69,7 +69,7 @@
                                                             <a href="/article/{{$row['article_id']}}" class="tablelink" target="_blank">查看</a>
                                                             @endif
                                                             <a href="/admin/article/update/{{$row['article_id']}}" class="tablelink">编辑</a>
-                                                            <a href="/admin/article/delete/{{$row['article_id']}}" class="tablelink"> 删除</a>
+                                                            <a href="/admin/article/delete/{{$row['article_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

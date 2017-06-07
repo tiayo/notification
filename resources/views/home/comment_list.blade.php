@@ -10,8 +10,8 @@
 @endsection
 
 @section('breadcrumbs')
-    <li navValue="nav_1"><i class="fa fa-home" aria-hidden="true"></i><a href="/">我的任务</a></li>
-    <li navValue="nav_1_1"><a href="/admin/task/page/">全部任务</a></li>
+    <li navValue="nav_5"><i class="fa fa-home" aria-hidden="true"></i><a href="/">会员中心</a></li>
+    <li navValue="nav_5_2"><a href="/admin/task/page/">我的评论</a></li>
 @endsection
 
 @section('content_body')
@@ -27,35 +27,33 @@
                                             <table id="basic-table" class="data-table table table-striped nowrap table-hover dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="basic-table_info" style="width: 100%;">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th>任务编号<i class="sort"><img src="/images/px.gif" /></i></th>
-                                                        <th>任务标题</th>
-                                                        @if ($admin)
-                                                            <th>用户</th>
-                                                        @endif
-                                                        <th>分类</th>
-                                                        <th>下次提醒时间</th>
-                                                        <th>提醒计划</th>
-                                                        <th>接收邮箱</th>
-                                                        <th>接收手机</th>
+                                                        <th>评论ID<i class="sort"><img src="/images/px.gif" /></i></th>
+                                                        <th>内容</th>
+                                                        <th>用户</th>
+                                                        <th>文章</th>
+                                                        <th>评论时间</th>
+                                                        <th>状态</th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach ($list_task as $row)
+                                                @foreach ($list_comment as $row)
                                                     <tr role="row" class="odd">
-                                                        <td>{{$row['task_id']}}</td>
-                                                        <td>{{$row['title']}}</td>
-                                                        @if ($admin)
-                                                            <td>{{$row['user_id']}}</td>
-                                                        @endif
-                                                        <td>{{$row['name']}}</td>
-                                                        <td>{{$row['start_time']}} {{$row['end_time'] or ''}}</td>
-                                                        <td>{{$plan::plan($row['plan'])}}</td>
-                                                        <td>{{$row['email']}}</td>
-                                                        <td>{{$row['phone']}}</td>
+                                                        <td>{{$row['comment_id']}}</td>
+                                                        <td>{{$row['content']}}</td>
+                                                        <td>{{$comment::find($row['comment_id'])->profile['real_name']}}</td>
                                                         <td>
-                                                            <a href="/admin/task/update/{{$row['task_id']}}" class="tablelink">修改</a>
-                                                            <a href="/admin/task/delete/{{$row['task_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>
+                                                            @if ($article = $comment::find($row['comment_id'])->article)
+                                                            <a href="/{{config('site.article_path')}}{{$article['links']}}" target="_blank">{{$article['title']}}</a>
+                                                            @endif
+                                                        </td>
+                                                        <td>{{$row['created_at']}}</td>
+                                                        <td>{{$judge::commentStatus($row['status'])}}</td>
+                                                        <td>
+                                                            @if ($admin)
+                                                                <a href="/admin/member/comment/mask/{{$row['comment_id']}}" class="tablelink">屏蔽</a>
+                                                            @endif
+                                                            <a href="/admin/member/comment/delete/{{$row['comment_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

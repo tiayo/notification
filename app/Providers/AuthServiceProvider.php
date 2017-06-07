@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Article;
 use App\Category;
+use App\Comment;
 use App\Http\Middleware\AdminAction;
 use App\Order;
 use App\Policies\ViewPolicy;
@@ -44,6 +45,7 @@ class AuthServiceProvider extends ServiceProvider
         AdminAction::class => ViewPolicy::class,
         WxpayService::class => ViewPolicy::class,
         Article::class => ViewPolicy::class,
+        Comment::class => ViewPolicy::class,
     ];
 
     /**

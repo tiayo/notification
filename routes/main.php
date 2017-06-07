@@ -63,6 +63,17 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //删除文章
     Route::get('/article/delete/{article_id}', 'ArticleController@destroy');
+
+    //------------------------------分隔线-------------------------------------------------//
+
+    //评论显示
+    Route::get('/member/comment/page', function () {
+        return redirect()->route('comment_page', ['page' => 1]);
+    });
+    Route::get('/member/comment/page/{page}', 'CommentController@index')->name('comment_page');
+
+    //删除评论
+    Route::get('/member/comment/delete/{comment_id}', 'CommentController@destroy');
 });
 
 // Authentication Routes...
