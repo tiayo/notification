@@ -28,6 +28,11 @@
 <div class="newscont clearfix"><div class="clearfix newsconter2">
         <div class="newsl">
             <div class="neirongkaishi" id="neirongkaishi">
+                @if (!empty($article['picture']))
+                    <p style="max-width: 100%; text-align: center;">
+                        <img src="{{$article['picture']}}" style="max-width: 100%;">
+                    </p>
+                @endif
                 {!! $article['body'] !!}
             </div>  　　
             <p class="newsediter">&nbsp;&nbsp;&nbsp;编辑：{{$article['real_name']}}</p>

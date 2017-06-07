@@ -28,7 +28,7 @@
                 <div class="panel-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <form id="messagebox-validation" action="{{$uri}}" method="post">
+                            <form id="messagebox-validation" action="{{$uri}}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 {{--输出错误信息--}}
                                 @if (count($errors) > 0)
@@ -46,7 +46,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="start_time" class=" control-label">封面图片<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="picture"  value="{{$old_input['picture']}}" placeholder="上传封面图片...">
+                                    <input type="text" id="article_picture_input" class="form-control"  value="{{$old_input['picture']}}" placeholder="上传封面图片...">
+                                    <input type="file" id="article_picture_file" style="margin-top: 1em;">
                                 </div>
                                 <div class="form-group">
                                     <label for="category" class="control-label">类型<span class="required">*</span></label>
@@ -210,4 +211,19 @@
     <script src="/javascripts/template-script.min.js"></script>
     <script src="/javascripts/template-init.min.js"></script>
     <script src="/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //input框change事件
+            $('#article_picture_input').on('change', function () {
+                $('#article_picture_input').attr('name', 'picture');
+                $('#article_picture_file').attr('name', '');
+            });
+
+            //file框change时间
+            $('#article_picture_file').on('change', function () {
+                $('#article_picture_input').val($(this).val()).attr('name', '');
+                $(this).attr('name', 'picture');
+            })
+        });
+    </script>
 @endsection

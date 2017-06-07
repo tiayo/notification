@@ -151,6 +151,11 @@ class ArticleService
      */
     public function update($data, $article_id)
     {
+        //保存图片(如果上传)
+        if (!empty($data['picture'])) {
+            $picture = ImagesUploadService::updaloadImage($data['picture']);
+        }
+
         //验证权限
         if (!$this->verfication($article_id)) {
             throw new \Exception('您没有权限访问（代码：1002）！', 403);
@@ -183,7 +188,9 @@ class ArticleService
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
         $value['attribute'] = $data['attribute'];
+        $value['picture'] = $picture ?? null;
 
+        //更新
         $this->article->update($value, $article_id);
 
         //生成页面(非私密属性文章执行)
@@ -207,16 +214,27 @@ class ArticleService
      */
     public function store($data, $category_id)
     {
+        //保存图片(如果上传)
+        if (!empty($data['picture'])) {
+            $picture = ImagesUploadService::updaloadImage($data['picture']);
+        }
+
         //如果摘要为空，执行自动截取方法
         if (empty($date['abstract'])) {
             $data['abstract'] = $this->getAbstract($data['body']);
         }
 
-        $data['user_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
-        $data['category'] = $category_id;
-        $data['user_id'] = Auth::id();
+        //构建插入数组
+        $value['category'] = $category_id;
+        $value['title'] = $data['title'];
+        $value['abstract'] = $data['abstract'];
+        $value['picture'] = $picture ?? null;
+        $value['user_id'] = Auth::id();
+        $value['user_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
+        $value['body'] = $data['body'];
 
-        $result = $this->article->store($data);
+        //插入数据库
+        $result = $this->article->store($value);
 
         //获取文章分类信息
         $article_id = $result->article_id;
