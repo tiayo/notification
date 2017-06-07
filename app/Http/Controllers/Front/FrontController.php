@@ -164,7 +164,6 @@ class FrontController extends Controller
         return view('front.article_comment', [
             'article_id' => $article_id,
             'all_comment' => $this->comment->allCommentAndProfile($article_id),
-            'builder' => $this->captcha->build(),
             'request' => $this->request,
         ])->__toString();
     }

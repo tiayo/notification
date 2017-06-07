@@ -14,12 +14,12 @@ class CommentRespositories
         $this->comment = $comment;
     }
 
-    public function allCommentAndProfile($comment_id)
+    public function allCommentAndProfile($article_id)
     {
         return $this->comment
             ->leftJoin('profile', 'comment.user_id', '=', 'profile.user_id')
             ->select('comment.*', 'profile.real_name')
-            ->where('comment.comment_id', $comment_id)
+            ->where('comment.article_id', $article_id)
             ->where('comment.status', 1)
             ->orderby('comment.updated_at', 'desc')
             ->get();

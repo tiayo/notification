@@ -210,6 +210,7 @@
                 <div class="drop-content basic">
                     <ul>
                         <li id="login_lock"> <a href="/lock"><i class="fa fa-lock" aria-hidden="true"></i>锁定屏幕</a></li>
+                        <li id="member_profile"> <a href="/admin/member/me/view"><i class="fa fa-lock" aria-hidden="true"></i>我的资料</a></li>
                     </ul>
                 </div>
             </div>

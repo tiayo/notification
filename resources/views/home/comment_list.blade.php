@@ -38,7 +38,7 @@
                                                 </thead>
                                                 <tbody>
                                                 @foreach ($list_comment as $row)
-                                                    <tr role="row" class="odd">
+                                                    <tr role="row" class="odd @if ($row['status'] == 2) color-danger @endif">
                                                         <td>{{$row['comment_id']}}</td>
                                                         <td>{{$row['content']}}</td>
                                                         <td>{{$comment::find($row['comment_id'])->profile['real_name']}}</td>
@@ -51,7 +51,11 @@
                                                         <td>{{$judge::commentStatus($row['status'])}}</td>
                                                         <td>
                                                             @if ($admin)
-                                                                <a href="/admin/member/comment/mask/{{$row['comment_id']}}" class="tablelink">屏蔽</a>
+                                                                @if ($row['status'] == 1)
+                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}" class="tablelink">屏蔽</a>
+                                                                @elseif ($row['status'] == 2)
+                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}" class="tablelink">取消屏蔽</a>
+                                                                @endif
                                                             @endif
                                                             <a href="/admin/member/comment/delete/{{$row['comment_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>
                                                         </td>
