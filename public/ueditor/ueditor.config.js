@@ -1,38 +1,38 @@
 /**
- * ueditorÍêÕûÅäÖÃÏî
- * ¿ÉÒÔÔÚÕâÀïÅäÖÃÕû¸ö±à¼­Æ÷µÄÌØĞÔ
+ * ueditorå®Œæ•´é…ç½®é¡¹
+ * å¯ä»¥åœ¨è¿™é‡Œé…ç½®æ•´ä¸ªç¼–è¾‘å™¨çš„ç‰¹æ€§
  */
-/**************************ÌáÊ¾********************************
- * ËùÓĞ±»×¢ÊÍµÄÅäÖÃÏî¾ùÎªUEditorÄ¬ÈÏÖµ¡£
- * ĞŞ¸ÄÄ¬ÈÏÅäÖÃÇëÊ×ÏÈÈ·±£ÒÑ¾­ÍêÈ«Ã÷È·¸Ã²ÎÊıµÄÕæÊµÓÃÍ¾¡£
- * Ö÷ÒªÓĞÁ½ÖÖĞŞ¸Ä·½°¸£¬Ò»ÖÖÊÇÈ¡Ïû´Ë´¦×¢ÊÍ£¬È»ºóĞŞ¸Ä³É¶ÔÓ¦²ÎÊı£»ÁíÒ»ÖÖÊÇÔÚÊµÀı»¯±à¼­Æ÷Ê±´«Èë¶ÔÓ¦²ÎÊı¡£
- * µ±Éı¼¶±à¼­Æ÷Ê±£¬¿ÉÖ±½ÓÊ¹ÓÃ¾É°æÅäÖÃÎÄ¼şÌæ»»ĞÂ°æÅäÖÃÎÄ¼ş,²»ÓÃµ£ĞÄ¾É°æÅäÖÃÎÄ¼şÖĞÒòÈ±ÉÙĞÂ¹¦ÄÜËùĞèµÄ²ÎÊı¶øµ¼ÖÂ½Å±¾±¨´í¡£
- **************************ÌáÊ¾********************************/
+/**************************æç¤º********************************
+ * æ‰€æœ‰è¢«æ³¨é‡Šçš„é…ç½®é¡¹å‡ä¸ºUEditoré»˜è®¤å€¼ã€‚
+ * ä¿®æ”¹é»˜è®¤é…ç½®è¯·é¦–å…ˆç¡®ä¿å·²ç»å®Œå…¨æ˜ç¡®è¯¥å‚æ•°çš„çœŸå®ç”¨é€”ã€‚
+ * ä¸»è¦æœ‰ä¸¤ç§ä¿®æ”¹æ–¹æ¡ˆï¼Œä¸€ç§æ˜¯å–æ¶ˆæ­¤å¤„æ³¨é‡Šï¼Œç„¶åä¿®æ”¹æˆå¯¹åº”å‚æ•°ï¼›å¦ä¸€ç§æ˜¯åœ¨å®ä¾‹åŒ–ç¼–è¾‘å™¨æ—¶ä¼ å…¥å¯¹åº”å‚æ•°ã€‚
+ * å½“å‡çº§ç¼–è¾‘å™¨æ—¶ï¼Œå¯ç›´æ¥ä½¿ç”¨æ—§ç‰ˆé…ç½®æ–‡ä»¶æ›¿æ¢æ–°ç‰ˆé…ç½®æ–‡ä»¶,ä¸ç”¨æ‹…å¿ƒæ—§ç‰ˆé…ç½®æ–‡ä»¶ä¸­å› ç¼ºå°‘æ–°åŠŸèƒ½æ‰€éœ€çš„å‚æ•°è€Œå¯¼è‡´è„šæœ¬æŠ¥é”™ã€‚
+ **************************æç¤º********************************/
 
 (function () {
 
     /**
-     * ±à¼­Æ÷×ÊÔ´ÎÄ¼ş¸ùÂ·¾¶¡£ËüËù±íÊ¾µÄº¬ÒåÊÇ£ºÒÔ±à¼­Æ÷ÊµÀı»¯Ò³ÃæÎªµ±Ç°Â·¾¶£¬Ö¸Ïò±à¼­Æ÷×ÊÔ´ÎÄ¼ş£¨¼´dialogµÈÎÄ¼ş¼Ğ£©µÄÂ·¾¶¡£
-     * ¼øÓÚºÜ¶àÍ¬Ñ§ÔÚÊ¹ÓÃ±à¼­Æ÷µÄÊ±ºò³öÏÖµÄÖÖÖÖÂ·¾¶ÎÊÌâ£¬´Ë´¦Ç¿ÁÒ½¨Òé´ó¼ÒÊ¹ÓÃ"Ïà¶ÔÓÚÍøÕ¾¸ùÄ¿Â¼µÄÏà¶ÔÂ·¾¶"½øĞĞÅäÖÃ¡£
-     * "Ïà¶ÔÓÚÍøÕ¾¸ùÄ¿Â¼µÄÏà¶ÔÂ·¾¶"Ò²¾ÍÊÇÒÔĞ±¸Ü¿ªÍ·µÄĞÎÈç"/myProject/ueditor/"ÕâÑùµÄÂ·¾¶¡£
-     * Èç¹ûÕ¾µãÖĞÓĞ¶à¸ö²»ÔÚÍ¬Ò»²ã¼¶µÄÒ³ÃæĞèÒªÊµÀı»¯±à¼­Æ÷£¬ÇÒÒıÓÃÁËÍ¬Ò»UEditorµÄÊ±ºò£¬´Ë´¦µÄURL¿ÉÄÜ²»ÊÊÓÃÓÚÃ¿¸öÒ³ÃæµÄ±à¼­Æ÷¡£
-     * Òò´Ë£¬UEditorÌá¹©ÁËÕë¶Ô²»Í¬Ò³ÃæµÄ±à¼­Æ÷¿Éµ¥¶ÀÅäÖÃµÄ¸ùÂ·¾¶£¬¾ßÌåÀ´Ëµ£¬ÔÚĞèÒªÊµÀı»¯±à¼­Æ÷µÄÒ³Ãæ×î¶¥²¿Ğ´ÉÏÈçÏÂ´úÂë¼´¿É¡£µ±È»£¬ĞèÒªÁî´Ë´¦µÄURLµÈÓÚ¶ÔÓ¦µÄÅäÖÃ¡£
+     * ç¼–è¾‘å™¨èµ„æºæ–‡ä»¶æ ¹è·¯å¾„ã€‚å®ƒæ‰€è¡¨ç¤ºçš„å«ä¹‰æ˜¯ï¼šä»¥ç¼–è¾‘å™¨å®ä¾‹åŒ–é¡µé¢ä¸ºå½“å‰è·¯å¾„ï¼ŒæŒ‡å‘ç¼–è¾‘å™¨èµ„æºæ–‡ä»¶ï¼ˆå³dialogç­‰æ–‡ä»¶å¤¹ï¼‰çš„è·¯å¾„ã€‚
+     * é‰´äºå¾ˆå¤šåŒå­¦åœ¨ä½¿ç”¨ç¼–è¾‘å™¨çš„æ—¶å€™å‡ºç°çš„ç§ç§è·¯å¾„é—®é¢˜ï¼Œæ­¤å¤„å¼ºçƒˆå»ºè®®å¤§å®¶ä½¿ç”¨"ç›¸å¯¹äºç½‘ç«™æ ¹ç›®å½•çš„ç›¸å¯¹è·¯å¾„"è¿›è¡Œé…ç½®ã€‚
+     * "ç›¸å¯¹äºç½‘ç«™æ ¹ç›®å½•çš„ç›¸å¯¹è·¯å¾„"ä¹Ÿå°±æ˜¯ä»¥æ–œæ å¼€å¤´çš„å½¢å¦‚"/myProject/ueditor/"è¿™æ ·çš„è·¯å¾„ã€‚
+     * å¦‚æœç«™ç‚¹ä¸­æœ‰å¤šä¸ªä¸åœ¨åŒä¸€å±‚çº§çš„é¡µé¢éœ€è¦å®ä¾‹åŒ–ç¼–è¾‘å™¨ï¼Œä¸”å¼•ç”¨äº†åŒä¸€UEditorçš„æ—¶å€™ï¼Œæ­¤å¤„çš„URLå¯èƒ½ä¸é€‚ç”¨äºæ¯ä¸ªé¡µé¢çš„ç¼–è¾‘å™¨ã€‚
+     * å› æ­¤ï¼ŒUEditoræä¾›äº†é’ˆå¯¹ä¸åŒé¡µé¢çš„ç¼–è¾‘å™¨å¯å•ç‹¬é…ç½®çš„æ ¹è·¯å¾„ï¼Œå…·ä½“æ¥è¯´ï¼Œåœ¨éœ€è¦å®ä¾‹åŒ–ç¼–è¾‘å™¨çš„é¡µé¢æœ€é¡¶éƒ¨å†™ä¸Šå¦‚ä¸‹ä»£ç å³å¯ã€‚å½“ç„¶ï¼Œéœ€è¦ä»¤æ­¤å¤„çš„URLç­‰äºå¯¹åº”çš„é…ç½®ã€‚
      * window.UEDITOR_HOME_URL = "/xxxx/xxxx/";
      */
     var URL = window.UEDITOR_HOME_URL || getUEBasePath();
 
     /**
-     * ÅäÖÃÏîÖ÷Ìå¡£×¢Òâ£¬´Ë´¦ËùÓĞÉæ¼°µ½Â·¾¶µÄÅäÖÃ±ğÒÅÂ©URL±äÁ¿¡£
+     * é…ç½®é¡¹ä¸»ä½“ã€‚æ³¨æ„ï¼Œæ­¤å¤„æ‰€æœ‰æ¶‰åŠåˆ°è·¯å¾„çš„é…ç½®åˆ«é—æ¼URLå˜é‡ã€‚
      */
     window.UEDITOR_CONFIG = {
 
-        //Îª±à¼­Æ÷ÊµÀıÌí¼ÓÒ»¸öÂ·¾¶£¬Õâ¸ö²»ÄÜ±»×¢ÊÍ
+        //ä¸ºç¼–è¾‘å™¨å®ä¾‹æ·»åŠ ä¸€ä¸ªè·¯å¾„ï¼Œè¿™ä¸ªä¸èƒ½è¢«æ³¨é‡Š
         UEDITOR_HOME_URL: URL
 
-        // ·şÎñÆ÷Í³Ò»ÇëÇó½Ó¿ÚÂ·¾¶
+        // æœåŠ¡å™¨ç»Ÿä¸€è¯·æ±‚æ¥å£è·¯å¾„
         , serverUrl: URL + "php/controller.php"
 
-        //¹¤¾ßÀ¸ÉÏµÄËùÓĞµÄ¹¦ÄÜ°´Å¥ºÍÏÂÀ­¿ò£¬¿ÉÒÔÔÚnew±à¼­Æ÷µÄÊµÀıÊ±Ñ¡Ôñ×Ô¼ºĞèÒªµÄÖØĞÂ¶¨Òå
+        //å·¥å…·æ ä¸Šçš„æ‰€æœ‰çš„åŠŸèƒ½æŒ‰é’®å’Œä¸‹æ‹‰æ¡†ï¼Œå¯ä»¥åœ¨newç¼–è¾‘å™¨çš„å®ä¾‹æ—¶é€‰æ‹©è‡ªå·±éœ€è¦çš„é‡æ–°å®šä¹‰
         , toolbars: [[
             'fullscreen', 'source', '|', 'undo', 'redo', '|',
             'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
@@ -46,80 +46,80 @@
             'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
             'print', 'preview', 'searchreplace', 'drafts', 'help'
         ]]
-        //µ±Êó±ê·ÅÔÚ¹¤¾ßÀ¸ÉÏÊ±ÏÔÊ¾µÄtooltipÌáÊ¾,Áô¿ÕÖ§³Ö×Ô¶¯¶àÓïÑÔÅäÖÃ£¬·ñÔòÒÔÅäÖÃÖµÎª×¼
+        //å½“é¼ æ ‡æ”¾åœ¨å·¥å…·æ ä¸Šæ—¶æ˜¾ç¤ºçš„tooltipæç¤º,ç•™ç©ºæ”¯æŒè‡ªåŠ¨å¤šè¯­è¨€é…ç½®ï¼Œå¦åˆ™ä»¥é…ç½®å€¼ä¸ºå‡†
         //,labelMap:{
         //    'anchor':'', 'undo':''
         //}
 
-        //ÓïÑÔÅäÖÃÏî,Ä¬ÈÏÊÇzh-cn¡£ÓĞĞèÒªµÄ»°Ò²¿ÉÒÔÊ¹ÓÃÈçÏÂÕâÑùµÄ·½Ê½À´×Ô¶¯¶àÓïÑÔÇĞ»»£¬µ±È»£¬Ç°ÌáÌõ¼şÊÇlangÎÄ¼ş¼ĞÏÂ´æÔÚ¶ÔÓ¦µÄÓïÑÔÎÄ¼ş£º
-        //langÖµÒ²¿ÉÒÔÍ¨¹ı×Ô¶¯»ñÈ¡ (navigator.language||navigator.browserLanguage ||navigator.userLanguage).toLowerCase()
+        //è¯­è¨€é…ç½®é¡¹,é»˜è®¤æ˜¯zh-cnã€‚æœ‰éœ€è¦çš„è¯ä¹Ÿå¯ä»¥ä½¿ç”¨å¦‚ä¸‹è¿™æ ·çš„æ–¹å¼æ¥è‡ªåŠ¨å¤šè¯­è¨€åˆ‡æ¢ï¼Œå½“ç„¶ï¼Œå‰ææ¡ä»¶æ˜¯langæ–‡ä»¶å¤¹ä¸‹å­˜åœ¨å¯¹åº”çš„è¯­è¨€æ–‡ä»¶ï¼š
+        //langå€¼ä¹Ÿå¯ä»¥é€šè¿‡è‡ªåŠ¨è·å– (navigator.language||navigator.browserLanguage ||navigator.userLanguage).toLowerCase()
         //,lang:"zh-cn"
         //,langPath:URL +"lang/"
 
-        //Ö÷ÌâÅäÖÃÏî,Ä¬ÈÏÊÇdefault¡£ÓĞĞèÒªµÄ»°Ò²¿ÉÒÔÊ¹ÓÃÈçÏÂÕâÑùµÄ·½Ê½À´×Ô¶¯¶àÖ÷ÌâÇĞ»»£¬µ±È»£¬Ç°ÌáÌõ¼şÊÇthemesÎÄ¼ş¼ĞÏÂ´æÔÚ¶ÔÓ¦µÄÖ÷ÌâÎÄ¼ş£º
-        //ÏÖÓĞÈçÏÂÆ¤·ô:default
+        //ä¸»é¢˜é…ç½®é¡¹,é»˜è®¤æ˜¯defaultã€‚æœ‰éœ€è¦çš„è¯ä¹Ÿå¯ä»¥ä½¿ç”¨å¦‚ä¸‹è¿™æ ·çš„æ–¹å¼æ¥è‡ªåŠ¨å¤šä¸»é¢˜åˆ‡æ¢ï¼Œå½“ç„¶ï¼Œå‰ææ¡ä»¶æ˜¯themesæ–‡ä»¶å¤¹ä¸‹å­˜åœ¨å¯¹åº”çš„ä¸»é¢˜æ–‡ä»¶ï¼š
+        //ç°æœ‰å¦‚ä¸‹çš®è‚¤:default
         //,theme:'default'
         //,themePath:URL +"themes/"
 
-        //,zIndex : 900     //±à¼­Æ÷²ã¼¶µÄ»ùÊı,Ä¬ÈÏÊÇ900
+        //,zIndex : 900     //ç¼–è¾‘å™¨å±‚çº§çš„åŸºæ•°,é»˜è®¤æ˜¯900
 
-        //Õë¶ÔgetAllHtml·½·¨£¬»áÔÚ¶ÔÓ¦µÄhead±êÇ©ÖĞÔö¼Ó¸Ã±àÂëÉèÖÃ¡£
+        //é’ˆå¯¹getAllHtmlæ–¹æ³•ï¼Œä¼šåœ¨å¯¹åº”çš„headæ ‡ç­¾ä¸­å¢åŠ è¯¥ç¼–ç è®¾ç½®ã€‚
         //,charset:"gbk"
 
-        //ÈôÊµÀı»¯±à¼­Æ÷µÄÒ³ÃæÊÖ¶¯ĞŞ¸ÄµÄdomain£¬´Ë´¦ĞèÒªÉèÖÃÎªtrue
+        //è‹¥å®ä¾‹åŒ–ç¼–è¾‘å™¨çš„é¡µé¢æ‰‹åŠ¨ä¿®æ”¹çš„domainï¼Œæ­¤å¤„éœ€è¦è®¾ç½®ä¸ºtrue
         //,customDomain:false
 
-        //³£ÓÃÅäÖÃÏîÄ¿
-        //,isShow : true    //Ä¬ÈÏÏÔÊ¾±à¼­Æ÷
+        //å¸¸ç”¨é…ç½®é¡¹ç›®
+        //,isShow : true    //é»˜è®¤æ˜¾ç¤ºç¼–è¾‘å™¨
 
-        //,textarea:'editorValue' // Ìá½»±íµ¥Ê±£¬·şÎñÆ÷»ñÈ¡±à¼­Æ÷Ìá½»ÄÚÈİµÄËùÓÃµÄ²ÎÊı£¬¶àÊµÀıÊ±¿ÉÒÔ¸øÈİÆ÷nameÊôĞÔ£¬»á½«name¸ø¶¨µÄÖµ×îÎªÃ¿¸öÊµÀıµÄ¼üÖµ£¬²»ÓÃÃ¿´ÎÊµÀı»¯µÄÊ±ºò¶¼ÉèÖÃÕâ¸öÖµ
+        //,textarea:'editorValue' // æäº¤è¡¨å•æ—¶ï¼ŒæœåŠ¡å™¨è·å–ç¼–è¾‘å™¨æäº¤å†…å®¹çš„æ‰€ç”¨çš„å‚æ•°ï¼Œå¤šå®ä¾‹æ—¶å¯ä»¥ç»™å®¹å™¨nameå±æ€§ï¼Œä¼šå°†nameç»™å®šçš„å€¼æœ€ä¸ºæ¯ä¸ªå®ä¾‹çš„é”®å€¼ï¼Œä¸ç”¨æ¯æ¬¡å®ä¾‹åŒ–çš„æ—¶å€™éƒ½è®¾ç½®è¿™ä¸ªå€¼
 
-        //,initialContent:'»¶Ó­Ê¹ÓÃueditor!'    //³õÊ¼»¯±à¼­Æ÷µÄÄÚÈİ,Ò²¿ÉÒÔÍ¨¹ıtextarea/script¸øÖµ£¬¿´¹ÙÍøÀı×Ó
+        //,initialContent:'æ¬¢è¿ä½¿ç”¨ueditor!'    //åˆå§‹åŒ–ç¼–è¾‘å™¨çš„å†…å®¹,ä¹Ÿå¯ä»¥é€šè¿‡textarea/scriptç»™å€¼ï¼Œçœ‹å®˜ç½‘ä¾‹å­
 
-        //,autoClearinitialContent:true //ÊÇ·ñ×Ô¶¯Çå³ı±à¼­Æ÷³õÊ¼ÄÚÈİ£¬×¢Òâ£ºÈç¹ûfocusÊôĞÔÉèÖÃÎªtrue,Õâ¸öÒ²ÎªÕæ£¬ÄÇÃ´±à¼­Æ÷Ò»ÉÏÀ´¾Í»á´¥·¢µ¼ÖÂ³õÊ¼»¯µÄÄÚÈİ¿´²»µ½ÁË
+        //,autoClearinitialContent:true //æ˜¯å¦è‡ªåŠ¨æ¸…é™¤ç¼–è¾‘å™¨åˆå§‹å†…å®¹ï¼Œæ³¨æ„ï¼šå¦‚æœfocuså±æ€§è®¾ç½®ä¸ºtrue,è¿™ä¸ªä¹Ÿä¸ºçœŸï¼Œé‚£ä¹ˆç¼–è¾‘å™¨ä¸€ä¸Šæ¥å°±ä¼šè§¦å‘å¯¼è‡´åˆå§‹åŒ–çš„å†…å®¹çœ‹ä¸åˆ°äº†
 
-        //,focus:false //³õÊ¼»¯Ê±£¬ÊÇ·ñÈÃ±à¼­Æ÷»ñµÃ½¹µãtrue»òfalse
+        //,focus:false //åˆå§‹åŒ–æ—¶ï¼Œæ˜¯å¦è®©ç¼–è¾‘å™¨è·å¾—ç„¦ç‚¹trueæˆ–false
 
-        //Èç¹û×Ô¶¨Òå£¬×îºÃ¸øp±êÇ©ÈçÏÂµÄĞĞ¸ß£¬Òª²»ÊäÈëÖĞÎÄÊ±£¬»áÓĞÌø¶¯¸Ğ
-        //,initialStyle:'p{line-height:1em}'//±à¼­Æ÷²ã¼¶µÄ»ùÊı,¿ÉÒÔÓÃÀ´¸Ä±ä×ÖÌåµÈ
+        //å¦‚æœè‡ªå®šä¹‰ï¼Œæœ€å¥½ç»™pæ ‡ç­¾å¦‚ä¸‹çš„è¡Œé«˜ï¼Œè¦ä¸è¾“å…¥ä¸­æ–‡æ—¶ï¼Œä¼šæœ‰è·³åŠ¨æ„Ÿ
+        //,initialStyle:'p{line-height:1em}'//ç¼–è¾‘å™¨å±‚çº§çš„åŸºæ•°,å¯ä»¥ç”¨æ¥æ”¹å˜å­—ä½“ç­‰
 
-        //,iframeCssUrl: URL + '/themes/iframe.css' //¸ø±à¼­ÇøÓòµÄiframeÒıÈëÒ»¸öcssÎÄ¼ş
+        //,iframeCssUrl: URL + '/themes/iframe.css' //ç»™ç¼–è¾‘åŒºåŸŸçš„iframeå¼•å…¥ä¸€ä¸ªcssæ–‡ä»¶
 
         //indentValue
-        //Ê×ĞĞËõ½ø¾àÀë,Ä¬ÈÏÊÇ2em
+        //é¦–è¡Œç¼©è¿›è·ç¦»,é»˜è®¤æ˜¯2em
         //,indentValue:'2em'
 
-        //,initialFrameWidth:1000  //³õÊ¼»¯±à¼­Æ÷¿í¶È,Ä¬ÈÏ1000
-        //,initialFrameHeight:320  //³õÊ¼»¯±à¼­Æ÷¸ß¶È,Ä¬ÈÏ320
+        //,initialFrameWidth:1000  //åˆå§‹åŒ–ç¼–è¾‘å™¨å®½åº¦,é»˜è®¤1000
+        //,initialFrameHeight:320  //åˆå§‹åŒ–ç¼–è¾‘å™¨é«˜åº¦,é»˜è®¤320
 
-        //,readonly : false //±à¼­Æ÷³õÊ¼»¯½áÊøºó,±à¼­ÇøÓòÊÇ·ñÊÇÖ»¶ÁµÄ£¬Ä¬ÈÏÊÇfalse
+        //,readonly : false //ç¼–è¾‘å™¨åˆå§‹åŒ–ç»“æŸå,ç¼–è¾‘åŒºåŸŸæ˜¯å¦æ˜¯åªè¯»çš„ï¼Œé»˜è®¤æ˜¯false
 
-        //,autoClearEmptyNode : true //getContentÊ±£¬ÊÇ·ñÉ¾³ı¿ÕµÄinlineElement½Úµã£¨°üÀ¨Ç¶Ì×µÄÇé¿ö£©
+        //,autoClearEmptyNode : true //getContentæ—¶ï¼Œæ˜¯å¦åˆ é™¤ç©ºçš„inlineElementèŠ‚ç‚¹ï¼ˆåŒ…æ‹¬åµŒå¥—çš„æƒ…å†µï¼‰
 
-        //ÆôÓÃ×Ô¶¯±£´æ
+        //å¯ç”¨è‡ªåŠ¨ä¿å­˜
         //,enableAutoSave: true
-        //×Ô¶¯±£´æ¼ä¸ôÊ±¼ä£¬ µ¥Î»ms
+        //è‡ªåŠ¨ä¿å­˜é—´éš”æ—¶é—´ï¼Œ å•ä½ms
         //,saveInterval: 500
 
-        //,fullscreen : false //ÊÇ·ñ¿ªÆô³õÊ¼»¯Ê±¼´È«ÆÁ£¬Ä¬ÈÏ¹Ø±Õ
+        //,fullscreen : false //æ˜¯å¦å¼€å¯åˆå§‹åŒ–æ—¶å³å…¨å±ï¼Œé»˜è®¤å…³é—­
 
-        //,imagePopup:true      //Í¼Æ¬²Ù×÷µÄ¸¡²ã¿ª¹Ø£¬Ä¬ÈÏ´ò¿ª
+        //,imagePopup:true      //å›¾ç‰‡æ“ä½œçš„æµ®å±‚å¼€å…³ï¼Œé»˜è®¤æ‰“å¼€
 
-        //,autoSyncData:true //×Ô¶¯Í¬²½±à¼­Æ÷ÒªÌá½»µÄÊı¾İ
-        //,emotionLocalization:false //ÊÇ·ñ¿ªÆô±íÇé±¾µØ»¯£¬Ä¬ÈÏ¹Ø±Õ¡£ÈôÒª¿ªÆôÇëÈ·±£emotionÎÄ¼ş¼ĞÏÂ°üº¬¹ÙÍøÌá¹©µÄimages±íÇéÎÄ¼ş¼Ğ
+        //,autoSyncData:true //è‡ªåŠ¨åŒæ­¥ç¼–è¾‘å™¨è¦æäº¤çš„æ•°æ®
+        //,emotionLocalization:false //æ˜¯å¦å¼€å¯è¡¨æƒ…æœ¬åœ°åŒ–ï¼Œé»˜è®¤å…³é—­ã€‚è‹¥è¦å¼€å¯è¯·ç¡®ä¿emotionæ–‡ä»¶å¤¹ä¸‹åŒ…å«å®˜ç½‘æä¾›çš„imagesè¡¨æƒ…æ–‡ä»¶å¤¹
 
-        //Õ³ÌùÖ»±£Áô±êÇ©£¬È¥³ı±êÇ©ËùÓĞÊôĞÔ
+        //ç²˜è´´åªä¿ç•™æ ‡ç­¾ï¼Œå»é™¤æ ‡ç­¾æ‰€æœ‰å±æ€§
         //,retainOnlyLabelPasted: false
 
-        //,pasteplain:false  //ÊÇ·ñÄ¬ÈÏÎª´¿ÎÄ±¾Õ³Ìù¡£falseÎª²»Ê¹ÓÃ´¿ÎÄ±¾Õ³Ìù£¬trueÎªÊ¹ÓÃ´¿ÎÄ±¾Õ³Ìù
-        //´¿ÎÄ±¾Õ³ÌùÄ£Ê½ÏÂµÄ¹ıÂË¹æÔò
+        //,pasteplain:false  //æ˜¯å¦é»˜è®¤ä¸ºçº¯æ–‡æœ¬ç²˜è´´ã€‚falseä¸ºä¸ä½¿ç”¨çº¯æ–‡æœ¬ç²˜è´´ï¼Œtrueä¸ºä½¿ç”¨çº¯æ–‡æœ¬ç²˜è´´
+        //çº¯æ–‡æœ¬ç²˜è´´æ¨¡å¼ä¸‹çš„è¿‡æ»¤è§„åˆ™
         //'filterTxtRules' : function(){
         //    function transP(node){
         //        node.tagName = 'p';
         //        node.setStyle();
         //    }
         //    return {
-        //        //Ö±½ÓÉ¾³ı¼°Æä×Ö½ÚµãÄÚÈİ
+        //        //ç›´æ¥åˆ é™¤åŠå…¶å­—èŠ‚ç‚¹å†…å®¹
         //        '-' : 'script style object iframe embed input select',
         //        'p': {$:{}},
         //        'br':{$:{}},
@@ -130,7 +130,7 @@
         //        'tr':transP,
         //        'h1':transP,'h2':transP,'h3':transP,'h4':transP,'h5':transP,'h6':transP,
         //        'td':function(node){
-        //            //Ã»ÓĞÄÚÈİµÄtdÖ±½ÓÉ¾µô
+        //            //æ²¡æœ‰å†…å®¹çš„tdç›´æ¥åˆ æ‰
         //            var txt = !!node.innerText();
         //            if(txt){
         //                node.parentNode.insertAfter(UE.uNode.createText(' &nbsp; &nbsp;'),node);
@@ -140,19 +140,19 @@
         //    }
         //}()
 
-        //,allHtmlEnabled:false //Ìá½»µ½ºóÌ¨µÄÊı¾İÊÇ·ñ°üº¬Õû¸öhtml×Ö·û´®
+        //,allHtmlEnabled:false //æäº¤åˆ°åå°çš„æ•°æ®æ˜¯å¦åŒ…å«æ•´ä¸ªhtmlå­—ç¬¦ä¸²
 
         //insertorderedlist
-        //ÓĞĞòÁĞ±íµÄÏÂÀ­ÅäÖÃ,ÖµÁô¿ÕÊ±Ö§³Ö¶àÓïÑÔ×Ô¶¯Ê¶±ğ£¬ÈôÅäÖÃÖµ£¬ÔòÒÔ´ËÖµÎª×¼
+        //æœ‰åºåˆ—è¡¨çš„ä¸‹æ‹‰é…ç½®,å€¼ç•™ç©ºæ—¶æ”¯æŒå¤šè¯­è¨€è‡ªåŠ¨è¯†åˆ«ï¼Œè‹¥é…ç½®å€¼ï¼Œåˆ™ä»¥æ­¤å€¼ä¸ºå‡†
         //,'insertorderedlist':{
-        //      //×Ô¶¨µÄÑùÊ½
+        //      //è‡ªå®šçš„æ ·å¼
         //        'num':'1,2,3...',
         //        'num1':'1),2),3)...',
         //        'num2':'(1),(2),(3)...',
-        //        'cn':'Ò»,¶ş,Èı....',
-        //        'cn1':'Ò»),¶ş),Èı)....',
-        //        'cn2':'(Ò»),(¶ş),(Èı)....',
-        //     //ÏµÍ³×Ô´ø
+        //        'cn':'ä¸€,äºŒ,ä¸‰....',
+        //        'cn1':'ä¸€),äºŒ),ä¸‰)....',
+        //        'cn2':'(ä¸€),(äºŒ),(ä¸‰)....',
+        //     //ç³»ç»Ÿè‡ªå¸¦
         //     'decimal' : '' ,         //'1,2,3...'
         //     'lower-alpha' : '' ,    // 'a,b,c...'
         //     'lower-roman' : '' ,    //'i,ii,iii...'
@@ -161,28 +161,28 @@
         //}
 
         //insertunorderedlist
-        //ÎŞĞòÁĞ±íµÄÏÂÀ­ÅäÖÃ£¬ÖµÁô¿ÕÊ±Ö§³Ö¶àÓïÑÔ×Ô¶¯Ê¶±ğ£¬ÈôÅäÖÃÖµ£¬ÔòÒÔ´ËÖµÎª×¼
-        //,insertunorderedlist : { //×Ô¶¨µÄÑùÊ½
-        //    'dash' :'¡ª ÆÆÕÛºÅ', //-ÆÆÕÛºÅ
-        //    'dot':' ¡£ Ğ¡Ô²È¦', //ÏµÍ³×Ô´ø
-        //    'circle' : '',  // '¡ğ Ğ¡Ô²È¦'
-        //    'disc' : '',    // '¡ñ Ğ¡Ô²µã'
-        //    'square' : ''   //'¡ö Ğ¡·½¿é'
+        //æ— åºåˆ—è¡¨çš„ä¸‹æ‹‰é…ç½®ï¼Œå€¼ç•™ç©ºæ—¶æ”¯æŒå¤šè¯­è¨€è‡ªåŠ¨è¯†åˆ«ï¼Œè‹¥é…ç½®å€¼ï¼Œåˆ™ä»¥æ­¤å€¼ä¸ºå‡†
+        //,insertunorderedlist : { //è‡ªå®šçš„æ ·å¼
+        //    'dash' :'â€” ç ´æŠ˜å·', //-ç ´æŠ˜å·
+        //    'dot':' ã€‚ å°åœ†åœˆ', //ç³»ç»Ÿè‡ªå¸¦
+        //    'circle' : '',  // 'â—‹ å°åœ†åœˆ'
+        //    'disc' : '',    // 'â— å°åœ†ç‚¹'
+        //    'square' : ''   //'â–  å°æ–¹å—'
         //}
-        //,listDefaultPaddingLeft : '30'//Ä¬ÈÏµÄ×ó±ßËõ½øµÄ»ùÊı±¶
-        //,listiconpath : 'http://bs.baidu.com/listicon/'//×Ô¶¨Òå±êºÅµÄÂ·¾¶
-        //,maxListLevel : 3 //ÏŞÖÆ¿ÉÒÔtabµÄ¼¶Êı, ÉèÖÃ-1Îª²»ÏŞÖÆ
+        //,listDefaultPaddingLeft : '30'//é»˜è®¤çš„å·¦è¾¹ç¼©è¿›çš„åŸºæ•°å€
+        //,listiconpath : 'http://bs.baidu.com/listicon/'//è‡ªå®šä¹‰æ ‡å·çš„è·¯å¾„
+        //,maxListLevel : 3 //é™åˆ¶å¯ä»¥tabçš„çº§æ•°, è®¾ç½®-1ä¸ºä¸é™åˆ¶
 
-        //,autoTransWordToList:false  //½ûÖ¹wordÖĞÕ³Ìù½øÀ´µÄÁĞ±í×Ô¶¯±ä³ÉÁĞ±í±êÇ©
+        //,autoTransWordToList:false  //ç¦æ­¢wordä¸­ç²˜è´´è¿›æ¥çš„åˆ—è¡¨è‡ªåŠ¨å˜æˆåˆ—è¡¨æ ‡ç­¾
 
         //fontfamily
-        //×ÖÌåÉèÖÃ labelÁô¿ÕÖ§³Ö¶àÓïÑÔ×Ô¶¯ÇĞ»»£¬ÈôÅäÖÃ£¬ÔòÒÔÅäÖÃÖµÎª×¼
+        //å­—ä½“è®¾ç½® labelç•™ç©ºæ”¯æŒå¤šè¯­è¨€è‡ªåŠ¨åˆ‡æ¢ï¼Œè‹¥é…ç½®ï¼Œåˆ™ä»¥é…ç½®å€¼ä¸ºå‡†
         //,'fontfamily':[
-        //    { label:'',name:'songti',val:'ËÎÌå,SimSun'},
-        //    { label:'',name:'kaiti',val:'¿¬Ìå,¿¬Ìå_GB2312, SimKai'},
-        //    { label:'',name:'yahei',val:'Î¢ÈíÑÅºÚ,Microsoft YaHei'},
-        //    { label:'',name:'heiti',val:'ºÚÌå, SimHei'},
-        //    { label:'',name:'lishu',val:'Á¥Êé, SimLi'},
+        //    { label:'',name:'songti',val:'å®‹ä½“,SimSun'},
+        //    { label:'',name:'kaiti',val:'æ¥·ä½“,æ¥·ä½“_GB2312, SimKai'},
+        //    { label:'',name:'yahei',val:'å¾®è½¯é›…é»‘,Microsoft YaHei'},
+        //    { label:'',name:'heiti',val:'é»‘ä½“, SimHei'},
+        //    { label:'',name:'lishu',val:'éš¶ä¹¦, SimLi'},
         //    { label:'',name:'andaleMono',val:'andale mono'},
         //    { label:'',name:'arial',val:'arial, helvetica,sans-serif'},
         //    { label:'',name:'arialBlack',val:'arial black,avant garde'},
@@ -192,34 +192,34 @@
         //]
 
         //fontsize
-        //×ÖºÅ
+        //å­—å·
         //,'fontsize':[10, 11, 12, 14, 16, 18, 20, 24, 36]
 
         //paragraph
-        //¶ÎÂä¸ñÊ½ ÖµÁô¿ÕÊ±Ö§³Ö¶àÓïÑÔ×Ô¶¯Ê¶±ğ£¬ÈôÅäÖÃ£¬ÔòÒÔÅäÖÃÖµÎª×¼
+        //æ®µè½æ ¼å¼ å€¼ç•™ç©ºæ—¶æ”¯æŒå¤šè¯­è¨€è‡ªåŠ¨è¯†åˆ«ï¼Œè‹¥é…ç½®ï¼Œåˆ™ä»¥é…ç½®å€¼ä¸ºå‡†
         //,'paragraph':{'p':'', 'h1':'', 'h2':'', 'h3':'', 'h4':'', 'h5':'', 'h6':''}
 
         //rowspacingtop
-        //¶Î¼ä¾à ÖµºÍÏÔÊ¾µÄÃû×ÖÏàÍ¬
+        //æ®µé—´è· å€¼å’Œæ˜¾ç¤ºçš„åå­—ç›¸åŒ
         //,'rowspacingtop':['5', '10', '15', '20', '25']
 
         //rowspacingBottom
-        //¶Î¼ä¾à ÖµºÍÏÔÊ¾µÄÃû×ÖÏàÍ¬
+        //æ®µé—´è· å€¼å’Œæ˜¾ç¤ºçš„åå­—ç›¸åŒ
         //,'rowspacingbottom':['5', '10', '15', '20', '25']
 
         //lineheight
-        //ĞĞÄÚ¼ä¾à ÖµºÍÏÔÊ¾µÄÃû×ÖÏàÍ¬
+        //è¡Œå†…é—´è· å€¼å’Œæ˜¾ç¤ºçš„åå­—ç›¸åŒ
         //,'lineheight':['1', '1.5','1.75','2', '3', '4', '5']
 
         //customstyle
-        //×Ô¶¨ÒåÑùÊ½£¬²»Ö§³Ö¹ú¼Ê»¯£¬´Ë´¦ÅäÖÃÖµ¼´¿É×îºóÏÔÊ¾Öµ
-        //blockµÄÔªËØÊÇÒÀ¾İÉèÖÃ¶ÎÂäµÄÂß¼­ÉèÖÃµÄ£¬inlineµÄÔªËØÒÀ¾İBIUµÄÂß¼­ÉèÖÃ
-        //¾¡Á¿Ê¹ÓÃÒ»Ğ©³£ÓÃµÄ±êÇ©
-        //²ÎÊıËµÃ÷
-        //tag Ê¹ÓÃµÄ±êÇ©Ãû×Ö
-        //label ÏÔÊ¾µÄÃû×ÖÒ²ÊÇÓÃÀ´±êÊ¶²»Í¬ÀàĞÍµÄ±êÊ¶·û£¬×¢ÒâÕâ¸öÖµÃ¿¸öÒª²»Í¬£¬
-        //style Ìí¼ÓµÄÑùÊ½
-        //Ã¿Ò»¸ö¶ÔÏó¾ÍÊÇÒ»¸ö×Ô¶¨ÒåµÄÑùÊ½
+        //è‡ªå®šä¹‰æ ·å¼ï¼Œä¸æ”¯æŒå›½é™…åŒ–ï¼Œæ­¤å¤„é…ç½®å€¼å³å¯æœ€åæ˜¾ç¤ºå€¼
+        //blockçš„å…ƒç´ æ˜¯ä¾æ®è®¾ç½®æ®µè½çš„é€»è¾‘è®¾ç½®çš„ï¼Œinlineçš„å…ƒç´ ä¾æ®BIUçš„é€»è¾‘è®¾ç½®
+        //å°½é‡ä½¿ç”¨ä¸€äº›å¸¸ç”¨çš„æ ‡ç­¾
+        //å‚æ•°è¯´æ˜
+        //tag ä½¿ç”¨çš„æ ‡ç­¾åå­—
+        //label æ˜¾ç¤ºçš„åå­—ä¹Ÿæ˜¯ç”¨æ¥æ ‡è¯†ä¸åŒç±»å‹çš„æ ‡è¯†ç¬¦ï¼Œæ³¨æ„è¿™ä¸ªå€¼æ¯ä¸ªè¦ä¸åŒï¼Œ
+        //style æ·»åŠ çš„æ ·å¼
+        //æ¯ä¸€ä¸ªå¯¹è±¡å°±æ˜¯ä¸€ä¸ªè‡ªå®šä¹‰çš„æ ·å¼
         //,'customstyle':[
         //    {tag:'h1', name:'tc', label:'', style:'border-bottom:#ccc 2px solid;padding:0 4px 0 0;text-align:center;margin:0 0 20px 0;'},
         //    {tag:'h1', name:'tl',label:'', style:'border-bottom:#ccc 2px solid;padding:0 4px 0 0;margin:0 0 10px 0;'},
@@ -227,206 +227,206 @@
         //    {tag:'span',name:'hi', label:'', style:'font-style:italic;font-weight:bold;color:rgb(51, 153, 204)'}
         //]
 
-        //´ò¿ªÓÒ¼ü²Ëµ¥¹¦ÄÜ
+        //æ‰“å¼€å³é”®èœå•åŠŸèƒ½
         //,enableContextMenu: true
-        //ÓÒ¼ü²Ëµ¥µÄÄÚÈİ£¬¿ÉÒÔ²Î¿¼plugins/contextmenu.jsÀï±ßµÄÄ¬ÈÏ²Ëµ¥µÄÀı×Ó£¬labelÁô¿ÕÖ§³Ö¹ú¼Ê»¯£¬·ñÔòÒÔ´ËÅäÖÃÎª×¼
+        //å³é”®èœå•çš„å†…å®¹ï¼Œå¯ä»¥å‚è€ƒplugins/contextmenu.jsé‡Œè¾¹çš„é»˜è®¤èœå•çš„ä¾‹å­ï¼Œlabelç•™ç©ºæ”¯æŒå›½é™…åŒ–ï¼Œå¦åˆ™ä»¥æ­¤é…ç½®ä¸ºå‡†
         //,contextMenu:[
         //    {
-        //        label:'',       //ÏÔÊ¾µÄÃû³Æ
-        //        cmdName:'selectall',//Ö´ĞĞµÄcommandÃüÁî£¬µ±µã»÷Õâ¸öÓÒ¼ü²Ëµ¥Ê±
-        //        //exec¿ÉÑ¡£¬ÓĞÁËexec¾Í»áÔÚµã»÷Ê±Ö´ĞĞÕâ¸öfunction£¬ÓÅÏÈ¼¶¸ßÓÚcmdName
+        //        label:'',       //æ˜¾ç¤ºçš„åç§°
+        //        cmdName:'selectall',//æ‰§è¡Œçš„commandå‘½ä»¤ï¼Œå½“ç‚¹å‡»è¿™ä¸ªå³é”®èœå•æ—¶
+        //        //execå¯é€‰ï¼Œæœ‰äº†execå°±ä¼šåœ¨ç‚¹å‡»æ—¶æ‰§è¡Œè¿™ä¸ªfunctionï¼Œä¼˜å…ˆçº§é«˜äºcmdName
         //        exec:function () {
-        //            //thisÊÇµ±Ç°±à¼­Æ÷µÄÊµÀı
+        //            //thisæ˜¯å½“å‰ç¼–è¾‘å™¨çš„å®ä¾‹
         //            //this.ui._dialogs['inserttableDialog'].open();
         //        }
         //    }
         //]
 
-        //¿ì½İ²Ëµ¥
+        //å¿«æ·èœå•
         //,shortcutMenu:["fontfamily", "fontsize", "bold", "italic", "underline", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist"]
 
         //elementPathEnabled
-        //ÊÇ·ñÆôÓÃÔªËØÂ·¾¶£¬Ä¬ÈÏÊÇÏÔÊ¾
+        //æ˜¯å¦å¯ç”¨å…ƒç´ è·¯å¾„ï¼Œé»˜è®¤æ˜¯æ˜¾ç¤º
         //,elementPathEnabled : true
 
         //wordCount
-        //,wordCount:true          //ÊÇ·ñ¿ªÆô×ÖÊıÍ³¼Æ
-        //,maximumWords:10000       //ÔÊĞíµÄ×î´ó×Ö·ûÊı
-        //×ÖÊıÍ³¼ÆÌáÊ¾£¬{#count}´ú±íµ±Ç°×ÖÊı£¬{#leave}´ú±í»¹¿ÉÒÔÊäÈë¶àÉÙ×Ö·ûÊı,Áô¿ÕÖ§³Ö¶àÓïÑÔ×Ô¶¯ÇĞ»»£¬·ñÔò°´´ËÅäÖÃÏÔÊ¾
-        //,wordCountMsg:''   //µ±Ç°ÒÑÊäÈë {#count} ¸ö×Ö·û£¬Äú»¹¿ÉÒÔÊäÈë{#leave} ¸ö×Ö·û
-        //³¬³ö×ÖÊıÏŞÖÆÌáÊ¾  Áô¿ÕÖ§³Ö¶àÓïÑÔ×Ô¶¯ÇĞ»»£¬·ñÔò°´´ËÅäÖÃÏÔÊ¾
-        //,wordOverFlowMsg:''    //<span style="color:red;">ÄãÊäÈëµÄ×Ö·û¸öÊıÒÑ¾­³¬³ö×î´óÔÊĞíÖµ£¬·şÎñÆ÷¿ÉÄÜ»á¾Ü¾ø±£´æ£¡</span>
+        //,wordCount:true          //æ˜¯å¦å¼€å¯å­—æ•°ç»Ÿè®¡
+        //,maximumWords:10000       //å…è®¸çš„æœ€å¤§å­—ç¬¦æ•°
+        //å­—æ•°ç»Ÿè®¡æç¤ºï¼Œ{#count}ä»£è¡¨å½“å‰å­—æ•°ï¼Œ{#leave}ä»£è¡¨è¿˜å¯ä»¥è¾“å…¥å¤šå°‘å­—ç¬¦æ•°,ç•™ç©ºæ”¯æŒå¤šè¯­è¨€è‡ªåŠ¨åˆ‡æ¢ï¼Œå¦åˆ™æŒ‰æ­¤é…ç½®æ˜¾ç¤º
+        //,wordCountMsg:''   //å½“å‰å·²è¾“å…¥ {#count} ä¸ªå­—ç¬¦ï¼Œæ‚¨è¿˜å¯ä»¥è¾“å…¥{#leave} ä¸ªå­—ç¬¦
+        //è¶…å‡ºå­—æ•°é™åˆ¶æç¤º  ç•™ç©ºæ”¯æŒå¤šè¯­è¨€è‡ªåŠ¨åˆ‡æ¢ï¼Œå¦åˆ™æŒ‰æ­¤é…ç½®æ˜¾ç¤º
+        //,wordOverFlowMsg:''    //<span style="color:red;">ä½ è¾“å…¥çš„å­—ç¬¦ä¸ªæ•°å·²ç»è¶…å‡ºæœ€å¤§å…è®¸å€¼ï¼ŒæœåŠ¡å™¨å¯èƒ½ä¼šæ‹’ç»ä¿å­˜ï¼</span>
 
         //tab
-        //µã»÷tab¼üÊ±ÒÆ¶¯µÄ¾àÀë,tabSize±¶Êı£¬tabNodeÊ²Ã´×Ö·û×öÎªµ¥Î»
+        //ç‚¹å‡»tabé”®æ—¶ç§»åŠ¨çš„è·ç¦»,tabSizeå€æ•°ï¼ŒtabNodeä»€ä¹ˆå­—ç¬¦åšä¸ºå•ä½
         //,tabSize:4
         //,tabNode:'&nbsp;'
 
         //removeFormat
-        //Çå³ı¸ñÊ½Ê±¿ÉÒÔÉ¾³ıµÄ±êÇ©ºÍÊôĞÔ
-        //removeForamtTags±êÇ©
+        //æ¸…é™¤æ ¼å¼æ—¶å¯ä»¥åˆ é™¤çš„æ ‡ç­¾å’Œå±æ€§
+        //removeForamtTagsæ ‡ç­¾
         //,removeFormatTags:'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
-        //removeFormatAttributesÊôĞÔ
+        //removeFormatAttributeså±æ€§
         //,removeFormatAttributes:'class,style,lang,width,height,align,hspace,valign'
 
         //undo
-        //¿ÉÒÔ×î¶à»ØÍËµÄ´ÎÊı,Ä¬ÈÏ20
+        //å¯ä»¥æœ€å¤šå›é€€çš„æ¬¡æ•°,é»˜è®¤20
         //,maxUndoCount:20
-        //µ±ÊäÈëµÄ×Ö·ûÊı³¬¹ı¸ÃÖµÊ±£¬±£´æÒ»´ÎÏÖ³¡
+        //å½“è¾“å…¥çš„å­—ç¬¦æ•°è¶…è¿‡è¯¥å€¼æ—¶ï¼Œä¿å­˜ä¸€æ¬¡ç°åœº
         //,maxInputCount:1
 
         //autoHeightEnabled
-        // ÊÇ·ñ×Ô¶¯³¤¸ß,Ä¬ÈÏtrue
-        //,autoHeightEnabled:true
+        // æ˜¯å¦è‡ªåŠ¨é•¿é«˜,é»˜è®¤true
+        ,autoHeightEnabled:true
 
         //scaleEnabled
-        //ÊÇ·ñ¿ÉÒÔÀ­Éì³¤¸ß,Ä¬ÈÏtrue(µ±¿ªÆôÊ±£¬×Ô¶¯³¤¸ßÊ§Ğ§)
+        //æ˜¯å¦å¯ä»¥æ‹‰ä¼¸é•¿é«˜,é»˜è®¤true(å½“å¼€å¯æ—¶ï¼Œè‡ªåŠ¨é•¿é«˜å¤±æ•ˆ)
         //,scaleEnabled:false
-        //,minFrameWidth:800    //±à¼­Æ÷ÍÏ¶¯Ê±×îĞ¡¿í¶È,Ä¬ÈÏ800
-        //,minFrameHeight:220  //±à¼­Æ÷ÍÏ¶¯Ê±×îĞ¡¸ß¶È,Ä¬ÈÏ220
+        //,minFrameWidth:800    //ç¼–è¾‘å™¨æ‹–åŠ¨æ—¶æœ€å°å®½åº¦,é»˜è®¤800
+        //,minFrameHeight:220  //ç¼–è¾‘å™¨æ‹–åŠ¨æ—¶æœ€å°é«˜åº¦,é»˜è®¤220
 
         //autoFloatEnabled
-        //ÊÇ·ñ±£³ÖtoolbarµÄÎ»ÖÃ²»¶¯,Ä¬ÈÏtrue
+        //æ˜¯å¦ä¿æŒtoolbarçš„ä½ç½®ä¸åŠ¨,é»˜è®¤true
         //,autoFloatEnabled:true
-        //¸¡¶¯Ê±¹¤¾ßÀ¸¾àÀëä¯ÀÀÆ÷¶¥²¿µÄ¸ß¶È£¬ÓÃÓÚÄ³Ğ©¾ßÓĞ¹Ì¶¨Í·²¿µÄÒ³Ãæ
+        //æµ®åŠ¨æ—¶å·¥å…·æ è·ç¦»æµè§ˆå™¨é¡¶éƒ¨çš„é«˜åº¦ï¼Œç”¨äºæŸäº›å…·æœ‰å›ºå®šå¤´éƒ¨çš„é¡µé¢
         //,topOffset:30
-        //±à¼­Æ÷µ×²¿¾àÀë¹¤¾ßÀ¸¸ß¶È(Èç¹û²ÎÊı´óÓÚµÈÓÚ±à¼­Æ÷¸ß¶È£¬ÔòÉèÖÃÎŞĞ§)
+        //ç¼–è¾‘å™¨åº•éƒ¨è·ç¦»å·¥å…·æ é«˜åº¦(å¦‚æœå‚æ•°å¤§äºç­‰äºç¼–è¾‘å™¨é«˜åº¦ï¼Œåˆ™è®¾ç½®æ— æ•ˆ)
         //,toolbarTopOffset:400
 
-        //ÉèÖÃÔ¶³ÌÍ¼Æ¬ÊÇ·ñ×¥È¡µ½±¾µØ±£´æ
-        ,catchRemoteImageEnable: true //ÉèÖÃÊÇ·ñ×¥È¡Ô¶³ÌÍ¼Æ¬
+        //è®¾ç½®è¿œç¨‹å›¾ç‰‡æ˜¯å¦æŠ“å–åˆ°æœ¬åœ°ä¿å­˜
+        ,catchRemoteImageEnable: true //è®¾ç½®æ˜¯å¦æŠ“å–è¿œç¨‹å›¾ç‰‡
 
         //pageBreakTag
-        //·ÖÒ³±êÊ¶·û,Ä¬ÈÏÊÇ_ueditor_page_break_tag_
+        //åˆ†é¡µæ ‡è¯†ç¬¦,é»˜è®¤æ˜¯_ueditor_page_break_tag_
         //,pageBreakTag:'_ueditor_page_break_tag_'
 
         //autotypeset
-        //×Ô¶¯ÅÅ°æ²ÎÊı
+        //è‡ªåŠ¨æ’ç‰ˆå‚æ•°
         //,autotypeset: {
-        //    mergeEmptyline: true,           //ºÏ²¢¿ÕĞĞ
-        //    removeClass: true,              //È¥µôÈßÓàµÄclass
-        //    removeEmptyline: false,         //È¥µô¿ÕĞĞ
-        //    textAlign:"left",               //¶ÎÂäµÄÅÅ°æ·½Ê½£¬¿ÉÒÔÊÇ left,right,center,justify È¥µôÕâ¸öÊôĞÔ±íÊ¾²»Ö´ĞĞÅÅ°æ
-        //    imageBlockLine: 'center',       //Í¼Æ¬µÄ¸¡¶¯·½Ê½£¬¶ÀÕ¼Ò»ĞĞ¾çÖĞ,×óÓÒ¸¡¶¯£¬Ä¬ÈÏ: center,left,right,none È¥µôÕâ¸öÊôĞÔ±íÊ¾²»Ö´ĞĞÅÅ°æ
-        //    pasteFilter: false,             //¸ù¾İ¹æÔò¹ıÂËÃ»ÊÂÕ³Ìù½øÀ´µÄÄÚÈİ
-        //    clearFontSize: false,           //È¥µôËùÓĞµÄÄÚÇ¶×ÖºÅ£¬Ê¹ÓÃ±à¼­Æ÷Ä¬ÈÏµÄ×ÖºÅ
-        //    clearFontFamily: false,         //È¥µôËùÓĞµÄÄÚÇ¶×ÖÌå£¬Ê¹ÓÃ±à¼­Æ÷Ä¬ÈÏµÄ×ÖÌå
-        //    removeEmptyNode: false,         // È¥µô¿Õ½Úµã
-        //    //¿ÉÒÔÈ¥µôµÄ±êÇ©
-        //    removeTagNames: {±êÇ©Ãû×Ö:1},
-        //    indent: false,                  // ĞĞÊ×Ëõ½ø
-        //    indentValue : '2em',            //ĞĞÊ×Ëõ½øµÄ´óĞ¡
+        //    mergeEmptyline: true,           //åˆå¹¶ç©ºè¡Œ
+        //    removeClass: true,              //å»æ‰å†—ä½™çš„class
+        //    removeEmptyline: false,         //å»æ‰ç©ºè¡Œ
+        //    textAlign:"left",               //æ®µè½çš„æ’ç‰ˆæ–¹å¼ï¼Œå¯ä»¥æ˜¯ left,right,center,justify å»æ‰è¿™ä¸ªå±æ€§è¡¨ç¤ºä¸æ‰§è¡Œæ’ç‰ˆ
+        //    imageBlockLine: 'center',       //å›¾ç‰‡çš„æµ®åŠ¨æ–¹å¼ï¼Œç‹¬å ä¸€è¡Œå‰§ä¸­,å·¦å³æµ®åŠ¨ï¼Œé»˜è®¤: center,left,right,none å»æ‰è¿™ä¸ªå±æ€§è¡¨ç¤ºä¸æ‰§è¡Œæ’ç‰ˆ
+        //    pasteFilter: false,             //æ ¹æ®è§„åˆ™è¿‡æ»¤æ²¡äº‹ç²˜è´´è¿›æ¥çš„å†…å®¹
+        //    clearFontSize: false,           //å»æ‰æ‰€æœ‰çš„å†…åµŒå­—å·ï¼Œä½¿ç”¨ç¼–è¾‘å™¨é»˜è®¤çš„å­—å·
+        //    clearFontFamily: false,         //å»æ‰æ‰€æœ‰çš„å†…åµŒå­—ä½“ï¼Œä½¿ç”¨ç¼–è¾‘å™¨é»˜è®¤çš„å­—ä½“
+        //    removeEmptyNode: false,         // å»æ‰ç©ºèŠ‚ç‚¹
+        //    //å¯ä»¥å»æ‰çš„æ ‡ç­¾
+        //    removeTagNames: {æ ‡ç­¾åå­—:1},
+        //    indent: false,                  // è¡Œé¦–ç¼©è¿›
+        //    indentValue : '2em',            //è¡Œé¦–ç¼©è¿›çš„å¤§å°
         //    bdc2sb: false,
         //    tobdc: false
         //}
 
         //tableDragable
-        //±í¸ñÊÇ·ñ¿ÉÒÔÍÏ×§
+        //è¡¨æ ¼æ˜¯å¦å¯ä»¥æ‹–æ‹½
         //,tableDragable: true
 
 
 
         //sourceEditor
-        //Ô´ÂëµÄ²é¿´·½Ê½,codemirror ÊÇ´úÂë¸ßÁÁ£¬textareaÊÇÎÄ±¾¿ò,Ä¬ÈÏÊÇcodemirror
-        //×¢ÒâÄ¬ÈÏcodemirrorÖ»ÄÜÔÚie8+ºÍ·ÇieÖĞÊ¹ÓÃ
+        //æºç çš„æŸ¥çœ‹æ–¹å¼,codemirror æ˜¯ä»£ç é«˜äº®ï¼Œtextareaæ˜¯æ–‡æœ¬æ¡†,é»˜è®¤æ˜¯codemirror
+        //æ³¨æ„é»˜è®¤codemirroråªèƒ½åœ¨ie8+å’Œéieä¸­ä½¿ç”¨
         //,sourceEditor:"codemirror"
-        //Èç¹ûsourceEditorÊÇcodemirror£¬»¹ÓÃÅäÖÃÒ»ÏÂÁ½¸ö²ÎÊı
-        //codeMirrorJsUrl js¼ÓÔØµÄÂ·¾¶£¬Ä¬ÈÏÊÇ URL + "third-party/codemirror/codemirror.js"
+        //å¦‚æœsourceEditoræ˜¯codemirrorï¼Œè¿˜ç”¨é…ç½®ä¸€ä¸‹ä¸¤ä¸ªå‚æ•°
+        //codeMirrorJsUrl jsåŠ è½½çš„è·¯å¾„ï¼Œé»˜è®¤æ˜¯ URL + "third-party/codemirror/codemirror.js"
         //,codeMirrorJsUrl:URL + "third-party/codemirror/codemirror.js"
-        //codeMirrorCssUrl css¼ÓÔØµÄÂ·¾¶£¬Ä¬ÈÏÊÇ URL + "third-party/codemirror/codemirror.css"
+        //codeMirrorCssUrl cssåŠ è½½çš„è·¯å¾„ï¼Œé»˜è®¤æ˜¯ URL + "third-party/codemirror/codemirror.css"
         //,codeMirrorCssUrl:URL + "third-party/codemirror/codemirror.css"
-        //±à¼­Æ÷³õÊ¼»¯Íê³ÉºóÊÇ·ñ½øÈëÔ´ÂëÄ£Ê½£¬Ä¬ÈÏÎª·ñ¡£
+        //ç¼–è¾‘å™¨åˆå§‹åŒ–å®Œæˆåæ˜¯å¦è¿›å…¥æºç æ¨¡å¼ï¼Œé»˜è®¤ä¸ºå¦ã€‚
         //,sourceEditorFirst:false
 
         //iframeUrlMap
-        //dialogÄÚÈİµÄÂ·¾¶ ¡«»á±»Ìæ»»³ÉURL,ÛòÊôĞÔÒ»µ©´ò¿ª£¬½«¸²¸ÇËùÓĞµÄdialogµÄÄ¬ÈÏÂ·¾¶
+        //dialogå†…å®¹çš„è·¯å¾„ ï½ä¼šè¢«æ›¿æ¢æˆURL,å“å±æ€§ä¸€æ—¦æ‰“å¼€ï¼Œå°†è¦†ç›–æ‰€æœ‰çš„dialogçš„é»˜è®¤è·¯å¾„
         //,iframeUrlMap:{
         //    'anchor':'~/dialogs/anchor/anchor.html',
         //}
 
-        //allowLinkProtocol ÔÊĞíµÄÁ´½ÓµØÖ·£¬ÓĞÕâĞ©Ç°×ºµÄÁ´½ÓµØÖ·²»»á×Ô¶¯Ìí¼Óhttp
+        //allowLinkProtocol å…è®¸çš„é“¾æ¥åœ°å€ï¼Œæœ‰è¿™äº›å‰ç¼€çš„é“¾æ¥åœ°å€ä¸ä¼šè‡ªåŠ¨æ·»åŠ http
         //, allowLinkProtocols: ['http:', 'https:', '#', '/', 'ftp:', 'mailto:', 'tel:', 'git:', 'svn:']
 
-        //webAppKey °Ù¶ÈÓ¦ÓÃµÄAPIkey£¬Ã¿¸öÕ¾³¤±ØĞëÊ×ÏÈÈ¥°Ù¶È¹ÙÍø×¢²áÒ»¸ökeyºó·½ÄÜÕı³£Ê¹ÓÃapp¹¦ÄÜ£¬×¢²á½éÉÜ£¬http://app.baidu.com/static/cms/getapikey.html
+        //webAppKey ç™¾åº¦åº”ç”¨çš„APIkeyï¼Œæ¯ä¸ªç«™é•¿å¿…é¡»é¦–å…ˆå»ç™¾åº¦å®˜ç½‘æ³¨å†Œä¸€ä¸ªkeyåæ–¹èƒ½æ­£å¸¸ä½¿ç”¨appåŠŸèƒ½ï¼Œæ³¨å†Œä»‹ç»ï¼Œhttp://app.baidu.com/static/cms/getapikey.html
         //, webAppKey: ""
 
-        //Ä¬ÈÏ¹ıÂË¹æÔòÏà¹ØÅäÖÃÏîÄ¿
-        //,disabledTableInTable:true  //½ûÖ¹±í¸ñÇ¶Ì×
-        //,allowDivTransToP:true      //ÔÊĞí½øÈë±à¼­Æ÷µÄdiv±êÇ©×Ô¶¯±ä³Ép±êÇ©
-        //,rgb2Hex:true               //Ä¬ÈÏ²ú³öµÄÊı¾İÖĞµÄcolor×Ô¶¯´Órgb¸ñÊ½±ä³É16½øÖÆ¸ñÊ½
+        //é»˜è®¤è¿‡æ»¤è§„åˆ™ç›¸å…³é…ç½®é¡¹ç›®
+        //,disabledTableInTable:true  //ç¦æ­¢è¡¨æ ¼åµŒå¥—
+        //,allowDivTransToP:true      //å…è®¸è¿›å…¥ç¼–è¾‘å™¨çš„divæ ‡ç­¾è‡ªåŠ¨å˜æˆpæ ‡ç­¾
+        //,rgb2Hex:true               //é»˜è®¤äº§å‡ºçš„æ•°æ®ä¸­çš„colorè‡ªåŠ¨ä»rgbæ ¼å¼å˜æˆ16è¿›åˆ¶æ ¼å¼
 
-		// xss ¹ıÂËÊÇ·ñ¿ªÆô,inserthtmlµÈ²Ù×÷
-		,xssFilterRules: true
-		//input xss¹ıÂË
-		,inputXssFilter: true
-		//output xss¹ıÂË
-		,outputXssFilter: true
-		// xss¹ıÂË°×Ãûµ¥ Ãûµ¥À´Ô´: https://raw.githubusercontent.com/leizongmin/js-xss/master/lib/default.js
-		,whitList: {
-			a:      ['target', 'href', 'title', 'class', 'style'],
-			abbr:   ['title', 'class', 'style'],
-			address: ['class', 'style'],
-			area:   ['shape', 'coords', 'href', 'alt'],
-			article: [],
-			aside:  [],
-			audio:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'class', 'style'],
-			b:      ['class', 'style'],
-			bdi:    ['dir'],
-			bdo:    ['dir'],
-			big:    [],
-			blockquote: ['cite', 'class', 'style'],
-			br:     [],
-			caption: ['class', 'style'],
-			center: [],
-			cite:   [],
-			code:   ['class', 'style'],
-			col:    ['align', 'valign', 'span', 'width', 'class', 'style'],
-			colgroup: ['align', 'valign', 'span', 'width', 'class', 'style'],
-			dd:     ['class', 'style'],
-			del:    ['datetime'],
-			details: ['open'],
-			div:    ['class', 'style'],
-			dl:     ['class', 'style'],
-			dt:     ['class', 'style'],
-			em:     ['class', 'style'],
-			font:   ['color', 'size', 'face'],
-			footer: [],
-			h1:     ['class', 'style'],
-			h2:     ['class', 'style'],
-			h3:     ['class', 'style'],
-			h4:     ['class', 'style'],
-			h5:     ['class', 'style'],
-			h6:     ['class', 'style'],
-			header: [],
-			hr:     [],
-			i:      ['class', 'style'],
-			img:    ['src', 'alt', 'title', 'width', 'height', 'id', '_src', 'loadingclass', 'class', 'data-latex'],
-			ins:    ['datetime'],
-			li:     ['class', 'style'],
-			mark:   [],
-			nav:    [],
-			ol:     ['class', 'style'],
-			p:      ['class', 'style'],
-			pre:    ['class', 'style'],
-			s:      [],
-			section:[],
-			small:  [],
-			span:   ['class', 'style'],
-			sub:    ['class', 'style'],
-			sup:    ['class', 'style'],
-			strong: ['class', 'style'],
-			table:  ['width', 'border', 'align', 'valign', 'class', 'style'],
-			tbody:  ['align', 'valign', 'class', 'style'],
-			td:     ['width', 'rowspan', 'colspan', 'align', 'valign', 'class', 'style'],
-			tfoot:  ['align', 'valign', 'class', 'style'],
-			th:     ['width', 'rowspan', 'colspan', 'align', 'valign', 'class', 'style'],
-			thead:  ['align', 'valign', 'class', 'style'],
-			tr:     ['rowspan', 'align', 'valign', 'class', 'style'],
-			tt:     [],
-			u:      [],
-			ul:     ['class', 'style'],
-			video:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width', 'class', 'style']
-		}
+        // xss è¿‡æ»¤æ˜¯å¦å¼€å¯,inserthtmlç­‰æ“ä½œ
+        ,xssFilterRules: true
+        //input xssè¿‡æ»¤
+        ,inputXssFilter: true
+        //output xssè¿‡æ»¤
+        ,outputXssFilter: true
+        // xssè¿‡æ»¤ç™½åå• åå•æ¥æº: https://raw.githubusercontent.com/leizongmin/js-xss/master/lib/default.js
+        ,whitList: {
+            a:      ['target', 'href', 'title', 'class', 'style'],
+            abbr:   ['title', 'class', 'style'],
+            address: ['class', 'style'],
+            area:   ['shape', 'coords', 'href', 'alt'],
+            article: [],
+            aside:  [],
+            audio:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'class', 'style'],
+            b:      ['class', 'style'],
+            bdi:    ['dir'],
+            bdo:    ['dir'],
+            big:    [],
+            blockquote: ['cite', 'class', 'style'],
+            br:     [],
+            caption: ['class', 'style'],
+            center: [],
+            cite:   [],
+            code:   ['class', 'style'],
+            col:    ['align', 'valign', 'span', 'width', 'class', 'style'],
+            colgroup: ['align', 'valign', 'span', 'width', 'class', 'style'],
+            dd:     ['class', 'style'],
+            del:    ['datetime'],
+            details: ['open'],
+            div:    ['class', 'style'],
+            dl:     ['class', 'style'],
+            dt:     ['class', 'style'],
+            em:     ['class', 'style'],
+            font:   ['color', 'size', 'face'],
+            footer: [],
+            h1:     ['class', 'style'],
+            h2:     ['class', 'style'],
+            h3:     ['class', 'style'],
+            h4:     ['class', 'style'],
+            h5:     ['class', 'style'],
+            h6:     ['class', 'style'],
+            header: [],
+            hr:     [],
+            i:      ['class', 'style'],
+            img:    ['src', 'alt', 'title', 'width', 'height', 'id', '_src', 'loadingclass', 'class', 'data-latex'],
+            ins:    ['datetime'],
+            li:     ['class', 'style'],
+            mark:   [],
+            nav:    [],
+            ol:     ['class', 'style'],
+            p:      ['class', 'style'],
+            pre:    ['class', 'style'],
+            s:      [],
+            section:[],
+            small:  [],
+            span:   ['class', 'style'],
+            sub:    ['class', 'style'],
+            sup:    ['class', 'style'],
+            strong: ['class', 'style'],
+            table:  ['width', 'border', 'align', 'valign', 'class', 'style'],
+            tbody:  ['align', 'valign', 'class', 'style'],
+            td:     ['width', 'rowspan', 'colspan', 'align', 'valign', 'class', 'style'],
+            tfoot:  ['align', 'valign', 'class', 'style'],
+            th:     ['width', 'rowspan', 'colspan', 'align', 'valign', 'class', 'style'],
+            thead:  ['align', 'valign', 'class', 'style'],
+            tr:     ['rowspan', 'align', 'valign', 'class', 'style'],
+            tt:     [],
+            u:      [],
+            ul:     ['class', 'style'],
+            video:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'height', 'width', 'class', 'style']
+        }
     };
 
     function getUEBasePath(docUrl, confUrl) {
