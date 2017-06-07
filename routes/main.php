@@ -83,10 +83,10 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //------------------------------分隔线-------------------------------------------------//
 
     //留言
-    Route::get('/member/messages/page', function () {
-        return redirect()->route('messages_page', ['page' => 1]);
+    Route::get('/member/message/page', function () {
+        return redirect()->route('message_page', ['page' => 1]);
     });
-    Route::get('/member/messages/page/{page}', 'MessagesController@index')->name('messages_page');
+    Route::get('/member/message/page/{page}', 'MessagesController@index')->name('message_page');
 
 });
 
