@@ -41,7 +41,7 @@
                         <ul class="nav child-nav level-1">
                             <li id="nav_5_1" ><a href="/admin/member/me/view">我的资料</a></li>
                             <li id="nav_5_2" ><a href="/admin/member/comment/page">我的评论</a></li>
-                            <li id="nav_5_2" ><a href="/admin/member/message">我的消息</a></li>
+                            <li id="nav_5_2" ><a href="/admin/member/message/page">我的消息</a></li>
                         </ul>
                     </li>
                     @if (app('App\Service\IndexService')::admin() === true)

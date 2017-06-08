@@ -90,7 +90,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/member/message/page', function () {
         return redirect()->route('message_page', ['page' => 1]);
     });
-    Route::get('/member/message/page/{page}', 'MessagesController@index')->name('message_page');
+    Route::get('/member/message/page/{page}', 'MessageController@index')->name('message_page');
 
 });
 
