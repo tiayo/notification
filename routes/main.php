@@ -77,8 +77,12 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //------------------------------分隔线-------------------------------------------------//
 
-    //我的资料
-    Route::get('/member/me/view/', 'MeController@view');
+    //查看资料
+    Route::get('/member/me/view/', 'MeController@view')->name('me_view');
+
+    //修改资料
+    Route::get('/member/me/update/', 'MeController@updateView');
+    Route::post('/member/me/update/', 'MeController@update')->name('me_update');
 
     //------------------------------分隔线-------------------------------------------------//
 

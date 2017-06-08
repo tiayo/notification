@@ -20,9 +20,9 @@ class CreateUsersProfileTables extends Migration
             $table->string('phone')->nullable();
             $table->string('real_name')->nullable();
             $table->integer('age')->nullable();
-            $table->string('state')->nullable();
-            $table->string('city')->nullable();
-            $table->string('address')->nullable();
+            $table->string('address1')->nullable();
+            $table->string('address2')->nullable();
+            $table->string('address_code', 50)->nullable();
             $table->integer('certified')->default(0);
             $table->integer('status')->default(1);
             $table->timestamps();

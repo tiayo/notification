@@ -36,4 +36,11 @@ class ProfileRepositories
             ->where('user_id', $user_id)
             ->first()['avatar'];
     }
+
+    public function update($option, $value, $data)
+    {
+        return $this->profile
+            ->where($option, $value)
+            ->update($data);
+    }
 }

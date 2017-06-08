@@ -6,7 +6,6 @@
     @parent
     <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
-    <link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css">
 @endsection
 
 @section('breadcrumbs')
@@ -19,23 +18,28 @@
                 <div class="col-md-6 col-lg-4">
                     <div>
                         <div class="profile-photo">
-                            <img alt="Jane Doe" src="{{$profile['avatar']}}" />
+                            <img alt="Jane Doe" src="{{$profile['avatar'] or '/images/user.jpg'}}" />
                         </div>
                         <div class="user-header-info">
                             <h2 class="user-name">{{$profile['real_name']}}</h2>
                             <h5 class="user-position">{{$user['name']}}</h5>
                             <div class="user-social-media">
-                                <span class="text-lg"><a href="#" class="fa fa-twitter-square"></a> <a href="#" class="fa fa-facebook-square"></a> <a href="#" class="fa fa-linkedin-square"></a> <a href="#" class="fa fa-google-plus-square"></a></span>
+                                <h6>（{{$status::userCertified($profile['certified'])}}）</h6>
                             </div>
                         </div>
                     </div>
                     <div class="panel bg-scale-0 b-primary bt-sm mt-xl">
                         <div class="panel-content">
-                            <h4 class=""><b>联系方式</b></h4>
+                            <div style="width: 100%; float:left;">
+                                <h4 style="float: left"><b>我的资料</b></h4>
+                                <h6 style="float: right"><a href="/admin/member/me/update">修改</a></h6>
+                            </div>
                             <ul class="user-contact-info ph-sm">
                                 <li><b><i class="color-primary mr-sm fa fa-envelope"></i></b>{{$user['email']}}</li>
                                 <li><b><i class="color-primary mr-sm fa fa-phone"></i></b> {{$profile['phone']}}</li>
-                                <li><b><i class="color-primary mr-sm fa fa-globe"></i></b> {{$profile['state'].$profile['city']}}</li>
+                                <li><b><i class="color-primary mr-sm fa fa-globe"></i></b> {{$profile['address1']}}</li>
+                                <li><b><i class="color-primary mr-sm fa fa-home"></i></b> {{$profile['address2']}}</li>
+                                <li><b><i class="color-primary mr-sm fa fa-info-circle"></i></b> {{$profile['age']}}岁</li>
                             </ul>
                         </div>
                     </div>
@@ -129,7 +133,7 @@
                         @foreach ($articles as $article)
                             <div class="timeline-box">
                                 <div class="timeline-icon bg-primary">
-                                    <i class="fa fa-cubes"></i>
+                                    <i class="fa fa-files-o"></i>
                                 </div>
                                 <div class="timeline-content">
                                     <h4 class="tl-title">{{$article['title']}}</h4>
@@ -155,28 +159,4 @@
 
 @section('script')
     @parent
-    <script src="vendor/nano-scroller/nano-scroller.js"></script>
-    <script src="javascripts/template-script.min.js"></script>
-    <script src="javascripts/template-init.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script>
-        //MAGNIFIC POPUP GALLERY
-        $(function() {
-            $('.gallery-wrap').magnificPopup({
-                delegate: 'a',
-                type: 'image',
-                gallery: {
-                    enabled: true,
-                    navigateByImgClick: true,
-                    preload: [0, 1]
-                },
-                tLoading: 'Loading image #%curr%...',
-                mainClass: 'mfp-no-margins mfp-with-zoom',
-                zoom: {
-                    enabled: true,
-                    duration: 300
-                }
-            });
-        });
-    </script>
 @endsection

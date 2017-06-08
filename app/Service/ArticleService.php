@@ -153,7 +153,7 @@ class ArticleService
     {
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
-            $picture = ImagesUploadService::updaloadImage($data['picture']);
+            $value['picture'] = ImagesUploadService::updaloadImage($data['picture']);
         }
 
         //验证权限
@@ -184,11 +184,9 @@ class ArticleService
         //更新数组
         $value['title'] = $data['title'];
         $value['category'] = $data['category'];
-        $value['picture'] = $data['picture'] ?? null;
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
         $value['attribute'] = $data['attribute'];
-        $value['picture'] = $picture ?? null;
 
         //更新
         $this->article->update($value, $article_id);
@@ -216,7 +214,7 @@ class ArticleService
     {
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
-            $picture = ImagesUploadService::updaloadImage($data['picture']);
+            $value['picture'] = ImagesUploadService::updaloadImage($data['picture']);
         }
 
         //如果摘要为空，执行自动截取方法
@@ -228,7 +226,6 @@ class ArticleService
         $value['category'] = $category_id;
         $value['title'] = $data['title'];
         $value['abstract'] = $data['abstract'];
-        $value['picture'] = $picture ?? null;
         $value['user_id'] = Auth::id();
         $value['user_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
         $value['body'] = $data['body'];
