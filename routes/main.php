@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //------------------------------分隔线-------------------------------------------------//
 
     //发送
-    Route::get('/member/message/send/{target_id}', 'MessageController@sendView');
+    Route::get('/member/message/send/{target_id}', 'MessageController@sendView')->name('message_send_view');
     Route::post('/member/message/send/{target_id}', 'MessageController@send')->name('message_send');
 
     //收到的留言列表
