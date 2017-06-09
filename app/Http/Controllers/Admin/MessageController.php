@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Message;
+use App\Profile;
 use App\Service\IndexService;
 use App\Service\MessageService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
     protected $message;
+    protected $request;
 
-    public function __construct(MessageService $message)
+    public function __construct(MessageService $message, Request $request)
     {
         $this->message = $message;
+        $this->request = $request;
     }
 
     public function index($page)
@@ -39,5 +44,49 @@ class MessageController extends Controller
             'admin' => $admin,
             'judge' => 'App\Http\Controllers\Controller',
         ]);
+    }
+
+    public function sendView($target_id)
+    {
+        return view('home.message_send', [
+            'target' => Profile::find($target_id),
+        ]);
+    }
+
+    public function send($target_id)
+    {
+        $data = $this->request->all();
+
+        try{
+            $this->message->send($data, $target_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 401);
+        }
+
+        return redirect()->route('message_page', ['page' => 1]);
+    }
+
+    public function read($message_id, $status)
+    {
+        //业务执行
+        try{
+            $this->message->read($message_id, $status);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 401);
+        }
+
+        return redirect()->route('message_page', ['page' => 1]);
+    }
+
+    public function destroy($message_id)
+    {
+        //业务执行
+        try{
+            $this->message->destroy($message_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 401);
+        }
+
+        return redirect()->route('message_page', ['page' => 1]);
     }
 }

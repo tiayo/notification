@@ -31,7 +31,7 @@ class MeService
         //其他数据
         $value['user_id'] = Auth::id();
         $value['phone'] = $data['phone'];
-        $value['real_name'] = $data['real_name'];
+        $value['real_name'] = $data['real_name'] ?? Auth::user()['name'];
         $value['age'] = $data['age'];
         $value['address1'] = $data['address1'][2].$address1_3.$data['address1'][4];
         $value['address2'] = $data['address2'];

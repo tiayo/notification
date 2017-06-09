@@ -52,9 +52,9 @@
                                                         <td>
                                                             @if ($admin)
                                                                 @if ($row['status'] == 1)
-                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}" class="tablelink">屏蔽</a>
+                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}/2" class="tablelink">屏蔽</a>
                                                                 @elseif ($row['status'] == 2)
-                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}" class="tablelink">取消屏蔽</a>
+                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}/1" class="tablelink">取消屏蔽</a>
                                                                 @endif
                                                             @endif
                                                             <a href="/admin/member/comment/delete/{{$row['comment_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>

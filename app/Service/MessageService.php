@@ -7,21 +7,18 @@ use App\Facades\Verfication;
 use App\Repositories\MessageRespositories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Throw_;
 
 
 class MessageService
 {
-    protected $Message;
+    protected $message;
     protected $request;
-    protected $category;
-    protected $generate;
 
-    public function __construct(MessageRespositories $Message, Request $request, CategoryService $category, GenerateService $generate)
+    public function __construct(MessageRespositories $message, Request $request)
     {
-        $this->Message = $Message;
+        $this->message = $message;
         $this->request = $request;
-        $this->category = $category;
-        $this->generate = $generate;
     }
 
     /**
@@ -46,13 +43,13 @@ class MessageService
      * @param $task_id
      * @return mixed
      */
-    public function verfication($Message_id)
+    public function verfication($message_id)
     {
-        return Verfication::update($this->Message->findOne('Message_id', $Message_id));
+        return Verfication::update($this->message->findOne('message_id', $message_id));
     }
 
     /**
-     * 获取评论列表
+     * 获取消息列表
      * 根据权限执行不同操作
      *
      * @param $page 当前页数
@@ -69,7 +66,7 @@ class MessageService
     }
 
     /**
-     * 普通用户获取评论列表
+     * 普通用户获取消息列表
      *
      * @param $page 当前页数
      * @param $num 每页条数
@@ -77,13 +74,13 @@ class MessageService
      */
     public function userShow($page, $num)
     {
-        return $this->Message
-            ->findMulti('user_id', Auth::id(), $page, $num)
+        return $this->message
+            ->findMulti($page, $num)
             ->toArray();
     }
 
     /**
-     * 管理员获取评论列表
+     * 管理员获取消息列表
      *
      * @param $page 当前页数
      * @param $num 每页条数
@@ -91,13 +88,13 @@ class MessageService
      */
     public function adminShow($page, $num)
     {
-        return $task = $this->Message
+        return $task = $this->message
             ->getAll($page, $num)
             ->toArray();
     }
 
     /**
-     * 统计评论总数量
+     * 统计消息总数量
      * 权限不同执行不同操作
      *
      * @return mixed
@@ -105,43 +102,74 @@ class MessageService
     public function count()
     {
         if (!$this->isAdmin()) {
-            return $this->Message->userCount(Auth::id());
+            return $this->message->userCount(Auth::id());
         }
 
-        return $this->Message->adminCount();
+        return $this->message->adminCount();
+    }
+
+
+    public function send($data, $target_id)
+    {
+        //不允许给自己发消息
+        if (Auth::id() == $target_id) {
+            throw new \Exception('不能给自己发送消息！', 403);
+        }
+
+        //构建插入数据库数组
+        $value['user_id'] = Auth::id();
+        $value['target_id'] = $target_id;
+        $value['content'] = $data['content'];
+        $value['user_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
+
+        //插入数据库
+        return Message::create($value);
     }
 
     /**
-     * 设置置顶
-     * 管理员权限验证
+     * 设置状态
+     * 操作权限验证
      *
      * @param $Message_id
      * @return mixed
      */
-    public function mask($Message_id)
+    public function read($message_id, $status)
     {
+        //权限验证
+        if (!$this->verfication($message_id)) {
+            throw new \Exception('您没有权限访问（代码：1007）！', 403);
+        }
+
+        //判断状态
+        if ($status != 1 && $status != 2) {
+            throw new \Exception('数据验证失败！（代码：1007）');
+        }
+
         //更新数据
-        $value['status'] = 2;
+        $value['status'] = $status;
 
         //写入数据库
-        return $this->Message->update($value, $Message_id);
+        return $this->message->update($value, $message_id);
     }
 
     /**
-     * 删除评论
+     * 删除消息
      * 需要通过权限验证
-     * 验证失败抛403
+     * 没有实际删除（将状态设为2，即删除状态）
      *
      * @param $Message_id
      */
-    public function destroy($Message_id)
+    public function destroy($message_id)
     {
         //验证权限
-        if (!$this->verfication($Message_id)) {
-            throw new \Exception('您没有权限访问（代码：1006）！', 403);
+        if (!$this->verfication($message_id)) {
+            throw new \Exception('您没有权限访问（代码：1007）！', 403);
         }
 
         //权限验证通过
-        $this->Message->destroy('Message_id', $Message_id);
+        $value['status'] = 3;
+
+        //写入数据库
+        return $this->message->update($value, $message_id);
     }
 }

@@ -14,21 +14,11 @@ class messageRespositories
         $this->message = $message;
     }
 
-    public function allmessageAndProfile($article_id)
-    {
-        return $this->message
-            ->leftJoin('profile', 'message.user_id', '=', 'profile.user_id')
-            ->select('message.*', 'profile.real_name')
-            ->where('message.article_id', $article_id)
-            ->where('message.status', 1)
-            ->orderby('message.updated_at', 'desc')
-            ->get();
-    }
-
     public function userShow()
     {
         return $this->message
             ->where('user_id', Auth::id())
+            ->where('status', '<>', '2')
             ->count();
     }
 
@@ -37,17 +27,24 @@ class messageRespositories
         return $this->message
             ->skip(($page-1) * $num)
             ->take($num)
-            ->orderBy('message.updated_at', 'desc')
+            ->orderBy('message.message_id', 'desc')
             ->get();
     }
 
-    public function findMulti($option, $value, $page, $num)
+    public function findMulti($page, $num)
     {
         return $this->message
             ->skip(($page-1)*$num)
             ->take($num)
-            ->where($option, $value)
-            ->orderBy('updated_at', 'desc')
+            ->where(function ($query) {
+                $query->where('user_id', Auth::id())
+                    ->where('status', '<>', '3');
+            })
+            ->orwhere(function ($query) {
+                $query->where('target_id', Auth::id())
+                    ->where('status', '<>', '3');
+            })
+            ->orderBy('message_id', 'desc')
             ->get();
     }
 
@@ -56,6 +53,7 @@ class messageRespositories
         return $this->message
             ->select($data)
             ->where($option, $value)
+            ->where('status', '<>', '2')
             ->first();
     }
 
@@ -68,6 +66,7 @@ class messageRespositories
     {
         return $this->message
             ->where('user_id', $user_id)
+            ->where('status', '<>', '2')
             ->count();
     }
 

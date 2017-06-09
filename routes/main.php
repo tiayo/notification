@@ -86,12 +86,21 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //------------------------------分隔线-------------------------------------------------//
 
-    //留言
+    //发送
+    Route::get('/member/message/send/{target_id}', 'MessageController@sendView');
+    Route::post('/member/message/send/{target_id}', 'MessageController@send')->name('message_send');
+
+    //留言列表
     Route::get('/member/message/page', function () {
         return redirect()->route('message_page', ['page' => 1]);
     });
     Route::get('/member/message/page/{page}', 'MessageController@index')->name('message_page');
 
+    //设置留言状态
+    Route::get('/member/message/read/{message_id}/{status}', 'MessageController@read');
+
+    //删除
+    Route::get('/member/message/delete/{message_id}', 'MessageController@destroy');
 });
 
 // Authentication Routes...

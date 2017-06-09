@@ -9,7 +9,7 @@ class Message extends Model
     public $timestamps = true;
     protected $fillable = [
         'user_id',
-        'target_ip',
+        'target_id',
         'content',
         'status',
         'user_ip',
@@ -18,9 +18,14 @@ class Message extends Model
     protected $table = 'message';
     protected $primaryKey = 'message_id';
 
-    public function profile()
+    public function userProfile()
     {
         return $this->belongsTo('App\Profile', 'user_id', 'user_id');
+    }
+
+    public function targetProfile()
+    {
+        return $this->belongsTo('App\Profile', 'target_id', 'user_id');
     }
 
     public function article()

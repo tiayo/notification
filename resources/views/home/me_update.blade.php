@@ -43,15 +43,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="real_name" class=" control-label">姓名<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="real_name" value="{{$profile['real_name']}}">
+                                    <input type="text" class="form-control" name="real_name" value="{{$profile['real_name']}}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone" class=" control-label">手机号码<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="phone" value="{{$profile['phone']}}" required>
+                                    <input type="text" class="form-control" name="phone" value="{{$profile['phone']}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="age" class=" control-label">年龄<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="age" value="{{$profile['age']}}" required>
+                                    <input type="text" class="form-control" name="age" value="{{$profile['age']}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="address" class=" control-label">地址<span class="required">*</span></label>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="address2" class=" control-label">详细地址<span class="required">*</span></label>
-                                    <input type="text" class="form-control" name="address2" value="{{$profile['address2']}}" required>
+                                    <input type="text" class="form-control" name="address2" value="{{$profile['address2']}}">
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Submit</button>

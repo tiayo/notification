@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '我的任务')
+@section('title', $judge::isStoreOrUpdate($type).'文章')
 
 @section('link')
     @parent

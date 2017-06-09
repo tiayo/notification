@@ -162,4 +162,19 @@ class Controller extends BaseController
                 return '实名认证用户';
         }
     }
+
+    public static function messageStatus($num)
+    {
+        switch ($num) {
+            case 1 :
+                return '未读';
+                break;
+            case 2 :
+                return '已读';
+                break;
+            case 3 :
+                return '删除';
+                break;
+        }
+    }
 }

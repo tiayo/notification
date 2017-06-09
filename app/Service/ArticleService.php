@@ -311,10 +311,15 @@ class ArticleService
      * @param $article_id
      * @return mixed
      */
-    public function top($article_id)
+    public function top($article_id, $attribute)
     {
+        //判断状态
+        if ($attribute != 1 && $attribute != 3) {
+            throw new \Exception('数据验证失败！（代码：1002）');
+        }
+
         //更新数据
-        $value['attribute'] = 3;
+        $value['attribute'] = $attribute;
 
         //写入数据库
         return $this->article->update($value, $article_id);
