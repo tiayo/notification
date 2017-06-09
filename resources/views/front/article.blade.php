@@ -52,7 +52,7 @@
                         <h3>{{$article['real_name']}}</h3>
                         <p>城市：{{$article['city']}}</p>
                         <p>邮箱:{{$article['email']}}</p>
-                        <p>联系他：<a href="/Home/Article/liuyan?id=12" target="_blank">给他留言</a></p>
+                        <p>发消息：<a href="{{route('message_send_view', ['target_id' => $article['user_id']])}}" target="_blank">给他留言</a></p>
                     </dd>
                 </dl>
             </div>
