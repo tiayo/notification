@@ -4601,3 +4601,9 @@ html.left-sidebar-collapsed .c-hamburger--htla span::after {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+#basic-table a{
+  float: left;
+  padding: 0 0.5em 0 0.5em;
+  border: 1px solid #CCC;
+}

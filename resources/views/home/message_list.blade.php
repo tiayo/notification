@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '我的消息')
+@section('title', $type)
 
 @section('link')
     @parent
@@ -11,13 +11,28 @@
 
 @section('breadcrumbs')
     <li navValue="nav_5"><i class="fa fa-home" aria-hidden="true"></i><a href="/">会员中心</a></li>
-    <li navValue="nav_5_3"><a href="/admin/task/page/">我的消息</a></li>
+    <li navValue="nav_5_3"><a href="/admin/task/page/">{{$type}}</a></li>
 @endsection
 
 @section('content_body')
-            <div class="row animated fadeInRight">
+            <div class="row animated fadeInLeft">
                 <div class="col-sm-12">
-                    <h4 class="section-subtitle"><b>我的消息</b></h4>
+                    @if ($type == '收到的消息')
+                        <h4 class="section-subtitle"><b>{{$type}}</b></h4>
+                        <p class="section-text">
+                            <a href="{{route('message_send_page', ['page' => 1])}}">
+                                <b>查看发出的信息</b>
+                            </a>
+                        </p>
+                        @else
+                        <h4 class="section-subtitle"><b>{{$type}}</b></h4>
+                        <p class="section-text">
+                            <a href="{{route('message_received_page', ['page' => 1])}}">
+                                <b>查看收到的消息</b>
+                            </a>
+                        </p>
+                    @endif
+
                     <div class="panel">
                         <div class="panel-content">
                             <div class="table-responsive">
@@ -38,7 +53,7 @@
                                                 </thead>
                                                 <tbody>
                                                 @foreach ($list_message as $row)
-                                                    <tr role="row" class="odd @if ($row['status'] == 1) color-danger @endif">
+                                                    <tr role="row" class="odd @if ($row['status'] == 1) color-danger @endif ">
                                                         <td>{{$row['message_id']}}</td>
                                                         <td>{{$row['content']}}</td>
                                                         <td>{{$message::find($row['message_id'])->userProfile['real_name']}}</td>
@@ -46,14 +61,15 @@
                                                         <td>{{$row['created_at']}}</td>
                                                         <td>{{$judge::messageStatus($row['status'])}}</td>
                                                         <td>
-                                                            @if ($admin)
+                                                            @if ($row['user_id'] != Auth::id())
                                                                 @if ($row['status'] == 1)
-                                                                    <a href="/admin/member/message/read/{{$row['message_id']}}/2" class="tablelink">标记为已读</a>
+                                                                    <a href="/admin/member/message/read/{{$row['target_id']}}/2" class="tablelink">标记为已读</a>
                                                                 @elseif ($row['status'] == 2)
-                                                                    <a href="/admin/member/message/read/{{$row['message_id']}}/1" class="tablelink">标记为未读</a>
+                                                                    <a href="/admin/member/message/read/{{$row['target_id']}}/1" class="tablelink">标记为未读</a>
                                                                 @endif
+                                                                    <a href="/admin/member/message/send/{{$row['user_id']}}" class="tablelink">回复</a>
                                                             @endif
-                                                            <a href="/admin/member/message/delete/{{$row['message_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除消息</a>
+                                                            <a href="/admin/member/message/delete/{{$row['message_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;">删除消息</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

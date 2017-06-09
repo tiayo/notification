@@ -41,7 +41,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="content" class=" control-label">消息内容<span class="required">*</span></label>
-                                    <textarea class="form-control" name="content" placeholder="输入消息内容..." required></textarea>
+                                    <textarea class="form-control" name="content" placeholder="输入消息内容..." required>{{$old_input['content']}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">发送</button>

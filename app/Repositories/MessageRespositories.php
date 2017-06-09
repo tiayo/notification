@@ -25,6 +25,8 @@ class messageRespositories
     public function getAll($page, $num)
     {
         return $this->message
+            ->join('profile', 'message.user_id', '=', 'profile.user_id')
+            ->select('message.*', 'profile.real_name', 'profile.avatar')
             ->skip(($page-1) * $num)
             ->take($num)
             ->orderBy('message.message_id', 'desc')
@@ -34,17 +36,24 @@ class messageRespositories
     public function findMulti($page, $num)
     {
         return $this->message
+            ->join('profile', 'message.user_id', '=', 'profile.user_id')
+            ->select('message.*', 'profile.real_name', 'profile.avatar')
             ->skip(($page-1)*$num)
             ->take($num)
-            ->where(function ($query) {
-                $query->where('user_id', Auth::id())
-                    ->where('status', '<>', '3');
-            })
-            ->orwhere(function ($query) {
-                $query->where('target_id', Auth::id())
-                    ->where('status', '<>', '3');
-            })
-            ->orderBy('message_id', 'desc')
+            ->where('message.target_id', Auth::id())
+            ->where('message.status', '<>', '3')
+            ->orderBy('message.message_id', 'desc')
+            ->get();
+    }
+
+    public function list_message_send($page, $num)
+    {
+        return $this->message
+            ->skip(($page-1)*$num)
+            ->take($num)
+            ->where('message.user_id', Auth::id())
+            ->where('message.status', '<>', '3')
+            ->orderBy('message.message_id', 'desc')
             ->get();
     }
 
@@ -57,15 +66,22 @@ class messageRespositories
             ->first();
     }
 
-    public function adminCount()
+    public function adminCount($option)
     {
-        return $this->message->count();
+        if ($option == 'received') {
+            return $this->message->count();
+        } elseif ($option == 'send') {
+            return $this->message
+                ->where($option, Auth::id())
+                ->count();
+        }
     }
 
-    public function userCount($user_id)
+
+    public function userCount($option, $id)
     {
         return $this->message
-            ->where('user_id', $user_id)
+            ->where($option, $id)
             ->where('status', '<>', '2')
             ->count();
     }
@@ -82,5 +98,22 @@ class messageRespositories
         return $this->message
             ->where($option, $value)
             ->delete();
+    }
+
+    public function targetNoRead($target_id)
+    {
+        return $this->message
+            ->where('user_id', Auth::id())
+            ->where('target_id', $target_id)
+            ->where('status', '1')
+            ->count();
+    }
+
+    public function meNoRead()
+    {
+        return $this->message
+            ->where('target_id', Auth::id())
+            ->where('status', '1')
+            ->count();
     }
 }

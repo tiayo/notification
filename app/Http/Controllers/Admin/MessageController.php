@@ -8,7 +8,7 @@ use App\Profile;
 use App\Service\IndexService;
 use App\Service\MessageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class MessageController extends Controller
 {
@@ -21,13 +21,13 @@ class MessageController extends Controller
         $this->request = $request;
     }
 
-    public function index($page)
+    public function indexReceived($page)
     {
-        //所有消息
-        $list_message = $this->message->show($page, Config('site.page'));
+        //所有发出的消息
+        $list_message = $this->message->received($page, Config('site.page'));
 
-        //文章数量
-        $count = $this->message->count();
+        //消息数量
+        $count = $this->message->count('target_id');
 
         // 最多页数
         $max_page = ceil($count/Config('site.page'));
@@ -43,6 +43,33 @@ class MessageController extends Controller
             'max_page' => $max_page,
             'admin' => $admin,
             'judge' => 'App\Http\Controllers\Controller',
+            'type' => '收到的消息',
+        ]);
+    }
+
+    public function indexSend($page)
+    {
+        //所有发出的消息
+        $list_message = $this->message->list_message_send($page, Config('site.page'));
+
+        //消息数量
+        $count = $this->message->count('user_id');
+
+        // 最多页数
+        $max_page = ceil($count/Config('site.page'));
+
+        //判断管理员
+        $admin = IndexService::admin();
+
+        return view('home.message_list',[
+            'list_message' => $list_message,
+            'message' => Message::class,
+            'count' => ($count <= 5) ? $count : 5,
+            'page' => $page,
+            'max_page' => $max_page,
+            'admin' => $admin,
+            'judge' => 'App\Http\Controllers\Controller',
+            'type' => '发出的消息',
         ]);
     }
 
@@ -50,6 +77,7 @@ class MessageController extends Controller
     {
         return view('home.message_send', [
             'target' => Profile::find($target_id),
+            'old_input' => $this->request->session()->get('_old_input'),
         ]);
     }
 
@@ -60,22 +88,22 @@ class MessageController extends Controller
         try{
             $this->message->send($data, $target_id);
         } catch (\Exception $e) {
-            return response($e->getMessage(), 401);
+            return Redirect::back()->withInput()->withErrors($e->getMessage());
         }
 
-        return redirect()->route('message_page', ['page' => 1]);
+        return redirect()->route('message_send_page', ['page' => 1]);
     }
 
-    public function read($message_id, $status)
+    public function read($target_id, $status)
     {
         //业务执行
         try{
-            $this->message->read($message_id, $status);
+            $this->message->read($target_id, $status);
         } catch (\Exception $e) {
-            return response($e->getMessage(), 401);
+            return response($e->getMessage());
         }
 
-        return redirect()->route('message_page', ['page' => 1]);
+        return redirect()->route('message_received_page', ['page' => 1]);
     }
 
     public function destroy($message_id)
@@ -84,9 +112,9 @@ class MessageController extends Controller
         try{
             $this->message->destroy($message_id);
         } catch (\Exception $e) {
-            return response($e->getMessage(), 401);
+            return Redirect::back()->withInput()->withErrors($e->getMessage());
         }
 
-        return redirect()->route('message_page', ['page' => 1]);
+        return Redirect::back()->withInput()->withErrors(null);
     }
 }

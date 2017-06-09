@@ -42,4 +42,15 @@ class ViewPolicy
         return $user->id === $class['user_id'];
     }
 
+    /**
+     * 判断用户是否有修改消息权限
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function message(User $user, $class)
+    {
+        return $user->id === $class['target_id'];
+    }
+
 }
