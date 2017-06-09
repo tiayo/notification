@@ -76,7 +76,7 @@ class MessageController extends Controller
     public function sendView($target_id)
     {
         return view('home.message_send', [
-            'target' => Profile::find($target_id),
+            'target' => Profile::where('user_id', $target_id)->first(),
             'old_input' => $this->request->session()->get('_old_input'),
         ]);
     }
