@@ -67,4 +67,24 @@ class VerficationService
         return true;
     }
 
+    /**
+     *  消息操作权限认证
+     *
+     * @param $class
+     * @return bool
+     * @throws \Exception
+     */
+    public function message($class)
+    {
+        if ($this->skip(VerficationService::class)) {
+            return true;
+        }
+
+        if (!$this->user->find(Auth::id())->can('message', $class)) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

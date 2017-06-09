@@ -43,26 +43,41 @@ class MessageService
      * @param $task_id
      * @return mixed
      */
-    public function verfication($message_id)
+    public function verfication($target_id)
     {
-        return Verfication::update($this->message->findOne('message_id', $message_id));
+        return Verfication::message($this->message->findOne('target_id', $target_id));
     }
 
     /**
-     * 获取消息列表
+     * 获取收到的消息列表
      * 根据权限执行不同操作
      *
      * @param $page 当前页数
      * @param $num 每页条数
      * @return mixed
      */
-    public function show($page, $num)
+    public function received($page, $num)
     {
         if (!$this->isAdmin()) {
-            return $this->userShow($page, $num);
+            return $this->userReceived($page, $num);
         }
 
-        return $this->adminShow($page, $num);
+        return $this->adminReceived($page, $num);
+    }
+
+    /**
+     * 获取发出的消息列表
+     * 根据权限执行不同操作
+     *
+     * @param $page 当前页数
+     * @param $num 每页条数
+     * @return mixed
+     */
+    public function list_message_send($page, $num)
+    {
+        return $this->message
+            ->list_message_send($page, $num)
+            ->toArray();
     }
 
     /**
@@ -72,7 +87,7 @@ class MessageService
      * @param $num 每页条数
      * @return array
      */
-    public function userShow($page, $num)
+    public function userReceived($page, $num)
     {
         return $this->message
             ->findMulti($page, $num)
@@ -86,7 +101,7 @@ class MessageService
      * @param $num 每页条数
      * @return array
      */
-    public function adminShow($page, $num)
+    public function adminReceived($page, $num)
     {
         return $task = $this->message
             ->getAll($page, $num)
@@ -99,13 +114,13 @@ class MessageService
      *
      * @return mixed
      */
-    public function count()
+    public function count($option)
     {
         if (!$this->isAdmin()) {
-            return $this->message->userCount(Auth::id());
+            return $this->message->userCount($option, Auth::id());
         }
 
-        return $this->message->adminCount();
+        return $this->message->adminCount($option);
     }
 
 
@@ -114,6 +129,11 @@ class MessageService
         //不允许给自己发消息
         if (Auth::id() == $target_id) {
             throw new \Exception('不能给自己发送消息！', 403);
+        }
+
+        //对方有三条信息未读时不能再发送
+        if ($this->message->targetNoRead($target_id) >= 3) {
+            throw new \Exception('对方还没有读您的消息，请等待！', 403);
         }
 
         //构建插入数据库数组
@@ -133,10 +153,10 @@ class MessageService
      * @param $Message_id
      * @return mixed
      */
-    public function read($message_id, $status)
+    public function read($target_id, $status)
     {
         //权限验证
-        if (!$this->verfication($message_id)) {
+        if (!$this->verfication($target_id)) {
             throw new \Exception('您没有权限访问（代码：1007）！', 403);
         }
 
@@ -149,7 +169,7 @@ class MessageService
         $value['status'] = $status;
 
         //写入数据库
-        return $this->message->update($value, $message_id);
+        return $this->message->update($value, $target_id);
     }
 
     /**
@@ -171,5 +191,10 @@ class MessageService
 
         //写入数据库
         return $this->message->update($value, $message_id);
+    }
+
+    public function meNoRead()
+    {
+        return $this->message->meNoRead();
     }
 }

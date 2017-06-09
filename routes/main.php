@@ -90,14 +90,20 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/member/message/send/{target_id}', 'MessageController@sendView');
     Route::post('/member/message/send/{target_id}', 'MessageController@send')->name('message_send');
 
-    //留言列表
-    Route::get('/member/message/page', function () {
-        return redirect()->route('message_page', ['page' => 1]);
+    //收到的留言列表
+    Route::get('/member/message/page/received', function () {
+        return redirect()->route('message_received_page', ['page' => 1]);
     });
-    Route::get('/member/message/page/{page}', 'MessageController@index')->name('message_page');
+    Route::get('/member/message/page/received/{page}', 'MessageController@indexReceived')->name('message_received_page');
+
+    //发出的的留言列表
+    Route::get('/member/message/page/send', function () {
+        return redirect()->route('message_send_page', ['page' => 1]);
+    });
+    Route::get('/member/message/page/send/{page}', 'MessageController@indexSend')->name('message_send_page');
 
     //设置留言状态
-    Route::get('/member/message/read/{message_id}/{status}', 'MessageController@read');
+    Route::get('/member/message/read/{target_id}/{status}', 'MessageController@read');
 
     //删除
     Route::get('/member/message/delete/{message_id}', 'MessageController@destroy');

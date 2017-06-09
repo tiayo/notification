@@ -1,3 +1,6 @@
+@inject('task','App\Service\TaskService')
+@inject('message','App\Service\MessageService')
+
 <div class="page-header" xmlns="http://www.w3.org/1999/html">
     <div class="leftside-header">
         <div class="logo">
@@ -21,110 +24,60 @@
                 <i class="fa fa-check-square-o" aria-hidden="true"></i>
                 <div class="dropdown-box basic">
                     <div class="drop-header">
-                        <h3><i class="fa fa-check-square-o" aria-hidden="true"></i> To-Do List</h3>
+                        <h3><i class="fa fa-check-square-o" aria-hidden="true"></i>我的任务</h3>
                     </div>
                     <div class="drop-content">
                         <div class="widget-list list-to-do">
                             <ul>
-                                <li>
-                                    <div class="checkbox-custom checkbox-primary">
-                                        <input type="checkbox" id="check-s1" value="option1">
-                                        <label for="check-s1">Accusantium eveniet ipsam neque</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox-custom checkbox-primary">
-                                        <input type="checkbox" id="check-s2" value="option1" checked>
-                                        <label for="check-s2">Lorem ipsum dolor sit</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox-custom checkbox-primary">
-                                        <input type="checkbox" id="check-s3" value="option1">
-                                        <label for="check-s3">Dolor eligendi in ipsum sapiente</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox-custom checkbox-primary">
-                                        <input type="checkbox" id="check-s4" value="option1">
-                                        <label for="check-s4">Natus recusandae vel</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="checkbox-custom checkbox-primary">
-                                        <input type="checkbox" id="check-s5" value="option1">
-                                        <label for="check-s5">Adipisci amet officia tempore ut</label>
-                                    </div>
-                                </li>
+                                @foreach ($task->show(1, 5) as $task)
+                                    <li>
+                                        <div class="checkbox-custom checkbox-primary">
+                                            <input type="checkbox" id="check-s1" value="option1">
+                                            <label for="check-s1">
+                                                <a href="{{route('task_update', [$task['task_id']])}}">
+                                                    {{$task['title']}}
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                     <div class="drop-footer">
-                        <a>See all Items</a>
+                        <a href="{{route('task_page', ['page' => 1])}}">查看所有任务</a>
                     </div>
                 </div>
             </div>
             <div class="notice" id="messages-notice">
                 <i class="fa fa-comments-o" aria-hidden="true"></i>
-                <span><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                @if ($message->meNoRead() >= 1)
+                    <span><i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                @endif
                 <div class="dropdown-box basic">
                     <div class="drop-header ">
-                        <h3><i class="fa fa-comments-o" aria-hidden="true"></i> Messages</h3>
-                        <span class="number">120</span>
+                        <h3><i class="fa fa-comments-o" aria-hidden="true"></i>消息</h3>
+                        <span class="number">{{$message->count('target_id')}}</span>
                     </div>
                     <div class="drop-content">
                         <div class="widget-list list-left-element">
                             <ul>
+                                @foreach ($message->received(1, 5) as $message)
                                 <li>
-                                    <a href="#">
-                                        <div class="left-element"><img alt="John Doe" src="/images/avatar_1.jpg" /></div>
+                                    <a href="{{route('message_received_page', ['page' => 1])}}">
+                                        <div class="left-element"><img alt="{{$message['real_name']}}" src="{{$message['avatar']}}" /></div>
                                         <div class="text">
-                                            <span class="title">John Doe</span>
-                                            <span class="subtitle">Lorem ipsum dolor sit.</span>
+                                            <span class="title">{{$message['real_name']}}</span>
+                                            <span class="subtitle">{{$message['content']}}</span>
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="left-element"><img alt="Alice Smith" src="/images/avatar_2.jpg" /></div>
-                                        <div class="text">
-                                            <span class="title">Alice Smith</span>
-                                            <span class="subtitle">Deserunt, mollitia?</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="left-element"><img alt="Klaus Wolf" src="/images/avatar_3.jpg" /></div>
-                                        <div class="text">
-                                            <span class="title">Klaus Wolf</span>
-                                            <span class="subtitle">Consectetur adipisicing elit.</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="left-element"><img alt="Sun Li" src="/images/avatar_4.jpg" /></div>
-                                        <div class="text">
-                                            <span class="title">Sun Li</span>
-                                            <span class="subtitle">Tenetur tempora?</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="left-element"><img alt="Sonia Valera" src="/images/avatar_5.jpg" /></div>
-                                        <div class="text">
-                                            <span class="title">Sonia Valera</span>
-                                            <span class="subtitle">Similique ad maxime.</span>
-                                        </div>
-                                    </a>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                     <div class="drop-footer">
-                        <a>See all messages</a>
+                        <a>查看所有消息</a>
                     </div>
                 </div>
             </div>
