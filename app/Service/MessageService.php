@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Message;
 use App\Facades\Verfication;
 use App\Repositories\MessageRespositories;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Throw_;
@@ -126,11 +127,6 @@ class MessageService
 
     public function send($data, $target_id)
     {
-        //不允许给自己发消息
-        if (Auth::id() == $target_id) {
-            throw new \Exception('不能给自己发送消息！', 403);
-        }
-
         //对方有三条信息未读时不能再发送
         if ($this->message->targetNoRead($target_id) >= 3) {
             throw new \Exception('对方还没有读您的消息，请等待！', 403);
@@ -196,5 +192,21 @@ class MessageService
     public function meNoRead()
     {
         return $this->message->meNoRead();
+    }
+
+    public function sendView($target_id)
+    {
+        //查询用户是否存在
+        if (empty(User::find($target_id)))
+        {
+            throw new \Exception('用户不存在！');
+        }
+
+        //不允许给自己发消息
+        if (Auth::id() == $target_id) {
+            throw new \Exception('不能给自己发送消息！', 403);
+        }
+
+        return true;
     }
 }
