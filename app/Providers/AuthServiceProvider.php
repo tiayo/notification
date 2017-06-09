@@ -6,6 +6,7 @@ use App\Article;
 use App\Category;
 use App\Comment;
 use App\Http\Middleware\AdminAction;
+use App\Message;
 use App\Order;
 use App\Policies\ViewPolicy;
 use App\Refund;
@@ -46,6 +47,7 @@ class AuthServiceProvider extends ServiceProvider
         WxpayService::class => ViewPolicy::class,
         Article::class => ViewPolicy::class,
         Comment::class => ViewPolicy::class,
+        Message::class => ViewPolicy::class,
     ];
 
     /**

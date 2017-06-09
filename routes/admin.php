@@ -44,9 +44,9 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         Route::post('/generate/{option}', 'GenerateController@option');
 
         //设置文章置顶
-        Route::get('/article/top/{article_id}', 'ArticleController@top');
+        Route::get('/article/top/{article_id}/{attribute}', 'ArticleController@top');
 
         //屏蔽评论
-        Route::get('/member/comment/mask/{comment_id}', 'CommentController@mask');
+        Route::get('/member/comment/mask/{comment_id}/{status}', 'CommentController@mask');
     });
 });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '我的评论')
+@section('title', '我的消息')
 
 @section('link')
     @parent
@@ -11,13 +11,13 @@
 
 @section('breadcrumbs')
     <li navValue="nav_5"><i class="fa fa-home" aria-hidden="true"></i><a href="/">会员中心</a></li>
-    <li navValue="nav_5_2"><a href="/admin/task/page/">我的评论</a></li>
+    <li navValue="nav_5_3"><a href="/admin/task/page/">我的消息</a></li>
 @endsection
 
 @section('content_body')
             <div class="row animated fadeInRight">
                 <div class="col-sm-12">
-                    <h4 class="section-subtitle"><b>我的任务</b></h4>
+                    <h4 class="section-subtitle"><b>我的消息</b></h4>
                     <div class="panel">
                         <div class="panel-content">
                             <div class="table-responsive">
@@ -27,37 +27,33 @@
                                             <table id="basic-table" class="data-table table table-striped nowrap table-hover dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="basic-table_info" style="width: 100%;">
                                                 <thead>
                                                     <tr role="row">
-                                                        <th>评论ID<i class="sort"><img src="/images/px.gif" /></i></th>
-                                                        <th>内容</th>
-                                                        <th>用户</th>
-                                                        <th>文章</th>
-                                                        <th>评论时间</th>
-                                                        <th>状态</th>
+                                                        <th>消息ID<i class="sort"><img src="/images/px.gif" /></i></th>
+                                                        <th>消息内容</th>
+                                                        <th>发送者</th>
+                                                        <th>接收者</th>
+                                                        <th>发送时间</th>
+                                                        <th>消息状态</th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                @foreach ($list_comment as $row)
-                                                    <tr role="row" class="odd @if ($row['status'] == 2) color-danger @endif">
-                                                        <td>{{$row['comment_id']}}</td>
+                                                @foreach ($list_message as $row)
+                                                    <tr role="row" class="odd @if ($row['status'] == 1) color-danger @endif">
+                                                        <td>{{$row['message_id']}}</td>
                                                         <td>{{$row['content']}}</td>
-                                                        <td>{{$comment::find($row['comment_id'])->profile['real_name']}}</td>
-                                                        <td>
-                                                            @if ($article = $comment::find($row['comment_id'])->article)
-                                                            <a href="/{{config('site.article_path')}}{{$article['links']}}" target="_blank">{{$article['title']}}</a>
-                                                            @endif
-                                                        </td>
+                                                        <td>{{$message::find($row['message_id'])->userProfile['real_name']}}</td>
+                                                        <td>{{$message::where('target_id', $row['target_id'])->first()->targetProfile['real_name']}}</td>
                                                         <td>{{$row['created_at']}}</td>
-                                                        <td>{{$judge::commentStatus($row['status'])}}</td>
+                                                        <td>{{$judge::messageStatus($row['status'])}}</td>
                                                         <td>
                                                             @if ($admin)
                                                                 @if ($row['status'] == 1)
-                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}/2" class="tablelink">屏蔽</a>
+                                                                    <a href="/admin/member/message/read/{{$row['message_id']}}/2" class="tablelink">标记为已读</a>
                                                                 @elseif ($row['status'] == 2)
-                                                                    <a href="/admin/member/comment/mask/{{$row['comment_id']}}/1" class="tablelink">取消屏蔽</a>
+                                                                    <a href="/admin/member/message/read/{{$row['message_id']}}/1" class="tablelink">标记为未读</a>
                                                                 @endif
                                                             @endif
-                                                            <a href="/admin/member/comment/delete/{{$row['comment_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除</a>
+                                                            <a href="/admin/member/message/delete/{{$row['message_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;"> 删除消息</a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

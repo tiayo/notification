@@ -151,4 +151,30 @@ class Controller extends BaseController
                 return '屏蔽';
         }
     }
+
+    public static function userCertified($num)
+    {
+        switch ($num) {
+            case 0 :
+                return '未实名认证';
+                break;
+            case 2 :
+                return '实名认证用户';
+        }
+    }
+
+    public static function messageStatus($num)
+    {
+        switch ($num) {
+            case 1 :
+                return '未读';
+                break;
+            case 2 :
+                return '已读';
+                break;
+            case 3 :
+                return '删除';
+                break;
+        }
+    }
 }

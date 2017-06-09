@@ -177,11 +177,11 @@ class ArticleController extends Controller
      * @param $article_id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function top($article_id)
+    public function top($article_id, $attribute)
     {
         //错误抛错
         try{
-            $this->article->top($article_id);
+            $this->article->top($article_id, $attribute);
         } catch (\Exception $e) {
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
         }

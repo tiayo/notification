@@ -153,7 +153,7 @@ class ArticleService
     {
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
-            $picture = ImagesUploadService::updaloadImage($data['picture']);
+            $value['picture'] = ImagesUploadService::updaloadImage($data['picture']);
         }
 
         //验证权限
@@ -184,11 +184,9 @@ class ArticleService
         //更新数组
         $value['title'] = $data['title'];
         $value['category'] = $data['category'];
-        $value['picture'] = $data['picture'] ?? null;
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
         $value['attribute'] = $data['attribute'];
-        $value['picture'] = $picture ?? null;
 
         //更新
         $this->article->update($value, $article_id);
@@ -216,7 +214,7 @@ class ArticleService
     {
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
-            $picture = ImagesUploadService::updaloadImage($data['picture']);
+            $value['picture'] = ImagesUploadService::updaloadImage($data['picture']);
         }
 
         //如果摘要为空，执行自动截取方法
@@ -228,7 +226,6 @@ class ArticleService
         $value['category'] = $category_id;
         $value['title'] = $data['title'];
         $value['abstract'] = $data['abstract'];
-        $value['picture'] = $picture ?? null;
         $value['user_id'] = Auth::id();
         $value['user_ip'] = ip2long($_SERVER['REMOTE_ADDR']);
         $value['body'] = $data['body'];
@@ -314,10 +311,15 @@ class ArticleService
      * @param $article_id
      * @return mixed
      */
-    public function top($article_id)
+    public function top($article_id, $attribute)
     {
+        //判断状态
+        if ($attribute != 1 && $attribute != 3) {
+            throw new \Exception('数据验证失败！（代码：1002）');
+        }
+
         //更新数据
-        $value['attribute'] = 3;
+        $value['attribute'] = $attribute;
 
         //写入数据库
         return $this->article->update($value, $article_id);

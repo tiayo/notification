@@ -119,10 +119,15 @@ class CommentService
      * @param $comment_id
      * @return mixed
      */
-    public function mask($comment_id)
+    public function mask($comment_id, $status)
     {
+        //判断状态
+        if ($status != 1 && $status != 2) {
+            throw new \Exception('数据验证失败！（代码：1006）');
+        }
+
         //更新数据
-        $value['status'] = 2;
+        $value['status'] = $status;
 
         //写入数据库
         return $this->comment->update($value, $comment_id);

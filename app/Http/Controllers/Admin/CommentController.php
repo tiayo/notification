@@ -55,13 +55,13 @@ class CommentController extends Controller
      * @param $comment_id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function mask($comment_id)
+    public function mask($comment_id, $status)
     {
         //错误抛错
         try{
-            $this->comment->mask($comment_id);
+            $this->comment->mask($comment_id, $status);
         } catch (\Exception $e) {
-            return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
+            return response($e->getMessage(), empty($e->getCode()) ? 403 : $e->getCode());
         }
 
         //成功跳转

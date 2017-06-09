@@ -1,0 +1,92 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Message;
+use App\Profile;
+use App\Service\IndexService;
+use App\Service\MessageService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class MessageController extends Controller
+{
+    protected $message;
+    protected $request;
+
+    public function __construct(MessageService $message, Request $request)
+    {
+        $this->message = $message;
+        $this->request = $request;
+    }
+
+    public function index($page)
+    {
+        //所有消息
+        $list_message = $this->message->show($page, Config('site.page'));
+
+        //文章数量
+        $count = $this->message->count();
+
+        // 最多页数
+        $max_page = ceil($count/Config('site.page'));
+
+        //判断管理员
+        $admin = IndexService::admin();
+
+        return view('home.message_list',[
+            'list_message' => $list_message,
+            'message' => Message::class,
+            'count' => ($count <= 5) ? $count : 5,
+            'page' => $page,
+            'max_page' => $max_page,
+            'admin' => $admin,
+            'judge' => 'App\Http\Controllers\Controller',
+        ]);
+    }
+
+    public function sendView($target_id)
+    {
+        return view('home.message_send', [
+            'target' => Profile::find($target_id),
+        ]);
+    }
+
+    public function send($target_id)
+    {
+        $data = $this->request->all();
+
+        try{
+            $this->message->send($data, $target_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 401);
+        }
+
+        return redirect()->route('message_page', ['page' => 1]);
+    }
+
+    public function read($message_id, $status)
+    {
+        //业务执行
+        try{
+            $this->message->read($message_id, $status);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 401);
+        }
+
+        return redirect()->route('message_page', ['page' => 1]);
+    }
+
+    public function destroy($message_id)
+    {
+        //业务执行
+        try{
+            $this->message->destroy($message_id);
+        } catch (\Exception $e) {
+            return response($e->getMessage(), 401);
+        }
+
+        return redirect()->route('message_page', ['page' => 1]);
+    }
+}

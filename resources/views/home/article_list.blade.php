@@ -52,14 +52,12 @@
                                                         <td>{{$judge::articleStatus($row['attribute'])}}</td>
                                                         @if ($admin)
                                                         <td>
-                                                            <a href="/admin/article/top/{{$row['article_id']}}" class="tablelink">
-                                                                @if ($row['attribute'] == 1)
-                                                                    设为置顶
+                                                            @if ($row['attribute'] == 1)
+                                                                <a href="/admin/article/top/{{$row['article_id']}}/3" class="tablelink">设为置顶</a>
                                                                 @endif
                                                                 @if ($row['attribute'] == 3)
-                                                                    取消置顶
+                                                                    <a href="/admin/article/top/{{$row['article_id']}}/1" class="tablelink">取消置顶</a>
                                                                 @endif
-                                                            </a>
                                                         </td>
                                                         @endif
                                                         <td>

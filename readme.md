@@ -50,3 +50,5 @@ stdout_logfile= /var/log/supervisor/supervisord.log
 `1005` 文章操作权限错误
 
 `1006` 评论操作权限错误
+
+`1007` 消息没有操作权限
