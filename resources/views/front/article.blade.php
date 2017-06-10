@@ -51,8 +51,10 @@
                     <dd style=""><img src="{{$article['avatar']}}" width="96"/>
                         <h3>{{$article['real_name']}}</h3>
                         <p>城市：{{$article['city']}}</p>
-                        <p>邮箱:{{$article['email']}}</p>
+                        <p>邮箱:<small>{{$article['email']}}</small></p>
+                        @if (Auth::id() != $article['user_id'])
                         <p>发消息：<a href="{{route('message_send_view', ['target_id' => $article['user_id']])}}" target="_blank">给他留言</a></p>
+                        @endif
                     </dd>
                 </dl>
             </div>
@@ -63,7 +65,7 @@
                     <dd style=""><img src="{{$me['avatar']}}" width="96"/>
                         <h3>{{$me['real_name']}}</h3>
                         <p>城市：{{$me['city']}}</p>
-                        <p>邮箱：{{$me['email']}}</p>
+                        <p>邮箱：<small>{{$me['email']}}</small></p>
                         <p>进入：<a href="/admin" target="_blank">控制台</a></p>
                     </dd>
                 </dl>

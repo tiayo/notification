@@ -2449,6 +2449,10 @@ a.tagnews:hover {
 	font-size: 14px;
 }
 
+.newslinks p small {
+	font-size: 10px;
+}
+
 .newslinks p a,.newslinks dt a,.newslinks dt a:hover {
 	color: #666;
 	text-decoration: none;
