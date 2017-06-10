@@ -82,27 +82,47 @@
     {{--搜索slidebar--}}
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#search-icon').click(function () {
-                $('#search_slidebar').toggleClass('hidden');
-                if (typeof $(this).attr('slidebar') === 'undefined' || $(this).attr('slidebar') === 'close') {
-                    $(this).attr('slidebar', 'open')
-                } else {
-                    $(this).attr('slidebar', 'close');
-                    slidebar_axios();
+
+            //input框回车事件
+            $('#search_slidebar').bind('keypress',function(event){
+                if(event.keyCode === 13)
+                {
+                    search_run();
                 }
             });
 
+            //按钮点击提交事件
+            $('#search-icon').click(function () {
+                search_run();
+            });
+
+            //搜索入口
+            function search_run() {
+                $('#search_slidebar').toggleClass('hidden');
+
+                var search_icon = $('#search-icon');
+
+                if (typeof search_icon.attr('slidebar') === 'undefined' || search_icon.attr('slidebar') === 'close') {
+                    search_icon.attr('slidebar', 'open')
+                } else {
+                    search_icon.attr('slidebar', 'close');
+                    slidebar_axios();
+                }
+            }
+
+            //错误信息关闭事件
             $('#error_info_close').click(function () {
                 $('#error_info_div').addClass('hidden');
             });
 
+            //搜索请求与结果执行
             function slidebar_axios() {
                 axios.post('{{ route('search_slidebar') }}', {
                     _token:'{{csrf_token()}}',
                     search_slidebar:$('#search_slidebar').val()
                 })
                     .then(function (response) {
-                        
+                        console.log(response.data.array_key);
                         if (response.data.array_key === false) {
                             $('#error_info_div').removeClass('hidden');
                             return false;
