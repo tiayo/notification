@@ -42,7 +42,7 @@
     </div>
 
     <div class="db_foot">
-        <p><span class="mr12">版权所有：{{config('site.title') config('site.version')}} 版本</span>Copyright 2015-2016 tiayo.com Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
+        <p><span class="mr12">版权所有：{{config('site.title').config('site.version')}} 版本</span>Copyright 2015-{{date('Y')}} tiayo.com Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
 
     </div>
 </div>
