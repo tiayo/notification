@@ -65,6 +65,10 @@ class IndexService
 
         //搜索
         $key = $this->searchSlidebarHandle($array, $keyword);
+        if (!$key) {
+            //搜索没有结果
+            return ['key_level' => false, 'array_key' => false];
+        }
 
         //切割
         $key_array = explode('_', $key);
@@ -119,6 +123,7 @@ class IndexService
                 }
             }
         }
+        return false;
     }
 
     /**
