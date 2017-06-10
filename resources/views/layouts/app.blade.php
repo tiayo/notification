@@ -71,7 +71,44 @@
             }
         })
     </script>
+    {{--搜索slidebar--}}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search-icon').click(function () {
+                $('#search_slidebar').toggleClass('hidden');
+                if (typeof $(this).attr('slidebar') === 'undefined' || $(this).attr('slidebar') === 'close') {
+                    $(this).attr('slidebar', 'open')
+                } else {
+                    $(this).attr('slidebar', 'close');
+                    slidebar_axios();
+                }
+            });
+            function slidebar_axios() {
+                axios.post('{{ route('search_slidebar') }}', {
+                    _token:'{{csrf_token()}}',
+                    search_slidebar:$('#search_slidebar').val()
+                })
+                    .then(function (response) {
+                        $.each(response.data.key_level,function(index, value){
+
+                            if (index === 0) {
+                                $('.has-child-item').removeClass('open-item active-item');
+                                $('#'+value+' li').removeClass('open-item active-item');
+                            }
+
+                            var value_$ = $('#'+value);
+                            value_$.removeClass('close-item');
+                            value_$.addClass('open-item');
+                        });
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+            }
+        })
+    </script>
     {{--这里放js文件引用--}}
+
 @show
 
 </body>

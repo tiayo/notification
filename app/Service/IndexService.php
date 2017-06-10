@@ -50,4 +50,54 @@ class IndexService
         return $this->order->create($data);
     }
 
+    /**
+    * 后台搜索
+    *
+    * @return array
+    */
+    public function searchSlidebar($keyword)
+    {
+        //初始化
+        $key_level = [];
+
+        //获取配置文件
+        $array = config('slidebar.slidebar');
+
+        //搜索
+        $key = array_search($keyword, $array);
+
+        //切割
+        $key_array = explode('_', $key);
+
+        //获取各级key
+        $num = count($key_array);
+        for ($i=1; $i < $num; $i++) {
+            $key_level[] = $this->keyLevel($i, $key_array);
+        }
+
+        //返回结果
+        return ['key_level' => $key_level, 'array_key' => $key];
+    }
+
+    /**
+     * 计算各级目录key
+     *
+     * @param $array
+     * @param $key
+     * @return array
+     */
+    public function keyLevel($num, $key_array)
+    {
+        $str = null;
+
+        for ($i=0; $i <= $num; $i++) {
+            if ($i<$num) {
+                $str .= $key_array[$i].'_';
+            } else if($i = $num) {
+                $str .= $key_array[$i];
+            }
+        }
+
+        return $str;
+    }
 }

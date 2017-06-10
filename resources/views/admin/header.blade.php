@@ -15,7 +15,7 @@
     <div class="rightside-header">
         <div class="header-middle"></div>
         <div class="header-section" id="search-headerbox">
-            <input type="text" name="search" id="search" placeholder="Search...">
+            <input type="text" name="search_slidebar" id="search_slidebar" class="color-dark hidden" placeholder="搜索操作列表...">
             <i class="fa fa-search search" id="search-icon" aria-hidden="true"></i>
             <div class="header-separator"></div>
         </div>

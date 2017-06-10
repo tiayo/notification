@@ -9,6 +9,7 @@ use App\Service\IndexService;
 use App\Service\TaskService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class IndexController extends Controller
 {
@@ -64,5 +65,17 @@ class IndexController extends Controller
 
         //转到订单详情页
         return redirect()->route('order_view', ['order_id' => $order->order_id]);
+    }
+
+    /**
+     * 后台搜索入口
+     *
+     * @return array
+     */
+    public function searchSlidebar()
+    {
+        $keyword = $this->request->get('search_slidebar');
+        Log::info($keyword);
+        return response()->json($this->index->searchSlidebar($keyword));
     }
 }

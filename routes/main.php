@@ -4,11 +4,11 @@
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     //后台显示相关
-    Route::get('/', 'IndexController@index');
+    Route::get('/', 'IndexController@index')->name('admin');
     Route::get('/top', 'IndexController@top');
     Route::get('/left', 'IndexController@left');
     Route::get('/main', 'IndexController@main');
-    Route::get('/sponsor', 'IndexController@sponsor');
+    Route::get('/sponsor', 'IndexController@sponsor')->name('sponsor');
     Route::post('/sponsor', 'IndexController@sponsor');
 
 //------------------------------分隔线-------------------------------------------------//
@@ -16,13 +16,13 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //任务显示
     Route::get('/task/page', function () {
         return redirect()->route('task_page', ['page' => 1]);
-    });
+    })->name('task_page_simple');
     Route::get('/task/page/{page}', 'TaskController@show')->name('task_page');
 
     //添加任务
     Route::get('/task/add', function () {
         return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst('task')['category_id']]);
-    });
+    })->name('task_add_simple');
     Route::get('/task/add/{category}', 'TaskController@storeView')->name('task_add');
     Route::post('/task/add/{category}', 'TaskController@store')->name('task_add_post');
 
@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //订单列表
     Route::get('/order/page', function () {
         return redirect()->route('order_page', ['page' => 1]);
-    });
+    })->name('order_page_simple');
     Route::get('/order/page/{page}', 'OrderController@index')->name('order_page');
 
 //------------------------------分隔线-------------------------------------------------//
@@ -47,13 +47,13 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //文章显示
     Route::get('/article/page', function () {
         return redirect()->route('article_page', ['page' => 1]);
-    });
+    })->name('article_page_simple');
     Route::get('/article/page/{page}', 'ArticleController@index')->name('article_page');
 
     //添加文章
     Route::get('/article/add', function () {
         return redirect()->route('article_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst('article')['category_id']]);
-    });
+    })->name('article_add_simple');
     Route::get('/article/add/{category}', 'ArticleController@storeView')->name('article_add');
     Route::post('/article/add/{category}', 'ArticleController@store')->name('article_add_post');
 
@@ -69,7 +69,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //评论显示
     Route::get('/member/comment/page', function () {
         return redirect()->route('comment_page', ['page' => 1]);
-    });
+    })->name('comment_page_simple');
     Route::get('/member/comment/page/{page}', 'CommentController@index')->name('comment_page');
 
     //删除评论
@@ -93,7 +93,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //收到的留言列表
     Route::get('/member/message/page/received', function () {
         return redirect()->route('message_received_page', ['page' => 1]);
-    });
+    })->name('message_received_page_simple');
     Route::get('/member/message/page/received/{page}', 'MessageController@indexReceived')->name('message_received_page');
 
     //发出的的留言列表
@@ -107,6 +107,11 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //删除
     Route::get('/member/message/delete/{message_id}', 'MessageController@destroy');
+
+    //------------------------------分隔线-------------------------------------------------//
+
+    //搜索导航
+    Route::post('/search/slidebar', 'IndexController@searchSlidebar')->name('search_slidebar');
 });
 
 // Authentication Routes...
