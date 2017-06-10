@@ -65,8 +65,9 @@ class IndexService
 
         //搜索
         $key = $this->searchSlidebarHandle($array, $keyword);
+
+        //如果搜索没有结果，返回false
         if (!$key) {
-            //搜索没有结果
             return ['key_level' => false, 'array_key' => false];
         }
 
@@ -134,17 +135,19 @@ class IndexService
      * @param string $charset
      * @return array|bool
      */
-    public function mb_str_split($str,$split_length=1,$charset='UTF-8'){
-        if(func_num_args()==1){
+    public function mb_str_split($str, $split_length=1, $charset='UTF-8'){
+        if (func_num_args() == 1) {
             return preg_split('/(?<!^)(?!$)/u', $str);
         }
-        if($split_length<1)return false;
+        if ($split_length < 1) {
+            return false;
+        }
         $len = mb_strlen($str, $charset);
         $arr = array();
-        for($i=0;$i<$len;$i+=$split_length){
+        for ($i=0; $i<$len; $i+=$split_length) {
             $s = mb_substr($str, $i, $split_length, $charset);
             $arr[] = $s;
         }
         return $arr;
-}
+    }
 }
