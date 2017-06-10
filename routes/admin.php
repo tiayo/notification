@@ -5,7 +5,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         //退款
         Route::get('/refund/page', function () {
             return redirect()->route('refund_page', ['page' => 1]);
-        });
+        })->name('refund_page_simple');
         Route::get('/refund/page/{page}', 'OrderController@refundList')->name('refund_page');
 
         //退款详情
@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         //管理分类
         Route::get('/category/page', function () {
             return redirect()->route('category', ['page' => 1]);
-        });
+        })->name('category_simple');
         Route::get('/category/page/{page}', 'CategoryController@index')->name('category');
 
         //添加分类
@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         Route::post('/category/select/', 'CategoryController@selectEvent');
 
         //生成视图
-        Route::get('/generate/view', 'GenerateController@view');
+        Route::get('/generate/view', 'GenerateController@view')->name('generate_view');
 
         //生成操作
         Route::post('/generate/{option}', 'GenerateController@option');

@@ -66,7 +66,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('message_page', ['page' => 1])}}">
+                                        <a href="{{ route('message_received_page_simple') }}">
                                             <div class="left-element"><i class="fa fa-envelope color-primary"></i></div>
                                             <div class="text">
                                                 <span class="title">Leave a Menssage</span>
