@@ -41,7 +41,7 @@
                         <ul class="nav child-nav level-1">
                             <li id="nav_5_1" ><a href="{{ route('me_view') }}">我的资料</a></li>
                             <li id="nav_5_2" ><a href="{{ route('comment_page_simple') }}">我的评论</a></li>
-                            <li id="nav_5_2" ><a href="{{ route('message_received_page_simple') }}">我的消息</a></li>
+                            <li id="nav_5_3" ><a href="{{ route('message_received_page_simple') }}">我的消息</a></li>
                         </ul>
                     </li>
                     @if (app('App\Service\IndexService')::admin() === true)
