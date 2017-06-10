@@ -64,7 +64,7 @@ class IndexService
         $array = config('slidebar.slidebar');
 
         //搜索
-        $key = array_search($keyword, $array);
+        $key = $this->searchSlidebarHandle($array, $keyword);
 
         //切割
         $key_array = explode('_', $key);
@@ -100,4 +100,46 @@ class IndexService
 
         return $str;
     }
+
+    /**
+     * 数组模糊搜索
+     *
+     * @param $array
+     * @param $keyword
+     * @return int|string
+     */
+    public function searchSlidebarHandle($array, $keyword)
+    {
+        foreach ($array as $key => $value) {
+            $length = mb_strlen($keyword,'UTF8');
+            $arr = $this->mb_str_split($value, $length);
+            foreach ($arr as $item) {
+                if ($item == $keyword) {
+                    return $key;
+                }
+            }
+        }
+    }
+
+    /**
+     * 切割中文字符串
+     *
+     * @param $str
+     * @param int $split_length
+     * @param string $charset
+     * @return array|bool
+     */
+    public function mb_str_split($str,$split_length=1,$charset='UTF-8'){
+        if(func_num_args()==1){
+            return preg_split('/(?<!^)(?!$)/u', $str);
+        }
+        if($split_length<1)return false;
+        $len = mb_strlen($str, $charset);
+        $arr = array();
+        for($i=0;$i<$len;$i+=$split_length){
+            $s = mb_substr($str, $i, $split_length, $charset);
+            $arr[] = $s;
+        }
+        return $arr;
+}
 }

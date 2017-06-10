@@ -20,7 +20,7 @@
                 <i class="line"></i>
                 <div id="divWeiXinPicContainer" class="my_layer" style="display: none;">
                     <em class="l_arrow">&nbsp;</em><div class="inner p15" style="width:195px;">
-                        <i></i><p>扫描二维码，微信实时关注时光网</p>
+                        <i></i><p>扫描二维码，微信实时关注随享</p>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
     </div>
 
     <div class="db_foot">
-        <p><span class="mr12">版权所有：郑祥景 祥景CMS V3.0(1)版本</span>Copyright 2015-2016 tiayo.com Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
+        <p><span class="mr12">版权所有：{{config('site.title') config('site.version')}} 版本</span>Copyright 2015-2016 tiayo.com Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
 
     </div>
 </div>

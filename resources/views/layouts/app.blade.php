@@ -43,6 +43,14 @@
                 </div>
             </div>
 
+            {{--提示框--}}
+            <div class="col-md-12 hidden" id="error_info_div" style="z-index: 2;">
+                <div class="alert alert-warning fade in">
+                    <a href="#" class="close" id="error_info_close" data-dismiss="alert">×</a>
+                    <p>没有找到您搜索的栏目！</p>
+                </div>
+            </div>
+
             @section('content_body')
                 {{--这里是主要内容--}}
             @show
@@ -83,12 +91,23 @@
                     slidebar_axios();
                 }
             });
+
+            $('#error_info_close').click(function () {
+                $('#error_info_div').addClass('hidden');
+            });
+
             function slidebar_axios() {
                 axios.post('{{ route('search_slidebar') }}', {
                     _token:'{{csrf_token()}}',
                     search_slidebar:$('#search_slidebar').val()
                 })
                     .then(function (response) {
+                        
+                        if (response.data.array_key === false) {
+                            $('#error_info_div').removeClass('hidden');
+                            return false;
+                        }
+
                         $.each(response.data.key_level,function(index, value){
 
                             if (index === 0) {
@@ -102,8 +121,8 @@
                             value_$.addClass('open-item');
                         });
                     })
-                    .catch(function (response) {
-                        console.log(response);
+                    .catch(function (error) {
+                        console.log(error);
                     });
             }
         })
