@@ -93,6 +93,7 @@
 
                             if (index === 0) {
                                 $('.has-child-item').removeClass('open-item active-item');
+                                $('.nav_0').removeClass('open-item active-item');
                                 $('#'+value+' li').removeClass('open-item active-item');
                             }
 
