@@ -8,53 +8,6 @@
     <link rel="stylesheet" href="/vendor/animate.css/animate.css">
     <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
-    <style>
-        .bgc{
-            width: 100%;
-            height: 100%;
-            float: left;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1;
-        }
-        .float{
-            min-width: 35%;
-            float: left;
-            background:#fff;
-            position: fixed;
-            padding: 1em;
-            top:0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin:15% 0 0 25%;
-            z-index: 2;
-        }
-        @media screen and (max-width: 800px) {
-            .float{
-                min-width: 35%;
-                float: left;
-                background:#fff;
-                position: fixed;
-                padding: 1em;
-                top:0;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                margin:15% 0 0 5%;
-                z-index: 2;
-            }
-        }
-        .style-content {
-            text-align: center;
-            height: 100%;
-        }
-        .float p span{
-            width: 96%;
-            margin: 0 2% 0 2%;
-            float: left;
-        }
-    </style>
 @endsection
 
 @section('breadcrumbs')
