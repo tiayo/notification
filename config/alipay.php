@@ -7,7 +7,7 @@ return [
     'seller_id' => env('ALIPAY_SELLER_ID'),
 
     //商户私钥文件路径
-    'rsaPrivateKeyFilePath' => base_path().'/app_private_key.pem',
+    'rsaPrivateKeyFilePath' => base_path().'/pem/alipay_private.pem',
 
     //异步通知地址
     'notify_url' => env('APP_URL').env('ALIPAY_NOTIFY_URL'),
