@@ -14,6 +14,8 @@ use App\Payment\Alipay\Pay\Buildermodel\AlipayTradeRefundContentBuilder;
 
 class AlipayService implements PayInterfaces
 {
+    use IsMobileTrait;
+
     protected $order;
     protected $refund;
 
@@ -58,6 +60,9 @@ class AlipayService implements PayInterfaces
         //验证权限
         $this->verfication($order['order_id']);
 
+        //初始化
+        $array = [];
+
         //判断订单状态（已付款不再往下执行）
         if ($order['payment_status'] == 1) {
             throw new \Exception('订单已经支付，不腰重复支付！');
@@ -71,11 +76,13 @@ class AlipayService implements PayInterfaces
         }
 
         //判断电脑端或手机端，调用对应方法
-        if (BrowserDetect::isMobile() || BrowserDetect::isTablet()) {
+        if ($this::isMobile()) {
+            //调用手机方法
             $this->wapPay($array);
-        } elseif (BrowserDetect::isDesktop()) {
-            $this->pagePay($array);
         }
+
+        //调用电脑方法
+        $this->pagePay($array);
     }
 
     /**

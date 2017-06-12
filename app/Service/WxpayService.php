@@ -19,6 +19,8 @@ use App\Payment\Wxpay\Pay\JsApiPay;
 
 class WxpayService implements PayInterfaces
 {
+    use IsMobileTrait;
+
     protected $order;
     protected $refund;
 
@@ -77,11 +79,13 @@ class WxpayService implements PayInterfaces
         }
 
         //判断电脑端或手机端，调用对应方法
-        if (BrowserDetect::isMobile()) {
+        if ($this::isMobile()) {
+            //调用手机方法
             return ['type' => 'wapPay', 'data' => $this->wapPay($post, $order)];
-        } elseif (BrowserDetect::isDesktop() || BrowserDetect::isTablet()) {
-            return ['type' => 'pagePay', 'data' => $this->pagePay($post, $order)];
         }
+
+        //调用电脑方法
+        return ['type' => 'pagePay', 'data' => $this->pagePay($post, $order)];
     }
 
     /**

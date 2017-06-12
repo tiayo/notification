@@ -163,7 +163,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        hisorange\BrowserDetect\Provider\BrowserDetectService::class,
 
         /*
          * Package Service Providers...
@@ -233,7 +232,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Verfication' => \App\Facades\Verfication::class,
-        'BrowserDetect' => hisorange\BrowserDetect\Facade\Parser::class,
         'Searchy' => TomLingham\Searchy\Facades\Searchy::class,
     ],
 
