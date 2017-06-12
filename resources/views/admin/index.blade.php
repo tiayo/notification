@@ -4,7 +4,7 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/toastr/toastr.min.css">
     <link rel="stylesheet" href="/vendor/magnific-popup/magnific-popup.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">

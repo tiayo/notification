@@ -4,7 +4,6 @@
 
 @section('link')
     @parent
-    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
 @endsection

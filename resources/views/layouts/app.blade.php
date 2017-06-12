@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{config('site.title')}}-@yield('title')</title>
     @section('link')
+        <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/font-awesome/4.6.0/css/font-awesome.min.css">
         <link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png">
         <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
