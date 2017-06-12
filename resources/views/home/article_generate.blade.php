@@ -120,6 +120,7 @@
                                     </select><br>
                                     <button id="generate_button" type="article" class="btn btn-darker-1 btn-block">点击开始</button>
                             </div>
+                            <p class="text-muted">不会生成<span class="color-info">私密</span>属性的文章</p>
                         </div>
                     </div>
                 </div>
@@ -129,10 +130,25 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <h4 class="form-signin-heading">生成目录</h4>
+                                <h4 class="form-signin-heading">生成检索目录</h4>
                                 <hr>
                                 <button id="generate_button" type="retrieval" class="btn btn-darker-1 btn-block">点击开始</button>
                             </div>
+                            <p class="text-muted">生成<span class="color-info">/article/retrieval.html</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h4 class="form-signin-heading">生成后台目录数据</h4>
+                                <hr>
+                                <button id="generate_button" type="slidebar" class="btn btn-darker-1 btn-block">点击开始</button>
+                            </div>
+                            <p class="text-muted">当更新了<span class="color-info">config/slidebar.php</span>文件时必须执行本操作才能生效。</p>
                         </div>
                     </div>
                 </div>

@@ -45,9 +45,9 @@
 
             {{--提示框--}}
             <div class="col-md-12 hidden" id="error_info_div" style="z-index: 2;">
-                <div class="alert alert-warning fade in">
+                <div class="alert fade in">
                     <a href="#" class="close" id="error_info_close" data-dismiss="alert">×</a>
-                    <p>没有找到您搜索的栏目！</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
 
             //搜索入口
             function search_run() {
-                $('#search_slidebar').toggleClass('hidden');
+                $('#search_slidebar').removeClass('hidden');
 
                 var search_icon = $('#search-icon');
 
@@ -122,11 +122,19 @@
                     search_slidebar:$('#search_slidebar').val()
                 })
                     .then(function (response) {
-                        console.log(response.data.array_key);
+
+                        var error_info_div = '#error_info_div';
+
                         if (response.data.array_key === false) {
-                            $('#error_info_div').removeClass('hidden');
+                            $(error_info_div+' div').addClass('alert-warning');
+                            $(error_info_div+' p').html(response.data.info);
+                            $(error_info_div).removeClass('hidden');
                             return false;
                         }
+
+                        $(error_info_div+' div').addClass('alert-success');
+                        $(error_info_div+' p').html(response.data.info);
+                        $(error_info_div).removeClass('hidden');
 
                         $.each(response.data.key_level,function(index, value){
 
@@ -142,7 +150,7 @@
                         });
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        console.log(error.respon);
                     });
             }
         })

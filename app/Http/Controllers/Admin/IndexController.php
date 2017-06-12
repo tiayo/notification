@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Repositories\OrderRepositories;
 use App\Repositories\UserRepositories;
 use App\Service\IndexService;
+use App\Service\MessageService;
 use App\Service\TaskService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class IndexController extends Controller
 {
@@ -47,6 +47,7 @@ class IndexController extends Controller
             'tasks' => $task_list,
             'orders' => $order_list,
             'status' => app('App\Http\Controllers\Controller'),
+            'message' => app('App\Service\MessageService'),
         ]);
     }
 
@@ -75,7 +76,13 @@ class IndexController extends Controller
     public function searchSlidebar()
     {
         $keyword = $this->request->get('search_slidebar');
-        Log::info($keyword);
-        return response()->json($this->index->searchSlidebar($keyword));
+
+        try {
+            $response = $this->index->searchSlidebar($keyword);
+        } catch (\Exception $e) {
+            return $this->jsonResponse($e->getMessage(), 401);
+        }
+
+        return $this->jsonResponse($response);
     }
 }

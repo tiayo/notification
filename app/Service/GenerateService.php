@@ -6,6 +6,8 @@ use App\Http\Controllers\Front\FrontController;
 use App\Repositories\ArticleRepositories;
 use App\Repositories\CategoryRepositories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Redis;
 
 class GenerateService
 {
@@ -13,13 +15,19 @@ class GenerateService
     protected $front;
     protected $category;
     protected $request;
+    protected $index;
 
-    public function __construct(ArticleRepositories $article, FrontController $front, CategoryRepositories $category, Request $request)
+    public function __construct(ArticleRepositories $article,
+                                FrontController $front,
+                                CategoryRepositories $category,
+                                Request $request,
+                                IndexService $index)
     {
         $this->article = $article;
         $this->front = $front;
         $this->category = $category;
         $this->request = $request;
+        $this->index = $index;
     }
 
     /**
@@ -176,6 +184,31 @@ class GenerateService
 
         //写入文件
         return $this->fwrite($path.'/retrieval.html', $html);
+    }
+
+    /**
+     * 生成slidebar缓存
+     *
+     * @return bool
+     */
+    public function slidebar()
+    {
+        //获取原始数据
+        $result = [];
+        $data = config('slidebar.original');
+
+        //判断是否取到数据
+        if (empty($data)) {
+            return false;
+        }
+
+        //切割每一项数据
+        foreach ($data as $key => $value) {
+            $result['generate'][$key] = $this->index->mb_str_split($value);
+        }
+
+        //存储到redis
+        return Redis::set('slidebar_generate', json_encode($result));
     }
 
     /**

@@ -1,5 +1,10 @@
 <?php
 
+//登录后路由（前端）
+Route::group(['middleware' => 'auth', 'namespace' => 'Front'], function () {
+    Route::get('/article/{article_id}', 'FrontController@article')->name('article_view');
+});
+
 //登录后路由组
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
@@ -10,6 +15,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/main', 'IndexController@main');
     Route::get('/sponsor', 'IndexController@sponsor')->name('sponsor');
     Route::post('/sponsor', 'IndexController@sponsor');
+
 
 //------------------------------分隔线-------------------------------------------------//
 
@@ -109,9 +115,6 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/member/message/delete/{message_id}', 'MessageController@destroy');
 
     //------------------------------分隔线-------------------------------------------------//
-
-    //搜索导航
-    Route::post('/search/slidebar', 'IndexController@searchSlidebar')->name('search_slidebar');
 });
 
 // Authentication Routes...

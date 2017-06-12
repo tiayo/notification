@@ -1,10 +1,11 @@
 <script>
     $(document).ready(function(){
         $('#more_article').click(function(){
-            counter = document.getElementById('counter').innerHTML=parseInt(document.getElementById('counter').innerHTML)+1;
+            var category = {{$category['category_id']}};
+            var counter = document.getElementById('counter').innerHTML=parseInt(document.getElementById('counter').innerHTML)+1;
             $.ajax({
                 type: "get",
-                url: "/ajax/more_article/0/"+counter,
+                url: "/ajax/more_article/"+category+"/"+counter,
                 dataType: "json",
                 success: function (sqlJson) {
                     var html = '';

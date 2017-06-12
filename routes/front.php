@@ -7,7 +7,6 @@ Route::group(['middleware' => 'article'], function () {
     Route::get('/category/{category_id}', 'FrontController@category');
 });
 
-Route::get('/article/{article_id}', 'FrontController@article')->name('article_view');
 Route::get('/ajax/login_status', 'AjaxController@loginStatus');
 Route::post('/ajax/generate_num', 'AjaxController@generate_num');
 Route::get('/search/article/{driver}/{value}/{page}', 'FrontController@search');
