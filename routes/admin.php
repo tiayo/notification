@@ -48,8 +48,5 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
         //屏蔽评论
         Route::get('/member/comment/mask/{comment_id}/{status}', 'CommentController@mask');
-
-        //搜索导航
-        Route::post('/search/slidebar', 'IndexController@searchSlidebar')->name('search_slidebar');
     });
 });
