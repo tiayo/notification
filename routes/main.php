@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/member/message/delete/{message_id}', 'MessageController@destroy');
 
     //------------------------------分隔线-------------------------------------------------//
-    
+
     //搜索导航
     Route::post('/search/slidebar', 'IndexController@searchSlidebar')->name('search_slidebar');
 });

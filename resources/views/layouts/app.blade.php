@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            {{--提示框--}}
+            {{--返回信息提示框--}}
             <div class="col-md-12 hidden" id="error_info_div" style="z-index: 2;">
                 <div class="alert fade in">
                     <a href="#" class="close" id="error_info_close" data-dismiss="alert">×</a>
@@ -51,6 +51,17 @@
                 </div>
             </div>
 
+            {{--进行中提示框--}}
+            <div class="bgc hidden"></div>
+            <div class="float hidden">
+                <h4 class="text-center">智能搜索...</h4>
+                <div class="bs-example m-callback">
+                    <div class="style-content">
+                        <img src="/images/timg.gif">
+                    </div>
+                    <p><span class="label label-warning" id="m-callback-update">您需要耐心等待一会,不要刷新页面！</span></p>
+                </div>
+            </div>
             @section('content_body')
                 {{--这里是主要内容--}}
             @show
@@ -85,7 +96,7 @@
 
             //input框回车事件
             $('#search_slidebar').bind('keypress',function(event){
-                if(event.keyCode === 13)
+                if(event.keyCode == 13)
                 {
                     search_run();
                 }
@@ -102,10 +113,9 @@
 
                 var search_icon = $('#search-icon');
 
-                if (typeof search_icon.attr('slidebar') === 'undefined' || search_icon.attr('slidebar') === 'close') {
+                if (typeof search_icon.attr('slidebar') === 'undefined') {
                     search_icon.attr('slidebar', 'open')
                 } else {
-                    search_icon.attr('slidebar', 'close');
                     slidebar_axios();
                 }
             }
@@ -117,12 +127,15 @@
 
             //搜索请求与结果执行
             function slidebar_axios() {
+                //展示进度条
+                $('.bgc').removeClass('hidden');
+                $('.float').removeClass('hidden');
+
                 axios.post('{{ route('search_slidebar') }}', {
                     _token:'{{csrf_token()}}',
                     search_slidebar:$('#search_slidebar').val()
                 })
                     .then(function (response) {
-
                         var error_info_div = '#error_info_div';
 
                         if (response.data.array_key === false) {
@@ -147,10 +160,21 @@
                             var value_$ = $('#'+value);
                             value_$.removeClass('close-item');
                             value_$.addClass('open-item');
+
+                            //关闭进度条
+                            $('.bgc').addClass('hidden');
+                            $('.float').addClass('hidden');
+                            $('body').animate({ scrollTop: 0 }, 500);
+
                         });
                     })
                     .catch(function (error) {
                         console.log(error.respon);
+                        //关闭进度条
+                        $('.bgc').addClass('hidden');
+                        $('.float').addClass('hidden');
+                        $('body').animate({ scrollTop: 0 }, 500);
+
                     });
             }
         })
