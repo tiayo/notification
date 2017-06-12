@@ -44,7 +44,7 @@ class ArticleService
      * 验证用户是否可以操作本条文章
      * 验证失败抛错误
      *
-     * @param $task_id
+     * @param $article_id
      * @return mixed
      */
     public function verfication($article_id)

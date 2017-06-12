@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Facades\Verfication;
 use App\Repositories\OrderRepositories;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class IndexService
 {
@@ -57,18 +58,24 @@ class IndexService
     */
     public function searchSlidebar($keyword)
     {
+        //超过15个字符自动裁剪（一个中文和一个英文均算1）
+        if (mb_strlen($keyword) > 15) {
+            $keyword = $this->mb_str_split($keyword, 15);
+        }
+
         //初始化
         $key_level = [];
 
         //获取配置文件
-        $array = config('slidebar.slidebar');
+        $original = config('slidebar.original');
+        $array = json_decode(Redis::get('slidebar_generate'), true)['generate'];
 
         //搜索
         $key = $this->searchSlidebarHandle($array, $keyword);
 
         //如果搜索没有结果，返回false
         if (!$key) {
-            return ['key_level' => false, 'array_key' => false];
+            return ['info' => '抱歉，未找到合适的结果！', 'key_level' => false, 'array_key' => false];
         }
 
         //切割
@@ -81,7 +88,7 @@ class IndexService
         }
 
         //返回结果
-        return ['key_level' => $key_level, 'array_key' => $key];
+        return ['info' => '为您智能匹配到"'.$original[$key].'"', 'key_level' => $key_level, 'array_key' => $key];
     }
 
     /**
@@ -107,7 +114,7 @@ class IndexService
     }
 
     /**
-     * 数组模糊搜索
+     *  数组模糊搜索，成功返回符合的数组项键值
      *
      * @param $array
      * @param $keyword
@@ -115,16 +122,17 @@ class IndexService
      */
     public function searchSlidebarHandle($array, $keyword)
     {
+        //初始化
+        $result = [];
+
+        //循环查找
         foreach ($array as $key => $value) {
-            $length = mb_strlen($keyword,'UTF8');
-            $arr = $this->mb_str_split($value, $length);
-            foreach ($arr as $item) {
-                if ($item == $keyword) {
-                    return $key;
-                }
-            }
+            $keyword_array = $this->mb_str_split($keyword);
+            $result[$key] = count(array_intersect($keyword_array, $value));
         }
-        return false;
+
+        //获取并返回符合项的键值
+        return array_keys($result, max($result))[0] ?? false;
     }
 
     /**
@@ -135,7 +143,7 @@ class IndexService
      * @param string $charset
      * @return array|bool
      */
-    public function mb_str_split($str, $split_length=1, $charset='UTF-8'){
+    public function mb_str_split($str, $split_length = 1, $charset = 'UTF-8'){
         if (func_num_args() == 1) {
             return preg_split('/(?<!^)(?!$)/u', $str);
         }

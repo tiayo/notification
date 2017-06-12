@@ -84,6 +84,8 @@ class FrontController extends Controller
 
     /**
      * 文章页面视图
+     * 权限判断,只能访问自己发布的文章
+     * 管理员除外
      *
      * @param $article_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -91,7 +93,11 @@ class FrontController extends Controller
     public function article($article_id)
     {
         //获取文章信息
-        $article = $this->front->findOneAndCategoryUser($article_id);
+        try{
+            $article = $this->front->findOneAndCategoryUser($article_id);
+        } catch (\Exception $e) {
+            return $this->jsonResponse($e->getMessage(), 403);
+        }
 
         //获取5条置顶消息
         $article_top = $this->front->getArticleTopDescCategory($article['category'], 5);

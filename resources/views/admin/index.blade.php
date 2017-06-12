@@ -50,7 +50,7 @@
                                 </a>
                             </div>
                             <div class="panel widgetbox wbox-2 bg-darker-2 color-light">
-                                <a href="#">
+                                <a href="{{ route('message_received_page_simple') }}">
                                     <div class="panel-content">
                                         <div class="row">
                                             <div class="col-xs-4">
@@ -58,7 +58,7 @@
                                             </div>
                                             <div class="col-xs-8">
                                                 <h4 class="subtitle color-lighter">未读信息</h4>
-                                                <h1 class="title color-light"> 1</h1>
+                                                <h1 class="title color-light">{{$message->meNoRead()}}</h1>
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                                 </a>
                             </div>
                             <div class="panel widgetbox wbox-2 bg-darker-4 color-light">
-                                <a href="/admin/sponsor">
+                                <a href="{{ route('sponsor') }}">
                                     <div class="panel-content">
                                         <div class="row">
                                             <div class="col-xs-4">
@@ -201,11 +201,11 @@
 
 @section('script')
     @parent
-    <script src="vendor/nano-scroller/nano-scroller.js"></script>
-    <script src="javascripts/template-script.min.js"></script>
-    <script src="javascripts/template-init.min.js"></script>
-    <script src="vendor/toastr/toastr.min.js"></script>
-    <script src="vendor/chart-js/chart.min.js"></script>
-    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
-    <script src="javascripts/examples/dashboard.js"></script>
+    <script src="/vendor/nano-scroller/nano-scroller.js"></script>
+    <script src="/javascripts/template-script.min.js"></script>
+    <script src="/javascripts/template-init.min.js"></script>
+    <script src="/vendor/toastr/toastr.min.js"></script>
+    <script src="/vendor/chart-js/chart.min.js"></script>
+    <script src="/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="/javascripts/examples/dashboard.js"></script>
 @endsection
