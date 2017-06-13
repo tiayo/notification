@@ -4,7 +4,7 @@
 <div class="page-header" xmlns="http://www.w3.org/1999/html">
     <div class="leftside-header">
         <div class="logo">
-            <a href="/" class="on-click">
+            <a href="/admin" class="on-click">
                 <img alt="logo" src="/images/logo.png" />
             </a>
         </div>

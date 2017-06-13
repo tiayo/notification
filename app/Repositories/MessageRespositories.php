@@ -46,7 +46,7 @@ class messageRespositories
             ->get();
     }
 
-    public function list_message_send($page, $num)
+    public function listMessageSend($page, $num)
     {
         return $this->message
             ->skip(($page-1)*$num)
@@ -62,7 +62,6 @@ class messageRespositories
         return $this->message
             ->select($data)
             ->where($option, $value)
-            ->where('status', '<>', '2')
             ->first();
     }
 

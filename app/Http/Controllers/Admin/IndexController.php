@@ -26,7 +26,7 @@ class IndexController extends Controller
      * 显示后台框架
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(UserRepositories $user, TaskService $task, OrderRepositories $order)
+    public function index(UserRepositories $user, TaskService $task, OrderRepositories $order, MessageService $message)
     {
         //验证是否管理员true,false
         $admin = $this->index->admin();
@@ -40,12 +40,16 @@ class IndexController extends Controller
         //获取3条订单
         $order_list = $order->userShow(1, 3);
 
+        //获取五条收到的消息
+        $message_list = $message->userReceived(1, 5);
+
         return view('admin.index', [
             'user_name' => Auth::user()['name'],
             'admin' => $admin,
             'next_login_time' => $next_login_time ? : date('Y-m-d H:i:s'),
             'tasks' => $task_list,
             'orders' => $order_list,
+            'message_list' => $message_list,
             'status' => app('App\Http\Controllers\Controller'),
             'message' => app('App\Service\MessageService'),
         ]);

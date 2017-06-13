@@ -109,7 +109,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/member/message/page/send/{page}', 'MessageController@indexSend')->name('message_send_page');
 
     //设置留言状态
-    Route::get('/member/message/read/{target_id}/{status}', 'MessageController@read');
+    Route::get('/member/message/read/{message_id}/{status}', 'MessageController@read');
 
     //删除
     Route::get('/member/message/delete/{message_id}', 'MessageController@destroy');
