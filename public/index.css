@@ -893,10 +893,10 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     width: 1000px;
     margin: 0 auto;
     padding-top: 40px;
-    font-size: 13px;
+    font-size: 15px;
 }
 .footinner .fotlogo {
-    width: 200px;
+    width: 35%;
     float: left;
     display: inline;
     position: relative;
@@ -918,7 +918,9 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     overflow: hidden;
 }
 .fotlogo dd {
+    float: left;
     line-height: 1.8em;
+    margin: 0 0.5em 0 0.5em;
 }
 .footinner a {
     color: #333;
@@ -934,7 +936,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     top: 0;
 }
 .footinner .fotmap {
-    width: 401px;
+    width: 25%;
     float: left;
     display: inline;
     position: relative;
@@ -957,7 +959,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     top: -30px;
 }
 .footinner .fotweek {
-    width: 230px;
+    width: 23%;
     float: left;
     display: inline;
     min-height: 157px;
@@ -998,7 +1000,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     line-height: 25px;
 }
 .footinner .fothr {
-    width: 155px;
+    width: 15%;
     float: right;
     display: inline;
     min-height: 157px;

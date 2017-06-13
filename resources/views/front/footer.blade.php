@@ -5,15 +5,17 @@
             <div class="fotlogo">
                 <dl>
                     <dt><a href="/">随享社区</a></dt>
-                    <dd class="clearfix"><a href="javascript:void();">加入我们</a></dd>
-                    <dd class="clearfix"><a href="/article/version.html" class="ml30">更新日志</a></dd>
-                    <dd class="clearfix"><a href="/article/retrieval.html" class="ml30">检索目录</a></dd>
-                    <dd class="clearfix"><a href="/sitemap.xml">网站地图</a></dd>
+                    <dd><a href="/wiki" target="_blank">开发文档</a></dd>
+                    <dd><a href="/version" target="_blank">更新日志</a></dd>
+                    <dd><a href="/article/retrieval.html" target="_blank">检索目录</a></dd>
+                    <dd><a href="/sitemap.xml" target="_blank">网站地图</a></dd>
+                    <dd>邮箱：service@tiayo.com</dd>
+                    <dd>Github：<a href="https://github.com/tiayo" target="_blank">https://github.com/tiayo</a> </dd>
                 </dl>
                 <i class="line"></i>
             </div>
             <div class="fotmap">
-                <dl style="width:300px;">
+                <dl>
                     <dt>推荐</dt>
                     {!! app('\App\Service\CategoryService')->categoryHtml('<dd><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
                 </dl>
