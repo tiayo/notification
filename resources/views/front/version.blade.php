@@ -48,7 +48,7 @@
 
         </div>
 
-        <p class="mt15 ml25 newstime ">更新时间：2017-04-06
+        <p class="mt15 ml25 newstime ">更新时间：2017-06-13
 
         </p>
 
@@ -65,7 +65,7 @@
             <div class="neirongkaishi" id="neirongkaishi">
                 <div class="section">
                     <h2>V5.0版本</h2>
-                    <h4>时间：2017.01.05</h4>
+                    <h4>时间：2017.06.13</h4>
                     <p>
                         <span>使用laravel框架重新开发，并进行长期更新支持。5.0版本有功能：</span>
                         <span>1、文章内容管理模块</span>
