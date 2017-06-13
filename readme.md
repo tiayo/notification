@@ -1,12 +1,11 @@
-<p align="center"><img src="https://n.tiayo.com/images/blue_logo.png"></p>
-
-## 关于 随享V5.0
+<img src="https://n.tiayo.com/images/blue_logo.png">
+ 
+## 关于 随享V5.0  
 
  随享V5.0是一套集内容管理、任务管理、支付系统在内的全站系统，力求代码简洁、高效。
  
-#### 环境要求：
-
-````
+### 环境要求    
+```
 php >= 7.0
 
 mysql >= 5.7
@@ -14,11 +13,13 @@ mysql >= 5.7
 redis-cli >= 3.2.5
 
 supervisord >= 3.0
-````
-#### 文档
+```
+
+### 文档  
+
 [随享V5.0 开发文档](https://n.tiayo.com/wiki)
 
-#### 安装：
+### 安装：  
 
 一、克隆源码到本地：`git clone https://github.com/tiayo/notification.git`
 
@@ -55,13 +56,13 @@ redirect_stderr=true
 stdout_logfile= /var/log/supervisor/supervisord.log
 ````
 
-#### 环境配置教程
+### 环境配置教程  
 
 [centos安装LNMP环境](https://n.tiayo.com/article/linux/1/4/4/144.html)
 
 [centos安装与配置supervisor](https://n.tiayo.com/article/linux/2/1/5/215.html)
 
-#### 部分错误代码
+### 部分错误代码  
 
 ````
 1001 管理员权限错误
@@ -79,6 +80,6 @@ stdout_logfile= /var/log/supervisor/supervisord.log
 1007 消息没有操作权限
 ````
 
-#### 许可
+### 许可  
 
 随享V5.0是根据[MIT license](http://opensource.org/licenses/MIT)开发的开源软件。
