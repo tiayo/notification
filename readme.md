@@ -1,4 +1,4 @@
-<p align="center"><img src="https://n.tiayo.com/images/logo.png"></p>
+<p align="center"><img src="https://n.tiayo.com/images/blue_logo.png"></p>
 
 ## 关于 随享V5.0
 
