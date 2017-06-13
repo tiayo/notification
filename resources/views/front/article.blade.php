@@ -47,21 +47,18 @@
             <div id="newsECommerceInfo"></div>
             <div class="newslinks">
                 <h4>作者信息</h4>
-                <dl id="relatedInfos">
+                <dl id="relatedInfos-writer">
                     <dd style=""><img src="{{$article['avatar']}}" width="96"/>
                         <h3>{{$article['real_name']}}</h3>
                         <p>城市：{{$article['city']}}</p>
                         <p>邮箱:<small>{{$article['email']}}</small></p>
-                        @if (Auth::id() != $article['user_id'])
-                        <p>发消息：<a href="{{route('message_send_view', ['target_id' => $article['user_id']])}}" target="_blank">给他留言</a></p>
-                        @endif
                     </dd>
                 </dl>
             </div>
             @if (!empty($me))
             <div class="newslinks">
                 <h4>我的信息</h4>
-                <dl id="relatedInfos">
+                <dl id="relatedInfos-me">
                     <dd style=""><img src="{{$me['avatar']}}" width="96"/>
                         <h3>{{$me['real_name']}}</h3>
                         <p>城市：{{$me['city']}}</p>
@@ -117,6 +114,7 @@
 @section('script')
     @parent
     @include('front.login_status')
+    @include('front.user_is_identical')
     <script src="/ueditor/ueditor.parse.min.js"></script>
     <script type="text/javascript">
         window.onload=function(){
@@ -126,4 +124,7 @@
         };
     </script>
     @include('front.article_js')
+    <script>
+
+    </script>
 @endsection
