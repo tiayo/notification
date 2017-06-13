@@ -76,8 +76,8 @@
                                             </div>
 
                                         </div>
-                                        <input id="sfdq_num" name="address1[]" type="hidden" value="{{$address[0] or ''}}" />
-                                        <input id="csdq_num" name="address1[]" type="hidden" value="{{$address[1] or ''}}" />
+                                        <input id="sfdq_num" name="address1[]" type="hidden" value="{{$address[1] ?? 0}}" />
+                                        <input id="csdq_num" name="address1[]" type="hidden" value="{{$address[1] ?? 0}}" />
                                         <input id="sfdq_tj" name="address1[]" type="hidden" value="" />
                                         <input id="csdq_tj" name="address1[]" type="hidden" value="" />
                                         <input id="qydq_tj" name="address1[]" type="hidden" value="" />
