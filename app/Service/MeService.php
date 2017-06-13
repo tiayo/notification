@@ -50,8 +50,10 @@ class MeService
         $address_code = explode('/', $profile['address_code']);
 
         //组合数组
-        $address[0] = $address_code[0] ?? null;
-        $address[1] = $address_code[1] ?? null;
+        if (!empty($address_code)) {
+            $address[0] = $address_code[0] ?? null;
+            $address[1] = $address_code[1] ?? null;
+        }
 
         if (count($address_array) == 2) {
             $address[2] = $address_array[0];
