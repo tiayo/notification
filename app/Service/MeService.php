@@ -44,15 +44,21 @@ class MeService
     public function address($profile)
     {
         $address = [];
+        $address_code = [];
+        $address_array = [];
 
         //切割数据
-        $address_array = explode('/', $profile['address1']);
-        $address_code = explode('/', $profile['address_code']);
+        if (!empty($profile['address1'])) {
+            $address_array = explode('/', $profile['address1']);
+        }
+        if (!empty($profile['address_code'])) {
+            $address_code = explode('/', $profile['address_code']);
+        }
 
         //组合数组
-        if (strlen($address_code[0]) != 0) {
-            $address[0] = $address_code[0] ?? null;
-            $address[1] = $address_code[1] ?? null;
+        if (!empty($address_code)) {
+            $address[0] = $address_code[0];
+            $address[1] = $address_code[1];
         }
 
         if (count($address_array) == 2) {
