@@ -37,7 +37,7 @@ class TaskCheckService
         $data = null;
 
         for ($i=1; $i<=$num; $i++) {
-            $data = $this->task->findTastCheck($i, $serch_num);
+            $data = $this->task->findTaskCheck($i, $serch_num);
             if (!empty($data)) {
                 $this->handle($data);
             }

@@ -5,6 +5,7 @@
 @section('link')
     @parent
     <link rel="stylesheet" href="/vendor/data-table/media/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/css/message-float.css">
     <link rel="stylesheet" href="/stylesheets/css/style.css">
 @endsection
 
@@ -52,21 +53,22 @@
                                                 </thead>
                                                 <tbody>
                                                 @foreach ($list_message as $row)
-                                                    <tr role="row" class="odd @if ($row['status'] == 1) color-danger @endif ">
+                                                    <tr role="row" id="message-id{{$row['message_id']}}" num="{{$row['message_id']}}" class="odd @if ($row['status'] == 1) color-danger @endif ">
                                                         <td>{{$row['message_id']}}</td>
-                                                        <td>{{$row['content']}}</td>
-                                                        <td>{{$message::find($row['message_id'])->userProfile['real_name']}}</td>
+                                                        <td>{{str_limit($row['content'], 30)}}</td>
+                                                        <td class="hidden" id="message-id-content{{$row['message_id']}}">{{$row['content']}}</td>
+                                                        <td id="message-id-send-user">{{$message::find($row['message_id'])->userProfile['real_name']}}</td>
                                                         <td>{{$message::where('target_id', $row['target_id'])->first()->targetProfile['real_name']}}</td>
                                                         <td>{{$row['created_at']}}</td>
-                                                        <td>{{$judge::messageStatus($row['status'])}}</td>
-                                                        <td>
+                                                        <td id="message-id-status">{{$judge::messageStatus($row['status'])}}</td>
+                                                        <td id="message-id-statusurl" url="/admin/member/message/read/{{$row['message_id']}}/">
                                                             @if ($row['user_id'] != Auth::id())
                                                                 @if ($row['status'] == 1)
-                                                                    <a href="/admin/member/message/read/{{$row['target_id']}}/2" class="tablelink">标记为已读</a>
+                                                                    <a href="/admin/member/message/read/{{$row['message_id']}}/2" class="tablelink">标记为已读</a>
                                                                 @elseif ($row['status'] == 2)
-                                                                    <a href="/admin/member/message/read/{{$row['target_id']}}/1" class="tablelink">标记为未读</a>
+                                                                    <a href="/admin/member/message/read/{{$row['message_id']}}/1" class="tablelink">标记为未读</a>
                                                                 @endif
-                                                                    <a href="/admin/member/message/send/{{$row['user_id']}}" class="tablelink">回复</a>
+                                                                    <a id="message-id-reply" href="/admin/member/message/send/{{$row['user_id']}}" class="tablelink">回复</a>
                                                             @endif
                                                             <a href="/admin/member/message/delete/{{$row['message_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;">删除消息</a>
                                                         </td>
@@ -100,6 +102,17 @@
                     </div>
                 </div>
             </div>
+            {{--显示消息全部内容--}}
+            <div class="message-bgc hidden"></div>
+            <div class="message-float hidden">
+                <h5 class="text-center" id="message-float-send-user"></h5>
+                <p id="message-float-content"></p>
+                <p class="text-center">
+                    <button class="btn btn-wide btn-loading btn-primary" id="message-float-reply">回复</button>
+                    <button class="btn btn-wide btn-loading btn-primary" id="message-float-no">设为未读状态</button>
+                    <button class="btn btn-wide btn-loading btn-primary" id="message-float-close">关闭</button>
+                </p>
+            </div>
 @endsection
 
 @section('script')
@@ -109,4 +122,61 @@
     <script src="/javascripts/template-init.min.js"></script>
     <script src="/vendor/data-table/media/js/jquery.dataTables.min.js"></script>
     <script src="/vendor/data-table/media/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            //消息框显示
+            $('tbody tr').click(function () {
+                message_id_parent = $(this).attr('id');
+                var message_id_num = $(this).attr('num');
+                $('.message-bgc').removeClass('hidden');
+                $('.message-float').removeClass('hidden');
+                $('#message-float-content').html($('#message-id-content'+message_id_num).html());
+                $('#message-float-send-user').html('来自:'+$('#message-id-send-user').html());
+
+                //设置文章为已读
+                already_read();
+            });
+
+            //回复按钮
+            $('#message-float-reply').click(function () {
+                window.location.href = $('#message-id-reply').attr('href');
+            });
+
+            //设置文章未读
+            $('#message-float-no').click(function () {
+                $('.message-bgc').addClass('hidden');
+                $('.message-float').addClass('hidden');
+                no_read();
+            });
+            
+            //消息框关闭1
+            $('.message-bgc').click(function () {
+                $('.message-bgc').addClass('hidden');
+                $('.message-float').addClass('hidden');
+                $('#'+message_id_parent).removeClass('color-danger');
+                $('#message-id-status').html('已读');
+            });
+            //消息框关闭2
+            $('#message-float-close').click(function () {
+                $('.message-bgc').addClass('hidden');
+                $('.message-float').addClass('hidden');
+                $('#'+message_id_parent).removeClass('color-danger');
+                $('#message-id-status').html('已读');
+            });
+
+            //设置文章为已读
+            function already_read() {
+                axios.get($('#message-id-statusurl').attr('url')+'2');
+            }
+
+            //设置文章为未读
+            function no_read() {
+                $('#'+message_id_parent).addClass('color-danger');
+                $('#message-id-status').html('未读');
+
+                axios.get($('#message-id-statusurl').attr('url')+'1')
+            }
+        })
+    </script>
 @endsection

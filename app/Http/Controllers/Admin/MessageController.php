@@ -50,7 +50,7 @@ class MessageController extends Controller
     public function indexSend($page)
     {
         //所有发出的消息
-        $list_message = $this->message->list_message_send($page, Config('site.page'));
+        $list_message = $this->message->listMessageSend($page, Config('site.page'));
 
         //消息数量
         $count = $this->message->count('user_id');
@@ -101,11 +101,11 @@ class MessageController extends Controller
         return redirect()->route('message_send_page', ['page' => 1]);
     }
 
-    public function read($target_id, $status)
+    public function read($message_id, $status)
     {
         //业务执行
         try{
-            $this->message->read($target_id, $status);
+            $this->message->read($message_id, $status);
         } catch (\Exception $e) {
             return response($e->getMessage());
         }

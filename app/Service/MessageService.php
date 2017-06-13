@@ -44,9 +44,9 @@ class MessageService
      * @param $task_id
      * @return mixed
      */
-    public function verfication($target_id)
+    public function verfication($message_id)
     {
-        return Verfication::message($this->message->findOne('target_id', $target_id));
+        return Verfication::message($this->message->findOne('message_id', $message_id));
     }
 
     /**
@@ -74,10 +74,10 @@ class MessageService
      * @param $num 每页条数
      * @return mixed
      */
-    public function list_message_send($page, $num)
+    public function listMessageSend($page, $num)
     {
         return $this->message
-            ->list_message_send($page, $num)
+            ->listMessageSend($page, $num)
             ->toArray();
     }
 
@@ -149,10 +149,10 @@ class MessageService
      * @param $Message_id
      * @return mixed
      */
-    public function read($target_id, $status)
+    public function read($message_id, $status)
     {
         //权限验证
-        if (!$this->verfication($target_id)) {
+        if (!$this->verfication($message_id)) {
             throw new \Exception('您没有权限访问（代码：1007）！', 403);
         }
 
@@ -165,7 +165,7 @@ class MessageService
         $value['status'] = $status;
 
         //写入数据库
-        return $this->message->update($value, $target_id);
+        return $this->message->update($value, $message_id);
     }
 
     /**

@@ -134,27 +134,18 @@
                                     <div class="widget-list list-to-do">
                                         <h4 class="list-title">我的消息</h4>
                                         <button class="add-item btn btn-o btn-primary btn-xs">
-                                            <a href="/admin/sponsor"> <i class="fa fa-plus"></i></a>
+                                            <a href="{{ route('message_received_page_simple') }}">查看</a>
                                         </button>
                                         <ul>
+                                            @foreach ($message_list as $message)
                                             <li>
                                                 <div class="checkbox-custom checkbox-primary">
-                                                    <input type="checkbox" id="check-h1" value="option1">
-                                                    <label for="check-h1">Accusantium eveniet ipsam neque</label>
+                                                    <label for="check-h1">
+                                                        {{$message['real_name'].':'.str_limit($message['content'], 80)}}
+                                                    </label>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <div class="checkbox-custom checkbox-primary">
-                                                    <input type="checkbox" id="check-h2" value="option1" checked>
-                                                    <label for="check-h2">Lorem ipsum dolor sit</label>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="checkbox-custom checkbox-primary">
-                                                    <input type="checkbox" id="check-h3" value="option1">
-                                                    <label for="check-h3">Dolor eligendi in ipsum sapiente</label>
-                                                </div>
-                                            </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
