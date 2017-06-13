@@ -124,7 +124,4 @@
         };
     </script>
     @include('front.article_js')
-    <script>
-
-    </script>
 @endsection
