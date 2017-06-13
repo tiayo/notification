@@ -167,6 +167,9 @@
                             $('.float').addClass('hidden');
                             $('body').animate({ scrollTop: 0 }, 500);
 
+                            //手机端展示
+                            $('html').addClass('left-sidebar-open');
+
                         });
                     })
                     .catch(function (error) {
