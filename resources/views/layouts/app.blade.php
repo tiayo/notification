@@ -153,7 +153,7 @@
                         $.each(response.data.key_level,function(index, value){
 
                             if (index === 0) {
-                                $('.has-child-item').removeClass('open-item active-item');
+                                $('.has-child-item').removeClass('open-item active-item').addClass('close-item');;
                                 $('#nav_0').removeClass('open-item active-item');
                                 $('#'+value+' li').removeClass('open-item active-item');
                             }
