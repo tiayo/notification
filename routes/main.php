@@ -70,6 +70,9 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //删除文章
     Route::get('/article/delete/{article_id}', 'ArticleController@destroy');
 
+    //后台搜索文章
+    Route::get('/article/search/view', 'ArticleController@search')->name('admin_article_search');
+
     //------------------------------分隔线-------------------------------------------------//
 
     //评论显示

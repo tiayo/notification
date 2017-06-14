@@ -208,4 +208,42 @@ class ArticleController extends Controller
 
         return redirect()->route('article_page', ['page' => 1]);
     }
+
+    /**
+     * 搜索列表
+     *
+     * @param $page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search()
+    {
+        //获取参数
+        $keyword = $this->request->get('keyword');
+        $page = $this->request->get('page');
+
+        //获取业务数据
+        $data = $this->article->show($page, Config('site.page'), $keyword);
+
+        //所有文章
+        $list_article = $data['data'] ?? [];
+
+        //文章数量
+        $count = $data['count'];
+
+        // 最多页数
+        $max_page = ceil($count/Config('site.page'));
+
+        //判断管理员
+        $admin = IndexService::admin();
+
+        return view('home.article_list',[
+            'list_article' => $list_article,
+            'count' => ($count <= 5) ? $count : 5,
+            'page' => $page,
+            'max_page' => $max_page,
+            'all_category' => $this->all_category,
+            'admin' => $admin,
+            'judge' => 'App\Http\Controllers\Controller',
+        ]);
+    }
 }

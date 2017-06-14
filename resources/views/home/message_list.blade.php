@@ -108,7 +108,7 @@
                 <h5 class="text-center" id="message-float-send-user"></h5>
                 <p id="message-float-content"></p>
                 <p class="text-center">
-                    @if ($row['user_id'] != Auth::id())
+                    @if ($type == '收到的消息')
                     <button class="btn btn-wide btn-loading btn-primary" id="message-float-reply">回复</button>
                     <button class="btn btn-wide btn-loading btn-primary" id="message-float-no">设为未读状态</button>
                     @endif
