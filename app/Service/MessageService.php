@@ -59,11 +59,9 @@ class MessageService
      */
     public function received($page, $num)
     {
-        if (!$this->isAdmin()) {
-            return $this->userReceived($page, $num);
-        }
-
-        return $this->adminReceived($page, $num);
+        return $this->message
+            ->findMulti($page, $num)
+            ->toArray();
     }
 
     /**
@@ -78,34 +76,6 @@ class MessageService
     {
         return $this->message
             ->listMessageSend($page, $num)
-            ->toArray();
-    }
-
-    /**
-     * 普通用户获取消息列表
-     *
-     * @param $page 当前页数
-     * @param $num 每页条数
-     * @return array
-     */
-    public function userReceived($page, $num)
-    {
-        return $this->message
-            ->findMulti($page, $num)
-            ->toArray();
-    }
-
-    /**
-     * 管理员获取消息列表
-     *
-     * @param $page 当前页数
-     * @param $num 每页条数
-     * @return array
-     */
-    public function adminReceived($page, $num)
-    {
-        return $task = $this->message
-            ->getAll($page, $num)
             ->toArray();
     }
 
