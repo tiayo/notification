@@ -41,7 +41,7 @@ class IndexController extends Controller
         $order_list = $order->userShow(1, 3);
 
         //获取五条收到的消息
-        $message_list = $message->userReceived(1, 5);
+        $message_list = $message->received(1, 5);
 
         return view('admin.index', [
             'user_name' => Auth::user()['name'],
