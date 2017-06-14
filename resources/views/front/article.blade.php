@@ -1,6 +1,6 @@
 @extends('layouts.article')
 @section('title', $article['title'])
-@section('description', '随享校园社区是基于祥景CMS架构的一套分享php学习之路的网站,大量常用的代码和常遇到的问题不断更新中.')
+@section('description', $article['abstract'])
 
 @section('link')
     <link href="/index.css" rel="stylesheet" />
