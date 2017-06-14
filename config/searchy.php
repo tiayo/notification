@@ -12,6 +12,10 @@ return [
             'class' => '\App\Service\SearchExactMatcher',
         ],
 
+        'admin_article' => [
+            'class' => '\App\Service\SearchInStringMatcher',
+        ],
+
         'en' => [
             'class' => 'TomLingham\Searchy\SearchDrivers\FuzzySearchDriver',
         ],

@@ -21,8 +21,7 @@ class WxpayController extends Controller
                                 OrderRepositories $order,
                                 RefundRepositories $refund,
                                 WxpayService $wxpay,
-                                PaymentCheckService $payment
-    )
+                                PaymentCheckService $payment)
     {
         $this->request = $request;
         $this->order = $order;
@@ -45,9 +44,7 @@ class WxpayController extends Controller
             $order = $this->order->findOne('order_id', $order_id);
         }
 
-
-            $array = $this->wxpay->Pay($post, $order);
-
+        $array = $this->wxpay->Pay($post, $order);
 
         //电脑扫码支付页面
         if ($array['type'] = 'pagePay') {

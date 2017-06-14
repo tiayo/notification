@@ -1,7 +1,7 @@
 <!DOCTYPE html Public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>{{config('site.title')}}-@yield('title')</title>
+    <title>@yield('title')-{{config('site.title')}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="Keywords" content="随享,随享校园社区,随享笔记本,随享记事本,祥景CMS">
     <meta name="Description" content="@yield('description')">

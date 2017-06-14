@@ -8,6 +8,7 @@ use App\Task;
 use App\Facades\Verfication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use TomLingham\Searchy\Facades\Searchy;
 
 
 class ArticleService
@@ -60,13 +61,13 @@ class ArticleService
      * @param $num 每页条数
      * @return mixed
      */
-    public function show($page, $num)
+    public function show($page, $num, $keyword = null)
     {
         if (!$this->isAdmin()) {
-            return $this->userShow($page, $num);
+            return $this->userShow($page, $num, $keyword);
         }
 
-        return $this->adminShow($page, $num);
+        return $this->adminShow($page, $num, $keyword);
     }
 
     /**
@@ -76,11 +77,24 @@ class ArticleService
      * @param $num 每页条数
      * @return array
      */
-    public function userShow($page, $num)
+    public function userShow($page, $num, $keyword = null)
     {
-        return $this->article
-            ->findMulti('user_id', Auth::id(), $page, $num)
-            ->toArray();
+        if (empty($keyword)) {
+            return $this->article
+                ->findMulti('user_id', Auth::id(), $page, $num)
+                ->toArray();
+        } else {
+            $result = Searchy::driver('admin_article')
+                ->article('title')
+                ->query($keyword)
+                ->getQuery()
+                ->where('user_id', Auth::id())
+                ->orderBy('article_id', 'desc')
+                ->get()
+                ->toArray();
+
+            return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
+        }
     }
 
     /**
@@ -90,11 +104,50 @@ class ArticleService
      * @param $num 每页条数
      * @return array
      */
-    public function adminShow($page, $num)
+    public function adminShow($page, $num, $keyword = null)
     {
-        return $task = $this->article
-            ->getAll($page, $num)
-            ->toArray();
+        if (empty($keyword)) {
+            return $task = $this->article
+                ->getAll($page, $num)
+                ->toArray();
+
+        } else {
+            $result = Searchy::driver('admin_article')
+                ->article('title')
+                ->query($keyword)
+                ->getQuery()
+                ->orderBy('article_id', 'desc')
+                ->get()
+                ->toArray();
+
+            return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
+        }
+    }
+
+    /**
+     * 处理后台文章搜索数据
+     *
+     * @param $page
+     * @param $num
+     * @param $result
+     * @return array|null
+     */
+    public function adminArticleSearch($page, $num, $result)
+    {
+        if (empty($result)) {
+            return null;
+        }
+
+        $article_list = [];
+
+        $article = $this->object_to_array(array_slice($result, ($page-1)*$num, $num));
+
+        foreach ($article as $item) {
+            $item['name'] = $this->category->current($item['category'])['name'];
+            $article_list[] = $item;
+        }
+
+        return $article_list;
     }
 
     /**
@@ -341,5 +394,21 @@ class ArticleService
 
         //权限验证通过
         $this->article->destroy('article_id', $article_id);
+    }
+
+    /**
+     * object转array数组
+     *
+     * @param $obj
+     * @return array
+     */
+    public function object_to_array($obj){
+        $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
+        $arr = null;
+        foreach($_arr as $key=>$val){
+            $val = (is_array($val))||is_object($val) ? $this->object_to_array($val) : $val;
+            $arr[$key] = $val;
+        }
+        return $arr;
     }
 }

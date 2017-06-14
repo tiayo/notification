@@ -19,6 +19,24 @@
             <h4 class="section-subtitle"><b>我的文章</b></h4>
             <div class="panel">
                 <div class="panel-content">
+                    <form method="get" action="{{ route('admin_article_search') }}">
+                        <div class="row pt-md">
+                            <div class="form-group col-sm-9 col-lg-10">
+                                            <span class="input-with-icon">
+                                                <input type="text" class="form-control" name="keyword" id="lefticon" placeholder="输入文章标题关键字...">
+                                                <input type="hidden" name="page" value="1">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                            </div>
+                            <div class="form-group col-sm-3  col-lg-2 ">
+                                <button type="submit" class="btn btn-primary btn-block">搜索文章</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-content">
                     <div class="table-responsive">
                         <div id="basic-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                             <div class="row">

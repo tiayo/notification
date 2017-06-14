@@ -55,20 +55,20 @@
                                                 @foreach ($list_message as $row)
                                                     <tr role="row" id="message-id{{$row['message_id']}}" num="{{$row['message_id']}}" class="odd @if ($row['status'] == 1) color-danger @endif ">
                                                         <td>{{$row['message_id']}}</td>
-                                                        <td>{{str_limit($row['content'], 30)}}</td>
+                                                        <td id="message-id-show">{{str_limit($row['content'], 30)}}</td>
                                                         <td class="hidden" id="message-id-content{{$row['message_id']}}">{{$row['content']}}</td>
-                                                        <td id="message-id-send-user">{{$message::find($row['message_id'])->userProfile['real_name']}}</td>
+                                                        <td id="message-id-send-user{{$row['message_id']}}">{{$message::find($row['message_id'])->userProfile['real_name']}}</td>
                                                         <td>{{$message::where('target_id', $row['target_id'])->first()->targetProfile['real_name']}}</td>
                                                         <td>{{$row['created_at']}}</td>
-                                                        <td id="message-id-status">{{$judge::messageStatus($row['status'])}}</td>
-                                                        <td id="message-id-statusurl" url="/admin/member/message/read/{{$row['message_id']}}/">
+                                                        <td id="message-id-status{{$row['message_id']}}">{{$judge::messageStatus($row['status'])}}</td>
+                                                        <td id="message-id-statusurl{{$row['message_id']}}" url="/admin/member/message/read/{{$row['message_id']}}/">
                                                             @if ($row['user_id'] != Auth::id())
                                                                 @if ($row['status'] == 1)
                                                                     <a href="/admin/member/message/read/{{$row['message_id']}}/2" class="tablelink">标记为已读</a>
                                                                 @elseif ($row['status'] == 2)
                                                                     <a href="/admin/member/message/read/{{$row['message_id']}}/1" class="tablelink">标记为未读</a>
                                                                 @endif
-                                                                    <a id="message-id-reply" href="/admin/member/message/send/{{$row['user_id']}}" class="tablelink">回复</a>
+                                                                    <a id="message-id-reply{{$row['message_id']}}" href="/admin/member/message/send/{{$row['user_id']}}" class="tablelink">回复</a>
                                                             @endif
                                                             <a href="/admin/member/message/delete/{{$row['message_id']}}" class="tablelink" onclick="if(confirm('删除后不可恢复，确定要删除吗？') === false)return false;">删除消息</a>
                                                         </td>
@@ -108,7 +108,7 @@
                 <h5 class="text-center" id="message-float-send-user"></h5>
                 <p id="message-float-content"></p>
                 <p class="text-center">
-                    @if ($row['user_id'] != Auth::id())
+                    @if ($type == '收到的消息')
                     <button class="btn btn-wide btn-loading btn-primary" id="message-float-reply">回复</button>
                     <button class="btn btn-wide btn-loading btn-primary" id="message-float-no">设为未读状态</button>
                     @endif
