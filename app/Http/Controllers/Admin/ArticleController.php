@@ -46,7 +46,7 @@ class ArticleController extends Controller
 
         return view('home.article_list',[
             'list_article' => $list_article,
-            'count' => ($count <= 5) ? $count : 5,
+            'count' => $count,
             'page' => $page,
             'max_page' => $max_page,
             'all_category' => $this->all_category,
@@ -238,7 +238,7 @@ class ArticleController extends Controller
 
         return view('home.article_list',[
             'list_article' => $list_article,
-            'count' => ($count <= 5) ? $count : 5,
+            'count' => $count,
             'page' => $page,
             'max_page' => $max_page,
             'all_category' => $this->all_category,
