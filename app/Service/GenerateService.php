@@ -118,7 +118,6 @@ class GenerateService
         foreach ($all_article as $article) {
             $id = $article->article_id;
             $data = $this->front->article($id)->__toString();
-            $data = $this->compressHtml($data);
             $filename = $id.'.html';
 
             //目录
@@ -153,9 +152,6 @@ class GenerateService
 
         //获取静态页面数据
         $data = $this->front->article($article_id)->__toString();
-
-        //压缩html
-        $data = $this->compressHtml($data);
 
         //文件名
         $filename = $article_id.'.html';
