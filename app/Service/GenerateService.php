@@ -41,6 +41,9 @@ class GenerateService
         //获取页面数据
         $data = $this->front->index()->__toString();
 
+        //压缩html
+        $data = $this->compressHtml($data);
+
         //首页静态路径
         $path = public_path().'/index.html';
 
@@ -79,6 +82,7 @@ class GenerateService
         foreach ($all_caregory_id as $category_id) {
             $id = $category_id->category_id;
             $data = $this->front->category($id)->__toString();
+            $data = $this->compressHtml($data);
             $filename = $id.'.html';
             $this->fwrite($path.$filename, $data);
         }
@@ -114,6 +118,7 @@ class GenerateService
         foreach ($all_article as $article) {
             $id = $article->article_id;
             $data = $this->front->article($id)->__toString();
+            $data = $this->compressHtml($data);
             $filename = $id.'.html';
 
             //目录
@@ -138,6 +143,7 @@ class GenerateService
     /**
      * 生成单篇文章
      *
+     * @param $article_id
      * @return bool
      */
     public function article_one($article_id)
@@ -147,6 +153,11 @@ class GenerateService
 
         //获取静态页面数据
         $data = $this->front->article($article_id)->__toString();
+
+        //压缩html
+        $data = $this->compressHtml($data);
+
+        //文件名
         $filename = $article_id.'.html';
 
         //生成目录
@@ -230,6 +241,7 @@ class GenerateService
 
         return true;
     }
+
     /**
      * 根据文章ID生成URL
      *
@@ -276,5 +288,44 @@ class GenerateService
         }
         $dir->close();
         return rmdir($dirname);
+    }
+
+    /**
+     * 压缩html
+     *
+     * @param $string
+     * @return mixed
+     */
+    public function compressHtml($string) {
+
+        //清除换行符
+        $string = str_replace("\r\n", '', $string);
+
+        //清除换行符
+        $string = str_replace("\n", '', $string);
+
+        //清除制表符
+        $string = str_replace("\t", '', $string);
+
+        //去掉注释标记
+        $pattern = array (
+            "/> *([^ ]*) *</",
+            "/[\s]+/",
+            "/<!--[^!]*-->/",
+            "/\" /",
+            "/ \"/",
+            "'/\*[^*]*\*/'"
+        );
+
+        $replace = array (
+            ">\\1<",
+            " ",
+            "",
+            "\"",
+            "\"",
+            ""
+        );
+
+        return preg_replace($pattern, $replace, $string);
     }
 }
