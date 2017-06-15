@@ -143,7 +143,7 @@ class WxpayController extends Controller
             return response()->json($e->getMessage());
         }
 
-        return response()->json(urlencode($url));
+        return response()->json(urlencode($url['data']));
     }
 
 }
