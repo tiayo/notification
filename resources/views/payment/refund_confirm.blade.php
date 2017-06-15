@@ -73,10 +73,10 @@
         $(document).ready(function () {
             $('#submit_form').click(function () {
                 if ('{{$action}}' == 'agree') {
-                    $('#refund_form').attr('action', '/admin/refund/action/agree');
+                    $('#refund_form').attr('action', '{{route('refund.action', ['action' => 'agree'])}}');
                     $('#refund_form').submit();
                 } else if ('{{$action}}' == 'refuse') {
-                    $('#refund_form').attr('action', '/admin/refund/action/refuse');
+                    $('#refund_form').attr('action', '{{route('refund.action', ['action' => 'refuse'])}}');
                     $('#refund_form').submit();
                 }
             })
