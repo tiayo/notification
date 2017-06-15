@@ -11,7 +11,9 @@
             $('#message-float-send-user').html('来自:'+$('#message-id-send-user'+message_id_num).html());
 
             //设置文章为已读
+            @if ($type == '收到的消息')
             already_read();
+            @endif
         });
 
         //回复按钮
