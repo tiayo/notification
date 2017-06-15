@@ -277,6 +277,7 @@ class ArticleService
 
         //构建插入数组
         $value['category'] = $category_id;
+        $value['attribute'] = $data['attribute'];
         $value['title'] = $data['title'];
         $value['abstract'] = $data['abstract'];
         $value['user_id'] = Auth::id();
