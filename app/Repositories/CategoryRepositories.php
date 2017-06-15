@@ -59,6 +59,7 @@ class CategoryRepositories
         return $this->category
             ->skip(($page-1)*$num)
             ->take($num)
+            ->where('parent_id', '<>', 0)
             ->orderBy('category_id', 'desc')
             ->get();
    }

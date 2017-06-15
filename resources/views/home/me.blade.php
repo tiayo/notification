@@ -89,7 +89,7 @@
                                     <p style="line-height: 2rem; margin: 0;">
                                         {{$order['content']}}<br>
                                         订单号:{{$order['order_number']}}<br>
-                                        <a href="/admin/order/view/{{$order['order_id']}}">
+                                        <a href="{{ route('order_view', ['order_id' => $order['order_id']]) }}">
                                             @if ($order['payment_status'] == 0)
                                                 <button type="button" class="btn btn-danger">
                                                     还未付款哦！
@@ -117,7 +117,7 @@
                                     <p style="line-height: 2rem; margin: 0;">
                                         {{$task['name']}}<br>
                                         下次提醒时间:{{$task['start_time']}} {{$task['end_time'] or ''}}<br>
-                                        <a href="/admin/task/update/{{$task['task_id']}}">
+                                        <a href="{{route('task_update', ['task' => $task['task_id']])}}">
                                             <button type="button" class="btn btn-success">
                                                 计划：{{$status::plan($task['plan'])}}
                                             </button>
@@ -139,7 +139,7 @@
                                     <p style="line-height: 2rem; margin: 0;">
                                         {{$article['name']}}<br>
                                         {{$article['abstract']}}<br>
-                                        <a href="/admin/task/update/{{$task['task_id']}}">
+                                        <a href="{{ route('article_update', ['article' => $article['article_id']]) }}">
                                             <button type="button" class="btn btn-success">
                                                 类型：{{$status::articleStatus($article['attribute'])}}
                                             </button>
@@ -158,4 +158,5 @@
 
 @section('script')
     @parent
+    <script src="/javascripts/template-script.min.js"></script>
 @endsection
