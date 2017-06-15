@@ -135,6 +135,11 @@ class GenerateService
             //写入文件
             $this->fwrite($path.$filename, $data);
         }
+
+        //生成检索目录
+        $this->retrieval();
+
+        //返回结果
         return true;
     }
 
