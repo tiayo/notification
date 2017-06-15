@@ -35,7 +35,10 @@
             </div>
             <div class="fothr">
                 <dl>
-                    <dt><strong>微信公众号</strong> 方便 快速</dt>
+                    <dt style="min-height:30px;">
+                        <strong style="width: 100%; float: left;">微信公众号</strong>
+                        <span style="width: 100%; float: left;">方便 快速</span>
+                    </dt>
                     <dd><a href="javascript:void();" target="_blank"><i></i></a></dd>
                     <dd>扫描二维码 关注公众号</dd>
                 </dl>
@@ -44,7 +47,7 @@
     </div>
 
     <div class="db_foot">
-        <p><span class="mr12">版权所有：{{config('site.title').config('site.version')}} 版本</span>Copyright 2015-{{date('Y')}} tiayo.com Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
+        <p><span class="mr12">版权所有：{{config('site.title').config('site.version')}} </span>Copyright 2015-{{date('Y')}} TIAYO.COM Inc. All rights reserved.<script src="https://s11.cnzz.com/z_stat.php?id=1261611384&web_id=1261611384" language="JavaScript"></script></p>
 
     </div>
 </div>
