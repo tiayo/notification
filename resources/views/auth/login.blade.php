@@ -49,7 +49,8 @@
                         </div>
                         <div class="form-group text-center">
                             <a id="login_type" style="cursor: pointer">使用用户名登录</a><br>
-                            <a href="/password/reset">忘记密码？</a>
+                            <a href="{{ route('password.request') }}">忘记密码？</a><br>
+                            <a href="{{ route('register') }}">注册新用户！</a>
                         </div>
                     </form>
                 </div>

@@ -19,7 +19,7 @@
                     <div class="panel-content bg-scale-0">
                         <form method="POST" action="{{ route('password.email')}}">
                             {{ csrf_field() }}
-                            <h3>Forgot your password?</h3> 输入您的邮箱，我们将发送一份邮件给您，您根据邮件操作即可重制密码！
+                            <h3>忘记了您的密码?</h3> 输入您的邮箱，我们将发送一份邮件给您，您根据邮件操作即可重制密码！
                             <div class="form-group mt-md{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <span class="input-with-icon">
                                     {{--成功提醒--}}
@@ -42,7 +42,7 @@
                                 <button type="submit" class="btn btn-primary btn-block ">发送</button>
                             </div>
                             <div class="form-group text-center">
-                                You remembered?, <a href="/login">Sign in!</a>
+                                您记得密码?, <a href="/login">登录!</a>
                             </div>
                         </form>
                     </div>
