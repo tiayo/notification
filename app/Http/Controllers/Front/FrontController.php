@@ -28,8 +28,7 @@ class FrontController extends Controller
                                 SearchService $search,
                                 Request $request,
                                 CommentRespositories $comment,
-                                CaptchaBuilder $captcha
-)
+                                CaptchaBuilder $captcha)
     {
         $this->front = $front;
         $this->category = $category;

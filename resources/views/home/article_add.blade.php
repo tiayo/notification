@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="start_time" class=" control-label">封面图片<span class="required">*</span></label>
-                                    <input type="text" id="article_picture_input" class="form-control"  value="{{$old_input['picture']}}" placeholder="上传封面图片...">
+                                    <input type="text" id="article_picture_input" class="form-control"  value="{{$old_input['picture'] or ''}}" placeholder="上传封面图片...">
                                     <input type="file" id="article_picture_file" style="margin-top: 1em;">
                                 </div>
                                 <div class="form-group">
