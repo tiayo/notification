@@ -158,4 +158,5 @@
 
 @section('script')
     @parent
+    <script src="/javascripts/template-script.min.js"></script>
 @endsection
