@@ -15,7 +15,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         Route::get('/refund/confirm/{action}', 'OrderController@configmView');
 
         //执行退款操作
-        Route::post('/refund/action/{action}', 'OrderController@refundAction');
+        Route::post('/refund/action/{action}', 'OrderController@refundAction')->name('refund.action');
 
         //管理分类
         Route::get('/category/page', function () {

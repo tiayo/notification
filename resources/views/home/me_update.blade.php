@@ -55,21 +55,21 @@
                                 <div class="form-group">
                                     <label for="address" class=" control-label">地址<span class="required">*</span></label>
                                     <div id="sjld" class="address">
-                                        <div class="m_zlxg" id="shenfen">
+                                        <div class="m_zlxg" id="province">
                                             <p title="">{{$address[2] or '选择省份'}}</p>
                                             <div class="m_zlxg2">
                                                 <ul></ul>
                                             </div>
                                         </div>
 
-                                        <div class="m_zlxg" id="chengshi">
+                                        <div class="m_zlxg" id="city">
                                             <p title="">{{$address[3] or '选择城市'}}</p>
                                             <div class="m_zlxg2">
                                                 <ul></ul>
                                             </div>
                                         </div>
 
-                                        <div class="m_zlxg" id="quyu">
+                                        <div class="m_zlxg" id="region">
                                             <p title="">{{$address[4] or '选择区域'}}</p>
                                             <div class="m_zlxg2">
                                                 <ul></ul>
@@ -124,7 +124,7 @@
     <script type="text/javascript" src="/javascripts/address.js"></script>
     <script type="text/javascript">
         $(function(){
-            $("#sjld").sjld("#shenfen","#chengshi","#quyu");
+            $("#sjld").sjld("#province","#city","#region");
         });
     </script>
 

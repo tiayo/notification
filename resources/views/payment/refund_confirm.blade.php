@@ -24,6 +24,16 @@
                         <div class="col-sm-12">
                             <form class="form-horizontal form-stripe" id='refund_form' method='post'>
                                 {{ csrf_field() }}
+                                {{--输出错误信息--}}
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <label class="error" style="color: #fff">{{ $error }}</label>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <h6 class="mb-xlg text-center"><b>退款批复-(您正在<i class="color-danger"> "{{$action_value}}" </i>退款)</b></h6>
                                 <div class="form-group">
                                     <label for="" class="col-sm-2 control-label">退款ID</label>
@@ -63,10 +73,10 @@
         $(document).ready(function () {
             $('#submit_form').click(function () {
                 if ('{{$action}}' == 'agree') {
-                    $('#refund_form').attr('action', '/admin/refund/action/agree');
+                    $('#refund_form').attr('action', '{{route('refund.action', ['action' => 'agree'])}}');
                     $('#refund_form').submit();
                 } else if ('{{$action}}' == 'refuse') {
-                    $('#refund_form').attr('action', '/admin/refund/action/refuse');
+                    $('#refund_form').attr('action', '{{route('refund.action', ['action' => 'refuse'])}}');
                     $('#refund_form').submit();
                 }
             })
