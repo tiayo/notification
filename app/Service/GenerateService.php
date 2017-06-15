@@ -41,9 +41,6 @@ class GenerateService
         //获取页面数据
         $data = $this->front->index()->__toString();
 
-        //压缩html
-        $data = $this->compressHtml($data);
-
         //首页静态路径
         $path = public_path().'/index.html';
 
@@ -82,7 +79,6 @@ class GenerateService
         foreach ($all_caregory_id as $category_id) {
             $id = $category_id->category_id;
             $data = $this->front->category($id)->__toString();
-            $data = $this->compressHtml($data);
             $filename = $id.'.html';
             $this->fwrite($path.$filename, $data);
         }
