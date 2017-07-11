@@ -29,6 +29,15 @@
                             <li id="nav_1_2"><a href="{{ route('task_add_simple') }}">添加任务</a></li>
                         </ul>
                     </li>
+                    <li id="nav_6" class="has-child-item close-item">
+                        <a><i class="fa fa-money" aria-hidden="true"></i><span>记帐本</span></a>
+                        <ul class="nav child-nav level-1">
+                            <li id="nav_6_1"><a href="{{ route('accounting_setup') }}">设置记帐本</a></li>
+                            <li id="nav_6_2"><a href="{{ route('accounting_add') }}">添加消费记录</a></li>
+                            <li id="nav_6_3"><a href="{{ route('accounting_view_simple') }}">全部消费记录</a></li>
+                            <li id="nav_6_4"><a href="{{ route('accounting_statistics') }}">账单</a></li>
+                        </ul>
+                    </li>
                     <li id="nav_2" class="has-child-item close-item">
                         <a><i class="fa fa-sitemap" aria-hidden="true"></i><span>我的订单</span></a>
                         <ul class="nav child-nav level-1">

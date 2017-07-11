@@ -123,6 +123,31 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::post('/search/slidebar', 'IndexController@searchSlidebar')->name('search_slidebar');
 });
 
+//记帐本路由
+Route::group(['middleware' => 'auth', 'namespace' => 'Accounting', 'prefix' => 'admin'], function () {
+
+    Route::get('/accounting/view', function () {
+        return redirect()->route('accounting_view', ['page' => 1]);
+    })->name('accounting_view_simple');
+    Route::get('/accounting/view/{page}', 'IndexController@view')->name('accounting_view');
+
+    Route::get('/accounting/add', 'IndexController@createView')->name('accounting_add');
+    Route::post('/accounting/add', 'IndexController@createOrUpdate');
+
+    Route::get('/accounting/update/{id}/{type}', 'IndexController@updateView')->name('accounting_update');
+    Route::post('/accounting/update/{id}/{type}', 'IndexController@createOrUpdate');
+
+    Route::get('/accounting/setup', 'IndexController@setupView')->name('accounting_setup');
+    Route::post('/accounting/setup', 'IndexController@setupPost');
+
+    Route::get('/accounting/delete/{id}', 'IndexController@destroy')->name('accounting_destroy');
+
+    Route::get('/accounting/statistics', 'IndexController@statistics')->name('accounting_statistics');
+
+    Route::get('/accounting/status/{id}', 'IndexController@status')->name('accounting_status');
+
+});
+
 // Authentication Routes...
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
 $this->post('login', 'Auth\LoginController@login');

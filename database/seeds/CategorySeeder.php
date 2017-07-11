@@ -15,15 +15,27 @@ class CategorySeeder extends Seeder
         App\Category::truncate();
 
         factory(\App\Category::class)->create([
-            'name' => '默认',
+            'name' => '文章',
             'parent_id' => '0',
-            'alias' => 'default',
+            'alias' => 'article',
         ]);
 
         factory(\App\Category::class)->create([
-            'name' => '闹钟任务',
-            'parent_id' => $category->selectWhereFirst('category_id', 'alias', 'default')['category_id'],
-            'alias' => 'alarm',
+            'name' => '我的任务',
+            'parent_id' => '0',
+            'alias' => 'task',
+        ]);
+
+        factory(\App\Category::class)->create([
+            'name' => '我的文章',
+            'parent_id' => $category->selectWhereFirst('category_id', 'alias', 'article')['category_id'],
+            'alias' => 'task',
+        ]);
+
+        factory(\App\Category::class)->create([
+            'name' => '我的任务',
+            'parent_id' => $category->selectWhereFirst('category_id', 'alias', 'task')['category_id'],
+            'alias' => 'task',
         ]);
     }
 }

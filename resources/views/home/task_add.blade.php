@@ -30,7 +30,7 @@
                         <div class="col-md-12">
                             <form id="messagebox-validation" action="{{$uri}}" method="post">
                                 {{ csrf_field() }}
-                                <div class="message-container alert alert-danger">
+                                <div class="message-container alert alert-danger @if(count($errors) > 0) show @endif">
                                     <ul>
                                         {{--输出错误信息--}}
                                         @if (count($errors) > 0)

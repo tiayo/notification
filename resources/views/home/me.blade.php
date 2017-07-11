@@ -125,7 +125,7 @@
                                     </p>
                                 </div>
                                 <div class="timeline-footer">
-                                    <span>{{$order['updated_at']}}</span>
+                                    <span>{{$task['updated_at']}}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -147,7 +147,7 @@
                                     </p>
                                 </div>
                                 <div class="timeline-footer">
-                                    <span>{{$order['updated_at']}}</span>
+                                    <span>{{$article['updated_at']}}</span>
                                 </div>
                             </div>
                         @endforeach

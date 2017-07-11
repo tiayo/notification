@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Accounting;
 use App\Article;
 use App\Category;
 use App\Comment;
@@ -48,6 +49,7 @@ class AuthServiceProvider extends ServiceProvider
         Article::class => ViewPolicy::class,
         Comment::class => ViewPolicy::class,
         Message::class => ViewPolicy::class,
+        Accounting::class => ViewPolicy::class,
     ];
 
     /**

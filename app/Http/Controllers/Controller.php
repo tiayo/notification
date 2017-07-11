@@ -177,4 +177,52 @@ class Controller extends BaseController
                 break;
         }
     }
+
+    public static function accountingType($num)
+    {
+        switch ($num) {
+            case 1 :
+                return '饮食';
+                break;
+            case 2 :
+                return '购物';
+                break;
+            case 3 :
+                return '出行';
+                break;
+            case 4 :
+                return '住宿';
+                break;
+            case 5 :
+                return '娱乐';
+                break;
+            case 6 :
+                return '医疗';
+                break;
+            case 7 :
+                return '手机、宽带';
+                break;
+            case 0 :
+                return '其他';
+                break;
+        }
+    }
+
+    public static function accountingSetupType($num)
+    {
+        switch ($num) {
+            case 1 :
+                return '月度';
+                break;
+            case 2 :
+                return '年度';
+                break;
+            case 3 :
+                return '单天';
+                break;
+            case 0 :
+                return '自定义';
+                break;
+        }
+    }
 }
