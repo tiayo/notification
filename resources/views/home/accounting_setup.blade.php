@@ -58,7 +58,7 @@
                                                 <option value="0">自定义</option>
                                         </select>
                                 </div>
-                                <div class="form-group @if($old_input['type'] == 0) show @else hidden @endif" id="cycle_div">
+                                <div class="form-group @if(isset($old_input['type']) && $old_input['type'] == 0) show @else hidden @endif" id="cycle_div">
                                     <label for="cycle" class=" control-label">周期<span class="required">*</span></label>
                                     <input type="number" class="form-control" id="cycle" name="" value="{{$old_input['cycle'] or ''}}" required>
                                     <p>(当类型设置为自定义时有效,从保存时间开始计算)</p>
