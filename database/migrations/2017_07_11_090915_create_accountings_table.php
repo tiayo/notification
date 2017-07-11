@@ -19,7 +19,7 @@ class CreateAccountingsTable extends Migration
             $table->string('title');
             $table->integer('type')->default(0);
             $table->float('money');
-            $table->timestamp('time');
+            $table->dateTime('time')->nullable();
             $table->string('location')->nullable();
             $table->string('remark')->nullable();
             $table->integer('status')->default(1);
