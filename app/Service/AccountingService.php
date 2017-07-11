@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Facades\Verfication;
 use App\Repositories\AccountRepositeries;
 use App\Repositories\AccountSetupRepositeries;
 use GuzzleHttp\Client;
@@ -113,7 +112,7 @@ class AccountingService
         //周期为月度
         if ($setup['type'] == 1) {
 
-            $consumption_money = $this->statisticsMonthMoney(date('Y-m-01 00:00:00'), date('Y-m-t 24:00:00'));
+            $consumption_money = $this->statisticsMonthMoney(date('Y-m-01 00:00:00'), date('Y-m-t 23:59:59'));
 
             return [
                 'remaining_budget' => $setup['budget'] - $consumption_money,
@@ -123,7 +122,7 @@ class AccountingService
         }
         //周期为年度
         else if ($setup['type'] == 2) {
-            $consumption_money = $this->statisticsMonthMoney(date('Y-01-01 00:00:00'), date('Y-12-31 24:00:00'));
+            $consumption_money = $this->statisticsMonthMoney(date('Y-01-01 00:00:00'), date('Y-12-31 23:59:59'));
 
             return [
                 'remaining_budget' => $setup['budget'] - $consumption_money,
@@ -133,7 +132,7 @@ class AccountingService
         }
         //周期为单天
         else if ($setup['type'] == 3) {
-            $consumption_money = $this->statisticsMonthMoney(date('Y-m-d 00:00:00'), date('Y-m-d 24:00:00'));
+            $consumption_money = $this->statisticsMonthMoney(date('Y-m-d 00:00:00'), date('Y-m-d 23:59:59'));
 
             return [
                 'remaining_budget' => $setup['budget'] - $consumption_money,
