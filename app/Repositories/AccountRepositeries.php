@@ -52,7 +52,8 @@ class AccountRepositeries
     {
         return $this->account
             ->select($select)
-            ->first($id);
+            ->where('accounting_id', $id)
+            ->first();
     }
 
     public function update($id, $data)
