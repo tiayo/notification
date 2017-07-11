@@ -6,6 +6,7 @@ use App\Facades\Verfication;
 use App\Repositories\AccountRepositeries;
 use App\Repositories\AccountSetupRepositeries;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AccountingService
@@ -13,11 +14,13 @@ class AccountingService
     protected $account;
     protected $client;
     protected $account_setup;
+    protected $request;
 
-    public function __construct(AccountRepositeries $accounting, AccountSetupRepositeries $account_setup)
+    public function __construct(AccountRepositeries $accounting, AccountSetupRepositeries $account_setup, Request $request)
     {
         $this->account = $accounting;
         $this->account_setup = $account_setup;
+        $this->request = $request;
         $this->client = new Client();
     }
 
@@ -33,7 +36,7 @@ class AccountingService
         //生成地址
         if (empty($post['location'])) {
             $ak = config('site.baidu_ak');
-            $response = $this->client->get('https://api.map.baidu.com/location/ip?ak='.$ak.'&coor=bd09ll');
+            $response = $this->client->get('https://api.map.baidu.com/location/ip?ak='.$ak.'&coor=bd09ll&ip='.$this->request->getClientIp().'');
             $location = json_decode($response->getBody()->getContents())->content->address;
             $map['location'] = $location;
         } else {

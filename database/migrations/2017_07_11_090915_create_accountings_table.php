@@ -22,7 +22,7 @@ class CreateAccountingsTable extends Migration
             $table->timestamp('time');
             $table->string('location')->nullable();
             $table->string('remark')->nullable();
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
