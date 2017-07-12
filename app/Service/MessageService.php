@@ -133,12 +133,16 @@ class MessageService
     public function destroy($message_id)
     {
         //验证权限
-        if (!can('message', $this->message->findOne('message_id', $message_id))) {
+        if (!$status = can('messageDelete', $this->message->findOne('message_id', $message_id))) {
             throw new \Exception('您没有权限访问（代码：1007）！', 403);
         }
 
-        //权限验证通过
-        $value['status'] = 3;
+        //权限验证通过,根据情况设置消息状态
+        if ($status == 1) {
+            $value['status'] = 4;
+        } else if($status == 2) {
+            $value['status'] = 3;
+        }
 
         //写入数据库
         return $this->message->update($value, $message_id);

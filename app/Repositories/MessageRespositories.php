@@ -42,6 +42,7 @@ class messageRespositories
             ->take($num)
             ->where('message.target_id', Auth::id())
             ->where('message.status', '<>', '3')
+            ->where('message.status', '<>', '4')
             ->orderBy('message.message_id', 'desc')
             ->get();
     }
@@ -52,7 +53,7 @@ class messageRespositories
             ->skip(($page-1)*$num)
             ->take($num)
             ->where('message.user_id', Auth::id())
-            ->where('message.status', '<>', '3')
+            ->where('message.status', '<>', '4')
             ->orderBy('message.message_id', 'desc')
             ->get();
     }

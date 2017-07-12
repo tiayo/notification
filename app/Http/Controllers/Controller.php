@@ -173,7 +173,10 @@ class Controller extends BaseController
                 return '已读';
                 break;
             case 3 :
-                return '删除';
+                return '不在对方列表';
+                break;
+            case 4 :
+                return '发送者删除';
                 break;
         }
     }

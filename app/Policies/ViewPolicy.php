@@ -58,4 +58,26 @@ class ViewPolicy
         return $user->id === $class['target_id'];
     }
 
+    /**
+     * 判断用户是否有删除消息权限
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function messageDelete(User $user, $class)
+    {
+        if ($this->admin()) {
+            return true;
+        }
+
+        if ($user->id === $class['user_id']) {
+            return 1;
+        } else if($user->id === $class['target_id']) {
+            return 2;
+        } else {
+            return false;
+        }
+
+    }
+
 }
