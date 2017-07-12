@@ -42,7 +42,7 @@ class OrderController extends Controller
             'page' => $page,
             'max_page' => $max_page,
             'status' => app('App\Http\Controllers\Controller'),
-            'is_admin' => $this->order->isAdmin(),
+            'is_admin' => can('admin'),
         ]);
     }
 
@@ -149,7 +149,7 @@ class OrderController extends Controller
             'page' => $page,
             'max_page' => $max_page,
             'status' => app('App\Http\Controllers\Controller'),
-            'is_admin' => $this->order->isAdmin(),
+            'is_admin' => can('admin'),
         ]);
     }
 
