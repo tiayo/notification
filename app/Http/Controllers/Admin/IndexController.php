@@ -29,7 +29,7 @@ class IndexController extends Controller
     public function index(UserRepositories $user, TaskService $task, OrderRepositories $order, MessageService $message)
     {
         //验证是否管理员true,false
-        $admin = $this->index->admin();
+        $admin = can('admin');
 
         //获取上次登录时间
         $next_login_time = $user->selectFirst('next_login_time', 'id', Auth::id())['next_login_time'];

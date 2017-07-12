@@ -53,7 +53,7 @@
                             <li id="nav_5_3" ><a href="{{ route('message_received_page_simple') }}">我的消息</a></li>
                         </ul>
                     </li>
-                    @if (app('App\Service\IndexService')::admin() === true)
+                    @if (can('admin') === true)
                     <li id="nav_3" class="has-child-item close-item">
                         <a><i class="fa fa-columns" aria-hidden="true"></i><span>管理操作</span></a>
                         <ul class="nav child-nav level-1">

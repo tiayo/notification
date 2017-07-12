@@ -23,21 +23,6 @@ class MessageService
     }
 
     /**
-     * 判断是否是管理员
-     *
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        try{
-            Verfication::admin(Message::class);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 验证用户是否可以操作本条评论
      * 验证失败抛错误
      *
@@ -87,7 +72,7 @@ class MessageService
      */
     public function count($option)
     {
-        if (!$this->isAdmin()) {
+        if (!can('admin')) {
             return $this->message->userCount($option, Auth::id());
         }
 
@@ -122,7 +107,7 @@ class MessageService
     public function read($message_id, $status)
     {
         //权限验证
-        if (!$this->verfication($message_id)) {
+        if (!can('message', $this->message->findOne('message_id', $message_id))) {
             throw new \Exception('您没有权限访问（代码：1007）！', 403);
         }
 
@@ -148,7 +133,7 @@ class MessageService
     public function destroy($message_id)
     {
         //验证权限
-        if (!$this->verfication($message_id)) {
+        if (!can('message', $this->message->findOne('message_id', $message_id))) {
             throw new \Exception('您没有权限访问（代码：1007）！', 403);
         }
 

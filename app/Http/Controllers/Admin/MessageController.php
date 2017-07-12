@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Message;
 use App\Profile;
-use App\Service\IndexService;
 use App\Service\MessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -33,7 +32,7 @@ class MessageController extends Controller
         $max_page = ceil($count/Config('site.page'));
 
         //判断管理员
-        $admin = IndexService::admin();
+        $admin = can('admin');
 
         return view('home.message_list',[
             'list_message' => $list_message,
@@ -59,7 +58,7 @@ class MessageController extends Controller
         $max_page = ceil($count/Config('site.page'));
 
         //判断管理员
-        $admin = IndexService::admin();
+        $admin = can('admin');
 
         return view('home.message_list',[
             'list_message' => $list_message,

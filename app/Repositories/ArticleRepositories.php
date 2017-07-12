@@ -13,6 +13,11 @@ class ArticleRepositories
         $this->article = $article;
     }
 
+    public function find($id)
+    {
+        return $this->article->find($id);
+    }
+
     public function getAll($page, $num)
     {
         return $this->article

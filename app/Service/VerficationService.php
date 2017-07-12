@@ -24,7 +24,7 @@ class VerficationService
      */
     public function admin($class)
     {
-        if (!$this->user->find(Auth::id())->can('admin', $class)) {
+        if (!can('admin')) {
             throw new \Exception('拒绝访问！（代码：1001）', 403);
         }
 
@@ -37,13 +37,12 @@ class VerficationService
      * @param $class
      * @return bool
      */
-    public function skip($class)
+    public function skip()
     {
-        try{
-            $this->admin($class);
-        } catch (\Exception $e) {
+        if (!can('admin')) {
             return false;
         }
+
         return true;
     }
 
@@ -56,11 +55,11 @@ class VerficationService
      */
     public function update($class)
     {
-        if ($this->skip(VerficationService::class)) {
+        if ($this->skip()) {
             return true;
         }
 
-        if (!$this->user->find(Auth::id())->can('update', $class)) {
+        if (!can('update', $class)) {
             return false;
         }
 
@@ -76,11 +75,11 @@ class VerficationService
      */
     public function message($class)
     {
-        if ($this->skip(VerficationService::class)) {
+        if ($this->skip()) {
             return true;
         }
 
-        if (!$this->user->find(Auth::id())->can('message', $class)) {
+        if (!can('message', $class)) {
             return false;
         }
 

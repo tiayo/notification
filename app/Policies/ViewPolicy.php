@@ -4,31 +4,28 @@ namespace App\Policies;
 
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class ViewPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $user;
+
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
      * 判断是否是管理员
-     * 管理员返回true
-     * 普通用户返回false
+     *
      * @param User $user
      * @return bool
      */
-    public function admin(User $user)
+    public function admin()
     {
-        return $user->name === config('site.adminstrator');
+        return Auth::user()['name'] === config('site.adminstrator');
     }
 
     /**
@@ -39,7 +36,11 @@ class ViewPolicy
      */
     public function update(User $user, $class)
     {
-        return $user->id === $class['user_id'];
+        if ($this->admin()) {
+            return true;
+        }
+
+        return Auth::id() === $class['user_id'];
     }
 
     /**
@@ -50,6 +51,10 @@ class ViewPolicy
      */
     public function message(User $user, $class)
     {
+        if ($this->admin()) {
+            return true;
+        }
+
         return $user->id === $class['target_id'];
     }
 

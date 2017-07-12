@@ -22,30 +22,6 @@ class OrderService
         $this->wxpay = $wxpay;
     }
 
-    public function isAdmin()
-    {
-        //权限验证
-        try {
-            Verfication::admin(OrderService::class);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 验证用户是否可以操作本条订单
-     * 验证失败抛错误
-     *
-     * @param $order_id
-     * @return bool
-     * @throws \Exception
-     */
-    public function verfication($order_id)
-    {
-        return Verfication::update($this->order->findOne('order_id', $order_id));
-    }
-
     /**
      * 前端展示数据
      * 权限不同调用管理员方法
@@ -57,7 +33,7 @@ class OrderService
     public function show($page, $num)
     {
         //权限验证
-        if ($this->isAdmin()) {
+        if (can('admin')) {
             return $this->order->adminShow($page, $num);
         }
 
@@ -72,7 +48,7 @@ class OrderService
     public function count()
     {
         //权限验证
-        if ($this->isAdmin()) {
+        if (can('admin')) {
             return $this->order->adminCount();
         }
         return $this->order->userCount();
@@ -89,7 +65,7 @@ class OrderService
     public function findOrderAndUser($order_id)
     {
         //验证权限
-        if (!$this->verfication($order_id)) {
+        if (!can('update', $this->order->findOne('order_id', $order_id))) {
             throw new \Exception('您没有权限访问（代码：1003）！', 403);
         }
 
@@ -113,8 +89,10 @@ class OrderService
      */
     public function refundApply($order_id)
     {
-        //权限验证
-        $this->verfication($order_id);
+        //验证权限
+        if (!can('update', $this->order->findOne('order_id', $order_id))) {
+            throw new \Exception('您没有权限访问（代码：1003）！', 403);
+        }
 
         //验证状态是否可以操作
         if (!empty($refund_exist = $this->refund->findOne('order_id', $order_id))) {
@@ -146,8 +124,10 @@ class OrderService
      */
     public function refundSave($data, $order_id)
     {
-        //权限验证
-        $this->verfication($order_id);
+        //验证权限
+        if (!can('update', $this->order->findOne('order_id', $order_id))) {
+            throw new \Exception('您没有权限访问（代码：1003）！', 403);
+        }
 
         //初始化
         $value = [];
@@ -209,7 +189,7 @@ class OrderService
     public function refundList($page, $num)
     {
         //权限验证
-        if (!$this->isAdmin()) {
+        if (!can('admin')) {
            throw new \Exception('拒绝访问！（错误代码：1001）');
         }
 

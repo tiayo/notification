@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Facades\Verfication;
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAction
 {
@@ -16,10 +16,8 @@ class AdminAction
      */
     public function handle($request, Closure $next)
     {
-        try {
-            Verfication::admin(AdminAction::class);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
+        if (!can('admin')) {
+            return response('拒绝访问！（代码：1001）', 403);
         }
 
         return $next($request);

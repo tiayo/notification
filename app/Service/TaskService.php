@@ -36,26 +36,24 @@ class TaskService
      * 获取任务列表
      * 根据权限执行不同操作
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return mixed
      */
     public function show($page, $num)
     {
-        try{
-            Verfication::admin(Task::class);
-        } catch (\Exception $e) {
-            return $this->userShow($page, $num);
-        }
+       if(!can('admin')) {
+           return $this->userShow($page, $num);
+       }
 
-        return $this->adminShow($page, $num);
+       return $this->adminShow($page, $num);
     }
 
     /**
      * 普通用户获取任务列表
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return array
      */
     public function userShow($page, $num)
@@ -68,8 +66,8 @@ class TaskService
     /**
      * 管理员获取任务列表
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return array
      */
     public function adminShow($page, $num)
@@ -87,9 +85,7 @@ class TaskService
      */
     public function count()
     {
-        try{
-            Verfication::admin(Task::class);
-        } catch (\Exception $e) {
+        if(!can('admin')) {
             return $this->task->userCount(Auth::id());
         }
 
@@ -261,6 +257,6 @@ class TaskService
      */
     public function verfication($task_id)
     {
-        return Verfication::update($this->task->findOne('task_id', $task_id));
+        return can('update', $this->task->findOne('task_id', $task_id));
     }
 }

@@ -185,7 +185,7 @@ trait Loginservice
      * 锁定屏幕
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return bool
      */
     public function lock()
     {

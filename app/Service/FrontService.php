@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Article;
 use App\Comment;
-use App\Facades\Verfication;
 use App\Repositories\ArticleRepositories;
 use App\Repositories\CommentRespositories;
 use App\Repositories\UserRepositories;
@@ -21,18 +20,6 @@ class FrontService
         $this->article = $article;
         $this->user = $user;
         $this->comment = $comment;
-    }
-
-    /**
-     * 验证用户是否可以操作本条文章
-     * 验证失败抛错误
-     *
-     * @param $article_id
-     * @return mixed
-     */
-    public function verfication($article_id)
-    {
-        return Verfication::update($this->article->findOne('article_id', $article_id));
     }
 
     /**
@@ -93,7 +80,7 @@ class FrontService
     public function findOneAndCategoryUser($article_id)
     {
         //权限验证
-        if (!$this->verfication($article_id)) {
+        if (!can('update', $this->article->find($article_id))) {
             throw new \Exception('不是您发布的文章！（错误代码：1005）');
         }
 

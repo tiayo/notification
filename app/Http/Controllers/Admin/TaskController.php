@@ -168,7 +168,7 @@ class TaskController extends Controller
         $max_page = ceil($count/Config('site.page'));
 
         //判断管理员
-        $admin = IndexService::admin();
+        $admin = can('admin');
 
         return view('home.task_list',[
             'list_task' => $list_task,

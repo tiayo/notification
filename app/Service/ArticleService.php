@@ -2,10 +2,7 @@
 
 namespace App\Service;
 
-use App\Article;
 use App\Repositories\ArticleRepositories;
-use App\Task;
-use App\Facades\Verfication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use TomLingham\Searchy\Facades\Searchy;
@@ -27,43 +24,16 @@ class ArticleService
     }
 
     /**
-     * 判断是否是管理员
-     *
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        try{
-            Verfication::admin(Article::class);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 验证用户是否可以操作本条文章
-     * 验证失败抛错误
-     *
-     * @param $article_id
-     * @return mixed
-     */
-    public function verfication($article_id)
-    {
-        return Verfication::update($this->article->findOne('article_id', $article_id));
-    }
-
-    /**
      * 获取文章列表
      * 根据权限执行不同操作
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return mixed
      */
     public function show($page, $num, $keyword = null)
     {
-        if (!$this->isAdmin()) {
+        if (!can('admin')) {
             return $this->userShow($page, $num, $keyword);
         }
 
@@ -73,8 +43,8 @@ class ArticleService
     /**
      * 普通用户获取文章列表
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return array
      */
     public function userShow($page, $num, $keyword = null)
@@ -100,8 +70,8 @@ class ArticleService
     /**
      * 管理员获取文章列表
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return array
      */
     public function adminShow($page, $num, $keyword = null)
@@ -158,7 +128,7 @@ class ArticleService
      */
     public function count()
     {
-        if (!$this->isAdmin()) {
+        if (!can('admin')) {
             return $this->article->userCount(Auth::id());
         }
 
@@ -186,7 +156,7 @@ class ArticleService
     public function updateView($article_id)
     {
         //验证权限
-        if (!$this->verfication($article_id)) {
+        if (!can('update', $this->article->find($article_id))) {
             throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
 
@@ -204,14 +174,14 @@ class ArticleService
      */
     public function update($data, $article_id)
     {
+        //验证权限
+        if (!can('update', $this->article->find($article_id))) {
+            throw new \Exception('您没有权限访问（代码：1002）！', 403);
+        }
+
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
             $value['picture'] = ImagesUploadService::updaloadImage($data['picture']);
-        }
-
-        //验证权限
-        if (!$this->verfication($article_id)) {
-            throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
 
         //获取文章静态链接
@@ -389,7 +359,7 @@ class ArticleService
     public function destroy($article_id)
     {
         //验证权限
-        if (!$this->verfication($article_id)) {
+        if (!can('update', $this->article->find($article_id))) {
             throw new \Exception('您没有权限访问（代码：1002）！', 403);
         }
 

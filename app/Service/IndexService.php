@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Facades\Verfication;
 use App\Repositories\OrderRepositories;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -17,24 +16,6 @@ class IndexService
     {
         $this->verfication = $verfication;
         $this->order = $order;
-    }
-
-    /**
-     * 判断是否为管理
-     * 管理员返回true
-     * 非管理返回false
-     *
-     * @return bool
-     */
-    static public function admin()
-    {
-        try {
-            Verfication::admin(IndexService::class);
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        return true;
     }
 
     public function sponsor($money)
@@ -96,7 +77,7 @@ class IndexService
      *
      * @param $array
      * @param $key
-     * @return array
+     * @return string
      */
     public function keyLevel($num, $key_array)
     {

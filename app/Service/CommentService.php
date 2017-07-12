@@ -2,9 +2,6 @@
 
 namespace App\Service;
 
-use App\Comment;
-use App\Repositories\ArticleRepositories;
-use App\Facades\Verfication;
 use App\Repositories\CommentRespositories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,43 +23,16 @@ class CommentService
     }
 
     /**
-     * 判断是否是管理员
-     *
-     * @return bool
-     */
-    public function isAdmin()
-    {
-        try{
-            Verfication::admin(Comment::class);
-        } catch (\Exception $e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 验证用户是否可以操作本条评论
-     * 验证失败抛错误
-     *
-     * @param $task_id
-     * @return mixed
-     */
-    public function verfication($comment_id)
-    {
-        return Verfication::update($this->comment->findOne('comment_id', $comment_id));
-    }
-
-    /**
      * 获取评论列表
      * 根据权限执行不同操作
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return mixed
      */
     public function show($page, $num)
     {
-        if (!$this->isAdmin()) {
+        if (!can('admin')) {
             return $this->userShow($page, $num);
         }
 
@@ -72,8 +42,8 @@ class CommentService
     /**
      * 普通用户获取评论列表
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num //每页条数
      * @return array
      */
     public function userShow($page, $num)
@@ -86,8 +56,8 @@ class CommentService
     /**
      * 管理员获取评论列表
      *
-     * @param $page 当前页数
-     * @param $num 每页条数
+     * @param $page //当前页数
+     * @param $num /每页条数
      * @return array
      */
     public function adminShow($page, $num)
@@ -105,7 +75,7 @@ class CommentService
      */
     public function count()
     {
-        if (!$this->isAdmin()) {
+        if (!can('admin')) {
             return $this->comment->userCount(Auth::id());
         }
 
@@ -143,7 +113,7 @@ class CommentService
     public function destroy($comment_id)
     {
         //验证权限
-        if (!$this->verfication($comment_id)) {
+        if (!can('update', $this->comment->findOne('comment_id', $comment_id))) {
             throw new \Exception('您没有权限访问（代码：1006）！', 403);
         }
 
