@@ -31,7 +31,7 @@ class IndexController extends Controller
         $max_page = ceil($count/Config('site.page'));
 
         //判断管理员
-        $admin = IndexService::admin();
+        $admin = can('admin');
 
         return view('home.accounting_list',[
             'lists' => $lists,
@@ -176,6 +176,6 @@ class IndexController extends Controller
      */
     public function verfication($id)
     {
-        return Verfication::update($this->account->findId($id));
+        return can('update', $this->account->findId($id));
     }
 }
