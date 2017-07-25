@@ -25,8 +25,7 @@ class ProfileRepositories
     {
         return $this->profile
             ->where($option, $value)
-            ->first()
-            ->toArray();
+            ->first();
     }
 
     public function avator($user_id)
