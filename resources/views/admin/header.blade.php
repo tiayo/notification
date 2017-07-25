@@ -150,11 +150,11 @@
         <div class="header-section" id="user-headerbox">
             <div class="user-header-wrap">
                 <div class="user-photo">
-                    <img src="{{ app('App\Repositories\ProfileRepositories')->findWhereArray('user_id', Auth::id())['avatar'] ?? '/ images/user.jpg'}}"/>
+                    <img src="{{ app('App\Repositories\ProfileRepositories')->findWhereArray('user_id', Auth::id())->avatar or '/ images/user.jpg'}}"/>
                 </div>
                 <div class="user-info">
                     <span class="user-name">{{ app('App\User')->find(Auth::id())->toArray()['name'] }}</span>
-                    <span class="user-profile">{{ app('App\Repositories\ProfileRepositories')->findWhereArray('user_id', Auth::id())['real_name'] }}</span>
+                    <span class="user-profile">{{ app('App\Repositories\ProfileRepositories')->findWhereArray('user_id', Auth::id())->real_name or '客官'}}</span>
                 </div>
                 <i class="fa fa-plus icon-open" aria-hidden="true"></i>
                 <i class="fa fa-minus icon-close" aria-hidden="true"></i>
