@@ -35,7 +35,7 @@ class MeController extends Controller
 
         return view('home.me', [
             'user' => Auth::user(),
-            'profile' => User::find(Auth::id())->profile[0] ?? '/images/user.jpg',
+            'profile' => User::find(Auth::id())->profile,
             'task_count' => $task->count(),
             'article_count' => $article->count(),
             'status' => app('App\Http\Controllers\Controller'),
