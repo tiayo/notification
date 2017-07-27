@@ -48,7 +48,7 @@ class MeController extends Controller
     public function updateView()
     {
         //获取用户信息
-        $profile = User::find(Auth::id())->profile[0];
+        $profile = User::find(Auth::id())->profile;
 
         //获取现有地址
         $address = $this->me->address($profile);
