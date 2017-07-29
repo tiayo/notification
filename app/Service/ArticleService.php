@@ -50,7 +50,7 @@ class ArticleService
     public function userShow($page, $num, $keyword = null)
     {
         if (empty($keyword)) {
-            return $this->article
+            $result = $this->article
                 ->findMulti('user_id', Auth::id(), $page, $num)
                 ->toArray();
         } else {
@@ -62,9 +62,9 @@ class ArticleService
                 ->orderBy('article_id', 'desc')
                 ->get()
                 ->toArray();
-
-            return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
         }
+
+        return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
     }
 
     /**
@@ -77,7 +77,7 @@ class ArticleService
     public function adminShow($page, $num, $keyword = null)
     {
         if (empty($keyword)) {
-            return $task = $this->article
+            $result = $this->article
                 ->getAll($page, $num)
                 ->toArray();
 
@@ -89,9 +89,9 @@ class ArticleService
                 ->orderBy('article_id', 'desc')
                 ->get()
                 ->toArray();
-
-            return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
         }
+
+        return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
     }
 
     /**
