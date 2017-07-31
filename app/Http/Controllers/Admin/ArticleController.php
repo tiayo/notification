@@ -33,7 +33,7 @@ class ArticleController extends Controller
     public function index($page)
     {
         //所有文章
-        $list_article = $this->article->show($page, Config('site.page'));
+        $list_article = $this->article->show($page, Config('site.page'))['data'];
 
         //文章数量
         $count = $this->article->count();
