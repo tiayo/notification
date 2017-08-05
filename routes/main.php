@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //添加任务
     Route::get('/task/add', function () {
-        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst('task')['category_id']]);
+        return redirect()->route('task_add', ['category' => app('\App\Repositories\CategoryRepository')->routeFirst('task')['category_id']]);
     })->name('task_add_simple');
     Route::get('/task/add/{category}', 'TaskController@storeView')->name('task_add');
     Route::post('/task/add/{category}', 'TaskController@store')->name('task_add_post');
@@ -58,7 +58,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //添加文章
     Route::get('/article/add', function () {
-        return redirect()->route('article_add', ['category' => app('\App\Repositories\CategoryRepositories')->routeFirst('article')['category_id']]);
+        return redirect()->route('article_add', ['category' => app('\App\Repositories\CategoryRepository')->routeFirst('article')['category_id']]);
     })->name('article_add_simple');
     Route::get('/article/add/{category}', 'ArticleController@storeView')->name('article_add');
     Route::post('/article/add/{category}', 'ArticleController@store')->name('article_add_post');

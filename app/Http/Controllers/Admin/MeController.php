@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\OrderRepositories;
-use App\Service\ArticleService;
-use App\Service\MeService;
-use App\Service\TaskService;
+use App\Repositories\OrderRepository;
+use App\Services\ArticleService;
+use App\Services\MeService;
+use App\Services\TaskService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +22,7 @@ class MeController extends Controller
         $this->me = $me;
     }
 
-    public function view(TaskService $task, ArticleService $article, OrderRepositories $order)
+    public function view(TaskService $task, ArticleService $article, OrderRepository $order)
     {
         //获取1条订单
         $orders = $order->userShow(1, 1);
@@ -41,7 +41,7 @@ class MeController extends Controller
             'status' => app('App\Http\Controllers\Controller'),
             'orders' => $orders,
             'tasks' => $tasks,
-            'articles' => $articles
+            'articles' => $articles['data']
         ]);
     }
 

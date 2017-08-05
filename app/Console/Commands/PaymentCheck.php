@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Service\PaymentCheckService;
+use App\Services\PaymentCheckService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;

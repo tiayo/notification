@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Service\ArticleService;
-use App\Service\CategoryService;
-use App\Service\GenerateService;
-use App\Service\IndexService;
+use App\Services\ArticleService;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller

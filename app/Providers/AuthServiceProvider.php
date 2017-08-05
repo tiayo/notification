@@ -11,17 +11,16 @@ use App\Message;
 use App\Order;
 use App\Policies\ViewPolicy;
 use App\Refund;
-use App\Service\AlipayService;
-use App\Service\CategoryService;
-use App\Service\IndexService;
-use App\Service\OrderService;
-use App\Service\TaskService;
-use App\Service\VerficationService;
-use App\Service\WxpayService;
+use App\Services\AlipayService;
+use App\Services\CategoryService;
+use App\Services\IndexService;
+use App\Services\OrderService;
+use App\Services\TaskService;
+use App\Services\VerficationService;
+use App\Services\WxpayService;
 use App\Task;
 use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\View\View;
 use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider

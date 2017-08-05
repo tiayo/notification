@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Comment;
 use App\Http\Controllers\Controller;
-use App\Repositories\CommentRespositories;
-use App\Service\CategoryService;
-use App\Service\FrontService;
-use App\Service\SearchService;
-use function foo\func;
+use App\Repositories\CommentRespository;
+use App\Services\CategoryService;
+use App\Services\FrontService;
+use App\Services\SearchService;
 use Gregwar\Captcha\CaptchaBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +25,7 @@ class FrontController extends Controller
                                 CategoryService $category,
                                 SearchService $search,
                                 Request $request,
-                                CommentRespositories $comment,
+                                CommentRespository $comment,
                                 CaptchaBuilder $captcha)
     {
         $this->front = $front;

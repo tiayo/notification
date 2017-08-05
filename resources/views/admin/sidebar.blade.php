@@ -17,7 +17,7 @@
                             <li id="nav_4_2" class="has-child-item close-item">
                                 <a href="#">添加文章</a>
                                 <ul class="nav child-nav level-2">
-                                    {!! app('\App\Service\CategoryService')->categoryHtml('<li id="nav_4_<<num>>" class><a href="'.route('article_add', ['category' => null]).'/<<category_id>>"><<title>></a></li>', 'article') !!}
+                                    {!! app('\App\Services\CategoryService')->categoryHtml('<li id="nav_4_<<num>>" class><a href="'.route('article_add', ['category' => null]).'/<<category_id>>"><<title>></a></li>', 'article') !!}
                                 </ul>
                             </li>
                         </ul>

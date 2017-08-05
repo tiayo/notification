@@ -17,7 +17,7 @@
             <div class="fotmap">
                 <dl>
                     <dt>推荐</dt>
-                    {!! app('\App\Service\CategoryService')->categoryHtml('<dd><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
+                    {!! app('\App\Services\CategoryService')->categoryHtml('<dd><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
                 </dl>
                 <i class="line"></i>
                 <div id="divWeiXinPicContainer" class="my_layer" style="display: none;">

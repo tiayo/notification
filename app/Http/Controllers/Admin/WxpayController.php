@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\OrderRepositories;
-use App\Repositories\RefundRepositories;
-use App\Service\PaymentCheckService;
-use App\Service\WxpayService;
+use App\Repositories\OrderRepository;
+use App\Repositories\RefundRepository;
+use App\Services\PaymentCheckService;
+use App\Services\WxpayService;
 use Illuminate\Http\Request;
 
 class WxpayController extends Controller
@@ -18,8 +18,8 @@ class WxpayController extends Controller
     protected $payment;
 
     public function __construct(Request $request,
-                                OrderRepositories $order,
-                                RefundRepositories $refund,
+                                OrderRepository $order,
+                                RefundRepository $refund,
                                 WxpayService $wxpay,
                                 PaymentCheckService $payment)
     {

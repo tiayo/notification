@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\OrderRepositories;
-use App\Repositories\RefundRepositories;
-use App\Service\AlipayService;
+use App\Repositories\OrderRepository;
+use App\Repositories\RefundRepository;
+use App\Services\AlipayService;
 use Illuminate\Http\Request;
 
 class AlipayController extends Controller
@@ -19,8 +19,8 @@ class AlipayController extends Controller
 
     public function __construct(Request $request,
                                 AlipayService $alipay,
-                                OrderRepositories $order,
-                                RefundRepositories $refund
+                                OrderRepository $order,
+                                RefundRepository $refund
     )
     {
         $this->request = $request;

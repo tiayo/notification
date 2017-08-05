@@ -3,11 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Service\ArticleService;
-use App\Service\CategoryService;
-use App\Service\GenerateService;
-use App\Service\IndexService;
-use Illuminate\Http\Request;
+use App\Services\GenerateService;
 
 class GenerateController extends Controller
 {

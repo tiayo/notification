@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Comment;
 use App\Http\Controllers\Controller;
-use App\Service\CommentService;
-use App\Service\IndexService;
+use App\Services\CommentService;
 
 class CommentController extends Controller
 {

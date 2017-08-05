@@ -9,11 +9,11 @@ return [
     'drivers' => [
 
         'matching' => [
-            'class' => '\App\Service\SearchExactMatcher',
+            'class' => '\App\Services\SearchExactMatcher',
         ],
 
         'admin_article' => [
-            'class' => '\App\Service\SearchInStringMatcher',
+            'class' => '\App\Services\SearchInStringMatcher',
         ],
 
         'en' => [

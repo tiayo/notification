@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\OrderRepositories;
-use App\Repositories\UserRepositories;
-use App\Service\IndexService;
-use App\Service\MessageService;
-use App\Service\TaskService;
+use App\Repositories\OrderRepository;
+use App\Repositories\UserRepository;
+use App\Services\IndexService;
+use App\Services\MessageService;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +26,7 @@ class IndexController extends Controller
      * 显示后台框架
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(UserRepositories $user, TaskService $task, OrderRepositories $order, MessageService $message)
+    public function index(UserRepository $user, TaskService $task, OrderRepository $order, MessageService $message)
     {
         //验证是否管理员true,false
         $admin = can('admin');
@@ -51,7 +51,7 @@ class IndexController extends Controller
             'orders' => $order_list,
             'message_list' => $message_list,
             'status' => app('App\Http\Controllers\Controller'),
-            'message' => app('App\Service\MessageService'),
+            'message' => app('App\Services\MessageService'),
         ]);
     }
 

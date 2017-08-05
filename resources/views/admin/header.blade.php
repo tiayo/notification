@@ -1,5 +1,5 @@
-@inject('task','App\Service\TaskService')
-@inject('message','App\Service\MessageService')
+@inject('task','App\Services\TaskService')
+@inject('message','App\Services\MessageService')
 
 <div class="page-header" xmlns="http://www.w3.org/1999/html">
     <div class="leftside-header">
@@ -150,11 +150,11 @@
         <div class="header-section" id="user-headerbox">
             <div class="user-header-wrap">
                 <div class="user-photo">
-                    <img src="{{ app('App\Repositories\ProfileRepositories')->findWhereArray('user_id', Auth::id())['avatar'] }}"/>
+                    <img src="{{ app('App\Repositories\ProfileRepository')->findWhereArray('user_id', Auth::id())['avatar'] }}"/>
                 </div>
                 <div class="user-info">
                     <span class="user-name">{{ app('App\User')->find(Auth::id())->toArray()['name'] }}</span>
-                    <span class="user-profile">{{ app('App\Repositories\ProfileRepositories')->findWhereArray('user_id', Auth::id())['real_name'] }}</span>
+                    <span class="user-profile">{{ app('App\Repositories\ProfileRepository')->findWhereArray('user_id', Auth::id())['real_name'] }}</span>
                 </div>
                 <i class="fa fa-plus icon-open" aria-hidden="true"></i>
                 <i class="fa fa-minus icon-close" aria-hidden="true"></i>

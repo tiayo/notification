@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Events\AddTaskEvent;
 use App\Http\Controllers\Controller;
-use App\Service\CategoryService;
-use App\Service\IndexService;
-use App\Service\TaskService;
+use App\Services\CategoryService;
+use App\Services\TaskService;
 use Illuminate\Http\Request;
 
 

@@ -2,10 +2,8 @@
 
 namespace  App\Http\Controllers\Accounting;
 
-use App\Facades\Verfication;
 use App\Http\Controllers\Controller;
-use App\Service\AccountingService;
-use App\Service\IndexService;
+use App\Services\AccountingService;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller

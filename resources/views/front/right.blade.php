@@ -11,7 +11,7 @@
         </dl>
         <div class="com_hotgroup">
             <ul class="clearfix">
-                {!! app('\App\Service\CategoryService')->categoryHtml('<li><a href="/category/<<category_id>>.html" target="_blank"><<title>><i></i></a></dd>', 'article') !!}
+                {!! app('\App\Services\CategoryService')->categoryHtml('<li><a href="/category/<<category_id>>.html" target="_blank"><<title>><i></i></a></dd>', 'article') !!}
             </ul>
         </div>
     </div><div id="M14_B_CommunityIndex_HotUserAboveTG"></div><div class="com_mod">

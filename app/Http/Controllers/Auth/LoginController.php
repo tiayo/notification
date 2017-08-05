@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Profile;
-use App\Service\AuthenticatesUsers;
-use App\Service\Loginservice;
+use App\Services\AuthenticatesUsers;
+use App\Services\Loginservice;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller

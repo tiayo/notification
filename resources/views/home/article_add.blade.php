@@ -65,7 +65,7 @@
                                             @if (!empty($current['name']))
                                                 <option value="{{$current['category_id']}}">{{$current['name']}}(当前栏目)</option>
                                             @endif
-                                                {!! app('\App\Service\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
+                                                {!! app('\App\Services\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
                                         </select>
                                     </div>
                                 @endif

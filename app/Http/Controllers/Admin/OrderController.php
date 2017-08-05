@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\RefundRepositories;
-use App\Service\OrderService;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -191,7 +190,7 @@ class OrderController extends Controller
             'action' => $action,
             'action_value' => $action_value,
             'refund_number' => $refund_number,
-            'refund_id' => app('App\Repositories\RefundRepositories')->findOne('refund_number', $refund_number)['refund_id'],
+            'refund_id' => app('App\Repositories\RefundRepository')->findOne('refund_number', $refund_number)['refund_id'],
         ]);
     }
 

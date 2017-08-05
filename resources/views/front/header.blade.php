@@ -2,7 +2,7 @@
     <div class="headbar" id="headbar">
         <dl class="headbarnav">
             <h1><a title="" href="/"><img src="/images/logo.png" /></a></h1>
-            {!! app('\App\Service\CategoryService')->categoryHtml('<dd class=""><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
+            {!! app('\App\Services\CategoryService')->categoryHtml('<dd class=""><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
             </dl>
         <div class="headtool" id="loginbox">
             <div class="sousuo">

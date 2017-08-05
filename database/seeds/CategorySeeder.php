@@ -9,7 +9,7 @@ class CategorySeeder extends Seeder
      *
      * @return void
      */
-    public function run(\App\Repositories\CategoryRepositories $category)
+    public function run(\App\Repositories\CategoryRepository $category)
     {
         //清除表
         App\Category::truncate();

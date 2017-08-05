@@ -9,7 +9,7 @@ class TaskSeeder extends Seeder
      *
      * @return void
      */
-    public function run(\App\Repositories\UserRepositories $user)
+    public function run(\App\Repositories\UserRepository $user)
     {
         //清除表
         App\Task::truncate();

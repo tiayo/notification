@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Service\VerficationService;
+use App\Services\VerficationService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('Verfication', function ($app) {
-            return new VerficationService($app->make('App\Repositories\UserRepositories'));
+            return new VerficationService($app->make('App\Repositories\UserRepository'));
         });
     }
 }

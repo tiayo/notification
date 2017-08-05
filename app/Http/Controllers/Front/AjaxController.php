@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
-use App\Service\AjaxService;
+use App\Services\AjaxService;
 use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller

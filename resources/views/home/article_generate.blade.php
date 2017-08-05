@@ -68,7 +68,7 @@
                                 <hr>
                                     <select id="category_select" class="form-control select2-hidden-accessible" required>
                                         <option value="0">全部</option>
-                                        {!! app('\App\Service\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
+                                        {!! app('\App\Services\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
                                     </select><br>
                                     <button id="generate_button" type="article" class="btn btn-darker-1 btn-block">点击开始</button>
                             </div>
