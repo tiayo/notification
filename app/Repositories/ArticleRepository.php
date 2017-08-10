@@ -71,7 +71,7 @@ class ArticleRepository
             ->join('category', 'category.category_id', '=', 'article.category')
             ->join('profile', 'profile.user_id', '=', 'article.user_id')
             ->join('users', 'users.id', '=', 'article.user_id')
-            ->select('article.*', 'category.*', 'profile.*', 'users.email')
+            ->select('article.*', 'article.created_at as created_time', 'category.*', 'profile.*', 'users.email')
             ->where($option, $value)
             ->first();
     }
