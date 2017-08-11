@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Service\TaskCheckService;
+use App\Services\TaskCheckService;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
