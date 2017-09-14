@@ -14,8 +14,8 @@ if (!function_exists('can')) {
     {
         $class = $class ?? Auth::user();
 
-        $$name = app("App\\".ucwords(strtolower($name)));
+        $app = app("App\\".ucwords(strtolower($name)));
 
-        return $$name->find(Auth::guard()->id())->can($option, $class);
+        return $app->find(Auth::guard()->id())->can($option, $class);
     }
 }
