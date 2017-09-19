@@ -2,45 +2,69 @@
 
 namespace App\Jobs;
 
-use App\Task;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Services\MailService;
 use Illuminate\Support\Facades\Log;
+use Exception;
 
 class TaskAddSendEmail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $task;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Task $task)
+    public function __construct($task)
     {
         $this->task = $task;
     }
 
-    public function handle(MailService $mail, User $user)
+    public function handle(User $user)
     {
-        $template = 'emails.task_add';
-        $user_email = $user->find($this->task->user_id)->email;
-        $name = '任务添加通知';
+        $user = $user->find($this->task->user_id);
+
         $data = [
-            'task' => $this->task,
-            'plan' => 'App\Http\Controllers\Controller'
+            'view' => 'task_add',
+            'subject' => '任务添加通知',
+            'assign' => [
+                'task' => $this->task,
+                'plan' => 'App\Http\Controllers\Controller'
+            ],
+            'queue_name' => 'task_add',
         ];
 
         //发送邮件
-        $mail->mailSend($template, $user_email, $name, $data);
+        MailSend($user, $data);
 
         //记录到日志
-        Log::info('Task add success notice(email):',$this->task->toArray());
+        Log::info('Task add success notice(email):', $this->task->toArray());
+    }
+
+    public function failed(Exception $exception)
+    {
+        $user = app('App\User')->where('name', config('site.adminstrator'))->first();
+
+        $data = [
+            'view' => 'failed',
+            'subject' => '任务失败通知',
+            'assign' => [
+                'exception' => $exception,
+            ],
+            'queue_name' => 'task_add',
+        ];
+
+        //发送邮件
+        MailSend($user, $data);
+
+        //记录到日志
+        Log::info('Task add failed notice(email):', $exception);
     }
 }
