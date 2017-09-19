@@ -128,7 +128,7 @@ class ArticleController extends Controller
         }
 
         //成功跳转
-        return redirect()->route('article_page', ['page' => 1]);
+        return redirect()->route('article_list', ['page' => 1]);
     }
 
     /**
@@ -155,7 +155,7 @@ class ArticleController extends Controller
         }
 
         //成功跳转
-        return redirect()->route('article_page', ['page' => 1]);
+        return redirect()->route('article_list', ['page' => 1]);
     }
 
     /**
@@ -176,7 +176,7 @@ class ArticleController extends Controller
         }
 
         //成功跳转
-        return redirect()->route('article_page', ['page' => 1]);
+        return redirect()->route('article_list', ['page' => 1]);
     }
 
     /**
@@ -195,6 +195,6 @@ class ArticleController extends Controller
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
         }
 
-        return redirect()->route('article_page', ['page' => 1]);
+        return redirect()->route('article_list', ['page' => 1]);
     }
 }
