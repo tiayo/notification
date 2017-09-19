@@ -56,7 +56,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('article_page', ['page' => 1])}}">
+                                        <a href="{{ route('article_list') }}">
                                             <div class="left-element"><i class="fa fa-clock-o color-warning"></i></div>
                                             <div class="text">
                                                 <span class="title">{{$article_count}} 篇文章</span>
@@ -107,6 +107,7 @@
                                 </div>
                             </div>
                         @endforeach
+
                         @foreach ($tasks as $task)
                             <div class="timeline-box">
                                 <div class="timeline-icon bg-primary">
@@ -129,6 +130,7 @@
                                 </div>
                             </div>
                         @endforeach
+
                         @foreach ($articles as $article)
                             <div class="timeline-box">
                                 <div class="timeline-icon bg-primary">

@@ -27,11 +27,11 @@ class MeController extends Controller
         //获取1条订单
         $orders = $order->userShow(1, 1);
 
-        //取1条文章
+        //取1条任务
         $tasks = $task->userShow(1, 1);
 
-        //取1条任务
-        $articles = $article->userShow(1, 1);
+        //取1条文章
+        $articles = $article->userShow(1);
 
         return view('home.me', [
             'user' => Auth::user(),
@@ -41,7 +41,7 @@ class MeController extends Controller
             'status' => app('App\Http\Controllers\Controller'),
             'orders' => $orders,
             'tasks' => $tasks,
-            'articles' => $articles['data']
+            'articles' => $articles
         ]);
     }
 
