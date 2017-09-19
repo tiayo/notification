@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    public $timestamps = true;
     protected $fillable = [
         'article_id',
         'category',
@@ -23,8 +22,11 @@ class Article extends Model
         'body',
         'click',
     ];
-    protected $connection = 'mysql';
+
+    protected $connection = 'mysql2';
+
     protected $table = 'article';
+
     protected $primaryKey = 'article_id';
 
     public function profile()

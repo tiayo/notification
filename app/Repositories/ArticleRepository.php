@@ -18,16 +18,6 @@ class ArticleRepository
         return $this->article->find($id);
     }
 
-    public function getAll($page, $num)
-    {
-        return $this->article
-            ->leftJoin('category', 'article.category', '=', 'category.category_id')
-            ->skip(($page-1) * $num)
-            ->take($num)
-            ->orderBy('article.updated_at', 'desc')
-            ->get();
-    }
-
     public function getArticleGennerate()
     {
         return $this->article
@@ -45,17 +35,41 @@ class ArticleRepository
             ->get();
     }
 
-    public function findMulti($option, $value, $page, $num)
+    public function adminGet($num)
+    {
+        return $this->article
+            ->leftJoin('category', 'article.category', '=', 'category.category_id')
+            ->orderBy('article.updated_at', 'desc')
+            ->paginate($num);
+    }
+
+    public function adminSearchGet($num, $keyword)
+    {
+        return $this->article
+            ->leftJoin('category', 'article.category', '=', 'category.category_id')
+            ->where('title', 'like', "%$keyword%")
+            ->orderBy('article.updated_at', 'desc')
+            ->paginate($num);
+    }
+
+    public function userGet($where, $num)
     {
         return $this->article
             ->join('category', 'article.category', '=', 'category.category_id')
-            ->skip(($page-1)*$num)
-            ->take($num)
-            ->where($option, $value)
+            ->where($where)
             ->orderBy('article.updated_at', 'desc')
-            ->get();
+            ->paginate($num);
     }
 
+    public function userSearchGet($where, $num, $keyword)
+    {
+        return $this->article
+            ->join('category', 'article.category', '=', 'category.category_id')
+            ->where($where)
+            ->where('title', 'like', "%$keyword%")
+            ->orderBy('article.updated_at', 'desc')
+            ->paginate($num);
+    }
 
     public function findOne($option, $value, $data = '*')
     {
