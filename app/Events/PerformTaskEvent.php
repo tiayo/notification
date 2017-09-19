@@ -13,11 +13,9 @@ class PerformTaskEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $task;
-    public $user;
 
-    public function __construct(Task $task, User $user)
+    public function __construct(Task $task)
     {
         $this->task = $task;
-        $this->user = $user;
     }
 }

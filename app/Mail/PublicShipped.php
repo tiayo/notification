@@ -17,15 +17,8 @@ class PublicShipped extends Mailable
     {
         $this->data = $data;
 
-        //数据验证
-        try {
-            $this->validata($data);
-        } catch (\Exception $e) {
-            return $this->simpleRespose($e->getMessage());
-        }
-
-        // 加入指定队列
-        $this->onQueue($data['queue_name']);
+        //数据验证（抛错)
+        $this->validata($data);
     }
 
     /**
@@ -37,14 +30,14 @@ class PublicShipped extends Mailable
     {
         Log::info('email build:', $this->data);
 
-        if (empty($this->data['attach'])) {
+        if (isset($this->data['attach']) && !empty($this->data['attach'])) {
             return $this->view('mails.'.$this->data['view'], $this->data['assign'])
-                ->subject($this->data['subject']);
+                ->subject($this->data['subject'])
+                ->attach($this->data['attach']);
         }
 
         return $this->view('mails.'.$this->data['view'], $this->data['assign'])
-            ->subject($this->data['subject'])
-            ->attach($this->data['attach']);
+            ->subject($this->data['subject']);
     }
 
     /**
@@ -67,28 +60,8 @@ class PublicShipped extends Mailable
             $data['assign'] = [];
         }
 
-        if (!isset($data['queue_name']) || empty($data['queue_name'])) {
-            $data['queue_name'] = 'emails';
-        }
-
         if (!isset($data['attach']) || empty($data['attach'])) {
             $data['attach'] = null;
         }
-    }
-
-    /**
-     * 简单的错误返回
-     *
-     * @param $data
-     * @param int $code
-     * @return bool
-     */
-    public function simpleRespose($data, $code = 403)
-    {
-        echo (string) $data;
-
-        http_response_code($code);
-
-        exit();
     }
 }

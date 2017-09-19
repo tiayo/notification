@@ -29,10 +29,10 @@ if(!function_exists('MailSend')) {
      *
      * @param $user
      * @param $data
-     * @param $when
+
      */
-    function MailSend($user, $data, $when = null)
+    function MailSend($user, $data)
     {
-        MailService::email($user, $data, $when);
+        MailService::email($user, $data);
     }
 }

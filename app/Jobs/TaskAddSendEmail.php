@@ -38,7 +38,6 @@ class TaskAddSendEmail implements ShouldQueue
                 'task' => $this->task,
                 'plan' => 'App\Http\Controllers\Controller'
             ],
-            'queue_name' => 'task_add',
         ];
 
         //发送邮件
@@ -58,7 +57,6 @@ class TaskAddSendEmail implements ShouldQueue
             'assign' => [
                 'exception' => $exception,
             ],
-            'queue_name' => 'task_add',
         ];
 
         //发送邮件
