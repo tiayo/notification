@@ -1,5 +1,7 @@
 <?php
-
+Route::get('/testmail', function () {
+    return \App\Services\MailService::test();
+});
 //登录后路由（前端）
 Route::group(['middleware' => 'auth', 'namespace' => 'Front'], function () {
     Route::get('/article/{article_id}', 'FrontController@article')->name('article_view');

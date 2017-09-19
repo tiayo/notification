@@ -6,8 +6,8 @@ use App\Events\AddTaskEvent;
 use App\Http\Controllers\Controller;
 use App\Services\CategoryService;
 use App\Services\TaskService;
+use App\User;
 use Illuminate\Http\Request;
-
 
 class TaskController extends Controller
 {
@@ -207,14 +207,14 @@ class TaskController extends Controller
     {
         $task = $this->task->findFirst($task_id);
 
-        event(new AddTaskEvent($task));
+        event(new AddTaskEvent($task, User::class));
     }
 
     /**
      * checkbox事件
      * 进行批量删除及选择修改
      *
-     * @return \Illuminate\Http\RedirectResponse|void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function selectEvent()
     {

@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\MailService;
+
 if (!function_exists('can')) {
     /**
      * 权限验证
@@ -17,5 +19,20 @@ if (!function_exists('can')) {
         $app = app("App\\".ucwords(strtolower($name)));
 
         return $app->find(Auth::guard()->id())->can($option, $class);
+    }
+}
+
+if(!function_exists('MailSend')) {
+    /**
+     * 邮件发送方法
+     * 使用方法详见MailController的test方法
+     *
+     * @param $user
+     * @param $data
+     * @param $when
+     */
+    function MailSend($user, $data, $when = null)
+    {
+        MailService::email($user, $data, $when);
     }
 }
