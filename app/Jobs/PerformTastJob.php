@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Task;
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -17,12 +16,10 @@ class PerformTastJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $task;
-    protected $user;
 
-    public function __construct(Task $task, User $user)
+    public function __construct(Task $task)
     {
         $this->task = $task;
-        $this->user = $user;
     }
 
     public function handle()
@@ -39,7 +36,6 @@ class PerformTastJob implements ShouldQueue
                 'plan' => 'App\Http\Controllers\Controller',
                 'site_title' => $site_title,
             ],
-            'queue_name' => 'task_perform',
         ];
 
         //发送邮件
@@ -51,7 +47,7 @@ class PerformTastJob implements ShouldQueue
 
     public function failed(Exception $exception)
     {
-        $user = $this->user->where('name', config('site.adminstrator'))->first();
+        $user = app('App\User')->where('name', config('site.adminstrator'))->first();
 
         $data = [
             'view' => 'failed',
@@ -59,7 +55,6 @@ class PerformTastJob implements ShouldQueue
             'assign' => [
                 'exception' => $exception,
             ],
-            'queue_name' => 'task_perform',
         ];
 
         //发送邮件

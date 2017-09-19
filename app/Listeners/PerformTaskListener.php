@@ -4,13 +4,13 @@ namespace App\Listeners;
 
 use App\Events\PerformTaskEvent;
 use App\Jobs\PerformTastJob;
-use App\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 
-class PerformTaskListener
+class PerformTaskListener implements ShouldQueue
 {
-    public function handle(PerformTaskEvent $event, User $user)
+    public function handle(PerformTaskEvent $event)
     {
         $time_difference = strtotime($event->task['start_time']) - strtotime(Carbon::now());
 
@@ -18,8 +18,8 @@ class PerformTaskListener
 
         Log::info('diff time:'.$time_difference);
 
-        $job = (new PerformTastJob($event->task, $user))->delay(Carbon::now()->addSecond($time_difference));
+        $job = (new PerformTastJob($event->task))->delay(Carbon::now()->addSecond($time_difference));
 
-        dispatch($job);
+        dispatch($job)->onQueue('task_perform');
     }
 }
