@@ -24,7 +24,6 @@
                             <div class="form-group col-sm-9 col-lg-10">
                                             <span class="input-with-icon">
                                                 <input type="text" class="form-control" name="keyword" id="lefticon" placeholder="输入文章标题关键字...">
-                                                <input type="hidden" name="page" value="1">
                                         <i class="fa fa-search"></i>
                                     </span>
                             </div>
@@ -94,19 +93,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <div class="dataTables_info">共{{$count}}条记录  当前显示第{{$page}}页</div>
+                                    <div class="dataTables_info">共{{ $list_article->total() }}条记录  当前显示第{{ $list_article->currentPage() }}页</div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="paginate_button previous"><a href="{{($page-1) < 1 ? 1 : ($page-1)}}">上一页</a></li>
-                                            @for ($i=1;$i<=$max_page;$i++)
-                                                <li class="paginate_button" id="paginate_button_{{$i}}"><a href="{{$i}}">{{$i}}</a></li>
-                                            @endfor
-                                            <li class="paginate_button next">
-                                                <a href="{{($page+1) > $max_page ? $max_page : $page+1}}">Next</a>
-                                            </li>
-                                        </ul>
+                                        {{ $list_article->links() }}
                                     </div>
                                 </div>
                             </div>

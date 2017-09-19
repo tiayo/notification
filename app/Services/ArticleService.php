@@ -31,13 +31,13 @@ class ArticleService
      * @param $num //每页条数
      * @return mixed
      */
-    public function show($page, $num, $keyword = null)
+    public function show($num, $keyword = null)
     {
         if (!can('admin')) {
-            return $this->userShow($page, $num, $keyword);
+            return $this->userShow($num, $keyword);
         }
 
-        return $this->adminShow($page, $num, $keyword);
+        return $this->adminShow($num, $keyword);
     }
 
     /**
@@ -45,26 +45,15 @@ class ArticleService
      *
      * @param $page //当前页数
      * @param $num //每页条数
-     * @return array
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function userShow($page, $num, $keyword = null)
+    public function userShow($num, $keyword = null)
     {
         if (empty($keyword)) {
-            $result = $this->article
-                ->findMulti('user_id', Auth::id(), $page, $num)
-                ->toArray();
-        } else {
-            $result = Searchy::driver('admin_article')
-                ->article('title')
-                ->query($keyword)
-                ->getQuery()
-                ->where('user_id', Auth::id())
-                ->orderBy('article_id', 'desc')
-                ->get()
-                ->toArray();
+            return $this->article->userGet([['user_id', Auth::id()]], $num);
         }
 
-        return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
+        return $this->article->userSearchGet([['user_id', Auth::id()]], $num, $keyword);
     }
 
     /**
@@ -72,26 +61,15 @@ class ArticleService
      *
      * @param $page //当前页数
      * @param $num //每页条数
-     * @return array
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function adminShow($page, $num, $keyword = null)
+    public function adminShow($num, $keyword = null)
     {
         if (empty($keyword)) {
-            $result = $this->article
-                ->getAll($page, $num)
-                ->toArray();
-
-        } else {
-            $result = Searchy::driver('admin_article')
-                ->article('title')
-                ->query($keyword)
-                ->getQuery()
-                ->orderBy('article_id', 'desc')
-                ->get()
-                ->toArray();
+            return $this->article->adminGet($num);
         }
 
-        return ['data' => $this->adminArticleSearch($page, $num, $result), 'count' => count($result)];
+        return $this->article->adminSearchGet($num, $keyword);
     }
 
     /**

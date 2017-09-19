@@ -13,7 +13,7 @@
                     <li id="nav_4" class="has-child-item close-item">
                         <a><i class="fa fa-files-o" aria-hidden="true"></i><span>我的文章</span></a>
                         <ul class="nav child-nav level-1">
-                            <li id="nav_4_1"><a href="{{ route('article_page_simple') }}">全部文章</a></li>
+                            <li id="nav_4_1"><a href="{{ route('article_list') }}">全部文章</a></li>
                             <li id="nav_4_2" class="has-child-item close-item">
                                 <a href="#">添加文章</a>
                                 <ul class="nav child-nav level-2">

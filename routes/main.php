@@ -51,10 +51,10 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 //------------------------------分隔线-------------------------------------------------//
 
     //文章显示
-    Route::get('/article/page', function () {
-        return redirect()->route('article_page', ['page' => 1]);
-    })->name('article_page_simple');
-    Route::get('/article/page/{page}', 'ArticleController@index')->name('article_page');
+    Route::get('/article', 'ArticleController@index')->name('article_list');
+
+    //后台搜索文章
+    Route::get('/article/search', 'ArticleController@index')->name('admin_article_search');
 
     //添加文章
     Route::get('/article/add', function () {
@@ -69,9 +69,6 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
 
     //删除文章
     Route::get('/article/delete/{article_id}', 'ArticleController@destroy');
-
-    //后台搜索文章
-    Route::get('/article/search/view', 'ArticleController@search')->name('admin_article_search');
 
     //------------------------------分隔线-------------------------------------------------//
 
