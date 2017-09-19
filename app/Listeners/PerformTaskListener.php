@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class PerformTaskListener implements ShouldQueue
 {
+    #public $queue = 'task_perform';
+
     public function handle(PerformTaskEvent $event)
     {
         $time_difference = strtotime($event->task['start_time']) - strtotime(Carbon::now());
@@ -20,6 +22,6 @@ class PerformTaskListener implements ShouldQueue
 
         $job = (new PerformTastJob($event->task))->delay(Carbon::now()->addSecond($time_difference));
 
-        dispatch($job)->onQueue('task_perform');
+        dispatch($job);
     }
 }
