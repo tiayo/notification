@@ -5,9 +5,13 @@ namespace App\Services;
 use App\Http\Controllers\Front\FrontController;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\URL;
+use Roumen\Sitemap\Sitemap;
 
 class GenerateService
 {
@@ -16,18 +20,21 @@ class GenerateService
     protected $category;
     protected $request;
     protected $index;
+    protected $sitemap;
 
     public function __construct(ArticleRepository $article,
                                 FrontController $front,
                                 CategoryRepository $category,
                                 Request $request,
-                                IndexService $index)
+                                IndexService $index, 
+                                Sitemap $sitemap)
     {
         $this->article = $article;
         $this->front = $front;
         $this->category = $category;
         $this->request = $request;
         $this->index = $index;
+        $this->sitemap = $sitemap;
     }
 
     /**
@@ -172,7 +179,7 @@ class GenerateService
     public function retrieval()
     {
         //获取所有文章
-        $all_article = $this->article->retrieval();
+        $all_article = $this->article->generateGetAll('links', 'title');
 
         //初始化
         $html = '<meta charset="UTF-8">';
@@ -217,6 +224,33 @@ class GenerateService
 
         //存储到redis
         return Redis::set('slidebar_generate', json_encode($result));
+    }
+
+    /**
+     * 生成sitemap
+     *
+     * @return bool
+     */
+    public function sitemap()
+    {
+        //存在缓存清除缓存
+        if ($this->sitemap->isCached()) {
+            Cache::forget(config('sitemap.cache_key'));
+        }
+
+        $this->sitemap->add(URL::to('/'), Carbon::now().'+08:00', '1.0', 'daily');
+
+        $this->sitemap->add(URL::to('/article/retrieval.html'), Carbon::now().'+02:00', '0.9', 'daily');
+
+        $articles = $this->article->generateGetAll('*');
+
+        foreach ($articles as $article)
+        {
+            $this->sitemap->add(URL::to('article'.$article->links), $article->updated_at, '0.8', 'daily');
+        }
+
+        //写入文件
+        return $this->fwrite(public_path().'/sitemap.xml', $this->sitemap->render('xml')->content());
     }
 
     /**
