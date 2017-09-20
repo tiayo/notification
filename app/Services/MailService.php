@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\PublicShipped;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -28,7 +29,9 @@ class MailService
             'attach' => base_path().'/public/images/logo.png'
         ];
 
-        return MailSend(Auth::user(), $data);
+        $when = Carbon::now()->addSecond(0);
+
+        return MailSend(Auth::user(), $data, $when);
     }
 
     /**
@@ -37,8 +40,14 @@ class MailService
      * @param $user
      * @param $data
      */
-    static public function email($user, $data)
+    static public function email($user, $data, $when)
     {
-        return Mail::to($user)->send(new PublicShipped($data));
+        //直接发送
+        if (empty($when)) {
+            return Mail::to($user)->send(new PublicShipped($data));
+        }
+
+        //延时发送
+        return Mail::to($user)->later($when, new PublicShipped($data));
     }
 }
