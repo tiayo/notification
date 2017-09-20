@@ -1,5 +1,10 @@
 <?php
 
+//laravel队列监控(特殊路由，误删)
+Horizon::auth(function () {
+    return can('admin');
+});
+
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::group(['middleware' => 'admin'], function () {
         //退款
@@ -50,3 +55,4 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
         Route::get('/member/comment/mask/{comment_id}/{status}', 'CommentController@mask');
     });
 });
+

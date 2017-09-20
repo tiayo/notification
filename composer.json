@@ -11,6 +11,7 @@
         "guzzlehttp/guzzle": "^6.2",
         "hisorange/browser-detect": "^2.0",
         "laravel/framework": "5.5.*",
+        "laravel/horizon": "^1.0",
         "laravel/passport": "^2.0",
         "laravel/tinker": "~1.0",
         "pda/pheanstalk": "^3.1",
