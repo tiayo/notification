@@ -196,10 +196,10 @@ class ArticleRepository
             ->get();
     }
 
-    public function retrieval()
+    public function getAll(...$select)
     {
         return $this->article
-            ->select('links', 'title')
+            ->select($select)
             ->get();
     }
 }

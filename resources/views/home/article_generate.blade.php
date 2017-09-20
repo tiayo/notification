@@ -27,7 +27,7 @@
     </div>
     <div class="row animated fadeInUp">
         <div class="col-sm-12">
-            <h4 class="section-subtitle"><b>生成文章</b></h4>
+            <h4 class="section-subtitle"><b>生成页面</b></h4>
 
                     <div class="row hidden" id="result_alert">
                         <div class="col-md-12" id="result_alert_div"></div>
@@ -73,6 +73,20 @@
                                     <button id="generate_button" type="article" class="btn btn-darker-1 btn-block">点击开始</button>
                             </div>
                             <p class="text-muted">不会生成<span class="color-info">私密</span>属性的文章</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <h4 class="form-signin-heading">生成sitemap</h4>
+                                <hr>
+                                <button id="generate_button" type="sitemap" class="btn btn-darker-1 btn-block">点击开始</button>
+                            </div>
+                            <p class="text-muted">生成<span class="color-info">/sitemap.xml</span></p>
                         </div>
                     </div>
                 </div>

@@ -5,9 +5,13 @@ namespace App\Services;
 use App\Http\Controllers\Front\FrontController;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\URL;
+use Roumen\Sitemap\Sitemap;
 
 class GenerateService
 {
@@ -172,7 +176,7 @@ class GenerateService
     public function retrieval()
     {
         //获取所有文章
-        $all_article = $this->article->retrieval();
+        $all_article = $this->article->getAll('links', 'title');
 
         //初始化
         $html = '<meta charset="UTF-8">';
@@ -217,6 +221,35 @@ class GenerateService
 
         //存储到redis
         return Redis::set('slidebar_generate', json_encode($result));
+    }
+
+    /**
+     * 生成sitemap
+     *
+     * @return bool
+     */
+    public function sitemap()
+    {
+        $sitemap = App::make("sitemap");
+
+        //存在缓存清楚缓存
+        if ($sitemap->isCached()) {
+            Cache::forget(config('sitemap.cache_key'));
+        }
+
+        $sitemap->add(URL::to('/'), Carbon::now().'+08:00', '1.0', 'daily');
+
+        $sitemap->add(URL::to('/article/retrieval.html'), Carbon::now().'+02:00', '0.9', 'daily');
+
+        $articles = $this->article->getAll('*');
+
+        foreach ($articles as $article)
+        {
+            $sitemap->add($article->title, $article->updated_at, '0.8', 'daily');
+        }
+
+        //写入文件
+        return $this->fwrite(public_path().'/sitemap.xml', $sitemap->render('xml')->content());
     }
 
     /**
