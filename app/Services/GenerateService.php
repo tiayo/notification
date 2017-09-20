@@ -238,10 +238,17 @@ class GenerateService
             Cache::forget(config('sitemap.cache_key'));
         }
 
-        $this->sitemap->add(URL::to('/'), Carbon::now().'+08:00', '1.0', 'daily');
+        //添加首页
+        $this->sitemap->add(URL::to('/'), Carbon::now(), '1.0', 'daily');
 
-        $this->sitemap->add(URL::to('/article/retrieval.html'), Carbon::now().'+02:00', '0.9', 'daily');
+        //添加列表页
+        $all_caregory_id = $this->category->getWhereParent('article', ['category_id']);
 
+        foreach ($all_caregory_id as $caregory_id) {
+            $this->sitemap->add(URL::to('/category/'.$caregory_id['category_id'].'.html'), Carbon::now(), '0.9', 'daily');
+        }
+
+        //添加文章链接
         $articles = $this->article->generateGetAll('*');
 
         foreach ($articles as $article)
