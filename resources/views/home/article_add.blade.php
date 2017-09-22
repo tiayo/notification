@@ -110,6 +110,9 @@
                 $('#article_picture_input').val($(this).val()).attr('name', '');
                 $(this).attr('name', 'picture');
             })
+
+            //开启编辑器
+            UE.getEditor('editor')
         });
     </script>
 @endsection
