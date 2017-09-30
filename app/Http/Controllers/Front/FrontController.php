@@ -91,7 +91,7 @@ class FrontController extends Controller
     {
         //获取文章信息
         try{
-            $article = $this->front->findOneAndCategoryUser($article_id);
+            $article = $this->front->first($article_id);
         } catch (\Exception $e) {
             return $this->jsonResponse($e->getMessage(), 403);
         }

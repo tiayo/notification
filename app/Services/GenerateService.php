@@ -110,7 +110,7 @@ class GenerateService
         } else {
             $all_article = $this->article->getArticleGennerateWhere($this->request->get('category'));
             //删除目录下文章（目录存在）
-            $alias = $this->category->current($this->request->get('category'))['alias'];
+            $alias = $this->article->find($this->request->get('category'))->category['alias'];
             $category_path = public_path().'/article/'.$alias;
             if (file_exists($category_path)) {
                 $this->deleteAll($category_path);
@@ -124,7 +124,7 @@ class GenerateService
             $filename = $id.'.html';
 
             //目录
-            $alias = $this->category->current($article->category)['alias'];
+            $alias = $this->article->find($id)->category['alias'];
             $path = public_path().'/article'.$this->links($id, $alias);
 
             //生成路径（目录不存在）
@@ -155,9 +155,6 @@ class GenerateService
      */
     public function article_one($article_id)
     {
-        //获取文章分类
-        $category = $this->article->findOne('article_id', $article_id, 'category')['category'];
-
         //获取静态页面数据
         $data = $this->front->article($article_id)->__toString();
 
@@ -165,7 +162,7 @@ class GenerateService
         $filename = $article_id.'.html';
 
         //生成目录
-        $alias = $this->category->current($category)['alias'];
+        $alias = $this->article->find($article_id)->category['alias'];
         $path = public_path().'/article'.$this->links($article_id, $alias);
 
         if (!file_exists($path)) {

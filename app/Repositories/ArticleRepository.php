@@ -21,7 +21,7 @@ class ArticleRepository
     public function getArticleGennerate()
     {
         return $this->article
-            ->select('article_id', 'category')
+            ->select('article_id', 'category_id')
             ->where('attribute', '<>', '2')
             ->get();
     }
@@ -29,9 +29,9 @@ class ArticleRepository
     public function getArticleGennerateWhere($category)
     {
         return $this->article
-            ->select('article_id', 'category')
+            ->select('article_id', 'category_id')
             ->where('attribute', '<>', 2)
-            ->where('category', $category)
+            ->where('category_id', $category)
             ->get();
     }
 
@@ -78,7 +78,6 @@ class ArticleRepository
     public function findOneAndCategoryUser($option, $value)
     {
         return $this->article
-            ->select('article.*', 'article.created_at as created_time', 'category.*', 'profile.*', 'users.email')
             ->where($option, $value)
             ->first();
     }
@@ -119,7 +118,6 @@ class ArticleRepository
     {
         return $this->article
             ->where('attribute', '<>', 2)
-            ->select('article.*', 'profile.real_name')
             ->orderBy('article.updated_at', 'desc')
             ->limit($num)
             ->get();
@@ -138,7 +136,7 @@ class ArticleRepository
     {
         return $this->article
             ->where('attribute', '<>', 2)
-            ->where('category', $category_id)
+            ->where('category_id', $category_id)
             ->limit($num)
             ->orderby('article.updated_at', 'desc')
             ->get();
@@ -148,7 +146,7 @@ class ArticleRepository
     {
         return $this->article
             ->where('attribute', 3)
-            ->where('category', $category_id)
+            ->where('category_id', $category_id)
             ->limit($num)
             ->orderby('updated_at', 'desc')
             ->get();
@@ -167,7 +165,7 @@ class ArticleRepository
 
         return $this->article
             ->where('attribute', '<>', 2)
-            ->where('category', $category_id)
+            ->where('category_id', $category_id)
             ->skip(config('site.index_page') + ($page-1)*config('site.more_article'))
             ->limit(config('site.more_article'))
             ->orderby('article.updated_at', 'desc')
@@ -179,7 +177,7 @@ class ArticleRepository
     {
         return $this->article
             ->where('attribute', '<>', 2)
-            ->where('category', $category_id)
+            ->where('category_id', $category_id)
             ->limit($num)
             ->inRandomOrder()
             ->get();

@@ -18,8 +18,8 @@
         <div class="newsheadtit">
             <h2>{{$article['title']}}</h2>
         </div>
-        <p class="mt15 ml25 newstime ">分类：{{$article['name']}}&emsp;发布时间：{{$article['created_time']}}&emsp;阅读：<span id="click"></span>&emsp;
-            <span class="ml15"><a href="#">作者：{{$article['real_name']}}</a></span>
+        <p class="mt15 ml25 newstime ">分类：{{ $article->category['name'] }}&emsp;发布时间：{{ $article['created_at'] }}&emsp;阅读：<span id="click"></span>&emsp;
+            <span class="ml15"><a href="#">作者：{{ $article->profile['real_name'] }}</a></span>
             <span><a href="#pinglun" class="icon_nbbs" title="评论"></a></span>
         </p>
     </div>
@@ -36,7 +36,7 @@
                 @endif
                 {!! $article['body'] !!}
             </div>  　　
-            <p class="newsediter">&nbsp;&nbsp;&nbsp;编辑：{{$article['real_name']}}</p>
+            <p class="newsediter">&nbsp;&nbsp;&nbsp;编辑：{{ $article->profile['real_name'] }}</p>
             <div class="newswarm">[随享社区版权所有 未经许可不得转载 ]</div>
             <img src="/images/code.jpg" class="article_img mt15"/>
             <div id="comment_block"></div>
@@ -49,9 +49,9 @@
                 <h4>作者信息</h4>
                 <dl id="relatedInfos-writer">
                     <dd style=""><img src="{{$article['avatar']}}" width="96"/>
-                        <h3>{{$article['real_name']}}</h3>
-                        <p>城市：{{$article['city']}}</p>
-                        <p>邮箱:<small>{{$article['email']}}</small></p>
+                        <h3>{{ $article->profile['real_name'] }}</h3>
+                        <p>城市：{{ $article->profile['city'] }}</p>
+                        <p>邮箱:<small>{{ $article->user['email'] }}</small></p>
                     </dd>
                 </dl>
             </div>
