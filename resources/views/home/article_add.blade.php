@@ -45,10 +45,9 @@
                                         @if (!empty($old_input['category_id']))
                                            <option value="{{ $old_input['category_id'] }}">{{ \App\Category::find($old_input['category_id'])['name'] }}</option>
                                         @endif
-
-                                        {{--@foreach($categories as $category)--}}
-                                           {{--<option value="{{ $category['category_id'] }}">{{ $category['name'] }}</option>--}}
-                                        {{--@endforeach--}}
+                                        @foreach($categories as $category)
+                                           <option value="{{ $category['category_id'] }}">{{ $category['name'] }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
