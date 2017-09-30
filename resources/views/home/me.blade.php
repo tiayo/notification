@@ -139,7 +139,7 @@
                                 <div class="timeline-content">
                                     <h4 class="tl-title">{{$article['title']}}</h4>
                                     <p style="line-height: 2rem; margin: 0;">
-                                        {{$article['name']}}<br>
+                                        {{ $article->category->name }}<br>
                                         {{$article['abstract']}}<br>
                                         <a href="{{ route('article_update', ['article' => $article['article_id']]) }}">
                                             <button type="button" class="btn btn-success">

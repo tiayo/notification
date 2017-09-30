@@ -61,10 +61,10 @@
                                             <tr role="row" class="odd @if ($row['attribute'] == 3) color-success @endif">
                                                 <td>{{$row['article_id']}}</td>
                                                 <td>{{$row['title']}}</td>
-                                                <td>{{app('App\Profile')->where('user_id', $row['user_id'])->first()['real_name']}}</td>
+                                                <td>{{ $row->profile['real_name'] }}</td>
                                                 <td>{{$row['click']}}</td>
                                                 <td>{{$row['created_at']}}</td>
-                                                <td>{{$row['name']}}</td>
+                                                <td>{{ $row->category['name'] }}</td>
                                                 <td>{{$judge::articleStatus($row['attribute'])}}</td>
                                                 @if ($admin)
                                                     <td>

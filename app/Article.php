@@ -33,5 +33,14 @@ class Article extends Model
     {
         return $this->belongsTo('App\Profile', 'user_id', 'user_id');
     }
-}
 
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'user_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Category', 'category_id', 'category_id');
+    }
+}

@@ -38,36 +38,32 @@ class ArticleRepository
     public function adminGet($num)
     {
         return $this->article
-            ->leftJoin('category', 'article.category', '=', 'category.category_id')
-            ->orderBy('article.updated_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($num);
     }
 
     public function adminSearchGet($num, $keyword)
     {
         return $this->article
-            ->leftJoin('category', 'article.category', '=', 'category.category_id')
             ->where('title', 'like', "%$keyword%")
-            ->orderBy('article.updated_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($num);
     }
 
     public function userGet($where, $num)
     {
         return $this->article
-            ->join('category', 'article.category', '=', 'category.category_id')
             ->where($where)
-            ->orderBy('article.updated_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($num);
     }
 
     public function userSearchGet($where, $num, $keyword)
     {
         return $this->article
-            ->join('category', 'article.category', '=', 'category.category_id')
             ->where($where)
             ->where('title', 'like', "%$keyword%")
-            ->orderBy('article.updated_at', 'desc')
+            ->orderBy('updated_at', 'desc')
             ->paginate($num);
     }
 
@@ -82,9 +78,6 @@ class ArticleRepository
     public function findOneAndCategoryUser($option, $value)
     {
         return $this->article
-            ->join('category', 'category.category_id', '=', 'article.category')
-            ->join('profile', 'profile.user_id', '=', 'article.user_id')
-            ->join('users', 'users.id', '=', 'article.user_id')
             ->select('article.*', 'article.created_at as created_time', 'category.*', 'profile.*', 'users.email')
             ->where($option, $value)
             ->first();
@@ -125,7 +118,6 @@ class ArticleRepository
     public function getArticleLimitDesc($num)
     {
         return $this->article
-            ->leftjoin('profile', 'profile.user_id', '=', 'article.user_id')
             ->where('attribute', '<>', 2)
             ->select('article.*', 'profile.real_name')
             ->orderBy('article.updated_at', 'desc')
@@ -145,7 +137,6 @@ class ArticleRepository
     public function getArticleLimitDescCategory($category_id, $num)
     {
         return $this->article
-            ->join('profile', 'article.user_id', 'profile.user_id')
             ->where('attribute', '<>', 2)
             ->where('category', $category_id)
             ->limit($num)
@@ -167,7 +158,6 @@ class ArticleRepository
     {
         if ($category_id == 0) {
             return $this->article
-                ->join('profile', 'article.user_id', 'profile.user_id')
                 ->where('attribute', '<>', 2)
                 ->skip(config('site.index_page') + ($page-1)*config('site.more_article'))
                 ->limit(config('site.more_article'))
@@ -176,7 +166,6 @@ class ArticleRepository
         }
 
         return $this->article
-            ->join('profile', 'article.user_id', 'profile.user_id')
             ->where('attribute', '<>', 2)
             ->where('category', $category_id)
             ->skip(config('site.index_page') + ($page-1)*config('site.more_article'))
