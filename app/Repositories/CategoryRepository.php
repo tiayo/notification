@@ -100,4 +100,12 @@ class CategoryRepository
             ->where('parent_id', $parent_id)
             ->get();
    }
+
+    public function getSimple($where, ...$select)
+    {
+        return $this->category
+            ->select($select)
+            ->where($where)
+            ->get();
+    }
 }

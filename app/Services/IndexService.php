@@ -48,7 +48,7 @@ class IndexService
         $key_level = [];
 
         //获取配置文件
-        $original = config('sidebar.original');
+        $sidebars = config('sidebar');
         $array = json_decode(Redis::get('sidebar_generate'), true)['generate'];
 
         //搜索
@@ -68,8 +68,11 @@ class IndexService
             $key_level[] = $this->keyLevel($i, $key_array);
         }
 
+        //搜索结果
+        $sidebars = $sidebars[$key_level[0]]['child'][$key_level[1]];
+
         //返回结果
-        return ['info' => '为您智能匹配到"'.$original[$key].'"', 'key_level' => $key_level, 'array_key' => $key];
+        return ['info' => '为您智能匹配到"'.$sidebars['name'].'"', 'key_level' => $key_level, 'array_key' => $key];
     }
 
     /**

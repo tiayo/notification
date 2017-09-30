@@ -5,8 +5,7 @@ namespace App\Services;
 use App\Repositories\ArticleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use TomLingham\Searchy\Facades\Searchy;
-
+use Exception;
 
 class ArticleService
 {
@@ -21,6 +20,29 @@ class ArticleService
         $this->request = $request;
         $this->category = $category;
         $this->generate = $generate;
+    }
+
+    /**
+     * 通过id验证记录是否存在以及是否有操作权限
+     * 通过：返回该记录
+     * 否则：抛错
+     *
+     * @param $id
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null|static|static[]
+     */
+    public function validata($id)
+    {
+        $first = $this->article->find($id);
+
+        throw_if(empty($first), Exception::class, '未找到该记录！', 404);
+
+        //权限验证
+        if (!can('admin')) {
+            throw_if(!can('update', $first)
+                , Exception::class, '没有权限！', 403);
+        }
+
+        return $first;
     }
 
     /**
@@ -119,29 +141,9 @@ class ArticleService
      * @param $id
      * @return mixed
      */
-    public function findFirst($id, $value = '*')
+    public function first($id)
     {
-        return $this->article->findOne('article_id', $id, $value);
-    }
-
-    /**
-     * 返回更新视图需要的数据
-     *
-     * @param $category_id
-     * @param $task_id
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
-     */
-    public function updateView($article_id)
-    {
-        //验证权限
-        if (!can('update', $this->article->find($article_id))) {
-            throw new \Exception('您没有权限访问（代码：1002）！', 403);
-        }
-
-        $result['old_input'] = $this->findFirst($article_id);
-        $result['uri'] = route('article_update_post', ['article' => $article_id]);
-
-        return $result;
+        return $this->validata($id);
     }
 
     /**
@@ -153,9 +155,7 @@ class ArticleService
     public function update($data, $article_id)
     {
         //验证权限
-        if (!can('update', $this->article->find($article_id))) {
-            throw new \Exception('您没有权限访问（代码：1002）！', 403);
-        }
+        $this->validata($article_id);
 
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
@@ -211,7 +211,7 @@ class ArticleService
      * @param $category_id
      * @return mixed
      */
-    public function store($data, $category_id)
+    public function store($data)
     {
         //保存图片(如果上传)
         if (!empty($data['picture'])) {
@@ -224,7 +224,7 @@ class ArticleService
         }
 
         //构建插入数组
-        $value['category'] = $category_id;
+        $value['category'] = $data['category_id'];
         $value['attribute'] = $data['attribute'];
         $value['title'] = $data['title'];
         $value['abstract'] = $data['abstract'];
@@ -253,20 +253,6 @@ class ArticleService
         }
 
         return true;
-    }
-
-    /**
-     * 返回插入任务视图需要的数据
-     *
-     * @param $category_id
-     * @param $task_id
-     * @return mixed
-     */
-    public function storeView($category_id)
-    {
-        $result['old_input'] = $this->request->session()->get('_old_input');
-        $result['uri'] = route('article_add_post', ['category' => $category_id]);
-        return $result;
     }
 
     /**

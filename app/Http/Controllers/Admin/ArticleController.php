@@ -18,7 +18,6 @@ class ArticleController extends Controller
     {
         $this->article = $article;
         $this->category = $category;
-        $this->all_category = $this->category->getSelect();
         $this->request = $request;
     }
 
@@ -38,7 +37,6 @@ class ArticleController extends Controller
 
         return view('home.article_list',[
             'list_article' => $list_article,
-            'all_category' => $this->all_category,
             'admin' => can('admin'),
             'judge' => 'App\Http\Controllers\Controller',
         ]);
@@ -51,23 +49,17 @@ class ArticleController extends Controller
      * @param null $task_id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function storeView($category_id)
+    public function storeView()
     {
-        //获取当前栏目
-        $current = $this->category->current($category_id);
-
-        //填入表格的内容及post提交url
-        try {
-            $result = $this->article->storeView($category_id);
-        } catch (\Exception $e) {
-            return response($e->getMessage());
-        }
+        //获取所有分类
+        $categories = $this->category->getSimple([
+            ['parent_id', '1']
+        ], 'name', 'category_id');
 
         return view("home.article_add", [
-            'all_category' => $this->all_category,
-            'current' => $current,
-            'old_input' => $result['old_input'],
-            'uri' => $result['uri'],
+            'categories' => $categories,
+            'old_input' => session('_old_input'),
+            'uri' => route('article_add'),
             'judge' => 'App\Http\Controllers\Controller',
             'type' => 'store',
         ]);
@@ -82,24 +74,21 @@ class ArticleController extends Controller
      */
     public function updateView($article_id)
     {
-        //获取栏目id
-        $category_id = $this->article->findFirst($article_id)['category'];
+        //获取所有分类
+        $categories = $this->category->getSimple([
+            ['parent_id', '1']
+        ], 'name', 'category_id');
 
-        //获取当前栏目
-        $current = $this->category->current($category_id);
-
-        //填入表格的内容及post提交url
         try {
-            $result = $this->article->updateView($article_id);
+            $old_input = session('_old_input') ?? $this->article->first($article_id);
         } catch (\Exception $e) {
-            return response($e->getMessage());
+            return response($e->getMessage(), $e->getCode());
         }
 
         return view("home.article_add", [
-            'all_category' => $this->all_category,
-            'current' => $current,
-            'old_input' => $result['old_input'],
-            'uri' => $result['uri'],
+            'categories' => $categories,
+            'old_input' => $old_input,
+            'uri' => route('article_update', ['article_id' => $article_id]),
             'judge' => 'App\Http\Controllers\Controller',
             'type' => 'update',
         ]);
@@ -113,16 +102,17 @@ class ArticleController extends Controller
      * @param $category_id
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
-    public function store($category_id)
+    public function store()
     {
         $this->validate($this->request, [
             'title' => 'bail|required|unique:article',
             'body' => 'bail|required',
             'attribute' => 'bail|required|integer|max:2|min:1',
+            'category_id' => 'bail|required|integer',
         ]);
 
         try {
-            $this->article->store($this->request->all(), $category_id);
+            $this->article->store($this->request->all());
         } catch (\Exception $e) {
             return response($e->getMessage(), empty($e->getCode())? 403 : $e->getCode());
         }

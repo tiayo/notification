@@ -22,7 +22,7 @@
 @section('content_body')
     <div class="row animated fadeInUp">
         <div class="col-sm-12">
-            <h4 class="section-subtitle"><b>当前栏目：{{$current['name']}}</b></h4>
+            <h4 class="section-subtitle"><b>{{$judge::isStoreOrUpdate($type)}}文章</b></h4>
             <div class="panel panel-default">
                 <div class="panel-content">
                     <div class="row">
@@ -40,6 +40,17 @@
                                     </div>
                                 @endif
                                 <div class="form-group">
+                                    <label for="category_id" class="control-label">选择分类<span class="required">*</span></label>
+                                    <select id="category_id" name="category_id" class="form-control select2-hidden-accessible" required>
+                                        @if (!empty($old_input['category_id']))
+                                            <option value="{{ $old_input['category_id'] }}">{{ \App\Category::find($old_input['category_id'])['name'] }}</option>
+                                        @endif
+
+                                        @foreach($categories as $category)<option value="{{ $category['category_id'] }}">{{ $category['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="title" class=" control-label">主题<span class="required">*</span></label>
                                     <input type="text" class="form-control" name="title" value="{{$old_input['title']}}" required>
                                 </div>
@@ -49,8 +60,8 @@
                                     <input type="file" id="article_picture_file" style="margin-top: 1em;">
                                 </div>
                                 <div class="form-group">
-                                    <label for="category" class="control-label">类型<span class="required">*</span></label>
-                                    <select name="attribute" class="form-control select2-hidden-accessible" required>
+                                    <label for="attribute" class="control-label">类型<span class="required">*</span></label>
+                                    <select id="attribute" name="attribute" class="form-control select2-hidden-accessible" required>
                                         @if (!empty($old_input['attribute']))
                                             <option value="{{$old_input['attribute']}}">{{$judge::articleStatus($old_input['attribute'])}}</option>
                                         @endif
