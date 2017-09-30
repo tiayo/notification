@@ -4608,20 +4608,20 @@ html.left-sidebar-collapsed .c-hamburger--htla span::after {
   border: 1px solid #CCC;
 }
 
-#search_slidebar {
+#search_sidebar {
   background: rgba(0,0,0,0);
   border: 1px solid #999;
   padding: 0 1em 0 1em;
 }
-#search_slidebar::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+#search_sidebar::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color:    #999;
 }
-#search_slidebar:-moz-placeholder, textarea:-moz-placeholder {
+#search_sidebar:-moz-placeholder, textarea:-moz-placeholder {
   color:    #999;
 }
-#search_slidebar::-moz-placeholder, textarea::-moz-placeholder {
+#search_sidebar::-moz-placeholder, textarea::-moz-placeholder {
   color:    #999;
 }
-#search_slidebar:-ms-input-placeholder, textarea:-ms-input-placeholder {
+#search_sidebar:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:    #999;
 }

@@ -122,7 +122,7 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     //------------------------------分隔线-------------------------------------------------//
 
     //搜索导航
-    Route::post('/search/slidebar', 'IndexController@searchSlidebar')->name('search_slidebar');
+    Route::post('/search/sidebar', 'IndexController@searchSlidebar')->name('search_sidebar');
 });
 
 //记帐本路由
