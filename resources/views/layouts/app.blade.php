@@ -91,12 +91,12 @@
             }
         })
     </script>
-    {{--搜索slidebar--}}
+    {{--搜索sidebar--}}
     <script type="text/javascript">
         $(document).ready(function () {
 
             //input框回车事件
-            $('#search_slidebar').bind('keypress',function(event){
+            $('#search_sidebar').bind('keypress',function(event){
                 if(event.keyCode == 13)
                 {
                     search_run();
@@ -110,14 +110,14 @@
 
             //搜索入口
             function search_run() {
-                $('#search_slidebar').removeClass('hidden');
+                $('#search_sidebar').removeClass('hidden');
 
                 var search_icon = $('#search-icon');
 
-                if (typeof search_icon.attr('slidebar') === 'undefined') {
-                    search_icon.attr('slidebar', 'open')
+                if (typeof search_icon.attr('sidebar') === 'undefined') {
+                    search_icon.attr('sidebar', 'open')
                 } else {
-                    slidebar_axios();
+                    sidebar_axios();
                 }
             }
 
@@ -127,14 +127,14 @@
             });
 
             //搜索请求与结果执行
-            function slidebar_axios() {
+            function sidebar_axios() {
                 //展示进度条
                 $('.bgc').removeClass('hidden');
                 $('.float').removeClass('hidden');
 
-                axios.post('{{ route('search_slidebar') }}', {
+                axios.post('{{ route('search_sidebar') }}', {
                     _token:'{{csrf_token()}}',
-                    search_slidebar:$('#search_slidebar').val()
+                    search_sidebar:$('#search_sidebar').val()
                 })
                     .then(function (response) {
                         var error_info_div = '#error_info_div';

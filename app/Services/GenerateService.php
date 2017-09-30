@@ -202,15 +202,15 @@ class GenerateService
     }
 
     /**
-     * 生成slidebar缓存
+     * 生成sidebar缓存
      *
      * @return bool
      */
-    public function slidebar()
+    public function sidebar()
     {
         //获取原始数据
         $result = [];
-        $data = config('slidebar.original');
+        $data = config('sidebar.original');
 
         //判断是否取到数据
         if (empty($data)) {
@@ -223,7 +223,7 @@ class GenerateService
         }
 
         //存储到redis
-        return Redis::set('slidebar_generate', json_encode($result));
+        return Redis::set('sidebar_generate', json_encode($result));
     }
 
     /**

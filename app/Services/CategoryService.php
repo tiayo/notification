@@ -51,9 +51,9 @@ class CategoryService
     /**
      * 根据条件获取分类
      *
-     * @param $page 页码
-     * @param $num 每页显示条数
-     * @return mixed
+     * @param $page
+     * @param $num
+     * @return array
      */
     public function show($page, $num)
     {
@@ -163,15 +163,24 @@ class CategoryService
         return redirect()->route('category', ['page' => 1]);
     }
 
+    /**
+     * 生成分类html
+     *
+     * @param $str
+     * @param $option
+     * @return null|string
+     */
     public function categoryHtml($str, $option)
     {
         $all_category = $this->category->getWhereParent($option);
+
         $result = null;
+
         foreach ($all_category as $key => $category) {
             $re = $str;
-            $re = str_replace('<<title>>',$category['name'],$re);
-            $re = str_replace('<<category_id>>',$category['category_id'],$re);
-            $re = str_replace('<<num>>',$key,$re);
+            $re = str_replace('<<title>>', $category['name'], $re);
+            $re = str_replace('<<category_id>>', $category['category_id'], $re);
+            $re = str_replace('<<num>>', $key, $re);
             $result .= $re;
         }
 

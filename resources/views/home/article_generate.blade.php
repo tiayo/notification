@@ -112,9 +112,9 @@
                             <div class="form-group">
                                 <h4 class="form-signin-heading">生成后台目录数据</h4>
                                 <hr>
-                                <button id="generate_button" type="slidebar" class="btn btn-darker-1 btn-block">点击开始</button>
+                                <button id="generate_button" type="sidebar" class="btn btn-darker-1 btn-block">点击开始</button>
                             </div>
-                            <p class="text-muted">当更新了<span class="color-info">config/slidebar.php</span>文件时必须执行本操作才能生效。</p>
+                            <p class="text-muted">当更新了<span class="color-info">config/sidebar.php</span>文件时必须执行本操作才能生效。</p>
                         </div>
                     </div>
                 </div>

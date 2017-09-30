@@ -79,7 +79,7 @@ class IndexController extends Controller
      */
     public function searchSlidebar()
     {
-        $keyword = $this->request->get('search_slidebar');
+        $keyword = $this->request->get('search_sidebar');
 
         try {
             $response = $this->index->searchSlidebar($keyword);

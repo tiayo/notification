@@ -48,8 +48,8 @@ class IndexService
         $key_level = [];
 
         //获取配置文件
-        $original = config('slidebar.original');
-        $array = json_decode(Redis::get('slidebar_generate'), true)['generate'];
+        $original = config('sidebar.original');
+        $array = json_decode(Redis::get('sidebar_generate'), true)['generate'];
 
         //搜索
         $key = $this->searchSlidebarHandle($array, $keyword);
