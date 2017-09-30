@@ -69,7 +69,8 @@ class IndexService
         }
 
         //搜索结果
-        $sidebars = $sidebars[$key_level[0]]['child'][$key_level[1]];
+        $sidebars = isset($key_level[1]) ? $sidebars[$key_level[0]]['child'][$key_level[1]] :
+            $sidebars[$key_level[0]];
 
         //返回结果
         return ['info' => '为您智能匹配到"'.$sidebars['name'].'"', 'key_level' => $key_level, 'array_key' => $key];

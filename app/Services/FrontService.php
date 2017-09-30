@@ -77,7 +77,7 @@ class FrontService
      * @param $article_id
      * @return mixed
      */
-    public function findOneAndCategoryUser($article_id)
+    public function first($article_id)
     {
         //权限验证
         if (!can('update', $this->article->find($article_id))) {
@@ -85,7 +85,7 @@ class FrontService
         }
 
         //获取文章
-        $article = $this->article->findOneAndCategoryUser('article_id', $article_id);
+        $article = $this->article->find($article_id);
 
         //判断文章是否存在
         if (empty($article)) {
