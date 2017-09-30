@@ -30,7 +30,7 @@
                                     <h3>
                                         <a href='/{{config('site.article_path').$article['links']}}' target='_blank'>{{$article['title']}}</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：{{$article['real_name']}}&emsp;{{$article['updated_at']}}&emsp;阅读：{{$article['click']}}</p>
+                                    <p class='mt12 px14'>作者：{{ $article->profile['real_name'] }}&emsp;{{$article['updated_at']}}&emsp;阅读：{{$article['click']}}</p>
                                     <p class='pcont'>
                                         <i></i>
                                         {{$article['abstract']}}

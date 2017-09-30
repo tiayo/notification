@@ -22,7 +22,7 @@
                 <dd class='__r_c_' pan='Com-HotPerson1'>
                     <a><img width='52' height='52' src='{{$user['avatar']}}'></a>
                     <h3><a>{{$user['real_name']}}</a></h3>
-                    <p class='mt6'>城市：{{$user['city']}}</p>
+                    <p class='mt6'>城市：{{$user['address1']}}</p>
                     <p class='mt5'>注册时间：{{$user['created_at']}}</p>
                 </dd>
                 @endforeach
