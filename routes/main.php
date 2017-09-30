@@ -62,11 +62,8 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
     Route::get('/article/search', 'ArticleController@index')->name('admin_article_search');
 
     //添加文章
-    Route::get('/article/add', function () {
-        return redirect()->route('article_add', ['category' => app('\App\Repositories\CategoryRepository')->routeFirst('article')['category_id']]);
-    })->name('article_add_simple');
-    Route::get('/article/add/{category}', 'ArticleController@storeView')->name('article_add');
-    Route::post('/article/add/{category}', 'ArticleController@store')->name('article_add_post');
+    Route::get('/article/add', 'ArticleController@storeView')->name('article_add');
+    Route::post('/article/add', 'ArticleController@store')->name('article_add_post');
 
     //更新文章
     Route::get('/article/update/{article}', 'ArticleController@UpdateView')->name('article_update');

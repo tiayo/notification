@@ -210,16 +210,27 @@ class GenerateService
     {
         //获取原始数据
         $result = [];
-        $data = config('sidebar.original');
+        $sidebars = config('sidebar');
 
         //判断是否取到数据
-        if (empty($data)) {
+        if (empty($sidebars)) {
             return false;
         }
 
         //切割每一项数据
-        foreach ($data as $key => $value) {
-            $result['generate'][$key] = $this->index->mb_str_split($value);
+        foreach ($sidebars as $key => $sidebar) {
+            //一级数据
+            $result['generate'][$key] = $this->index->mb_str_split($sidebar['name']);
+
+            //二级判断
+            if (!isset($sidebar['child']) || empty($sidebar['child'])) {
+                continue;
+            }
+
+            //二级数据
+            foreach ($sidebar['child'] as $num => $child) {
+                $result['generate'][$num] = $this->index->mb_str_split($child['name']);
+            }
         }
 
         //存储到redis

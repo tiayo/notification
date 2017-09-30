@@ -28,6 +28,18 @@ class CategoryService
     }
 
     /**
+     * 根据条件获取所有数据
+     *
+     * @param $where
+     * @param array ...$select
+     * @return mixed
+     */
+    public function getSimple($where, ...$select)
+    {
+        return $this->category->getSimple($where, ...$select);
+    }
+
+    /**
      * 获取所有分类（有指定字段）
      *
      * @return array
