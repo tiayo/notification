@@ -43,11 +43,12 @@
                                     <label for="category_id" class="control-label">选择分类<span class="required">*</span></label>
                                     <select id="category_id" name="category_id" class="form-control select2-hidden-accessible" required>
                                         @if (!empty($old_input['category_id']))
-                                            <option value="{{ $old_input['category_id'] }}">{{ \App\Category::find($old_input['category_id'])['name'] }}</option>
+                                           <option value="{{ $old_input['category_id'] }}">{{ \App\Category::find($old_input['category_id'])['name'] }}</option>
                                         @endif
 
-                                        @foreach($categories as $category)<option value="{{ $category['category_id'] }}">{{ $category['name'] }}</option>
-                                        @endforeach
+                                        {{--@foreach($categories as $category)--}}
+                                           {{--<option value="{{ $category['category_id'] }}">{{ $category['name'] }}</option>--}}
+                                        {{--@endforeach--}}
                                     </select>
                                 </div>
                                 <div class="form-group">
