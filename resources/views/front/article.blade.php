@@ -48,7 +48,7 @@
             <div class="newslinks">
                 <h4>作者信息</h4>
                 <dl id="relatedInfos-writer">
-                    <dd style=""><img src="{{$article['avatar']}}" width="96"/>
+                    <dd style=""><img src="{{ $article->profile['avatar'] }}" width="96"/>
                         <h3>{{ $article->profile['real_name'] }}</h3>
                         <p>城市：{{ $article->profile['city'] }}</p>
                         <p>邮箱:<small>{{ $article->user['email'] }}</small></p>
