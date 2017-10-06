@@ -26,11 +26,11 @@
                             </dt>
                             <dd style=''>
                                 <div class='com_ulr'>
-                                    <img width='64' height='64' class='img' src='{{app('\App\Article')->find($article['article_id'])->profile['avatar']}}'>
+                                    <img width='64' height='64' class='img' src='{{$article->profile['avatar']}}'>
                                     <h3>
                                         <a href='/{{config('site.article_path').$article['links']}}' target='_blank'>{{$article['title']}}</a>
                                     </h3>
-                                    <p class='mt12 px14'>作者：{{ $article->profile['real_name'] }}&emsp;{{$article['updated_at']}}&emsp;阅读：{{$article['click']}}</p>
+                                    <p class='mt12 px14'>作者：{{ $article->profile['real_name'] }}&emsp;{{$article['updated_at']}}&emsp;阅读：{{ $article['click'] }}</p>
                                     <p class='pcont'>
                                         <i></i>
                                         {{$article['abstract']}}
@@ -65,7 +65,7 @@
                             <i>更多搜索结果：</i>
                             <li><a href="{{$search_url}}/{{($page-1) <= 0 ? 1 : $page-1}}">上一页</a></li>
                             @for ($i=1; $i<=$max_page; $i++)
-                                <li><a href="{{$search_url}}/{{$i}}">第{{$i}}页</a></li>
+                                <li><a href="{{$search_url}}/?page={{$i}}">第{{$i}}页</a></li>
                             @endfor
                             <li><a href="{{$search_url}}/{{($page+1) >= $max_page ? $max_page : $page+1}}">下一页</a></li>
                         </ul>
@@ -86,10 +86,8 @@
     <script>
         $(document).ready(function () {
             $('#search_form').submit(function () {
-                var driver = 'zh';
                 var key = $('#search_form_key').val();
-                var page = 1;
-                window.location.href = '/search/article/' + driver + '/' + key + '/' + page;
+                window.location.href = '/search/article/'+ key ;
                 return false;
             })
         });

@@ -42,6 +42,18 @@ class ArticleRepository
             ->paginate($num);
     }
 
+    public function getSearch($value)
+    {
+        return $this->article
+            ->where('attribute', '<>', '2')
+            ->where(function ($query) use($value) {
+                $query->where('title', 'like', "%$value%")
+                    ->orwhere('abstract', 'like', "%$value%");
+            })
+            ->orderBy('updated_at', 'desc')
+            ->paginate(config('site.index_page'));
+    }
+
     public function adminSearchGet($num, $keyword)
     {
         return $this->article

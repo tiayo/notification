@@ -116,18 +116,14 @@ class FrontController extends Controller
     /**
      * 文章搜索
      *
-     * @param $driver
      * @param $value
      * @param $page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function search($driver, $value, $page)
+    public function search($value)
     {
         //获取查询信息
-        $article_info = $this->search->article($driver, $value, $page);
-
-        //获取文章信息
-        $article_list = $article_info['data'];
+        $article_list = $this->search->article($value);
 
         //获取5条置顶消息
         $article_top = $this->front->getArticleTopDesc(5);
@@ -137,9 +133,9 @@ class FrontController extends Controller
             'type' => 'search',
             'article_list' => $article_list,
             'article_top' => $article_top,
-            'page' => $page,
-            'max_page' => ceil($article_info['count']/Config('site.page')),
-            'search_url' => '/search/article/'.$driver.'/'.$value,
+            'page' => $article_list->currentPage(),
+            'max_page' => $article_list->lastPage(),
+            'search_url' => '/search/article/'.$value,
         ]);
     }
 
