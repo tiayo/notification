@@ -168,6 +168,8 @@ class ArticleRepository
     {
         if ($category_id == 0) {
             return $this->article
+                ->join('profile', 'profile.user_id', 'article.user_id')
+                ->select('profile.avatar', 'profile.real_name', 'article.*')
                 ->where('attribute', '<>', 2)
                 ->skip(config('site.index_page') + ($page-1)*config('site.more_article'))
                 ->limit(config('site.more_article'))
@@ -176,6 +178,8 @@ class ArticleRepository
         }
 
         return $this->article
+            ->join('profile', 'profile.user_id', 'article.user_id')
+            ->select('profile.avatar', 'profile.real_name', 'article.*')
             ->where('attribute', '<>', 2)
             ->where('category_id', $category_id)
             ->skip(config('site.index_page') + ($page-1)*config('site.more_article'))
