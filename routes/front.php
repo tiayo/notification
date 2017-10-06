@@ -10,7 +10,7 @@ Route::group(['middleware' => 'article'], function () {
 Route::get('/ajax/login_status', 'AjaxController@loginStatus');
 Route::get('/ajax/user_is_identical/{user_id}', 'AjaxController@userIsIdentical');
 Route::post('/ajax/generate_num', 'AjaxController@generate_num');
-Route::get('/search/article/{driver}/{value}/{page}', 'FrontController@search');
+Route::get('/search/article/{value}', 'FrontController@search');
 Route::get('/ajax/get_click/{article_id}', 'FrontController@clickAdd');
 
 Route::get('/comment/view/{article_id}', 'FrontController@comment');
