@@ -69,17 +69,6 @@
                                             <option value="2">{{$judge::articleStatus(2)}}</option>
                                     </select>
                                 </div>
-                                @if ($type == 'update')
-                                    <div class="form-group">
-                                        <label for="category" class="control-label">栏目<span class="required">*</span></label>
-                                        <select name="category" class="form-control select2-hidden-accessible" required>
-                                            @if (!empty($current['name']))
-                                                <option value="{{$current['category_id']}}">{{$current['name']}}(当前栏目)</option>
-                                            @endif
-                                                {!! app('\App\Services\CategoryService')->categoryHtml('<option value="<<category_id>>"><<title>></option>"><<title>></a></li>', 'article') !!}
-                                        </select>
-                                    </div>
-                                @endif
                                 <div class="form-group">
                                     <label for="start_time" class=" control-label">摘要<span class="required">*</span></label>
                                     <textarea class="form-control" name="abstract" placeholder="输入文章摘要..." >{{$old_input['abstract']}}</textarea>
