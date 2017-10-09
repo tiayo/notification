@@ -134,7 +134,7 @@ class ArticleController extends Controller
         $this->validate($this->request, [
             'title' => 'bail|required',
             'body' => 'bail|required',
-            'category' => 'bail|required|integer',
+            'category_id' => 'bail|required|integer',
             'attribute' => 'bail|required|integer|max:2|min:1',
         ]);
 

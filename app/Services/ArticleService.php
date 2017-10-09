@@ -164,7 +164,7 @@ class ArticleService
 
         //获取文章静态链接
         if ($data['attribute'] == 2) {
-            $category = $this->article->findOne('article_id', $article_id, 'category')['category'];
+            $category = $this->article->findOne('article_id', $article_id, 'category_id')['category_id'];
             $category = $this->category->current($category);
             $links = '/'.$category['alias'].$this->links($article_id);
             $value['links'] = null;
@@ -177,14 +177,14 @@ class ArticleService
                 return response($e->getMessage(), 500);
             }
         } else {
-            $category = $this->category->current($data['category']);
+            $category = $this->category->current($data['category_id']);
             $links = '/'.$category['alias'].$this->links($article_id);
             $value['links'] = $links;
         }
 
         //更新数组
         $value['title'] = $data['title'];
-        $value['category'] = $data['category'];
+        $value['category_id'] = $data['category_id'];
         $value['abstract'] = $data['abstract'] ?? $this->getAbstract($data['body']);
         $value['body'] = $data['body'];
         $value['attribute'] = $data['attribute'];
@@ -224,7 +224,7 @@ class ArticleService
         }
 
         //构建插入数组
-        $value['category'] = $data['category_id'];
+        $value['category_id'] = $data['category_id'];
         $value['attribute'] = $data['attribute'];
         $value['title'] = $data['title'];
         $value['abstract'] = $data['abstract'];
