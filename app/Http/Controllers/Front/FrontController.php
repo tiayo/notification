@@ -97,10 +97,10 @@ class FrontController extends Controller
         }
 
         //获取5条置顶消息
-        $article_top = $this->front->getArticleTopDescCategory($article['category'], 5);
+        $article_top = $this->front->getArticleTopDescCategory($article['category_id'], 5);
 
         //获取5条本栏目随机文章
-        $article_rand = $this->front->article_rand($article['category'], 5);
+        $article_rand = $this->front->article_rand($article['category_id'], 5);
 
         //我的信息
         $me = $this->front->me(Auth::id());
