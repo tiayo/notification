@@ -237,7 +237,7 @@ class ArticleService
 
         //获取文章分类信息
         $article_id = $result->article_id;
-        $category = $this->category->current($result->category);
+        $category = $this->category->current($result->category_id);
 
         //插入links
         $links = '/' . $category['alias'] . $this->links($result->article_id);
