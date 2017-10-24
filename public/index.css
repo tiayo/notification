@@ -1065,17 +1065,22 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     float: left;
 }
 .search_page ul li {
-    width: 10%;
+    width: 6%;
     float: left;
     display: inline;
     border: 1px solid #e1e1e1;
     line-height: 1em;
-    padding: 1em 0 1em 0;
-    margin: 0.5em;
+    padding: 0.5em 0 0.5em 0;
+    margin-left: -1px;
 }
-.search_page ul i {
-    float: left;
-    padding: 1em 0;
+.search_page ul li:first-child, li.disabled {
+    text-align: center;
+    margin-left: 0;
+}
+.search_page ul li.active {
+    background: #666;
+    text-align: center;
+    color: #fff;
 }
 .search_page ul li a{
     width:100%;
