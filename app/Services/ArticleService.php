@@ -263,7 +263,7 @@ class ArticleService
      */
     public function getAbstract($str)
     {
-        return substr($str, 0, 200);
+        return substr(strip_tags($str), 0, 300);
     }
 
     /**

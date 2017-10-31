@@ -65,7 +65,7 @@
                                     </h3>
                                     <p class="mt12 px16 lh16">
                                         <span class="i_quto"></span>
-                                        {{ strip_tags($headlines['abstract']) }}
+                                        {{ $headlines['abstract'] }}
                                     </p>
                                     <p class="mt12 px14">
                                         <a href="/{{ config('site.article_path').$headlines['links'] }}">
