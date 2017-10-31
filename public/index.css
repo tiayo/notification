@@ -428,7 +428,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 .zhuti{
 	background: url(/images/index_shadow2.png) no-repeat 0 0; 
 	width: 1000px;
-	margin: 4em auto 0;
+	margin: 0 auto 0;
 	padding: 11px 11px 0;
 	position: relative;
 	zoom: 1;z-index: 2;
