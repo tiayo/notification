@@ -12,11 +12,12 @@
 @endsection
 
 @section('content_body')
-            <div id="M14_B_CommunityIndex_SubNavUnderTG"><div class="mt15">
-                    <img src="/images/ggw.jpg" />
+            <div id="M14_B_CommunityIndex_SubNavUnderTG">
+                <div class="mt15">
+                    <a href="http://team.tiayo.com" target="_blank"><img src="{{ asset('/images/ggw.jpg') }}" /></a>
                 </div>
-            </div>            <div class="com_conlist clearfix">
-
+            </div>
+            <div class="com_conlist clearfix">
                 <ul id="dataListUl">
                     @foreach($article_list as $article)
                     <li class=' __r_c_'>
