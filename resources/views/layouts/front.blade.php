@@ -26,67 +26,70 @@
 @php
     $headlines = $article->findOneRand([['attribute', 4]], '*');
 @endphp
-<div id="communityHeadImgRegion" class="i_newshead">
 
-    <div id="communityHeadImgTgRegion" class="ddtip">
-        <div method="tipbox" class="ddtiper none">
-            <div class="ddtipbox">
-                <i method="close" class="tip_close"></i>
-                <div id="" method="tip">
+@if (!empty($headlines))
+    <div id="communityHeadImgRegion" class="i_newshead">
+
+        <div id="communityHeadImgTgRegion" class="ddtip">
+            <div method="tipbox" class="ddtiper none">
+                <div class="ddtipbox">
+                    <i method="close" class="tip_close"></i>
+                    <div id="" method="tip">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <ul id="communityHeadImgBackSlidesRegion" class="bgimg">
-        <li style="background-image:url({{ $headlines['picture'] }});opacity:1;z-index:2;background-repeat:no-repeat;"></li>
-    </ul>
-    <div class="i_newsimgs">
-        <div class="dl">
-            <dl id="communityHeadImgSlidesRegion" class="clearfix" style="width:620px">
-                <dd style="opacity:1;z-index:2;" class="__r_c_">
-                    <div class="clearfix i_combox __r_c_">
-                        <div class="i_textbox">
-                            <div class="pic_60">
-                                <a href="/{{ config('site.article_path').$headlines['links'] }}">
-                                    <img src="{{ $headlines->profile->avatar }}" width="60" height="60" class="userimg">
-                                </a>
-                                <h3>
-                                    <a href="/{{ config('site.article_path').$headlines['links'] }}" target="_blank">
-                                        {{ $headlines['title'] }}
-                                    </a>
-                                </h3>
-                                <p class="mt12 px16 lh16">
-                                    <span class="i_quto"></span>
-                                    {{ strip_tags($headlines['abstract']) }}
-                                </p>
-                                <p class="mt12 px14">
+        <ul id="communityHeadImgBackSlidesRegion" class="bgimg">
+            <li style="background-image:url({{ $headlines['picture'] }});opacity:1;z-index:2;background-repeat:no-repeat;"></li>
+        </ul>
+        <div class="i_newsimgs">
+            <div class="dl">
+                <dl id="communityHeadImgSlidesRegion" class="clearfix" style="width:620px">
+                    <dd style="opacity:1;z-index:2;" class="__r_c_">
+                        <div class="clearfix i_combox __r_c_">
+                            <div class="i_textbox">
+                                <div class="pic_60">
                                     <a href="/{{ config('site.article_path').$headlines['links'] }}">
-                                        {{ $headlines->profile->real_name }}
+                                        <img src="{{ $headlines->profile->avatar }}" width="60" height="60" class="userimg">
                                     </a>
-                                    <i class="ml6 mr6">阅读</i>
-                                    <strong class="db_point">
-                                        {{ $headlines['click'] }}
-                                    </strong>
-                                </p>
-                            </div>
+                                    <h3>
+                                        <a href="/{{ config('site.article_path').$headlines['links'] }}" target="_blank">
+                                            {{ $headlines['title'] }}
+                                        </a>
+                                    </h3>
+                                    <p class="mt12 px16 lh16">
+                                        <span class="i_quto"></span>
+                                        {{ strip_tags($headlines['abstract']) }}
+                                    </p>
+                                    <p class="mt12 px14">
+                                        <a href="/{{ config('site.article_path').$headlines['links'] }}">
+                                            {{ $headlines->profile->real_name }}
+                                        </a>
+                                        <i class="ml6 mr6">阅读</i>
+                                        <strong class="db_point">
+                                            {{ $headlines['click'] }}
+                                        </strong>
+                                    </p>
+                                </div>
 
-                            <div class="pic30box">
-                                @foreach ($headlines->comment as $comment)
-                                    <div class="pic_30">
-                                        <a href="#"><img src="{{ $comment->profile->avatar }}" width="30" height="30"></a>
-                                        <p><a href="#">{{ $comment->profile->real_name }}</a> 说:</p>
-                                        <p class="px14">{{ $comment['content'] }}</p>
-                                    </div>
-                                @endforeach
-                            </div>
+                                <div class="pic30box">
+                                    @foreach ($headlines->comment as $comment)
+                                        <div class="pic_30">
+                                            <a href="#"><img src="{{ $comment->profile->avatar }}" width="30" height="30"></a>
+                                            <p><a href="#">{{ $comment->profile->real_name }}</a> 说:</p>
+                                            <p class="px14">{{ $comment['content'] }}</p>
+                                        </div>
+                                    @endforeach
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                </dd>
-            </dl>
+                    </dd>
+                </dl>
+            </div>
         </div>
     </div>
-</div>
+@endif
 {{--大图--}}
 
 <!--主体部分-->
