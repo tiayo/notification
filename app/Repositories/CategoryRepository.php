@@ -18,10 +18,10 @@ class CategoryRepository
        return $this->category->get();
    }
 
-   public function selectGet($value = '*')
+   public function selectGet($select = '*')
    {
        return $this->category
-           ->select($value)
+           ->select($select)
            ->get();
    }
 

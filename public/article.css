@@ -2407,12 +2407,20 @@ a.tagnews:hover {
 
 .newslinks {
 	margin-top: 40px;
-	padding: 0 15px;
+	border: 1px solid #f1f1f1;
 }
 
 .newslinks h4,.newslinknews h4 {
 	font-size: 16px;
-	line-height: 1em;
+	width: 100%;
+	background: #192332;
+	line-height: 2.5em;
+	color: #fff;
+	text-align: center;
+}
+
+.newslinks dl {
+	padding: 0 15px;
 }
 
 .newslinks dd {
@@ -2474,7 +2482,7 @@ a.tagnews:hover {
 
 .newslinknews {
 	margin-top: 40px;
-	padding: 0 15px;
+	border: 1px solid #f1f1f1;
 }
 @media screen and (max-width: 800px) { 
 .newslinknews {
@@ -2482,11 +2490,13 @@ a.tagnews:hover {
 	position:relative;
 	float:left;
 	height:0;
+	border: 1px solid #f1f1f1;
 }
 }
 
 .newslinknews ul {
 	margin-left: 20px;
+	margin-bottom: 1em;
 }
 
 .newslinknews li {

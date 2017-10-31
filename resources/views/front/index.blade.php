@@ -26,7 +26,7 @@
                             </dt>
                             <dd style=''>
                                 <div class='com_ulr'>
-                                    <img width='64' height='64' class='img' src='{{$article->profile['avatar']}}'>
+                                    <img width='64' height='64' class='img' src='{{ $article->profile['avatar'] }}'>
                                     <h3>
                                         <a href='/{{config('site.article_path').$article['links']}}' target='_blank'>{{$article['title']}}</a>
                                     </h3>

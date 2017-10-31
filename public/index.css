@@ -335,6 +335,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     position: relative;
     zoom: 1;
     z-index: 2;
+    overflow: hidden;
 
 }
 .i_newsimgs dd {
@@ -910,7 +911,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 }
 .fotlogo dt a {
     background: url(/images/head.png) no-repeat 0 0;
-    width: 136px;
+    width: 155px;
     height: 44px;
     display: block;
     line-height: 0;

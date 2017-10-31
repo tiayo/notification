@@ -23,8 +23,9 @@ class CategoryService
      */
     public function getSelect()
     {
-        $value = ['name','parent_id','category_id'];
-        return $this->category->selectGet($value)->toArray();
+        $select = ['name','parent_id','category_id'];
+
+        return $this->category->selectGet($select)->toArray();
     }
 
     /**
@@ -173,6 +174,17 @@ class CategoryService
             }
         }
         return redirect()->route('category', ['page' => 1]);
+    }
+
+    /**
+     * 获取指定alias的下级栏目
+     *
+     * @param $option
+     * @return mixed
+     */
+    public function getWhereParent($alias)
+    {
+        return $this->category->getWhereParent($alias);
     }
 
     /**

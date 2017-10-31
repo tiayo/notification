@@ -43,4 +43,9 @@ class Article extends Model
     {
         return $this->belongsTo('App\Category', 'category_id', 'category_id');
     }
+
+    public function comment()
+    {
+        return $this->hasMany('App\Comment', 'article_id', 'article_id');
+    }
 }
