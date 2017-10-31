@@ -8,13 +8,6 @@ body {
     padding: 11px 0 0
 }
 
-.i_newsimgs .dl {
-    width: 1000px;
-    overflow: hidden;
-    position: relative;
-    z-index: 1
-}
-
 .i_newsimgs h2 {
     display: none
 }
