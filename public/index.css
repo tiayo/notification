@@ -1103,20 +1103,19 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 @media screen and (max-width: 800px) {
     .i_newsimgs {
         width: 100%;
+        padding: 0;
     }
     .i_combox .i_textbox {
         width: 100%;
     }
     .i_newsimgs .dl {
         width: 94%;
+        margin: 0 3%;
     }
     .i_newshead ul.bgimg li {
         height: 100%;
     }
     .i_newsimgs dd {
-        width: 100%;
-    }
-    .i_newsimgs dl {
         width: 100%;
     }
     .i_newshead {
@@ -1127,5 +1126,9 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     }
     .i_textbox .pic_60 {
         padding: 0 1em 10px 80px;
+    }
+    .i_newsimgs dl
+    {
+        width: 100%;
     }
 }
