@@ -330,7 +330,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     z-index: 1;
 }
 .i_newsimgs dl {
-    width: 1000px;
+    width: 620px;
     height: 360px;
     position: relative;
     zoom: 1;
@@ -438,7 +438,7 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 .zhuti{
 	background: url(/images/index_shadow2.png) no-repeat 0 0; 
 	width: 100%;
-	margin: 4em auto 0;
+	margin: 0 auto 0;
 	zoom: 1;z-index: 2;
 }
 }
@@ -1099,4 +1099,33 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
 .neirongkaishi{
     line-height: 30px;
     font-size: 15px;
+}
+@media screen and (max-width: 800px) {
+    .i_newsimgs {
+        width: 100%;
+    }
+    .i_combox .i_textbox {
+        width: 100%;
+    }
+    .i_newsimgs .dl {
+        width: 94%;
+    }
+    .i_newshead ul.bgimg li {
+        height: 100%;
+    }
+    .i_newsimgs dd {
+        width: 100%;
+    }
+    .i_newsimgs dl {
+        width: 100%;
+    }
+    .i_newshead {
+        padding-bottom: 2em;
+    }
+    .i_combox .i_textbox {
+        width: 92%;
+    }
+    .i_textbox .pic_60 {
+        padding: 0 1em 10px 80px;
+    }
 }
