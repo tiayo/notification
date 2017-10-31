@@ -302,7 +302,7 @@ class ArticleService
     public function top($article_id, $attribute)
     {
         //判断状态
-        if ($attribute != 1 && $attribute != 3) {
+        if ($attribute != 1 && $attribute != 3 && $attribute != 4) {
             throw new \Exception('数据验证失败！（代码：1002）');
         }
 

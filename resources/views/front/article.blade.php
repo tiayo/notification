@@ -55,19 +55,6 @@
                     </dd>
                 </dl>
             </div>
-            @if (!empty($me))
-            <div class="newslinks">
-                <h4>我的信息</h4>
-                <dl id="relatedInfos-me">
-                    <dd style=""><img src="{{$me['avatar']}}" width="96"/>
-                        <h3>{{$me['real_name']}}</h3>
-                        <p>城市：{{$me['city']}}</p>
-                        <p>邮箱：<small>{{$me['email']}}</small></p>
-                        <p>进入：<a href="/admin" target="_blank">控制台</a></p>
-                    </dd>
-                </dl>
-            </div>
-            @endif
             <div class="newslinknews" id="tit">
                 <h4>相关文章</h4>
                 <ul>
@@ -93,9 +80,11 @@
                     tit.style.position = "fixed";
                     tit.style.marginTop = "70px";
                     tit.style.top = 0;
+                    tit.style.width = "16%";
                 } else {
                     tit.style.position = "";
                     tit.style.marginTop = "";
+                    tit.style.width = "100%";
                 }
             }
         </script>

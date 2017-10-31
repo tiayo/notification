@@ -51,7 +51,7 @@
                                             <th>分类</th>
                                             <th>状态</th>
                                             @if ($admin)
-                                                <th>置顶</th>
+                                                <th>属性</th>
                                             @endif
                                             <th>操作</th>
                                         </tr>
@@ -70,9 +70,13 @@
                                                     <td>
                                                         @if ($row['attribute'] == 1)
                                                             <a href="/admin/article/top/{{$row['article_id']}}/3" class="tablelink">设为置顶</a>
+                                                            <a href="/admin/article/top/{{$row['article_id']}}/4" class="tablelink">设为头条</a>
                                                         @endif
                                                         @if ($row['attribute'] == 3)
                                                             <a href="/admin/article/top/{{$row['article_id']}}/1" class="tablelink">取消置顶</a>
+                                                        @endif
+                                                        @if ($row['attribute'] == 4)
+                                                            <a href="/admin/article/top/{{$row['article_id']}}/1" class="tablelink">取消头条</a>
                                                         @endif
                                                     </td>
                                                 @endif

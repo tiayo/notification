@@ -120,6 +120,9 @@ class Controller extends BaseController
             case 3 :
                 return '置顶';
                 break;
+            case 4 :
+                return '头条';
+                break;
         }
     }
 

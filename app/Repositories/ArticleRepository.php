@@ -87,6 +87,15 @@ class ArticleRepository
             ->first();
     }
 
+    public function findOneRand($where, ...$select)
+    {
+        return $this->article
+            ->select($select)
+            ->where($where)
+            ->inRandomOrder()
+            ->first();
+    }
+
     public function findOneAndCategoryUser($option, $value)
     {
         return $this->article

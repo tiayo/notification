@@ -1,8 +1,16 @@
+@inject('category', '\App\Services\CategoryService')
 <div id="topbar" class="fixed">
     <div class="headbar" id="headbar">
         <dl class="headbarnav">
             <h1><a title="" href="/"><img src="/images/logo.png" /></a></h1>
-            {!! app('\App\Services\CategoryService')->categoryHtml('<dd class=""><a href="/category/<<category_id>>.html"><<title>><i></i></a></dd>', 'article') !!}
+            @foreach ($category->getWhereParent('article') as $category)
+                <dd pan="Com-RecommendTag">
+                    <a href="/category/{{ $category['category_id'] }}.html">
+                        {{ $category['name'] }}
+                        <i></i>
+                    </a>
+                </dd>
+            @endforeach
             </dl>
         <div class="headtool" id="loginbox">
             <div class="sousuo">
