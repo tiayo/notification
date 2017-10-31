@@ -40,7 +40,13 @@
             </div>
         </div>
         <ul id="communityHeadImgBackSlidesRegion" class="bgimg">
-            <li style="background-image:url({{ $headlines['picture'] }});opacity:1;z-index:2;background-repeat:no-repeat;"></li>
+            <li style="
+                    background-image:url({{ $headlines['picture'] }});
+                    opacity:1;
+                    z-index:2;
+                    background-repeat:no-repeat;
+                    background-size: 100% 100%;
+                    "></li>
         </ul>
         <div class="i_newsimgs">
             <div class="dl">
