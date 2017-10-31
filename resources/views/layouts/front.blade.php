@@ -50,7 +50,7 @@
         </ul>
         <div class="i_newsimgs">
             <div class="dl">
-                <dl id="communityHeadImgSlidesRegion" class="clearfix" style="width:620px">
+                <dl id="communityHeadImgSlidesRegion" class="clearfix">
                     <dd style="opacity:1;z-index:2;" class="__r_c_">
                         <div class="clearfix i_combox __r_c_">
                             <div class="i_textbox">

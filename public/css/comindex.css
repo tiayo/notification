@@ -4,47 +4,6 @@ body {
     background: #fff
 }
 
-.i_newshead {
-    position: relative;
-    zoom: 1;
-    padding-top: 94px;
-    z-index: 1
-}
-
-.i_newshead ul.bgimg {
-    height: 550px;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1
-}
-
-.i_newshead ul.bgimg li {
-    background: repeat-x center 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 550px;
-    z-index: 1;
-    -webkit-transition: opacity 1s all;
-    -moz-transition: opacity 1s all;
-    -o-transition: opacity 1s all;
-    -ms-transition: opacity 1s all;
-    transition: opacity 1s all
-}
-
-.i_newsimgs {
-    background: url(//static1.mtime.cn/channel/20170817203036/images/index_shadow.png) no-repeat 0 0;
-    width: 1000px;
-    position: relative;
-    margin: 0 auto;
-    padding: 11px;
-    padding-bottom: 0;
-    z-index: 2
-}
-
 .scroll1024 .i_newsimgs {
     padding: 11px 0 0
 }
@@ -58,37 +17,6 @@ body {
 
 .i_newsimgs h2 {
     display: none
-}
-
-.i_newsimgs dl {
-    width: 1000px;
-    height: 360px;
-    position: relative;
-    zoom: 1;
-    z-index: 2;
-    -webkit-transition: opacity 1s all;
-    -moz-transition: opacity 1s all;
-    -o-transition: opacity 1s all;
-    -ms-transition: opacity 1s all;
-    transition: opacity 1s all
-}
-
-.i_newsimgs dd {
-    width: 1000px;
-    z-index: 1;
-    position: absolute;
-    left: 0;
-    top: 0
-}
-
-.i_newsimgs dd .smtimebar {
-    display: none;
-    margin-right: 405px
-}
-
-.i_newsimgs dd:hover .smtimebar,.i_newsimgs dd.hover .smtimebar {
-    display: block;
-    z-index: 3
 }
 
 .i_newsimgs .ddarea a {
