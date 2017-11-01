@@ -1100,6 +1100,10 @@ a:active,a:hover { text-decoration:none;color:#FF7F02;}
     line-height: 30px;
     font-size: 15px;
 }
+.neirongkaishi a{
+    color: #287ab2;
+    font-weight: 600;
+}
 @media screen and (max-width: 800px) {
     .i_newsimgs {
         width: 100%;
