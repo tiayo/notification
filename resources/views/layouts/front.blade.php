@@ -5,7 +5,7 @@
 <head>
     <title>@yield('title')-{{config('site.title')}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="Keywords" content="随享,随享校园社区,随享笔记本,随享记事本,祥景CMS">
+    <meta name="Keywords" content="随享,随享中国社区,随享笔记本,随享记事本,祥景CMS">
     <meta name="Description" content="@yield('description')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">

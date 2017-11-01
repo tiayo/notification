@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('title', $category['name'] ?? '首页')
-@section('description', '随享校园社区是基于祥景CMS架构的一套分享php学习之路的网站,大量常用的代码和常遇到的问题不断更新中.')
+@section('description', '随享中国社区是由随享中国社区团队开发、维护的开源项目，旨在帮助各位喜欢网站建设的朋友提供技术指导、踩坑记录。')
 
 @section('link')
     @parent
